@@ -18,6 +18,8 @@ kotlin {
         }
     }
 
+    val voyagerVersion = "1.0.0-rc07"
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -26,6 +28,8 @@ kotlin {
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+                // Voyager is used to provide navigation for the app
+                implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
             }
         }
         val androidMain by getting {
