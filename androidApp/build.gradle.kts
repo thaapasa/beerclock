@@ -32,6 +32,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    androidResources {
+        generateLocaleConfig = true
+    }
     dependencies {
         implementation("androidx.startup:startup-runtime:1.1.1")
     }
