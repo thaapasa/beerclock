@@ -9,6 +9,14 @@ with Jetpack Compose Multiplatform.
 <i>Spoiler: it can be somewhat frustrating</i>
 </p>
 
+Note: This project was initially bootstrapped from the
+[all-platforms template](https://github.com/JetBrains/compose-multiplatform-template).
+However, once it became apparent that supporting multiple platforms
+requires a lot of platform-specific work, I recreated the project based on the
+[iOS + Android template](https://github.com/JetBrains/compose-multiplatform-ios-android-template#readme).
+The old project repository is retained
+[here](https://github.com/thaapasa/beerclock-multiplatform).
+
 ## Development machine
 
 - Apple M1 Max MacBook Pro with 64 GB of memory
