@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("native.cocoapods")
     id("com.android.library")
     id("org.jetbrains.compose")
 }
@@ -7,18 +8,23 @@ plugins {
 kotlin {
     androidTarget()
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    val voyagerVersion = "1.0.0-rc07"
+
+    cocoapods {
+        version = "1.0.0"
+        summary = "BeerClock"
+        homepage = "https://github.com/thaapasa/beerclock"
+        ios.deploymentTarget = "16.4"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
             baseName = "shared"
             isStatic = true
         }
     }
-
-    val voyagerVersion = "1.0.0-rc07"
 
     sourceSets {
         val commonMain by getting {
