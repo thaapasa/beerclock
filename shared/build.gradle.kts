@@ -25,6 +25,7 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
+        extraSpecAttributes["resource"] = "'build/cocoapods/framework/shared.framework/*.bundle'"
     }
 
     sourceSets {
@@ -64,8 +65,9 @@ kotlin {
 }
 
 multiplatformResources {
-    multiplatformResourcesPackage = "" // required
+    multiplatformResourcesPackage = "fi.tuska.beerclock.common" // required
     multiplatformResourcesClassName = "MR" // optional, default MR
+    disableStaticFrameworkWarning = true
 }
 
 dependencies {

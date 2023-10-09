@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import dev.icerock.moko.resources.compose.painterResource
 import fi.tuska.beerclock.common.ui.MainLayout
+import fi.tuska.beerclock.common.MR
 
 object HomeScreen : Screen {
 
