@@ -46,6 +46,9 @@ Other resources
 
 1. [Setting up basic structure](./Setup.md)
 1. [State and navigation](./State%20and%20navigation.md)
+1. [Cocoapods](./Cocoapods.md)
+1. ...
+1. [Conclusion](./Conclusion.md)
 
 ## TODO:
 
