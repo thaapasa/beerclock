@@ -2,6 +2,5 @@ package fi.tuska.beerclock.common
 
 import androidx.compose.ui.window.ComposeUIViewController
 
-actual fun getPlatformName(): String = "iOS"
-
+@Suppress("unused", "FunctionName")
 fun MainViewController() = ComposeUIViewController { App() }

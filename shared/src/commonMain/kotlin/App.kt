@@ -10,5 +10,3 @@ fun App() {
         screen = HomeScreen
     )
 }
-
-expect fun getPlatformName(): String
