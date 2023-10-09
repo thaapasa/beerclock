@@ -35,5 +35,5 @@ Pod::Spec.new do |spec|
             SCRIPT
         }
     ]
-    spec.resource = 'build/cocoapods/framework/shared.framework/*.bundle'
+    spec.resources = ['build/cocoapods/framework/shared.framework/*.bundle', 'src/commonMain/resources/**']
 end

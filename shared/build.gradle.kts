@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.FatFrameworkTask
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -25,7 +27,8 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
-        extraSpecAttributes["resource"] = "'build/cocoapods/framework/shared.framework/*.bundle'"
+        extraSpecAttributes["resources"] =
+            "['build/cocoapods/framework/shared.framework/*.bundle', 'src/commonMain/resources/**']"
     }
 
     sourceSets {
@@ -68,6 +71,7 @@ multiplatformResources {
     multiplatformResourcesPackage = "fi.tuska.beerclock.common" // required
     multiplatformResourcesClassName = "MR" // optional, default MR
     disableStaticFrameworkWarning = true
+    multiplatformResourcesSourceSet = "commonMain"
 }
 
 dependencies {
