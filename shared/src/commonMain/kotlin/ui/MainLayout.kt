@@ -14,7 +14,10 @@ import fi.tuska.beerclock.common.localization.strings
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainLayout(content: @Composable (PaddingValues) -> Unit) {
+fun MainLayout(
+    content: @Composable (PaddingValues) -> Unit,
+    actionButton: @Composable () -> Unit = {}
+) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
     val navigator = LocalNavigator.currentOrThrow
@@ -30,7 +33,8 @@ fun MainLayout(content: @Composable (PaddingValues) -> Unit) {
                     navigator.push(it)
                 }
             })
-        }, drawerGesturesEnabled = true, content = content
+        }, floatingActionButton = actionButton,
+            drawerGesturesEnabled = true, content = content
         )
     }
 }
