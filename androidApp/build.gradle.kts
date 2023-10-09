@@ -32,6 +32,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    dependencies {
+        implementation("androidx.startup:startup-runtime:1.1.1")
+    }
     kotlin {
         jvmToolchain(17)
     }
