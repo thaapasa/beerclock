@@ -13,3 +13,6 @@
 - Even the libraries specifically designed to Compose Multiplatform
   might not work. The iOS support especially is poor.
 - Lots of suggested libraries are in alpha or release candidate stage.
+- Gradle caches need to be constantly manually invalidated - the
+  project just stops building and throws random errors unrelated to
+  anything that's in the code.
