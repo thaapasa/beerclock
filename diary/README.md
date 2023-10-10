@@ -71,6 +71,7 @@ Other projects or blogs regarding Compose Multiplatform projects:
 - [Compose Multiplatform Moko resource integration](https://medium.com/@boobalaninfo/article-1-compose-multiplatform-moko-resource-integration-dbccbf19aab7)
 - [Resource management and cocoapods issue](https://github.com/JetBrains/compose-multiplatform/issues/3553)
 - [Todometer KMP](https://github.com/serbelga/Todometer-KMP)
+- [Create a multiplatform app using Ktor and SQLDelight – tutorial](https://kotlinlang.org/docs/multiplatform-mobile-ktor-sqldelight.html)
 
 ## TODO:
 
