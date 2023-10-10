@@ -31,6 +31,7 @@ The old project repository is retained
 1. [State and navigation](./State%20and%20navigation.md)
 1. [Cocoapods](./Cocoapods.md)
 1. [Adding images](./Images.md)
+1. [Database](./Database.md)
 1. ...
 1. [Conclusion](./Conclusion.md)
 
@@ -69,6 +70,7 @@ Other projects or blogs regarding Compose Multiplatform projects:
 - [From Android to Multiplatform: Real 100% Jetpack Compose App](https://markonovakovic.medium.com/from-android-to-multiplatform-real-100-jetpack-compose-app-part-1-resources-a5db60f1ed73)
 - [Compose Multiplatform Moko resource integration](https://medium.com/@boobalaninfo/article-1-compose-multiplatform-moko-resource-integration-dbccbf19aab7)
 - [Resource management and cocoapods issue](https://github.com/JetBrains/compose-multiplatform/issues/3553)
+- [Todometer KMP](https://github.com/serbelga/Todometer-KMP)
 
 ## TODO:
 

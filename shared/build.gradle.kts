@@ -4,6 +4,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
     id("dev.icerock.mobile.multiplatform-resources")
+    id("app.cash.sqldelight")
 }
 
 kotlin {
@@ -64,6 +65,15 @@ kotlin {
         }
     }
 }
+
+sqldelight {
+    databases {
+        create("BeerDatabase") {
+            packageName.set("fi.tuska.beerclock")
+        }
+    }
+}
+
 
 multiplatformResources {
     multiplatformResourcesPackage = "fi.tuska.beerclock.common" // required
