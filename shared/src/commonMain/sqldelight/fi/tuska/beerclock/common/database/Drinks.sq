@@ -5,3 +5,11 @@ CREATE TABLE drinks (
 );
 
 CREATE INDEX drinks_time ON drinks(time);
+
+selectAll:
+SELECT *
+FROM drinks;
+
+insert:
+INSERT INTO drinks(time, drink)
+VALUES (?, ?);

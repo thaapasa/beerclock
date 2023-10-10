@@ -2,12 +2,12 @@ package fi.tuska.beerclock.common.database
 
 import app.cash.sqldelight.db.SqlDriver
 
-expect class DriverFactory {
+expect object DriverFactory {
     fun createDriver(): SqlDriver
 }
 
-fun createDatabase(driverFactory: DriverFactory): BeerDatabase {
-    val driver = driverFactory.createDriver()
+fun createDatabase(): BeerDatabase {
+    val driver = DriverFactory.createDriver()
     val database = BeerDatabase(driver)
 
     // Do more work with the database (see below).
