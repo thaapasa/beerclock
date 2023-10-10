@@ -10,7 +10,6 @@ actual object DriverFactory {
     internal set
 
   actual fun createDriver(): SqlDriver {
-    println("Creating database driver")
     return AndroidSqliteDriver(BeerDatabase.Schema, applicationContext, "beerdatabase.db")
   }
 }

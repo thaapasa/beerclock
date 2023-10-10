@@ -3,7 +3,6 @@ package fi.tuska.beerclock.common.settings
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.startup.Initializer
 
 actual object PreferenceProvider {
     /** Initialized by PreferenceInitializer */
@@ -32,21 +31,5 @@ class Prefs constructor(private val prefs: SharedPreferences) : PreferenceStore 
             putString(key, value)
             apply()
         }
-    }
-}
-
-/**
- * This is initialized on app startup by the androidx.startup:startup-runtime
- * library. See the provider definition in AndroidManifest.xml.
- */
-@Suppress("unused")
-class PreferenceInitializer: Initializer<PreferenceProvider> {
-    override fun create(context: Context): PreferenceProvider {
-        PreferenceProvider.applicationContext = context.applicationContext
-        return PreferenceProvider
-    }
-
-    override fun dependencies(): List<Class<out Initializer<*>>> {
-        return emptyList()
     }
 }

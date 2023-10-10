@@ -24,7 +24,7 @@ pluginManagement {
 
         id("com.android.application").version(agpVersion)
         id("com.android.library").version(agpVersion)
-        id("app.cash.sqldelight").version(sqldelightVersion) // SQLDelight version
+        id("app.cash.sqldelight").version(sqldelightVersion)
 
         id("org.jetbrains.compose").version(composeVersion)
     }
