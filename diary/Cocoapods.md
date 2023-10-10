@@ -2,7 +2,7 @@
 
 ## Switching templates
 
-_Mon, 9th October 2023_
+_Mon, Oct 9th 2023_
 
 - I started integrating shared resources library
   [Moko resources](https://github.com/icerockdev/moko-resources)
@@ -32,7 +32,7 @@ _Mon, 9th October 2023_
 
 ## Integrating cocoapods configuration
 
-_Mon, 9th October 2023_
+_Mon, Oct 9th 2023_
 
 - Next step: integrate CocoaPods to the project. As mentioned before,
   the multiplatform project templates do not contain any cocoapods

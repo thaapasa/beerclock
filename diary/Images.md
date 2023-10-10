@@ -1,6 +1,6 @@
 # Adding images
 
-_Monday, 9th October 2023_
+_Monday, Oct 9th 2023_
 
 - Tried adding custom images on the app and quickly realized you need
   platform-specific functionality for packaging and displaying images.
@@ -27,3 +27,18 @@ _Monday, 9th October 2023_
   - [Compose Multiplatform Moko resource integration](https://medium.com/@boobalaninfo/article-1-compose-multiplatform-moko-resource-integration-dbccbf19aab7)
 - Finally got the integration working, after adding the missing build
   script to [XCode project file](../iosApp/iosApp.xcodeproj/project.pbxproj).
+
+_Tuesday, Oct 10th 2023_
+
+- I managed to get the build working by following the instructions from
+  the [Medium article](https://medium.com/@boobalaninfo/article-1-compose-multiplatform-moko-resource-integration-dbccbf19aab7),
+  but it seems that the build phase setup was actually the same as what
+  was instructed for a non-cocoapods installation in the
+  MOKO resources [readme](https://github.com/icerockdev/moko-resources#without-orgjetbrainskotlinnativecocoapods).
+  I replaced it with the cocoapods-version of the script, and, well, it
+  works tool. Wonder why the non-cocoapods version worked as well?
+- The problem for me was that the instructions in the MOKO readme
+  assumed that I know more about the project setup than I actually do.
+  The title is now _iOS/macOS static kotlin frameworks support_,
+  and I was unsure whether that step was relevant to the Compose
+  Multiplatform project I am creating. Seems to be.  
