@@ -2,9 +2,9 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id("app.cash.sqldelight")
     id("org.jetbrains.compose")
     id("dev.icerock.mobile.multiplatform-resources")
-    id("app.cash.sqldelight")
 }
 
 kotlin {
@@ -52,6 +52,7 @@ kotlin {
                 // The startup library is used for Android to provide a global reference to the
                 // Application Context
                 implementation("androidx.startup:startup-runtime:1.1.1")
+                implementation("app.cash.sqldelight:android-driver:2.0.0")
             }
         }
         val iosX64Main by getting
@@ -62,6 +63,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation("app.cash.sqldelight:native-driver:2.0.0")
+            }
         }
     }
 }
@@ -69,11 +73,10 @@ kotlin {
 sqldelight {
     databases {
         create("BeerDatabase") {
-            packageName.set("fi.tuska.beerclock")
+            packageName.set("fi.tuska.beerclock.common.database")
         }
     }
 }
-
 
 multiplatformResources {
     multiplatformResourcesPackage = "fi.tuska.beerclock.common" // required

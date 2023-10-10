@@ -1,0 +1,7 @@
+CREATE TABLE drinks (
+  id INTEGER PRIMARY KEY NOT NULL,
+  time INTEGER NOT NULL,
+  drink TEXT NOT NULL
+);
+
+CREATE INDEX drinks_time ON drinks(time);
