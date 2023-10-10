@@ -25,9 +25,8 @@
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
             tools:node="merge">
-
             <meta-data
-                android:name="fi.tuska.beerclock.common.settings.PreferenceInitializer"
+                android:name="fi.tuska.beerclock.common.ContextInitializer"
                 android:value="androidx.startup" />
         </provider>
     </application>
