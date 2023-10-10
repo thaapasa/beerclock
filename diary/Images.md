@@ -42,3 +42,12 @@ _Tuesday, Oct 10th 2023_
   The title is now _iOS/macOS static kotlin frameworks support_,
   and I was unsure whether that step was relevant to the Compose
   Multiplatform project I am creating. Seems to be.  
+- Also: noticed that [this issue](https://github.com/JetBrains/compose-multiplatform/issues/3553)
+  discusses resource management and cocoapods for Compose Multiplatform.
+  It seems that Compose Multiplatform is trying to move away from
+  cocoapods, which might explain why the project examples do not
+  include the cocoapods setup. But on the other hand I could not find
+  examples of how to access the resources without the MOKO library,
+  and adding that seems to require cocoapods. I'm not 100% certain of
+  this, maybe it would have worked by following the MOKO resource
+  instructions for the non-cocoapods version.

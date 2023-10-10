@@ -68,6 +68,7 @@ Other projects or blogs regarding Compose Multiplatform projects:
 - [Jetpack Compose Multiplatform Android & iOS](https://proandroiddev.com/jetpack-compose-multiplatform-android-ios-4a87ba417caa)
 - [From Android to Multiplatform: Real 100% Jetpack Compose App](https://markonovakovic.medium.com/from-android-to-multiplatform-real-100-jetpack-compose-app-part-1-resources-a5db60f1ed73)
 - [Compose Multiplatform Moko resource integration](https://medium.com/@boobalaninfo/article-1-compose-multiplatform-moko-resource-integration-dbccbf19aab7)
+- [Resource management and cocoapods issue](https://github.com/JetBrains/compose-multiplatform/issues/3553)
 
 ## TODO:
 
