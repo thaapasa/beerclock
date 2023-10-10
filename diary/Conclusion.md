@@ -51,3 +51,52 @@ Other notices:
   the iOS platform being in the alpha stage. Compose Multiplatform
   might be a lot more appealing option once the iOS platform support
   matures.
+
+## Should I use Compose Multiplatform
+
+... for an Android + iOS app?
+
+Well, possibly not, but that depends.
+
+### Quick and easy app
+
+If you want to get something up and running quickly and easily, better
+try your luck with something like [React Native](https://reactnative.dev/)
+instead.
+
+### Performant app that feels native to the platform
+
+If you are already familiar with both iOS and Android app development,
+and are prepared to spend time in getting the library integrations
+working, Compose Multiplatform might be a good option for you.
+With Compose Multiplatform you can easily create shared code for both
+platforms and also use platform-specific UI and native code whenever
+that is required.
+
+The alpha status is still a bit worrying though, so expect migration
+issues later on when the platform support is finalized.
+
+### Shared business, native UIs
+
+The Compose Multiplatform uses
+[Kotlin Multiplatform for mobile](https://kotlinlang.org/docs/multiplatform-mobile-getting-started.html)
+(KMM) under the hood. KMM is still in beta, but support for it seems
+to be much more mature and there are a lot more resources available
+for just the KMM part.
+
+If you plan on creating native UIs with
+[Compose](https://developer.android.com/jetpack/compose) for Android,
+and [SwiftUI](https://developer.apple.com/xcode/swiftui/) for iOS, you
+could well check out KMM to share the business logic.
+
+### Just the Android app
+
+If you just target the Android platform, just use the plain
+[Jetpack Compose](https://developer.android.com/jetpack/compose).
+It's the recommended toolkit for Android and I can't see why you
+wouldn't use if for Android development.
+
+### Just the iOS app
+
+Errm well better skip these Kotlin libraries and use whatever you iOS
+developers normally use.
