@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.FatFrameworkTask
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
