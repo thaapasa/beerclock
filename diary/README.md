@@ -25,7 +25,20 @@ The old project repository is retained
 - Android Studio Giraffe 2022.3.1 Patch 2
 - OpenJDK 17 (from Homebrew, see diary below)
 
-## Links to resources
+## The journey
+
+1. [Setting up basic structure](./Setup.md)
+1. [State and navigation](./State%20and%20navigation.md)
+1. [Cocoapods](./Cocoapods.md)
+1. [Adding images](./Images.md)
+1. ...
+1. [Conclusion](./Conclusion.md)
+
+See also:
+
+- [Troubleshooting](./Troubleshooting.md) common errors
+
+## Links to external resources
 
 Compose Multiplatform
 
@@ -36,19 +49,25 @@ Compose Multiplatform
 - [Example projects](https://github.com/JetBrains/compose-multiplatform/tree/master/examples)
 
 Jetpack Compose
+
 - [Documentation](https://developer.android.com/jetpack/compose)
 - [Material UI components](https://developer.android.com/jetpack/compose/components)
 
 Other resources
+
 - [Awesome Kotlin Multiplatform](https://github.com/terrakok/kmp-awesome#-compose-ui)
 
-## The journey
+Other projects or blogs regarding Compose Multiplatform projects:
 
-1. [Setting up basic structure](./Setup.md)
-1. [State and navigation](./State%20and%20navigation.md)
-1. [Cocoapods](./Cocoapods.md)
-1. ...
-1. [Conclusion](./Conclusion.md)
+- [Appyx navigation example](https://github.com/bumble-tech/appyx/tree/2.x/demos/appyx-navigation)
+- [Cocoapods integration instructions](https://kotlinlang.org/docs/native-cocoapods.html)
+  for Kotlin/Native
+- [Kotlin Multiplatform by Tutorials](https://www.kodeco.com/books/kotlin-multiplatform-by-tutorials/v1.0/chapters/2-getting-started)
+  from Kodeco
+- [Compose Multiplatform Movie App](https://piashcse.medium.com/compose-multiplatform-movie-app-4752cd445e95)
+- [Jetpack Compose Multiplatform Android & iOS](https://proandroiddev.com/jetpack-compose-multiplatform-android-ios-4a87ba417caa)
+- [From Android to Multiplatform: Real 100% Jetpack Compose App](https://markonovakovic.medium.com/from-android-to-multiplatform-real-100-jetpack-compose-app-part-1-resources-a5db60f1ed73)
+- [Compose Multiplatform Moko resource integration](https://medium.com/@boobalaninfo/article-1-compose-multiplatform-moko-resource-integration-dbccbf19aab7)
 
 ## TODO:
 

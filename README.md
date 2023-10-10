@@ -20,3 +20,9 @@ Prompt: dark and moody image of a beer glass as a clock with the time slowly tic
 
 Read the [project diary](./diary/README.md) for some description in
 how the project was setup.
+
+## Troubleshooting
+
+See the [troubleshooting](./diary/Troubleshooting.md) documentation for
+common errors and some workarounds when developing with Compose
+Multiplatform.
