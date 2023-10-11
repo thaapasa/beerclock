@@ -13,3 +13,8 @@ FROM drinks;
 insert:
 INSERT INTO drinks(time, drink)
 VALUES (?, ?);
+
+delete:
+DELETE FROM drinks
+WHERE id = ?;
+
