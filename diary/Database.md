@@ -67,7 +67,35 @@ _Wednesday, Oct 11th 2023_
   linked library. Now we're getting somewhere! I told ChatGTP that
   I have not done that and asked it how to do it, and got clear
   instructions how to add the library from XCode and voilà, it started
-  working.
+  working. This is my interaction with ChatGTP:
+
+  Prompt:
+  > I don't think I've added libsqlite3 to the iOS project. How do I
+  do that? Do I need to download it manually or can I add it somehow
+  from XCode?
+  
+  ChatGPT:
+  > You don't need to download libsqlite3 manually; it's included with
+  the iOS SDK. Here's how you can add it to your iOS project using
+  Xcode:
+  >
+  > 1. Open Your Xcode Project: Launch Xcode and open your iOS project.
+  > 1. Select Your Target: In the Project Navigator on the left, select
+  the top-level project item. In the main pane, you'll see a list of
+  targets. Select your main app target.
+  > 1. Go to Build Phases: In the tab bar at the top of the main pane,
+  select "Build Phases".
+  > 1. Link Binary With Libraries: Expand the "Link Binary With Libraries"
+  section. Here, you'll see a list of libraries and frameworks that are
+  currently linked with your app.
+  > 1. Add libsqlite3: Click the "+" button below the list of libraries.
+  This will open a dialog where you can choose a library or framework
+  to add. In the search bar, type "sqlite3". You should see
+  libsqlite3.tbd appear in the list. Select it and click "Add".
+  > 1. Build Your Project: After adding the library, try building your
+  project again. The linker error related to SQLite should be resolved.
+  >
+  >That's it! By following these steps, you'll link your iOS app with the SQLite library, which should resolve the linker errors you were seeing.
 - So I guess for iOS developers this could have been something that is
   immediately apparent but for me I would have liked that the
   SQLDelight
