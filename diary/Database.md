@@ -36,3 +36,41 @@ _Tuesday, Oct 10th 2023_
       _co_touchlab_sqliter_sqlite3_sqlite3_bind_blob_wrapper69 in shared[arm64][2](result.o)
   ...
   ```
+
+_Wednesday, Oct 11th 2023_
+
+- Had problems trying to link the SQLite library. Initially I tried
+  to manually add a `-lsqlite3` linker option, since that seemed to
+  be present in some of the example projects, and ChatGPT suggested
+  adding that since I was getting linker errors for missing sqlite
+  functions, but when I tried to add the option, I started getting
+  mysterious Gradle errors such as:
+  ```
+  Consumable configurations with identical capabilities within a project (other than the default configuration) must have unique attributes, but configuration ':shared:podDebugFrameworkIosFat' and [configuration ':shared:debugFrameworkIosFat'] contain identical attribute sets. Consider adding an additional attribute to one of the configurations to disambiguate them.
+  ```
+- After asking ChatGPT for help, showing it my Gradle files, I got the
+  impression that the cocoapods plugin might be the cause of these.
+  At least ChatGPT thought that the `native-cocoapods` plugin would
+  be the one that creates those targets that were mentioned.
+- Decided that it would be better to try to do this without cocoapods,
+  since that is also the direction Compose Multiplatform is moving
+  towards.
+- Reverted the cocoapods addition, replaced the MOKO resources build
+  script with the non-cocoapods one, and rebuilt the project. I only
+  needed to clear the XCode derived data
+  (`~/Library/Developer/Xcode/DerivedData`) to get the build working
+  again (without SQLDelight, that is)!
+  So MOKO resources did work without that, and the problems I had
+  previously were only due to the missing build script.
+- Still could not get the sqlite library linked to the project, until
+  ChatGPT told me to make sure I've added the sqlite library as a
+  linked library. Now we're getting somewhere! I told ChatGTP that
+  I have not done that and asked it how to do it, and got clear
+  instructions how to add the library from XCode and voilà, it started
+  working.
+- So I guess for iOS developers this could have been something that is
+  immediately apparent but for me I would have liked that the
+  SQLDelight
+  [setup guide](https://cashapp.github.io/sqldelight/2.0.0/multiplatform_sqlite/)
+  would have mentioned that you need to manually link the sqlite3
+  library to the iOS XCode project. Well, it works now!
