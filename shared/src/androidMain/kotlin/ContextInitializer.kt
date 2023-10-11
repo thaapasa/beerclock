@@ -2,7 +2,6 @@ package fi.tuska.beerclock.common
 
 import android.content.Context
 import androidx.startup.Initializer
-import fi.tuska.beerclock.common.database.DriverFactory
 import fi.tuska.beerclock.common.settings.PreferenceProvider
 
 /**
@@ -13,7 +12,6 @@ import fi.tuska.beerclock.common.settings.PreferenceProvider
 class ContextInitializer : Initializer<PreferenceProvider> {
     override fun create(context: Context): PreferenceProvider {
         PreferenceProvider.applicationContext = context.applicationContext
-        DriverFactory.applicationContext = context.applicationContext
         return PreferenceProvider
     }
 
