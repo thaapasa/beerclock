@@ -1,6 +1,5 @@
 plugins {
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
     id("com.android.library")
     id("app.cash.sqldelight")
     id("org.jetbrains.compose")
@@ -10,25 +9,18 @@ plugins {
 kotlin {
     androidTarget()
 
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-
-    val voyagerVersion = "1.0.0-rc07"
-
-    cocoapods {
-        version = "1.0.0"
-        summary = "BeerClock"
-        homepage = "https://github.com/thaapasa/beerclock"
-        ios.deploymentTarget = "16.4"
-        podfile = project.file("../iosApp/Podfile")
-        framework {
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
             baseName = "shared"
             isStatic = true
         }
-        extraSpecAttributes["resources"] =
-            "['build/cocoapods/framework/shared.framework/*.bundle', 'src/commonMain/resources/**']"
     }
+
+    val voyagerVersion = "1.0.0-rc07"
 
     sourceSets {
         val commonMain by getting {
