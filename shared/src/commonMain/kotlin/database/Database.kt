@@ -1,16 +1,20 @@
 package fi.tuska.beerclock.common.database
 
+import androidx.compose.runtime.staticCompositionLocalOf
 import app.cash.sqldelight.db.SqlDriver
 
 expect object DriverFactory {
     fun createDriver(): SqlDriver
 }
 
-fun createDatabase(): BeerDatabase {
+private fun createDatabase(): BeerDatabase {
     val driver = DriverFactory.createDriver()
-    val database = BeerDatabase(driver)
-
-    // Do more work with the database (see below).
-
-    return database
+    return BeerDatabase(driver)
 }
+
+object DatabaseProvider {
+    val database: BeerDatabase by lazy { createDatabase() }
+}
+
+// Compose ambient to provide database access
+val LocalDatabase = staticCompositionLocalOf { DatabaseProvider.database }

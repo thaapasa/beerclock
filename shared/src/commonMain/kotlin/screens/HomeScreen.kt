@@ -16,7 +16,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import dev.icerock.moko.resources.compose.painterResource
 import fi.tuska.beerclock.common.MR
 import fi.tuska.beerclock.common.database.Drinks
-import fi.tuska.beerclock.common.database.createDatabase
+import fi.tuska.beerclock.common.database.LocalDatabase
 import fi.tuska.beerclock.common.ui.MainLayout
 import kotlinx.coroutines.launch
 
@@ -27,7 +27,7 @@ object HomeScreen : Screen {
     @Composable
     override fun Content() {
         val coroutineScope = rememberCoroutineScope()
-        val db = remember { createDatabase() }
+        val db = LocalDatabase.current
         val drinksList = remember { mutableStateListOf<Drinks>() }
 
         LaunchedEffect(Unit) {

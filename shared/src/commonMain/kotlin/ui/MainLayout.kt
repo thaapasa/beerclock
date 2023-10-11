@@ -1,7 +1,6 @@
 package fi.tuska.beerclock.common.ui
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -21,20 +20,19 @@ fun MainLayout(
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
     val navigator = LocalNavigator.currentOrThrow
-    MaterialTheme {
-        Scaffold(scaffoldState = scaffoldState, topBar = {
-            TopAppBar(title = { Text(strings.appName) }, actions = {
-                ToggleDrawerButton(scaffoldState.drawerState)
-            })
-        }, drawerContent = {
-            DrawerContent(selectScreen = {
-                coroutineScope.launch {
-                    scaffoldState.drawerState.close()
-                    navigator.push(it)
-                }
-            })
-        }, floatingActionButton = actionButton,
-            drawerGesturesEnabled = true, content = content
-        )
-    }
+    Scaffold(scaffoldState = scaffoldState, topBar = {
+        TopAppBar(title = { Text(strings.appName) }, actions = {
+            ToggleDrawerButton(scaffoldState.drawerState)
+        })
+    }, drawerContent = {
+        DrawerContent(selectScreen = {
+            coroutineScope.launch {
+                scaffoldState.drawerState.close()
+                navigator.push(it)
+            }
+        })
+    }, floatingActionButton = actionButton,
+        drawerGesturesEnabled = true, content = content
+    )
+
 }
