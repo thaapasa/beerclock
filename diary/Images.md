@@ -41,7 +41,7 @@ _Tuesday, Oct 10th 2023_
   assumed that I know more about the project setup than I actually do.
   The title is now _iOS/macOS static kotlin frameworks support_,
   and I was unsure whether that step was relevant to the Compose
-  Multiplatform project I am creating. Seems to be.  
+  Multiplatform project I am creating. Seems to be.
 - Also: noticed that [this issue](https://github.com/JetBrains/compose-multiplatform/issues/3553)
   discusses resource management and cocoapods for Compose Multiplatform.
   It seems that Compose Multiplatform is trying to move away from
