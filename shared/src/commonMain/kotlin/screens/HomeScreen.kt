@@ -18,7 +18,10 @@ import fi.tuska.beerclock.common.MR
 import fi.tuska.beerclock.common.database.Drinks
 import fi.tuska.beerclock.common.database.LocalDatabase
 import fi.tuska.beerclock.common.ui.MainLayout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 val drinks = listOf("Beer", "Wine", "Tequila", "Whisky", "Cognac", "Gin Tonic")
 
@@ -31,15 +34,17 @@ object HomeScreen : Screen {
         val drinksList = remember { mutableStateListOf<Drinks>() }
 
         LaunchedEffect(Unit) {
-            val drinks = db.drinksQueries.selectAll().executeAsList()
-            drinksList.addAll(drinks)
+            withContext(Dispatchers.IO) {
+                val drinks = db.drinksQueries.selectAll().executeAsList()
+                drinksList.addAll(drinks)
+            }
         }
         MainLayout(content = {
             Column {
                 LazyColumn {
                     items(drinksList) {
                         DropdownMenuItem(onClick = {
-                            coroutineScope.launch {
+                            coroutineScope.launch(Dispatchers.IO) {
                                 db.drinksQueries.delete(it.id)
                                 val drinks = db.drinksQueries.selectAll().executeAsList()
                                 drinksList.clear()
@@ -53,7 +58,7 @@ object HomeScreen : Screen {
             }
         }, actionButton = {
             FloatingActionButton(onClick = {
-                coroutineScope.launch {
+                coroutineScope.launch(Dispatchers.IO) {
                     db.drinksQueries.insert(1321, drinks.random())
                     val drinks = db.drinksQueries.selectAll().executeAsList()
                     drinksList.clear()
