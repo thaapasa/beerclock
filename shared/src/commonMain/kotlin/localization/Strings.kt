@@ -22,6 +22,8 @@ interface Strings {
 
     val gender: GenderStrings
 
+    val newDrink: NewDrinkStrings
+
     interface MenuStrings {
         val main: String
         val settings: String
@@ -39,4 +41,10 @@ interface Strings {
         val male: String
         val female: String
     }
+
+    interface NewDrinkStrings {
+        val title: String
+        val submit: String
+    }
+
 }

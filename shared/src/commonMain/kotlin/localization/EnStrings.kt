@@ -25,4 +25,11 @@ object EnStrings : Strings {
         override val male = "Male"
         override val female = "Female"
     }
+
+    object NewDrinks : Strings.NewDrinkStrings {
+        override val title = "Add a drink"
+        override val submit = "Drink!"
+    }
+
+    override val newDrink = NewDrinks
 }

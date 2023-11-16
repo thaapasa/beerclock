@@ -25,7 +25,7 @@ fun MainLayout(
             ToggleDrawerButton(scaffoldState.drawerState)
         })
     }, drawerContent = {
-        DrawerContent(selectScreen = {
+        MainMenu(selectScreen = {
             coroutineScope.launch {
                 scaffoldState.drawerState.close()
                 navigator.push(it)

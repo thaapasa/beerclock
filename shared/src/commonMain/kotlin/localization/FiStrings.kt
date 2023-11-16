@@ -25,4 +25,11 @@ object FiStrings : Strings {
         override val male = "Mies"
         override val female = "Nainen"
     }
+
+    object NewDrinks : Strings.NewDrinkStrings {
+        override val title = "Merkkaa juoma"
+        override val submit = "Juo!"
+    }
+
+    override val newDrink = NewDrinks
 }

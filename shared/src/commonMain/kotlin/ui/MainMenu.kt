@@ -14,7 +14,7 @@ import fi.tuska.beerclock.common.screens.SettingsScreen
 import fi.tuska.beerclock.common.screens.StatisticsScreen
 
 @Composable
-fun DrawerContent(selectScreen: (select: Screen) -> Unit) {
+fun MainMenu(selectScreen: (select: Screen) -> Unit) {
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Top) {
         DropdownMenuItem(
             onClick = { selectScreen(SettingsScreen) },

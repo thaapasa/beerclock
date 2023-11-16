@@ -13,6 +13,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import dev.icerock.moko.resources.compose.painterResource
 import fi.tuska.beerclock.common.MR
 import fi.tuska.beerclock.common.database.Drinks
@@ -32,6 +34,7 @@ object HomeScreen : Screen {
         val coroutineScope = rememberCoroutineScope()
         val db = LocalDatabase.current
         val drinksList = remember { mutableStateListOf<Drinks>() }
+        val navigator = LocalNavigator.currentOrThrow
 
         LaunchedEffect(Unit) {
             withContext(Dispatchers.IO) {
@@ -58,12 +61,7 @@ object HomeScreen : Screen {
             }
         }, actionButton = {
             FloatingActionButton(onClick = {
-                coroutineScope.launch(Dispatchers.IO) {
-                    db.drinksQueries.insert(1321, drinks.random())
-                    val drinks = db.drinksQueries.selectAll().executeAsList()
-                    drinksList.clear()
-                    drinksList.addAll(drinks)
-                }
+                navigator.push(AddDrinkScreen)
             }) {
                 Icon(
                     painter = painterResource(MR.images.sports_bar),
