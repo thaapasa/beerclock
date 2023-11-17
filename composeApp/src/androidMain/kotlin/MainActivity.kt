@@ -5,7 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import fi.tuska.beerclock.common.MainView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -13,4 +13,10 @@ class MainActivity : AppCompatActivity() {
             MainView()
         }
     }
+}
+
+@Preview
+@Composable
+fun AppAndroidPreview() {
+    App()
 }
