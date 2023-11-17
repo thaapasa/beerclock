@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.common.database
+package fi.tuska.beerclock.database
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import app.cash.sqldelight.db.SqlDriver

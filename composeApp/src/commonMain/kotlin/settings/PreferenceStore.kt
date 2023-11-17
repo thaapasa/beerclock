@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.common.settings
+package fi.tuska.beerclock.settings
 
 interface PreferenceStore {
     fun getString(key: String, defaultValue: String): String

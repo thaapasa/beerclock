@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.common.localization
+package fi.tuska.beerclock.localization
 
 object FiStrings : Strings {
     override val appName = "Kaljakello"

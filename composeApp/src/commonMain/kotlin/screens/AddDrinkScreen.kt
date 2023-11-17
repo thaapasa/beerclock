@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.common.screens
+package fi.tuska.beerclock.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.common.database.LocalDatabase
-import fi.tuska.beerclock.common.localization.strings
-import fi.tuska.beerclock.common.ui.MainLayout
+import fi.tuska.beerclock.database.LocalDatabase
+import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.ui.MainLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch

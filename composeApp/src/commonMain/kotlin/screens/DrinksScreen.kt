@@ -1,9 +1,9 @@
-package fi.tuska.beerclock.common.screens
+package fi.tuska.beerclock.screens
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import fi.tuska.beerclock.common.ui.SubLayout
+import fi.tuska.beerclock.ui.SubLayout
 
 object DrinksScreen : Screen {
 

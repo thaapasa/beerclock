@@ -1,9 +1,9 @@
-package fi.tuska.beerclock.common
+package fi.tuska.beerclock
 
 import android.content.Context
 import androidx.startup.Initializer
-import fi.tuska.beerclock.common.database.DriverFactory
-import fi.tuska.beerclock.common.settings.PreferenceProvider
+import fi.tuska.beerclock.database.DriverFactory
+import fi.tuska.beerclock.settings.PreferenceProvider
 
 /**
  * This is initialized on app startup by the androidx.startup:startup-runtime

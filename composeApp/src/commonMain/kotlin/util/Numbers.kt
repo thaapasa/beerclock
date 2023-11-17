@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.common.util
+package fi.tuska.beerclock.util
 
 fun safeToDouble(str: String): Double? = try {
     str.toDouble()

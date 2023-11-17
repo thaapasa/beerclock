@@ -1,8 +1,7 @@
-package fi.tuska.beerclock.common.screens
+package fi.tuska.beerclock.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -16,10 +15,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import dev.icerock.moko.resources.compose.painterResource
-import fi.tuska.beerclock.common.MR
-import fi.tuska.beerclock.common.database.Drinks
-import fi.tuska.beerclock.common.database.LocalDatabase
-import fi.tuska.beerclock.common.ui.MainLayout
+import fi.tuska.beerclock.database.LocalDatabase
+import fi.tuska.beerclock.ui.MainLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch

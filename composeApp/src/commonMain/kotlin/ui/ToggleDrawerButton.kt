@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.common.ui
+package fi.tuska.beerclock.ui
 
 import androidx.compose.material.DrawerState
 import androidx.compose.material.Icon
@@ -8,7 +8,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.vector.ImageVector
-import fi.tuska.beerclock.common.localization.strings
+import fi.tuska.beerclock.localization.strings
 import kotlinx.coroutines.launch
 
 @Composable

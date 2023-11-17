@@ -1,9 +1,9 @@
-package fi.tuska.beerclock.common.settings
+package fi.tuska.beerclock.settings
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import fi.tuska.beerclock.common.util.safeToDouble
+import fi.tuska.beerclock.util.safeToDouble
 
 internal class UserStore {
 

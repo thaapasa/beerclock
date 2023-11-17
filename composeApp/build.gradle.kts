@@ -70,7 +70,7 @@ kotlin {
 }
 
 android {
-    namespace = "fi.tuska.beerclock.common"
+    namespace = "fi.tuska.beerclock"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -114,13 +114,13 @@ android {
 sqldelight {
     databases {
         create("BeerDatabase") {
-            packageName.set("fi.tuska.beerclock.common.database")
+            packageName.set("fi.tuska.beerclock.database")
         }
     }
 }
 
 multiplatformResources {
-    multiplatformResourcesPackage = "fi.tuska.beerclock.common" // required
+    multiplatformResourcesPackage = "fi.tuska.beerclock" // required
     multiplatformResourcesClassName = "MR" // optional, default MR
     disableStaticFrameworkWarning = true
     multiplatformResourcesSourceSet = "commonMain"

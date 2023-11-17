@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.common.ui
+package fi.tuska.beerclock.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.Scaffold
@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.common.localization.strings
+import fi.tuska.beerclock.localization.strings
 import kotlinx.coroutines.launch
 
 @Composable

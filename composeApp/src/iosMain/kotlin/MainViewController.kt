@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.common
+package fi.tuska.beerclock
 
 import androidx.compose.ui.window.ComposeUIViewController
 

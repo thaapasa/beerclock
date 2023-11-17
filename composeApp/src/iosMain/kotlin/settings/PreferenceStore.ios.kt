@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.common.settings
+package fi.tuska.beerclock.settings
 
 import platform.Foundation.NSUserDefaults
 
@@ -9,7 +9,7 @@ actual object PreferenceProvider {
     }
 }
 
-private class Prefs: PreferenceStore {
+private class Prefs : PreferenceStore {
     private val userDefaults = NSUserDefaults.standardUserDefaults()
 
     override fun getString(key: String, defaultValue: String): String =

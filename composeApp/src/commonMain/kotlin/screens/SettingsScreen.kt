@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.common.screens
+package fi.tuska.beerclock.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,11 +13,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
-import fi.tuska.beerclock.common.localization.strings
-import fi.tuska.beerclock.common.settings.UserStore
-import fi.tuska.beerclock.common.ui.GenderSelector
-import fi.tuska.beerclock.common.ui.SubLayout
-import fi.tuska.beerclock.common.util.safeToDouble
+import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.settings.UserStore
+import fi.tuska.beerclock.ui.GenderSelector
+import fi.tuska.beerclock.ui.SubLayout
+import fi.tuska.beerclock.util.safeToDouble
 
 object SettingsScreen : Screen {
 

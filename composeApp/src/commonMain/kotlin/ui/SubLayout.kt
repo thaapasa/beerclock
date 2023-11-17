@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.common.ui
+package fi.tuska.beerclock.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.Icon
@@ -13,7 +13,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.common.localization.strings
+import fi.tuska.beerclock.localization.strings
 
 @Composable
 fun SubLayout(content: @Composable (PaddingValues) -> Unit, title: String) {
