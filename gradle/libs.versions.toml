@@ -15,6 +15,10 @@ androidx-test-junit = "1.1.5"
 androidx-espresso-core = "3.5.1"
 kotlin = "1.9.20"
 junit = "4.13.2"
+sqldelight = "2.0.0"
+moko-resources = "0.23.0"
+voyager = "1.0.0-rc10"
+startup = "1.1.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -32,9 +36,22 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+# Moko resources are used to provide resources cross-platform
+mokoResources = { module = "dev.icerock.moko:resources", version.ref = "moko-resources" }
+mokoResourcesGenerator = { module = "dev.icerock.moko:resources-generator", version.ref = "moko-resources" }
+mokoResourcesCompose = { module = "dev.icerock.moko:resources-compose", version.ref = "moko-resources" }
+mokoResourcesTest = { module = "dev.icerock.moko:resources-test", version.ref = "moko-resources" }
+# Voyager provides navigation
+voyager = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+# The startup library is used for Android to provide a global reference to the Application Context
+startupRuntime = { module = "androidx.startup:startup-runtime", version.ref = "startup" }
+# SQL library
+sqlDelightAndroid = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqlDelightNative = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
