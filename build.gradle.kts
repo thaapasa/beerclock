@@ -13,8 +13,4 @@ buildscript {
         gradlePluginPortal()
         mavenCentral()
     }
-
-    dependencies {
-        classpath(libs.mokoResourcesGenerator)
-    }
 }

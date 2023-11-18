@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.sqlDelight)
-    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 kotlin {
@@ -49,23 +48,10 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(libs.voyager)
-            implementation(libs.mokoResourcesCompose)
         }
-
-        /*
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain.get())
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation(libs.sqlDelightNative)
-            }
+        iosMain.dependencies {
+            implementation(libs.sqlDelightNative)
         }
-        */
     }
 }
 
@@ -117,17 +103,4 @@ sqldelight {
             packageName.set("fi.tuska.beerclock.database")
         }
     }
-}
-
-multiplatformResources {
-    multiplatformResourcesPackage = "fi.tuska.beerclock" // required
-    multiplatformResourcesClassName = "MR" // optional, default MR
-    disableStaticFrameworkWarning = true
-    multiplatformResourcesSourceSet = "commonMain"
-}
-
-dependencies {
-    commonMainApi(libs.mokoResources)
-    commonMainApi(libs.mokoResourcesCompose) // for compose multiplatform
-    // commonTestImplementation(libs.mokoResourcesTest) // for testing
 }

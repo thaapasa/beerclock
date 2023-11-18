@@ -15,7 +15,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import dev.icerock.moko.resources.compose.painterResource
 import fi.tuska.beerclock.database.Drinks
 import fi.tuska.beerclock.database.LocalDatabase
 import fi.tuska.beerclock.ui.MainLayout
@@ -23,9 +22,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 val drinks = listOf("Beer", "Wine", "Tequila", "Whisky", "Cognac", "Gin Tonic")
 
+@OptIn(ExperimentalResourceApi::class)
 object HomeScreen : Screen {
 
     @Composable
@@ -63,7 +65,7 @@ object HomeScreen : Screen {
                 navigator.push(AddDrinkScreen)
             }) {
                 Icon(
-                    painter = painterResource(MR.images.sports_bar),
+                    painter = painterResource("drawable/sports_bar.xml"),
                     contentDescription = "Juo!"
                 )
             }
