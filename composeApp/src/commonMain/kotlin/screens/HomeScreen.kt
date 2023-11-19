@@ -3,10 +3,10 @@ package fi.tuska.beerclock.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
@@ -57,7 +57,7 @@ object HomeScreen : Screen {
         }
         MainLayout(content = {
             Column {
-                DropdownMenuItem(onClick = {}, content = {
+                DropdownMenuItem(onClick = {}, text = {
                     Text(todaysDate())
                 })
                 LazyColumn {
@@ -69,7 +69,7 @@ object HomeScreen : Screen {
                                 drinksList.clear()
                                 drinksList.addAll(drinks)
                             }
-                        }, content = {
+                        }, text = {
                             Text("Drink: ${it.drink}")
                         })
                     }

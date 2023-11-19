@@ -1,6 +1,6 @@
 package fi.tuska.beerclock
 
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import cafe.adriel.voyager.navigator.Navigator
