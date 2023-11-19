@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.DropdownMenuItem
@@ -12,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -55,8 +57,8 @@ object HomeScreen : Screen {
                 drinksList.addAll(drinks)
             }
         }
-        MainLayout(content = {
-            Column {
+        MainLayout(content = { innerPadding ->
+            Column(modifier = Modifier.padding(innerPadding)) {
                 DropdownMenuItem(onClick = {}, text = {
                     Text(todaysDate())
                 })

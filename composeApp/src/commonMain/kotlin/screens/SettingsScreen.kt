@@ -1,7 +1,9 @@
 package fi.tuska.beerclock.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -23,12 +25,15 @@ object SettingsScreen : Screen {
 
     @Composable
     override fun Content() {
-        SubLayout(content = { SettingsPage() }, title = strings.settings.title)
+        SubLayout(
+            content = { innerPadding -> SettingsPage(innerPadding) },
+            title = strings.settings.title
+        )
     }
 }
 
 @Composable
-fun SettingsPage() {
+fun SettingsPage(innerPadding: PaddingValues) {
 
     val userPrefs = remember { UserStore() }
 
@@ -46,7 +51,10 @@ fun SettingsPage() {
         userPrefs.setGender(gender)
     }
 
-    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        Modifier.padding(innerPadding).fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         TextField(value = weightText,
             onValueChange = { weightText = it },
             label = { Text(text = strings.settings.weightLabel) })

@@ -31,8 +31,8 @@ object AddDrinkScreen : Screen {
 
         val db = LocalDatabase.current
 
-        MainLayout(content = {
-            Column(modifier = Modifier.fillMaxSize()) {
+        MainLayout(content = { innerPadding ->
+            Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
                 Row {
                     Text(strings.newDrink.title)
                 }
