@@ -35,11 +35,6 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.startupRuntime)
             implementation(libs.sqlDelightAndroid)
-            /*
-                dependsOn(commonMain)
-                api("androidx.appcompat:appcompat:1.6.1")
-                api("androidx.core:core-ktx:1.12.0")
-             */
         }
         commonMain.dependencies {
             implementation(compose.runtime)
