@@ -18,6 +18,7 @@ junit = "4.13.2"
 sqldelight = "2.0.0"
 voyager = "1.0.0-rc10"
 startup = "1.1.1"
+datetime = "0.4.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -42,6 +43,7 @@ startupRuntime = { module = "androidx.startup:startup-runtime", version.ref = "s
 # SQL library
 sqlDelightAndroid = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqlDelightNative = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }

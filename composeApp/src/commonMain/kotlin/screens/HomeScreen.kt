@@ -22,10 +22,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 val drinks = listOf("Beer", "Wine", "Tequila", "Whisky", "Cognac", "Gin Tonic")
+
+fun todaysDate(): String {
+    fun LocalDateTime.formatted() = "$dayOfMonth.$monthNumber.$year $hour:$minute"
+
+    val now = Clock.System.now()
+    val zone = TimeZone.currentSystemDefault()
+    return now.toLocalDateTime(zone).formatted()
+}
 
 @OptIn(ExperimentalResourceApi::class)
 object HomeScreen : Screen {
@@ -45,6 +57,9 @@ object HomeScreen : Screen {
         }
         MainLayout(content = {
             Column {
+                DropdownMenuItem(onClick = {}, content = {
+                    Text(todaysDate())
+                })
                 LazyColumn {
                     items(drinksList) {
                         DropdownMenuItem(onClick = {

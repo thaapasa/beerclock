@@ -43,6 +43,7 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(libs.voyager)
+            implementation(libs.datetime)
         }
         iosMain.dependencies {
             implementation(libs.sqlDelightNative)

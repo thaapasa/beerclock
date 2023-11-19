@@ -63,6 +63,7 @@ Jetpack Compose
 Other resources
 
 - [Awesome Kotlin Multiplatform](https://github.com/terrakok/kmp-awesome#-compose-ui)
+- [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
 
 Other projects or blogs regarding Compose Multiplatform projects:
 
