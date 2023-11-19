@@ -2,6 +2,7 @@
 compose = "1.5.4"
 compose-plugin = "1.5.10"
 compose-compiler = "1.5.4"
+material3 = "1.1.2"
 agp = "8.1.4"
 android-minSdk = "24"
 android-compileSdk = "34"
@@ -29,6 +30,7 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }

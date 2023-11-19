@@ -1,17 +1,19 @@
 package fi.tuska.beerclock.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -55,9 +57,9 @@ object HomeScreen : Screen {
                 drinksList.addAll(drinks)
             }
         }
-        MainLayout(content = {
-            Column {
-                DropdownMenuItem(onClick = {}, content = {
+        MainLayout(content = { innerPadding ->
+            Column(modifier = Modifier.padding(innerPadding)) {
+                DropdownMenuItem(onClick = {}, text = {
                     Text(todaysDate())
                 })
                 LazyColumn {
@@ -69,7 +71,7 @@ object HomeScreen : Screen {
                                 drinksList.clear()
                                 drinksList.addAll(drinks)
                             }
-                        }, content = {
+                        }, text = {
                             Text("Drink: ${it.drink}")
                         })
                     }
