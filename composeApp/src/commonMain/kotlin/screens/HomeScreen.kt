@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import fi.tuska.beerclock.components.DrinksListItem
 import fi.tuska.beerclock.database.Drinks
 import fi.tuska.beerclock.database.LocalDatabase
 import fi.tuska.beerclock.ui.MainLayout
@@ -64,15 +65,13 @@ object HomeScreen : Screen {
                 })
                 LazyColumn {
                     items(drinksList) {
-                        DropdownMenuItem(onClick = {
+                        DrinksListItem(it, onClick = {
                             coroutineScope.launch(Dispatchers.IO) {
                                 db.drinksQueries.delete(it.id)
                                 val drinks = db.drinksQueries.selectAll().executeAsList()
                                 drinksList.clear()
                                 drinksList.addAll(drinks)
                             }
-                        }, text = {
-                            Text("Drink: ${it.drink}")
                         })
                     }
                 }
