@@ -4,11 +4,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
@@ -68,12 +69,13 @@ object HomeScreen : Screen {
                 }
             }
         }, actionButton = {
-            FloatingActionButton(onClick = {
+            LargeFloatingActionButton(onClick = {
                 navigator.push(AddDrinkScreen)
             }) {
                 Icon(
                     painter = painterResource("drawable/sports_bar.xml"),
-                    contentDescription = "Juo!"
+                    contentDescription = "Juo!",
+                    modifier = Modifier.size(36.dp)
                 )
             }
         }

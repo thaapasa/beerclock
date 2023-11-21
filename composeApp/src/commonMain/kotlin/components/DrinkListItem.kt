@@ -16,7 +16,7 @@ import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun DrinksListItem(drink: Drinks, onClick: () -> Unit) {
+fun DrinksListItem(drink: Drinks, onClick: () -> Unit = { }) {
     ListItem(headlineContent = {
         Text("Drink: ${drink.drink}")
     }, leadingContent = {

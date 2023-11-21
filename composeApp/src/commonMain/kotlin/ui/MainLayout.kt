@@ -3,9 +3,12 @@ package fi.tuska.beerclock.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -59,7 +62,29 @@ fun MainLayout(
                     })
                 },
                 floatingActionButton = actionButton,
-                content = content
+                content = content,
+                bottomBar = {
+                    NavigationBar {
+                        bottomNavigationItems().forEachIndexed { index, navigationItem ->
+                            NavigationBarItem(
+                                selected = false,
+                                label = { Text(navigationItem.label) },
+                                icon = {
+                                    Icon(
+                                        navigationItem.icon,
+                                        contentDescription = navigationItem.label
+                                    )
+                                },
+                                onClick = {
+                                    coroutineScope.launch {
+                                        drawerState.close()
+                                        navigator.push(navigationItem.screen)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
             )
         }
     )
