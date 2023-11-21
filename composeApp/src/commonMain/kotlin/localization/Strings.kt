@@ -2,6 +2,9 @@ package fi.tuska.beerclock.localization
 
 import androidx.compose.ui.text.intl.Locale
 import fi.tuska.beerclock.settings.Gender
+import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.Month
 
 val strings: Strings = when (Locale.current.language) {
     "fi" -> FiStrings
@@ -23,6 +26,11 @@ interface Strings {
     val gender: GenderStrings
 
     val newDrink: NewDrinkStrings
+
+    fun weekday(day: DayOfWeek): String
+    fun weekdayShort(day: DayOfWeek): String
+    fun month(month: Month): String
+    fun date(day: LocalDateTime): String
 
     interface MenuStrings {
         val main: String

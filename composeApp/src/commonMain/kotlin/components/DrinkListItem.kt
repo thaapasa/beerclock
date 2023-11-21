@@ -23,7 +23,7 @@ fun DrinksListItem(drink: Drinks, onClick: () -> Unit) {
         Image(
             painter = painterResource(imgForDrink(drink)),
             contentDescription = "Beer",
-            modifier = Modifier.width(64.dp).clip(RoundedCornerShape(16.dp)),
+            modifier = Modifier.width(64.dp).clip(RoundedCornerShape(12.dp)),
         )
     }, modifier = Modifier.clickable { onClick() }, tonalElevation = 8.dp, shadowElevation = 16.dp)
 }

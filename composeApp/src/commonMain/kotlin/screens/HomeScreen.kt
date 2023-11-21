@@ -1,22 +1,26 @@
 package fi.tuska.beerclock.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import fi.tuska.beerclock.components.BacStatusCard
 import fi.tuska.beerclock.components.DrinksListItem
 import fi.tuska.beerclock.database.Drinks
 import fi.tuska.beerclock.database.LocalDatabase
@@ -25,22 +29,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Clock
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 val drinks = listOf("Beer", "Wine", "Tequila", "Whisky", "Cognac", "Gin Tonic")
-
-fun todaysDate(): String {
-    fun LocalDateTime.formatted() = "$dayOfMonth.$monthNumber.$year $hour:$minute"
-
-    val now = Clock.System.now()
-    val zone = TimeZone.currentSystemDefault()
-    return now.toLocalDateTime(zone).formatted()
-}
 
 @OptIn(ExperimentalResourceApi::class)
 object HomeScreen : Screen {
@@ -59,11 +51,10 @@ object HomeScreen : Screen {
             }
         }
         MainLayout(content = { innerPadding ->
-            Column(modifier = Modifier.padding(innerPadding)) {
-                DropdownMenuItem(onClick = {}, text = {
-                    Text(todaysDate())
-                })
-                LazyColumn {
+            Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
+                BacStatusCard()
+                Spacer(modifier = Modifier.height(16.dp))
+                LazyColumn(modifier = Modifier.clip(RoundedCornerShape(12.dp))) {
                     items(drinksList) {
                         DrinksListItem(it, onClick = {
                             coroutineScope.launch(Dispatchers.IO) {
