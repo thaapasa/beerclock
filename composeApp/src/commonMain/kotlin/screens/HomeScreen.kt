@@ -1,12 +1,11 @@
 package fi.tuska.beerclock.screens
 
+import DrinksList
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
@@ -22,7 +21,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.components.BacStatusCard
-import fi.tuska.beerclock.components.DrinksListItem
 import fi.tuska.beerclock.database.Drinks
 import fi.tuska.beerclock.database.LocalDatabase
 import fi.tuska.beerclock.ui.MainLayout
@@ -55,18 +53,17 @@ object HomeScreen : Screen {
             Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
                 BacStatusCard()
                 Spacer(modifier = Modifier.height(16.dp))
-                LazyColumn(modifier = Modifier.clip(RoundedCornerShape(12.dp))) {
-                    items(drinksList) {
-                        DrinksListItem(it, onClick = {
-                            coroutineScope.launch(Dispatchers.IO) {
-                                db.drinksQueries.delete(it.id)
-                                val drinks = db.drinksQueries.selectAll().executeAsList()
-                                drinksList.clear()
-                                drinksList.addAll(drinks)
-                            }
-                        })
-                    }
-                }
+                DrinksList(
+                    drinksList,
+                    modifier = Modifier.clip(RoundedCornerShape(12.dp)),
+                    onClick = {
+                        coroutineScope.launch(Dispatchers.IO) {
+                            db.drinksQueries.delete(it.id)
+                            val drinks = db.drinksQueries.selectAll().executeAsList()
+                            drinksList.clear()
+                            drinksList.addAll(drinks)
+                        }
+                    })
             }
         }, actionButton = {
             LargeFloatingActionButton(onClick = {

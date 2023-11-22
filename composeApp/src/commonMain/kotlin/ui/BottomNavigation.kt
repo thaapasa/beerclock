@@ -6,7 +6,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import fi.tuska.beerclock.screens.DrinksScreen
+import fi.tuska.beerclock.screens.HistoryScreen
 import fi.tuska.beerclock.screens.HomeScreen
 import fi.tuska.beerclock.screens.StatisticsScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -28,7 +28,7 @@ fun bottomNavigationItems(): List<BottomNavigationItem> {
         BottomNavigationItem(
             label = "Drinks",
             icon = "drawable/history.xml",
-            screen = DrinksScreen
+            screen = HistoryScreen
         ),
         BottomNavigationItem(
             label = "Statistics",
