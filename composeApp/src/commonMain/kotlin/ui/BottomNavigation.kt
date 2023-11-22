@@ -1,21 +1,20 @@
 package fi.tuska.beerclock.ui
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.ImageVector
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.screens.DrinksScreen
 import fi.tuska.beerclock.screens.HomeScreen
+import fi.tuska.beerclock.screens.StatisticsScreen
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 data class BottomNavigationItem(
     val label: String,
-    val icon: ImageVector,
+    val icon: String,
     val screen: Screen
 )
 
@@ -23,32 +22,38 @@ fun bottomNavigationItems(): List<BottomNavigationItem> {
     return listOf(
         BottomNavigationItem(
             label = "Home",
-            icon = Icons.Filled.Home,
+            icon = "drawable/local_bar.xml",
             screen = HomeScreen
         ),
         BottomNavigationItem(
             label = "Drinks",
-            icon = Icons.Filled.List,
+            icon = "drawable/history.xml",
             screen = DrinksScreen
+        ),
+        BottomNavigationItem(
+            label = "Statistics",
+            icon = "drawable/graph.xml",
+            screen = StatisticsScreen
         ),
     )
 }
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
-fun BottomNavigationBar(onNavigate: (screen: Screen) -> Unit) {
+fun BottomNavigationBar(current: Screen, onNavigate: (screen: Screen) -> Unit) {
     return NavigationBar {
-        bottomNavigationItems().forEachIndexed { index, navigationItem ->
+        bottomNavigationItems().forEachIndexed { index, item ->
             NavigationBarItem(
-                selected = false,
-                label = { Text(navigationItem.label) },
+                selected = item.screen == current,
+                label = { Text(item.label) },
                 icon = {
                     Icon(
-                        navigationItem.icon,
-                        contentDescription = navigationItem.label
+                        painter = painterResource(item.icon),
+                        contentDescription = item.label
                     )
                 },
                 onClick = {
-                    onNavigate(navigationItem.screen)
+                    onNavigate(item.screen)
                 }
             )
         }

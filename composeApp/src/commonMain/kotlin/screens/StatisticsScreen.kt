@@ -6,16 +6,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
-import fi.tuska.beerclock.ui.SubLayout
+import fi.tuska.beerclock.ui.MainLayout
 
 object StatisticsScreen : Screen {
 
     @Composable
     override fun Content() {
-        SubLayout(content = { innerPadding ->
+        MainLayout(content = { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding)) {
                 Text("Tilastot")
             }
-        }, title = "Tilastot")
+        })
     }
 }

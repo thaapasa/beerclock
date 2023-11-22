@@ -61,8 +61,8 @@ fun MainLayout(
                 floatingActionButton = actionButton,
                 content = content,
                 bottomBar = {
-                    BottomNavigationBar(onNavigate = {
-                        navigator.push(it)
+                    BottomNavigationBar(current = navigator.lastItem, onNavigate = {
+                        navigator.replace(it)
                     })
                 }
             )
