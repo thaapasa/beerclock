@@ -60,7 +60,7 @@ fun SettingsPage(innerPadding: PaddingValues) {
             label = { Text(text = strings.settings.weightLabel) })
         GenderSelector(
             modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-            selectedValue = gender,
-            onSelectGender = { gender = it })
+            selected = gender,
+            onSelect = { gender = it })
     }
 }
