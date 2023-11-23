@@ -6,15 +6,15 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
+import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.screens.HistoryScreen
 import fi.tuska.beerclock.screens.HomeScreen
 import fi.tuska.beerclock.screens.StatisticsScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 
 data class BottomNavigationItem(
     val label: String,
-    val icon: String,
+    val icon: AppIcon,
     val screen: Screen
 )
 
@@ -22,17 +22,17 @@ fun bottomNavigationItems(): List<BottomNavigationItem> {
     return listOf(
         BottomNavigationItem(
             label = "Home",
-            icon = "drawable/local_bar.xml",
+            icon = AppIcon.TODAY,
             screen = HomeScreen
         ),
         BottomNavigationItem(
             label = "Drinks",
-            icon = "drawable/history.xml",
+            icon = AppIcon.HISTORY,
             screen = HistoryScreen
         ),
         BottomNavigationItem(
             label = "Statistics",
-            icon = "drawable/graph.xml",
+            icon = AppIcon.GRAPH,
             screen = StatisticsScreen
         ),
     )
@@ -48,7 +48,7 @@ fun BottomNavigationBar(current: Screen, onNavigate: (screen: Screen) -> Unit) {
                 label = { Text(item.label) },
                 icon = {
                     Icon(
-                        painter = painterResource(item.icon),
+                        painter = item.icon.painter(),
                         contentDescription = item.label
                     )
                 },

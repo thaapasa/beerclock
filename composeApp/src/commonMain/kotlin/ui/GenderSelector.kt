@@ -14,10 +14,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.strings
 import fi.tuska.beerclock.settings.Gender
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
@@ -58,7 +58,7 @@ fun GenderSelector(
                     },
                     leadingIcon = {
                         Icon(
-                            painter = painterResource("drawable/${g.toString().lowercase()}.xml"),
+                            painter = AppIcon.forGender(g).painter(),
                             contentDescription = strings.forGender(g)
                         )
                     },
