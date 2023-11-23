@@ -51,9 +51,11 @@ object EnStrings : Strings {
     }
 
     object Menu : Strings.MenuStrings {
-        override val main = "Menu"
+        override val goBack = "Go back"
+        override val menu = "Menu"
+        override val today = "Today"
         override val settings = "Settings"
-        override val drinks = "Drinks"
+        override val history = "History"
         override val statistics = "Statistics"
     }
 

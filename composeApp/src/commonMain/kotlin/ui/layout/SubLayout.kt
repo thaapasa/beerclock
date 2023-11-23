@@ -31,7 +31,7 @@ fun SubLayout(content: @Composable (PaddingValues) -> Unit, title: String) {
                     IconButton({ navigator.pop() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = strings.menu.main,
+                            contentDescription = strings.menu.goBack,
                         )
                     }
                 })

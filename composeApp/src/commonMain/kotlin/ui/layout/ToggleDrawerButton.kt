@@ -25,7 +25,7 @@ fun ToggleDrawerButton(drawerState: DrawerState, icon: ImageVector = Icons.Defau
     }) {
         Icon(
             imageVector = icon,
-            contentDescription = strings.menu.main,
+            contentDescription = strings.menu.menu,
         )
     }
 }

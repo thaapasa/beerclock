@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.images.AppIcon
+import fi.tuska.beerclock.localization.strings
 import fi.tuska.beerclock.screens.StatisticsScreen
 import fi.tuska.beerclock.screens.history.HistoryScreen
 import fi.tuska.beerclock.screens.today.HomeScreen
@@ -20,17 +21,17 @@ data class BottomNavigationItem(
 fun bottomNavigationItems(): List<BottomNavigationItem> {
     return listOf(
         BottomNavigationItem(
-            label = "Home",
+            label = strings.menu.today,
             icon = AppIcon.TODAY,
             screen = HomeScreen
         ),
         BottomNavigationItem(
-            label = "Drinks",
+            label = strings.menu.history,
             icon = AppIcon.HISTORY,
             screen = HistoryScreen
         ),
         BottomNavigationItem(
-            label = "Statistics",
+            label = strings.menu.statistics,
             icon = AppIcon.GRAPH,
             screen = StatisticsScreen
         ),

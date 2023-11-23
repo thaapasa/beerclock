@@ -33,9 +33,11 @@ interface Strings {
     fun date(day: LocalDateTime): String
 
     interface MenuStrings {
-        val main: String
+        val goBack: String
+        val menu: String
+        val today: String
         val settings: String
-        val drinks: String
+        val history: String
         val statistics: String
     }
 

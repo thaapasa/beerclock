@@ -57,9 +57,11 @@ object FiStrings : Strings {
     }
 
     object Menu : Strings.MenuStrings {
-        override val main = "Valikko"
+        override val goBack = "Takaisin"
+        override val menu = "Valikko"
+        override val today = "Tänään"
         override val settings = "Asetukset"
-        override val drinks = "Juomat"
+        override val history = "Historia"
         override val statistics = "Tilastot"
     }
 
