@@ -16,6 +16,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.database.LocalDatabase
+import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.localization.strings
 import fi.tuska.beerclock.ui.SubLayout
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +41,11 @@ object AddDrinkScreen : Screen {
                 Row(modifier = Modifier.padding(16.dp).align(Alignment.CenterHorizontally)) {
                     Button(onClick = {
                         coroutineScope.launch(Dispatchers.IO) {
-                            db.drinksQueries.insert(1321, drinks.random())
+                            db.drinksQueries.insert(
+                                1321,
+                                drinks.random(),
+                                DrinkImage.values().random().path
+                            )
                             navigator.pop()
                         }
                     }) { Text(strings.newDrink.submit) }

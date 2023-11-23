@@ -1,7 +1,8 @@
 CREATE TABLE drinks (
   id INTEGER PRIMARY KEY NOT NULL,
   time INTEGER NOT NULL,
-  drink TEXT NOT NULL
+  drink TEXT NOT NULL,
+  image TEXT NOT NULL
 );
 
 CREATE INDEX drinks_time ON drinks(time);
@@ -11,8 +12,8 @@ SELECT *
 FROM drinks;
 
 insert:
-INSERT INTO drinks(time, drink)
-VALUES (?, ?);
+INSERT INTO drinks(time, drink, image)
+VALUES (?, ?, ?);
 
 delete:
 DELETE FROM drinks

@@ -29,11 +29,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 val drinks = listOf("Beer", "Wine", "Tequila", "Whisky", "Cognac", "Gin Tonic")
 
-@OptIn(ExperimentalResourceApi::class)
 object HomeScreen : Screen {
 
     @Composable

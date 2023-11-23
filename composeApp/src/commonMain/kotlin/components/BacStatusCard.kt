@@ -17,14 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
+import fi.tuska.beerclock.images.AppImage
 import fi.tuska.beerclock.localization.strings
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalResourceApi::class)
+
 @Composable
 fun BacStatusCard() {
     return Card(
@@ -41,7 +40,7 @@ fun BacStatusCard() {
                     modifier = Modifier.padding(16.dp).align(Alignment.CenterVertically)
                 )
                 Image(
-                    painter = painterResource("drawable/gauge.xml"),
+                    painter = AppImage.GAUGE.painter(),
                     contentDescription = "Tilanne",
                     modifier = Modifier.width(80.dp)
                 )
