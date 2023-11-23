@@ -12,8 +12,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.localization.strings
 import fi.tuska.beerclock.settings.UserStore
@@ -52,12 +52,15 @@ fun SettingsPage(innerPadding: PaddingValues) {
     }
 
     Column(
-        Modifier.padding(innerPadding).fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        Modifier.padding(innerPadding).padding(16.dp).fillMaxWidth()
     ) {
         TextField(value = weightText,
+            modifier = Modifier.fillMaxWidth(),
             onValueChange = { weightText = it },
             label = { Text(text = strings.settings.weightLabel) })
-        GenderSelector(selectedValue = gender, onSelectGender = { gender = it })
+        GenderSelector(
+            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+            selectedValue = gender,
+            onSelectGender = { gender = it })
     }
 }

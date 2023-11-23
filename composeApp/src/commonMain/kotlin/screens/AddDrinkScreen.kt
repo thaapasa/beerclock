@@ -17,7 +17,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.database.LocalDatabase
 import fi.tuska.beerclock.localization.strings
-import fi.tuska.beerclock.ui.MainLayout
+import fi.tuska.beerclock.ui.SubLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
@@ -31,7 +31,7 @@ object AddDrinkScreen : Screen {
 
         val db = LocalDatabase.current
 
-        MainLayout(content = { innerPadding ->
+        SubLayout(title = strings.newDrink.title, content = { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
                 Row {
                     Text(strings.newDrink.title)
