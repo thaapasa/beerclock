@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.ui
+package fi.tuska.beerclock.ui.layout
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.localization.strings
-import fi.tuska.beerclock.screens.SettingsScreen
+import fi.tuska.beerclock.screens.settings.SettingsScreen
 
 @Composable
 fun MainMenu(onNavigate: (select: Screen) -> Unit) {

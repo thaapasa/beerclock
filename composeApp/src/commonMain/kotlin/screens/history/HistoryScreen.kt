@@ -1,6 +1,5 @@
-package fi.tuska.beerclock.screens
+package fi.tuska.beerclock.screens.history
 
-import DrinksList
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,7 +9,7 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.database.Drinks
 import fi.tuska.beerclock.database.LocalDatabase
-import fi.tuska.beerclock.ui.MainLayout
+import fi.tuska.beerclock.ui.layout.MainLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext

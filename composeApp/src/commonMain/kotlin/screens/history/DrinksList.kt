@@ -1,8 +1,9 @@
+package fi.tuska.beerclock.screens.history
+
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import fi.tuska.beerclock.components.DrinksListItem
 import fi.tuska.beerclock.database.Drinks
 
 @Composable

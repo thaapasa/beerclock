@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.components
+package fi.tuska.beerclock.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem

@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.screens
+package fi.tuska.beerclock.screens.newdrink
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,14 +16,13 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.database.LocalDatabase
-import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.localization.strings
-import fi.tuska.beerclock.ui.SubLayout
+import fi.tuska.beerclock.ui.layout.SubLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 
-object AddDrinkScreen : Screen {
+object NewDrinkScreen : Screen {
 
     @Composable
     override fun Content() {
@@ -41,11 +40,7 @@ object AddDrinkScreen : Screen {
                 Row(modifier = Modifier.padding(16.dp).align(Alignment.CenterHorizontally)) {
                     Button(onClick = {
                         coroutineScope.launch(Dispatchers.IO) {
-                            db.drinksQueries.insert(
-                                1321,
-                                drinks.random(),
-                                DrinkImage.values().random().path
-                            )
+                            addNewDrink(db)
                             navigator.pop()
                         }
                     }) { Text(strings.newDrink.submit) }

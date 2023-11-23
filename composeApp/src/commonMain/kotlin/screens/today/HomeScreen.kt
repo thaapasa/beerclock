@@ -1,6 +1,5 @@
-package fi.tuska.beerclock.screens
+package fi.tuska.beerclock.screens.today
 
-import DrinksList
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -20,11 +19,12 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.components.BacStatusCard
 import fi.tuska.beerclock.database.Drinks
 import fi.tuska.beerclock.database.LocalDatabase
 import fi.tuska.beerclock.images.AppIcon
-import fi.tuska.beerclock.ui.MainLayout
+import fi.tuska.beerclock.screens.history.DrinksList
+import fi.tuska.beerclock.screens.newdrink.NewDrinkScreen
+import fi.tuska.beerclock.ui.layout.MainLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
@@ -65,7 +65,7 @@ object HomeScreen : Screen {
             }
         }, actionButton = {
             LargeFloatingActionButton(onClick = {
-                navigator.push(AddDrinkScreen)
+                navigator.push(NewDrinkScreen)
             }) {
                 Icon(
                     painter = AppIcon.DRINK.painter(),

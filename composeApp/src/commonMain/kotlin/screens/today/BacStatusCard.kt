@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.components
+package fi.tuska.beerclock.screens.today
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

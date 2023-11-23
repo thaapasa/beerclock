@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.components
+package fi.tuska.beerclock.screens.history
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

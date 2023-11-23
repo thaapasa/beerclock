@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.ui
+package fi.tuska.beerclock.ui.layout
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu

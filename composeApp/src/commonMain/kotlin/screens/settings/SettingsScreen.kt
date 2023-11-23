@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.screens
+package fi.tuska.beerclock.screens.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,8 +17,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.localization.strings
 import fi.tuska.beerclock.settings.UserStore
-import fi.tuska.beerclock.ui.GenderSelector
-import fi.tuska.beerclock.ui.SubLayout
+import fi.tuska.beerclock.ui.layout.SubLayout
 import fi.tuska.beerclock.util.safeToDouble
 
 object SettingsScreen : Screen {

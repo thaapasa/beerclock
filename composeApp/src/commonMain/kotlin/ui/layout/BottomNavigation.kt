@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.ui
+package fi.tuska.beerclock.ui.layout
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -7,10 +7,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.images.AppIcon
-import fi.tuska.beerclock.screens.HistoryScreen
-import fi.tuska.beerclock.screens.HomeScreen
 import fi.tuska.beerclock.screens.StatisticsScreen
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import fi.tuska.beerclock.screens.history.HistoryScreen
+import fi.tuska.beerclock.screens.today.HomeScreen
 
 data class BottomNavigationItem(
     val label: String,
@@ -38,7 +37,6 @@ fun bottomNavigationItems(): List<BottomNavigationItem> {
     )
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun BottomNavigationBar(current: Screen, onNavigate: (screen: Screen) -> Unit) {
     return NavigationBar {
