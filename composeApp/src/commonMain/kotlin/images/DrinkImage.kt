@@ -9,9 +9,14 @@ import org.jetbrains.compose.resources.painterResource
 val logger = getLogger("DrinkImage")
 
 enum class DrinkImage(val path: String) {
-    BEER1("drawable/drinks/beer1.webp"),
-    BEER2("drawable/drinks/beer2.webp"),
+    GENERIC_DRINK("drawable/drinks/generic_drink.webp"),
+    BEER_GLASS_1("drawable/drinks/beer_glass1.webp"),
+    BEER_GLASS_2("drawable/drinks/beer_glass2.webp"),
     BEER_CAN1("drawable/drinks/beer_can1.webp"),
+    RED_WINE_GLASS1("drawable/drinks/red_wine_glass1.webp"),
+    WHITE_WINE_GLASS1("drawable/drinks/white_wine_glass1.webp"),
+    CHAMPAGNE_GLASS1("drawable/drinks/champagne_glass1.webp"),
+    MARTINI("drawable/drinks/martini.webp"),
     WHISKY1("drawable/drinks/whisky1.webp");
 
     @OptIn(ExperimentalResourceApi::class)
@@ -19,11 +24,11 @@ enum class DrinkImage(val path: String) {
     fun painter(): Painter = painterResource(this.path)
 
     companion object {
-        fun forPath(path: String): DrinkImage = try {
-            DrinkImage.valueOf(path)
+        fun forName(name: String): DrinkImage = try {
+            DrinkImage.valueOf(name)
         } catch (e: IllegalArgumentException) {
-            logger.error("No drink icon found for $path. Using a generic icon")
-            BEER1
+            logger.error("No drink icon found with name $name. Using a generic icon")
+            GENERIC_DRINK
         }
 
     }
