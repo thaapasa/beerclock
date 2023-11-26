@@ -1,25 +1,21 @@
 package fi.tuska.beerclock.localization
 
 import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.Month
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 object EnStrings : Strings {
     override val appName = "Beer Clock"
-    override val menu = Menu
 
-    override fun weekdayShort(day: DayOfWeek): String {
-        return when (day) {
-            DayOfWeek.MONDAY -> "Mon"
-            DayOfWeek.TUESDAY -> "Tue"
-            DayOfWeek.WEDNESDAY -> "Wed"
-            DayOfWeek.THURSDAY -> "Thu"
-            DayOfWeek.FRIDAY -> "Fri"
-            DayOfWeek.SATURDAY -> "Sat"
-            DayOfWeek.SUNDAY -> "Sun"
-            else -> "?"
-        }
-    }
+    override fun createNumberFormatter(digits: Int) = getDecimalFormatter(
+        maximumFractionDigits = digits,
+        decimalSeparator = '.',
+        isGroupingUsed = true,
+        groupingSeparator = ','
+    )
 
     override fun weekday(day: DayOfWeek): String {
         return when (day) {
@@ -30,6 +26,19 @@ object EnStrings : Strings {
             DayOfWeek.FRIDAY -> "Friday"
             DayOfWeek.SATURDAY -> "Saturday"
             DayOfWeek.SUNDAY -> "Sunday"
+            else -> "?"
+        }
+    }
+
+    override fun weekdayShort(day: DayOfWeek): String {
+        return when (day) {
+            DayOfWeek.MONDAY -> "Mon"
+            DayOfWeek.TUESDAY -> "Tue"
+            DayOfWeek.WEDNESDAY -> "Wed"
+            DayOfWeek.THURSDAY -> "Thu"
+            DayOfWeek.FRIDAY -> "Fri"
+            DayOfWeek.SATURDAY -> "Sat"
+            DayOfWeek.SUNDAY -> "Sun"
             else -> "?"
         }
     }
@@ -50,6 +59,10 @@ object EnStrings : Strings {
         return "$mon $day$suffix"
     }
 
+
+    /* Main menu */
+    override val menu = Menu
+
     object Menu : Strings.MenuStrings {
         override val goBack = "Go back"
         override val menu = "Menu"
@@ -59,6 +72,29 @@ object EnStrings : Strings {
         override val statistics = "Statistics"
     }
 
+
+    /* Drink info */
+    override val drink = DrinkData
+
+    object DrinkData : Strings.DrinkData {
+        override val unitLabel = "units"
+        val unitF = createNumberFormatter(2)
+        val abvF = createNumberFormatter(1)
+        val quantityF = createNumberFormatter(1)
+        override fun abv(abv: Double) = "${abvF(abv)} %"
+        override fun units(units: Double) = unitF(units)
+        override fun quantity(quantity: Double) = "${quantityF(quantity)} l"
+        override fun itemDescription(quantity: Double, abv: Double): String =
+            "${quantityF(quantity)} l ${abvF(abv)} %"
+
+        override fun drinkTime(time: Instant): String =
+            time.toLocalDateTime(TimeZone.currentSystemDefault())
+                .let { "${it.hour}:${it.minute}" }
+
+    }
+
+
+    /* Settings screen */
     override val settings = Settings
 
     object Settings : Strings.SettingsStrings {
@@ -67,17 +103,22 @@ object EnStrings : Strings {
         override val genderLabel = "Gender"
     }
 
-    override val gender = Gender
 
-    object Gender : Strings.GenderStrings {
-        override val male = "Male"
-        override val female = "Female"
-    }
+    /* New drink screen */
+    override val newDrink = NewDrinks
 
     object NewDrinks : Strings.NewDrinkStrings {
         override val title = "Add a drink"
         override val submit = "Drink!"
     }
 
-    override val newDrink = NewDrinks
+
+    /* Gender options */
+    override val gender = Gender
+
+    object Gender : Strings.GenderStrings {
+        override val male = "Male"
+        override val female = "Female"
+    }
+    
 }
