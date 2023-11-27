@@ -65,7 +65,7 @@ object FiStrings : Strings {
         return "${date.dayOfMonth}.${date.monthNumber}."
     }
 
-    
+
     /* Main menu */
     override val menu = Menu
 
@@ -99,6 +99,14 @@ object FiStrings : Strings {
     }
 
 
+    /* Error strings */
+    override val errors = Errors
+
+    object Errors : Strings.ErrorStrings {
+        override val invalidDecimal = "Syötä desimaaliluku"
+    }
+
+
     /* Settings screen */
     override val settings = Settings
 
@@ -114,6 +122,11 @@ object FiStrings : Strings {
 
     object NewDrinks : Strings.NewDrinkStrings {
         override val title = "Merkkaa juoma"
+        override val nameLabel = "Nimi"
+        override val abvLabel = "Voimakkuus"
+        override val abvUnit = "%"
+        override val quantityLabel = "Määrä"
+        override val quantityUnit = "cl"
         override val submit = "Juo!"
     }
 

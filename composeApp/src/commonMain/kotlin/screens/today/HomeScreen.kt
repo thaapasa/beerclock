@@ -22,6 +22,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.database.Drinks
 import fi.tuska.beerclock.database.LocalDatabase
 import fi.tuska.beerclock.images.AppIcon
+import fi.tuska.beerclock.localization.strings
 import fi.tuska.beerclock.screens.history.DrinksList
 import fi.tuska.beerclock.screens.newdrink.NewDrinkScreen
 import fi.tuska.beerclock.ui.layout.MainLayout
@@ -30,7 +31,6 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-val drinks = listOf("Beer", "Wine", "Tequila", "Whisky", "Cognac", "Gin Tonic")
 
 object HomeScreen : Screen {
 
@@ -69,7 +69,7 @@ object HomeScreen : Screen {
             }) {
                 Icon(
                     painter = AppIcon.DRINK.painter(),
-                    contentDescription = "Juo!",
+                    contentDescription = strings.newDrink.title,
                     modifier = Modifier.size(36.dp)
                 )
             }

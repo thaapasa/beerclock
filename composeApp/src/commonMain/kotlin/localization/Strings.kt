@@ -23,7 +23,7 @@ interface Strings {
     fun month(month: Month): String
     fun date(day: LocalDateTime): String
 
-    
+
     /* Main menu */
     val menu: MenuStrings
 
@@ -49,6 +49,15 @@ interface Strings {
         fun drinkTime(time: Instant): String
     }
 
+
+    /* Error strings */
+    val errors: ErrorStrings
+
+    interface ErrorStrings {
+        val invalidDecimal: String
+    }
+
+
     /* Settings screen */
     val settings: SettingsStrings
 
@@ -64,6 +73,11 @@ interface Strings {
 
     interface NewDrinkStrings {
         val title: String
+        val nameLabel: String
+        val abvLabel: String
+        val abvUnit: String
+        val quantityLabel: String
+        val quantityUnit: String
         val submit: String
     }
 

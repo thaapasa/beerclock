@@ -94,6 +94,14 @@ object EnStrings : Strings {
     }
 
 
+    /* Error strings */
+    override val errors = Errors
+
+    object Errors : Strings.ErrorStrings {
+        override val invalidDecimal = "Not a valid decimal value"
+    }
+
+
     /* Settings screen */
     override val settings = Settings
 
@@ -109,6 +117,11 @@ object EnStrings : Strings {
 
     object NewDrinks : Strings.NewDrinkStrings {
         override val title = "Add a drink"
+        override val nameLabel = "Name"
+        override val abvLabel = "Alcohol by volume"
+        override val abvUnit = "%"
+        override val quantityLabel = "Quantity"
+        override val quantityUnit = "cl"
         override val submit = "Drink!"
     }
 
@@ -120,5 +133,5 @@ object EnStrings : Strings {
         override val male = "Male"
         override val female = "Female"
     }
-    
+
 }
