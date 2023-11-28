@@ -2,7 +2,8 @@ package fi.tuska.beerclock.localization
 
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -47,7 +48,11 @@ object EnStrings : Strings {
         return day.toString().lowercase().replaceFirstChar { it.titlecase() }
     }
 
-    override fun date(date: LocalDateTime): String {
+    override fun date(date: LocalDate): String {
+        return "${dateShort(date)} ${date.year}"
+    }
+
+    override fun dateShort(date: LocalDate): String {
         val day = date.dayOfMonth
         val suffix = when (day) {
             1, 21, 31 -> "st"
@@ -58,6 +63,13 @@ object EnStrings : Strings {
         val mon = month(date.month).substring(0, 3)
         return "$mon $day$suffix"
     }
+
+    override fun time(time: LocalTime): String {
+        return "${time.hour}.${time.minute}"
+    }
+
+    override val pickTime = "Pick time"
+    override val pickDate = "Pick date"
 
 
     /* Main menu */
@@ -117,6 +129,8 @@ object EnStrings : Strings {
 
     object NewDrinks : Strings.NewDrinkStrings {
         override val title = "Add a drink"
+        override val dateLabel = "Drinking day"
+        override val timeLabel = "Time of day"
         override val nameLabel = "Name"
         override val abvLabel = "Alcohol by volume"
         override val abvUnit = "%"

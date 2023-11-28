@@ -12,7 +12,9 @@ enum class AppIcon(private val path: String) {
     DRINK("drawable/icons/sports_bar.xml"),
     TODAY("drawable/icons/local_bar.xml"),
     HISTORY("drawable/icons/history.xml"),
-    GRAPH("drawable/icons/graph.xml");
+    GRAPH("drawable/icons/graph.xml"),
+    CLOCK("drawable/icons/clock.xml"),
+    CALENDAR("drawable/icons/calendar.xml");
 
     @OptIn(ExperimentalResourceApi::class)
     @Composable

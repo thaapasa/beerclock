@@ -2,7 +2,8 @@ package fi.tuska.beerclock.localization
 
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -61,9 +62,20 @@ object FiStrings : Strings {
         }
     }
 
-    override fun date(date: LocalDateTime): String {
+    override fun date(date: LocalDate): String {
+        return "${date.dayOfMonth}.${date.monthNumber}.${date.year}"
+    }
+
+    override fun dateShort(date: LocalDate): String {
         return "${date.dayOfMonth}.${date.monthNumber}."
     }
+
+    override fun time(time: LocalTime): String {
+        return "${time.hour}.${time.minute}"
+    }
+
+    override val pickTime = "Valitse kellonaika"
+    override val pickDate = "Valitse päivämäärä"
 
 
     /* Main menu */
@@ -122,6 +134,8 @@ object FiStrings : Strings {
 
     object NewDrinks : Strings.NewDrinkStrings {
         override val title = "Merkkaa juoma"
+        override val dateLabel = "Juomapäivä"
+        override val timeLabel = "Kellonaika"
         override val nameLabel = "Nimi"
         override val abvLabel = "Voimakkuus"
         override val abvUnit = "%"

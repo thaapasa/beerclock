@@ -60,7 +60,7 @@ fun DateView(statusText: String, modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.titleSmall
         )
         Text(
-            strings.date(time),
+            strings.dateShort(time),
             style = MaterialTheme.typography.titleMedium
         )
         Spacer(Modifier.height(8.dp))

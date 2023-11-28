@@ -4,7 +4,9 @@ import androidx.compose.ui.text.intl.Locale
 import fi.tuska.beerclock.settings.Gender
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 
 val strings: Strings = when (Locale.current.language) {
@@ -21,7 +23,15 @@ interface Strings {
     fun weekday(day: DayOfWeek): String
     fun weekdayShort(day: DayOfWeek): String
     fun month(month: Month): String
-    fun date(day: LocalDateTime): String
+    fun date(day: LocalDate): String
+    fun date(day: LocalDateTime): String = date(day.date)
+    fun dateShort(day: LocalDate): String
+    fun dateShort(day: LocalDateTime): String = dateShort(day.date)
+    fun time(time: LocalTime): String
+    fun time(time: LocalDateTime): String = time(time.time)
+
+    val pickTime: String
+    val pickDate: String
 
 
     /* Main menu */
@@ -73,6 +83,8 @@ interface Strings {
 
     interface NewDrinkStrings {
         val title: String
+        val dateLabel: String
+        val timeLabel: String
         val nameLabel: String
         val abvLabel: String
         val abvUnit: String
