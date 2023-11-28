@@ -71,7 +71,7 @@ object FiStrings : Strings {
     }
 
     override fun time(time: LocalTime): String {
-        return "${time.hour}.${time.minute}"
+        return "${time.hour}.${time.minute.toString().padStart(2, '0')}"
     }
 
     override val pickTime = "Valitse kellonaika"
@@ -107,7 +107,7 @@ object FiStrings : Strings {
 
         override fun drinkTime(time: Instant): String =
             time.toLocalDateTime(TimeZone.currentSystemDefault())
-                .let { "klo ${it.hour}:${it.minute}" }
+                .let { "klo ${it.hour}:${it.minute.toString().padStart(2, '0')}" }
     }
 
 
