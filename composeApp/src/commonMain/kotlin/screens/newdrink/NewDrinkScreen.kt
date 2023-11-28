@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -72,6 +73,12 @@ object NewDrinkScreen : Screen {
                         trailingIcon = { Text(strings.newDrink.quantityUnit) }
                     )
                 }
+                Slider(
+                    value = quantityCl.toFloat(),
+                    onValueChange = { quantityCl = it.toInt().toDouble() },
+                    valueRange = 1f..75f,
+                    steps = 74
+                )
                 Spacer(modifier = Modifier.weight(1f))
                 Row(modifier = Modifier.padding(16.dp).align(Alignment.CenterHorizontally)) {
                     Button(onClick = {

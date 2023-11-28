@@ -4,6 +4,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,6 +24,13 @@ fun DecimalField(
     errorText: String? = null
 ) {
     var textState by remember { mutableStateOf(TextFieldValue(value.toString())) }
+    // Update internal state when value from outside changes
+    LaunchedEffect(value) {
+        val valueStr = value.toString()
+        if (textState.text != valueStr) {
+            textState = TextFieldValue(valueStr)
+        }
+    }
     val isValidInput = textState.text.isEmpty() || textState.text.toDoubleOrNull() != null
 
     OutlinedTextField(
