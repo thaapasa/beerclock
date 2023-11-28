@@ -6,7 +6,7 @@ import fi.tuska.beerclock.logging.getLogger
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-val logger = getLogger("DrinkImage")
+private val logger = getLogger("DrinkImage")
 
 enum class DrinkImage(val path: String) {
     GENERIC_DRINK("drawable/drinks/generic_drink.webp"),

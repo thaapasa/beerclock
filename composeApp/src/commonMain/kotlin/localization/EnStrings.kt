@@ -70,6 +70,7 @@ object EnStrings : Strings {
 
     override val pickTime = "Pick time"
     override val pickDate = "Pick date"
+    override val dialogOk = "OK"
 
 
     /* Main menu */

@@ -32,6 +32,7 @@ interface Strings {
 
     val pickTime: String
     val pickDate: String
+    val dialogOk: String
 
 
     /* Main menu */

@@ -76,6 +76,7 @@ object FiStrings : Strings {
 
     override val pickTime = "Valitse kellonaika"
     override val pickDate = "Valitse päivämäärä"
+    override val dialogOk = "OK"
 
 
     /* Main menu */
