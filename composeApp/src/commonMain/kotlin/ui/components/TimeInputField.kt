@@ -32,6 +32,7 @@ import kotlinx.datetime.LocalTime
 @Composable
 fun TimeInputField(
     value: LocalTime,
+    supportingText: @Composable (() -> Unit)? = null,
     onValueChange: (time: LocalTime) -> Unit,
     modifier: Modifier = Modifier,
     labelText: String? = null
@@ -51,6 +52,7 @@ fun TimeInputField(
             }
         },
         label = { labelText?.let { Text(it) } },
+        supportingText = supportingText,
         readOnly = true,
         leadingIcon = {
             IconButton({ pickerShown = true }) {

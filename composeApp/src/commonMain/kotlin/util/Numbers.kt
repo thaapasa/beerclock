@@ -8,3 +8,6 @@ fun safeToDouble(str: String): Double? = try {
     null
 }
 
+fun Int.zeroPad(length: Int): String {
+    return this.toString().padStart(length, '0')
+}

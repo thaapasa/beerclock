@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.localization
 
+import fi.tuska.beerclock.util.zeroPad
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -65,7 +66,7 @@ object EnStrings : Strings {
     }
 
     override fun time(time: LocalTime): String {
-        return "${time.hour}.${time.minute.toString().padStart(2, '0')}"
+        return "${time.hour}.${time.minute.zeroPad(2)}"
     }
 
     override val pickTime = "Pick time"
@@ -102,7 +103,7 @@ object EnStrings : Strings {
 
         override fun drinkTime(time: Instant): String =
             time.toLocalDateTime(TimeZone.currentSystemDefault())
-                .let { "${it.hour}:${it.minute.toString().padStart(2, '0')}" }
+                .let { "${it.hour}:${it.minute.zeroPad(2)}" }
 
     }
 
@@ -120,8 +121,16 @@ object EnStrings : Strings {
 
     object Settings : Strings.SettingsStrings {
         override val title = "Settings"
-        override val weightLabel = "Weight in kg"
-        override val genderLabel = "Gender"
+        override val weightLabel = "Your weight"
+        override val weightUnit = "kg"
+        override val weightDescription =
+            "Your weight affects the calculation formulas. Extra kilos do not affect the burning of alcohol, so enter your own estimate of your ideal weight."
+        override val genderLabel = "Your gender"
+        override val genderDescription =
+            "Your gender affects the calculation formulas. Choose the gender that is closest to your body structure."
+        override val startOfDay = "Start of a new day"
+        override val startOfDayDescription =
+            "When does the new day start? Drinks consumed before this time will be listed under the previous day."
     }
 
 

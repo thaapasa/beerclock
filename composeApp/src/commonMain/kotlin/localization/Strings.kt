@@ -75,7 +75,12 @@ interface Strings {
     interface SettingsStrings {
         val title: String
         val weightLabel: String
+        val weightUnit: String
+        val weightDescription: String
         val genderLabel: String
+        val genderDescription: String
+        val startOfDay: String
+        val startOfDayDescription: String
     }
 
 

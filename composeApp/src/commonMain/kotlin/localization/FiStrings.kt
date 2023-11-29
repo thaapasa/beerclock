@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.localization
 
+import fi.tuska.beerclock.util.zeroPad
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -71,7 +72,7 @@ object FiStrings : Strings {
     }
 
     override fun time(time: LocalTime): String {
-        return "${time.hour}.${time.minute.toString().padStart(2, '0')}"
+        return "${time.hour}.${time.minute.zeroPad(2)}"
     }
 
     override val pickTime = "Valitse kellonaika"
@@ -108,7 +109,7 @@ object FiStrings : Strings {
 
         override fun drinkTime(time: Instant): String =
             time.toLocalDateTime(TimeZone.currentSystemDefault())
-                .let { "klo ${it.hour}:${it.minute.toString().padStart(2, '0')}" }
+                .let { "klo ${it.hour}:${it.minute.zeroPad(2)}" }
     }
 
 
@@ -125,8 +126,16 @@ object FiStrings : Strings {
 
     object Settings : Strings.SettingsStrings {
         override val title = "Asetukset"
-        override val weightLabel = "Paino kiloina"
-        override val genderLabel = "Sukupuoli"
+        override val weightLabel = "Painosi"
+        override val weightUnit = "kg"
+        override val weightDescription =
+            "Painosi vaikuttaa laskentakaavoihin. Ylimääräiset kilot eivät vaikuta alkoholin palamiseen, joten syötä oma arviosi ihannepainostasi."
+        override val genderLabel = "Sukupuolesi"
+        override val genderDescription =
+            "Sukupuolesi vaikuttaa laskentakaavioihin. Valitse se sukupuoli joka on lähinnä ruumiinrakennettasi."
+        override val startOfDay = "Uusi päivä alkaa"
+        override val startOfDayDescription =
+            "Milloin uusi päivä alkaa. Tätä ennen juodut juomat merkataan edellisen päivän kirjanpitoon."
     }
 
 

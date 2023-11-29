@@ -25,6 +25,7 @@ fun <T> DropdownSelect(
     modifier: Modifier = Modifier,
     valueToText: (value: T) -> String,
     label: @Composable (() -> Unit)? = null,
+    supportingText: @Composable (() -> Unit)? = null,
     placeholder: @Composable (() -> Unit)? = null,
     iconForValue: @Composable ((value: T) -> Unit)? = null,
 ) {
@@ -44,6 +45,7 @@ fun <T> DropdownSelect(
             },
             placeholder = placeholder,
             label = label,
+            supportingText = supportingText,
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
             modifier = Modifier.menuAnchor().fillMaxWidth()
         )
