@@ -67,7 +67,7 @@ object EnStrings : Strings {
     }
 
     override fun time(time: LocalTime): String {
-        return "${time.hour}.${time.minute.zeroPad(2)}"
+        return "${time.hour.zeroPad(2)}.${time.minute.zeroPad(2)}"
     }
 
     override val pickTime = "Pick time"
@@ -129,7 +129,7 @@ object EnStrings : Strings {
 
         override fun drinkTime(time: Instant): String =
             time.toLocalDateTime(TimeZone.currentSystemDefault())
-                .let { "${it.hour}:${it.minute.zeroPad(2)}" }
+                .let { "${it.hour.zeroPad(2)}:${it.minute.zeroPad(2)}" }
 
     }
 
