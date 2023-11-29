@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.localization
 
+import fi.tuska.beerclock.drinks.SingleUnitWeights
 import fi.tuska.beerclock.util.zeroPad
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
@@ -73,6 +74,31 @@ object EnStrings : Strings {
     override val pickDate = "Pick date"
     override val dialogOk = "OK"
 
+    private val Countries = mapOf(
+        "AT" to "Austria",
+        "AU" to "Australia",
+        "CA" to "Canada",
+        "DK" to "Denmark",
+        "ES" to "Spain",
+        "FI" to "Finland",
+        "FR" to "France",
+        "GB" to "United Kingdom",
+        "HU" to "Hungary",
+        "IE" to "Ireland",
+        "IS" to "Iceland",
+        "IT" to "Italy",
+        "JP" to "Japan",
+        "NL" to "Netherlands",
+        "NZ" to "New Zealand",
+        "PL" to "Poland",
+        "PT" to "Portugal",
+        "SE" to "Sweden",
+        "US" to "United States",
+    )
+
+
+    override fun countryName(countryCode: String) = Countries[countryCode] ?: countryCode
+
 
     /* Main menu */
     override val menu = Menu
@@ -131,6 +157,16 @@ object EnStrings : Strings {
         override val startOfDay = "Start of a new day"
         override val startOfDayDescription =
             "When does the new day start? Drinks consumed before this time will be listed under the previous day."
+        override val alcoholGramsLabel = "Standard drink"
+        override val alcoholGramsUnit = "g/unit"
+        override val alcoholGramsDescription =
+            "How many grams of alcohol are there in one standard drink (1 unit)? You can also select preset options from the dropdown below."
+        override val alcoholGramsByCountry = "Grams by countries"
+
+        override fun alcoholGramsByCountryOption(countryCode: String) =
+            "${countryName(countryCode)} (${SingleUnitWeights[countryCode]} g/unit)"
+
+        override val pickCountry = "Select country"
     }
 
 

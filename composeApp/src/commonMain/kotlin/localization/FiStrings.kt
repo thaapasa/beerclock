@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.localization
 
+import fi.tuska.beerclock.drinks.SingleUnitWeights
 import fi.tuska.beerclock.util.zeroPad
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
@@ -79,6 +80,30 @@ object FiStrings : Strings {
     override val pickDate = "Valitse päivämäärä"
     override val dialogOk = "OK"
 
+    private val Countries = mapOf(
+        "AT" to "Itävalta",
+        "AU" to "Australia",
+        "CA" to "Kanada",
+        "DK" to "Tanska",
+        "ES" to "Espanja",
+        "FI" to "Suomi",
+        "FR" to "Ranska",
+        "GB" to "Iso-Britannia",
+        "HU" to "Unkari",
+        "IE" to "Irlanti",
+        "IS" to "Islanti",
+        "IT" to "Italia",
+        "JP" to "Japani",
+        "NL" to "Alankomaat",
+        "NZ" to "Uusi-Seelanti",
+        "PL" to "Puola",
+        "PT" to "Portugali",
+        "SE" to "Ruotsi",
+        "US" to "Yhdysvallat",
+    )
+
+    override fun countryName(countryCode: String) = Countries[countryCode] ?: countryCode
+
 
     /* Main menu */
     override val menu = Menu
@@ -136,6 +161,16 @@ object FiStrings : Strings {
         override val startOfDay = "Uusi päivä alkaa"
         override val startOfDayDescription =
             "Milloin uusi päivä alkaa. Tätä ennen juodut juomat merkataan edellisen päivän kirjanpitoon."
+        override val alcoholGramsLabel = "Alkoholiannos"
+        override val alcoholGramsUnit = "g/annos"
+        override val alcoholGramsDescription =
+            "Kuinka monta grammaa alkoholia on yhdessä annoksessa? Voit myös valita maan mukaan alla olevasta valintalaatikosta."
+        override val alcoholGramsByCountry = "Painot maiden mukaan"
+
+        override fun alcoholGramsByCountryOption(countryCode: String) =
+            "${countryName(countryCode)}: ${SingleUnitWeights[countryCode]} g/annos"
+
+        override val pickCountry = "Valitse maa"
     }
 
 
@@ -162,5 +197,6 @@ object FiStrings : Strings {
         override val male = "Mies"
         override val female = "Nainen"
     }
+
 
 }

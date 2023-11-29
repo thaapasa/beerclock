@@ -34,6 +34,8 @@ interface Strings {
     val pickDate: String
     val dialogOk: String
 
+    fun countryName(countryCode: String): String
+
 
     /* Main menu */
     val menu: MenuStrings
@@ -81,6 +83,12 @@ interface Strings {
         val genderDescription: String
         val startOfDay: String
         val startOfDayDescription: String
+        val alcoholGramsLabel: String
+        val alcoholGramsUnit: String
+        val alcoholGramsDescription: String
+        val alcoholGramsByCountry: String
+        fun alcoholGramsByCountryOption(countryCode: String): String
+        val pickCountry: String
     }
 
 

@@ -40,9 +40,7 @@ fun <T> DropdownSelect(
             value = valueToText(selected),
             onValueChange = {},
             readOnly = true,
-            trailingIcon = {
-                TrailingIcon(expanded = expanded)
-            },
+            trailingIcon = { TrailingIcon(expanded = expanded) },
             placeholder = placeholder,
             label = label,
             supportingText = supportingText,
@@ -59,9 +57,7 @@ fun <T> DropdownSelect(
                         onSelect(option)
                         expanded = false
                     },
-                    leadingIcon = {
-                        iconForValue?.let { it(option) }
-                    },
+                    leadingIcon = { iconForValue?.let { it(option) } },
                     text = { Text(valueToText(option)) },
                     modifier = Modifier.fillMaxWidth(),
                 )

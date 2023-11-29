@@ -42,12 +42,10 @@ fun SettingsPage(innerPadding: PaddingValues) {
     var weightText by remember { mutableStateOf(userPrefs.state.weightKg.toString()) }
     var gender by remember { mutableStateOf(userPrefs.state.gender) }
     var startOfDay by remember { mutableStateOf(userPrefs.state.startOfDay) }
+    var gramsInUnitText by remember { mutableStateOf(userPrefs.state.alchoholGramsInUnit.toString()) }
 
     LaunchedEffect(weightText) {
-        val weightVal = safeToDouble(weightText)
-        if (weightVal != null) {
-            userPrefs.setWeight(weightVal)
-        }
+        safeToDouble(weightText)?.let { userPrefs.setWeight(it) }
     }
 
     LaunchedEffect(gender) {
@@ -58,29 +56,50 @@ fun SettingsPage(innerPadding: PaddingValues) {
         userPrefs.setStartOfDay(startOfDay)
     }
 
+    LaunchedEffect(gramsInUnitText) {
+        safeToDouble(gramsInUnitText)?.let { userPrefs.setAlcoholGramsInUnit(it) }
+    }
+
     Column(
         Modifier.padding(innerPadding).padding(16.dp).fillMaxWidth()
     ) {
-        TextField(value = weightText,
-            modifier = Modifier.fillMaxWidth(),
+        TextField(
+            value = weightText,
             onValueChange = { weightText = it },
+            modifier = Modifier.fillMaxWidth(),
             label = { Text(text = strings.settings.weightLabel) },
             trailingIcon = { Text(strings.settings.weightUnit) },
             supportingText = { Text(strings.settings.weightDescription) }
         )
         GenderSelector(
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
             selected = gender,
             onSelect = { gender = it },
+            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
             supportingText = { Text(strings.settings.genderDescription) }
         )
         Spacer(Modifier.height(16.dp))
         TimeInputField(
-            modifier = Modifier.fillMaxWidth(),
             value = startOfDay,
             onValueChange = { startOfDay = it },
+            modifier = Modifier.fillMaxWidth(),
             labelText = strings.settings.startOfDay,
             supportingText = { Text(strings.settings.startOfDayDescription) },
         )
+        Spacer(Modifier.height(16.dp))
+        TextField(
+            value = gramsInUnitText,
+            onValueChange = { gramsInUnitText = it },
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(strings.settings.alcoholGramsLabel) },
+            supportingText = { Text(strings.settings.alcoholGramsDescription) },
+            trailingIcon = {
+                Text(
+                    strings.settings.alcoholGramsUnit,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        )
+        Spacer(Modifier.height(16.dp))
+        AlcoholUnitsDropdown(onSelect = { gramsInUnitText = it.toString() })
     }
 }

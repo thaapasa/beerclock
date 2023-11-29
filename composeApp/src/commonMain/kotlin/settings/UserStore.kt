@@ -24,38 +24,38 @@ internal class UserStore {
         if (state.gender == gender) {
             return
         }
-        withContext(Dispatchers.IO) {
-            setState { copy(gender = gender) }
-            val prefs = PreferenceProvider.getPrefs()
-            prefs.setString(PreferenceKeys.gender, gender.toString())
-        }
+        setState { copy(gender = gender) }
+        setStateValue(PreferenceKeys.gender, gender.toString())
     }
 
-    /**
-     * @param weight weight, in kilograms
-     */
     suspend fun setWeight(weight: Double) {
         if (state.weightKg == weight) {
             return
         }
-        withContext(Dispatchers.IO) {
-            setState { copy(weightKg = weight) }
-            val prefs = PreferenceProvider.getPrefs()
-            prefs.setString(PreferenceKeys.weight, weight.toString())
-        }
+        setState { copy(weightKg = weight) }
+        setStateValue(PreferenceKeys.weight, weight.toString())
     }
 
-    /**
-     * @param startOfDay the time when day starts
-     */
     suspend fun setStartOfDay(startOfDay: LocalTime) {
         if (state.startOfDay == startOfDay) {
             return
         }
+        setState { copy(startOfDay = startOfDay) }
+        setStateValue(PreferenceKeys.startOfDay, startOfDay.toPrefsString())
+    }
+
+    suspend fun setAlcoholGramsInUnit(gramsInUnit: Double) {
+        if (state.alchoholGramsInUnit == gramsInUnit) {
+            return
+        }
+        setState { copy(alchoholGramsInUnit = gramsInUnit) }
+        setStateValue(PreferenceKeys.alchoholGramsInUnit, gramsInUnit.toString())
+    }
+
+    private suspend fun setStateValue(stateKey: String, stringified: String) {
         withContext(Dispatchers.IO) {
-            setState { copy(startOfDay = startOfDay) }
             val prefs = PreferenceProvider.getPrefs()
-            prefs.setString(PreferenceKeys.startOfDay, startOfDay.toPrefsString())
+            prefs.setString(stateKey, stringified)
         }
     }
 
@@ -65,12 +65,19 @@ internal class UserStore {
         val genderStr = prefs.getString(PreferenceKeys.gender, state.gender.toString())
         val startOfDayStr =
             prefs.getString(PreferenceKeys.startOfDay, state.startOfDay.toPrefsString())
+        val alcoholGramsInUnitStr =
+            prefs.getString(
+                PreferenceKeys.alchoholGramsInUnit,
+                state.alchoholGramsInUnit.toString()
+            )
 
         setState {
             copy(
                 weightKg = safeToDouble(weightStr) ?: state.weightKg,
                 gender = Gender.safeValueOf(genderStr) ?: state.gender,
-                startOfDay = LocalTime.fromPrefsString(startOfDayStr) ?: state.startOfDay
+                startOfDay = LocalTime.fromPrefsString(startOfDayStr) ?: state.startOfDay,
+                alchoholGramsInUnit = safeToDouble(alcoholGramsInUnitStr)
+                    ?: state.alchoholGramsInUnit
             )
         }
     }
@@ -88,13 +95,19 @@ internal class UserStore {
          * When the "drinking day" starts. Drinks consumed before this time will be shown
          * on the previous day's listing.
          */
-        val startOfDay: LocalTime = LocalTime(6, 0)
+        val startOfDay: LocalTime = LocalTime(6, 0),
+        /**
+         * How many grams of alcohol is there in a single standard unit?
+         * 12.0 grams of alcohol per unit is the default for Finland (and various other countries).
+         */
+        val alchoholGramsInUnit: Double = 12.0
     )
 
     object PreferenceKeys {
         const val weight = "prefs.user.weight"
         const val gender = "prefs.user.gender"
         const val startOfDay = "prefs.user.startOfDay"
+        const val alchoholGramsInUnit = "prefs.user.alchoholGramsInUnit"
     }
 
 }
