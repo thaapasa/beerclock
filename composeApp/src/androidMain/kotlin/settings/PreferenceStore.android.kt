@@ -21,12 +21,12 @@ class Prefs constructor(private val prefs: SharedPreferences) : PreferenceStore 
 
     override fun getString(key: String, defaultValue: String): String {
         val p = prefs.getString(key, defaultValue) ?: defaultValue
-        Log.i(tag, "Found value $p for $key (default $defaultValue)")
+        Log.d(tag, "Found value $p for $key (default $defaultValue)")
         return p
     }
 
     override fun setString(key: String, value: String) {
-        Log.i(tag, "Storing $key = $value")
+        Log.d(tag, "Storing $key = $value")
         with(prefs.edit()) {
             putString(key, value)
             apply()

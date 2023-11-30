@@ -13,12 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.util.safeToDouble
 
 @Composable
 fun DecimalField(
     value: Double,
     onValueChange: (value: Double) -> Unit,
     label: @Composable (() -> Unit)? = null,
+    supportingText: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     errorText: String? = null
@@ -26,8 +28,9 @@ fun DecimalField(
     var textState by remember { mutableStateOf(TextFieldValue(value.toString())) }
     // Update internal state when value from outside changes
     LaunchedEffect(value) {
-        val valueStr = value.toString()
-        if (textState.text != valueStr) {
+        val curValue = safeToDouble(textState.text)
+        if (curValue != null && curValue != value) {
+            val valueStr = value.toString()
             textState = TextFieldValue(valueStr)
         }
     }
@@ -49,7 +52,7 @@ fun DecimalField(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
         singleLine = true,
         supportingText = {
-            if (isValidInput) null else Text(
+            if (isValidInput) supportingText?.invoke() else Text(
                 errorText ?: strings.errors.invalidDecimal
             )
         },

@@ -13,7 +13,10 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -112,11 +115,11 @@ class NewDrinkScreenViewModel(
 ) : ViewModel() {
     val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
     val drinks = mutableStateListOf<DrinkRecord>()
-    var name = ""
-    var abv = 4.5
-    var quantityCl = 33.0
-    var time = today.time
-    var date = today.date
+    var name by mutableStateOf("")
+    var abv by mutableStateOf(4.5)
+    var quantityCl by mutableStateOf(33.0)
+    var time by mutableStateOf(today.time)
+    var date by mutableStateOf(today.date)
 
     fun addDrink() {
         launch {

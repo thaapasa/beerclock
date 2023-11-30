@@ -16,10 +16,6 @@ internal class UserStore {
     var state: UserStore by mutableStateOf(UserStore())
         private set
 
-    init {
-        this.loadFromPrefs()
-    }
-
     suspend fun setGender(gender: Gender) {
         if (state.gender == gender) {
             return
@@ -59,7 +55,7 @@ internal class UserStore {
         }
     }
 
-    private fun loadFromPrefs() {
+    fun load() {
         val prefs = PreferenceProvider.getPrefs()
         val weightStr = prefs.getString(PreferenceKeys.weight, state.weightKg.toString())
         val genderStr = prefs.getString(PreferenceKeys.gender, state.gender.toString())
