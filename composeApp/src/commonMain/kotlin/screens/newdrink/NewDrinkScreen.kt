@@ -13,32 +13,21 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.database.LocalDatabase
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.localization.strings
-import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.ui.components.DateInputField
 import fi.tuska.beerclock.ui.components.DecimalField
 import fi.tuska.beerclock.ui.components.TimeInputField
-import fi.tuska.beerclock.ui.composables.ViewModel
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
-import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 
 object NewDrinkScreen : Screen {
 
@@ -48,7 +37,11 @@ object NewDrinkScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val db = LocalDatabase.current
-        val vm = rememberWithDispose { NewDrinkScreenViewModel(DrinkService(db), navigator) }
+        val vm = rememberWithDispose { NewDrinkViewModel(DrinkService(db), navigator) }
+
+        LaunchedEffect(Unit) {
+            vm.randomize()
+        }
 
         SubLayout(title = strings.newDrink.title, content = { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding).padding(16.dp).fillMaxSize()) {
@@ -104,28 +97,5 @@ object NewDrinkScreen : Screen {
                 }
             }
         })
-    }
-}
-
-private val logger = getLogger("NewDrinkScreen")
-
-class NewDrinkScreenViewModel(
-    private val drinkService: DrinkService,
-    private val navigator: Navigator
-) : ViewModel() {
-    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-    val drinks = mutableStateListOf<DrinkRecord>()
-    var name by mutableStateOf("")
-    var abv by mutableStateOf(4.5)
-    var quantityCl by mutableStateOf(33.0)
-    var time by mutableStateOf(today.time)
-    var date by mutableStateOf(today.date)
-
-    fun addDrink() {
-        launch {
-            logger.info("Adding a new drink to database")
-            drinkService.insertDrink()
-            navigator.pop()
-        }
     }
 }

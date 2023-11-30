@@ -2,6 +2,7 @@ package fi.tuska.beerclock.drinks
 
 import fi.tuska.beerclock.database.BeerDatabase
 import fi.tuska.beerclock.database.toDbTime
+import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.util.ZeroHour
 import kotlinx.coroutines.Dispatchers
@@ -9,6 +10,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
@@ -46,12 +48,10 @@ class DrinkService(private val db: BeerDatabase) {
         logger.info("Deleted drink $id")
     }
 
-    suspend fun insertDrink() {
-        val now = Clock.System.now()
-        val drink = ExampleDrinks.random()
+    suspend fun insertDrink(drink: NewDrinkRecord) {
         withContext(Dispatchers.IO) {
             db.drinkRecordQueries.insert(
-                now.toDbTime(),
+                time = drink.time.toDbTime(),
                 name = drink.name,
                 quantity_liters = drink.quantityLiters,
                 abv = drink.abv,
@@ -60,3 +60,11 @@ class DrinkService(private val db: BeerDatabase) {
         }
     }
 }
+
+data class NewDrinkRecord(
+    val name: String,
+    val abv: Double,
+    val quantityLiters: Double,
+    val time: Instant,
+    val image: DrinkImage
+)

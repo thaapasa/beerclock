@@ -9,23 +9,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.localization.strings
-import fi.tuska.beerclock.logging.getLogger
-import fi.tuska.beerclock.settings.Gender
-import fi.tuska.beerclock.settings.UserStore
 import fi.tuska.beerclock.ui.components.DecimalField
 import fi.tuska.beerclock.ui.components.TimeInputField
-import fi.tuska.beerclock.ui.composables.ViewModel
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
-import fi.tuska.beerclock.util.ZeroHour
-import kotlinx.coroutines.launch
 
 object SettingsScreen : Screen {
 
@@ -41,7 +32,7 @@ object SettingsScreen : Screen {
 @Composable
 fun SettingsPage(innerPadding: PaddingValues) {
 
-    val vm = rememberWithDispose { SettingsScreenViewModel() }
+    val vm = rememberWithDispose { SettingsViewModel() }
 
     LaunchedEffect(Unit) {
         vm.loadFromPrefs()
@@ -94,31 +85,4 @@ fun SettingsPage(innerPadding: PaddingValues) {
         Spacer(Modifier.height(16.dp))
         AlcoholUnitsDropdown(onSelect = { vm.gramsInUnit = it })
     }
-}
-
-private val logger = getLogger("SettingsScreen")
-
-internal class SettingsScreenViewModel() : ViewModel() {
-
-    private val prefs = UserStore()
-
-    var weightKg by mutableStateOf(0.0)
-    var gender by mutableStateOf(Gender.FEMALE)
-    var startOfDay by mutableStateOf(ZeroHour)
-    var gramsInUnit by mutableStateOf(0.0)
-
-    fun loadFromPrefs() = launch {
-        prefs.load()
-        logger.info("Loaded prefs: ${prefs.state}")
-        weightKg = prefs.state.weightKg
-        gender = prefs.state.gender
-        startOfDay = prefs.state.startOfDay
-        gramsInUnit = prefs.state.alchoholGramsInUnit
-    }
-
-    fun saveWeight() = launch { prefs.setWeight(weightKg) }
-    fun saveGender() = launch { prefs.setGender(gender) }
-    fun saveStartOfDay() = launch { prefs.setStartOfDay(startOfDay) }
-    fun saveGramsInUnitText() = launch { prefs.setAlcoholGramsInUnit(gramsInUnit) }
-
 }

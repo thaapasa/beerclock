@@ -5,7 +5,7 @@ import fi.tuska.beerclock.images.DrinkImage
 data class DrinkDef(
     val name: String,
     val quantityLiters: Double,
-    val abv: Double, // Alcohol by volume in percentage
+    val abvPercentage: Double, // Alcohol by volume in percentage
     val image: DrinkImage
 )
 

@@ -33,7 +33,7 @@ fun DrinkListItem(drink: DrinkRecordInfo, onClick: () -> Unit = { }) {
                 modifier = Modifier.width(64.dp).clip(RoundedCornerShape(12.dp)),
             )
         },
-        trailingContent = { UnitAvatar(units = 1.1) },
+        trailingContent = { UnitAvatar(units = drink.alcoholGrams()) },
         modifier = Modifier.clickable { onClick() },
         tonalElevation = 8.dp,
         shadowElevation = 16.dp
