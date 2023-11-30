@@ -1,9 +1,6 @@
-package fi.tuska.beerclock.screens.newdrink
+package fi.tuska.beerclock.drinks
 
-import fi.tuska.beerclock.database.BeerDatabase
-import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.images.DrinkImage
-import kotlinx.datetime.Clock
 
 data class DrinkDef(
     val name: String,
@@ -12,7 +9,7 @@ data class DrinkDef(
     val image: DrinkImage
 )
 
-val DrinkLibrary = listOf(
+val ExampleDrinks = listOf(
     DrinkDef("Large brewski", 0.5, 4.6, DrinkImage.BEER_GLASS_1),
     DrinkDef("Can'o'beer", 0.33, 4.6, DrinkImage.BEER_CAN1),
     DrinkDef("Red wine", 0.16, 13.0, DrinkImage.RED_WINE_GLASS1),
@@ -22,15 +19,3 @@ val DrinkLibrary = listOf(
     DrinkDef("Whisky", 0.04, 43.0, DrinkImage.WHISKY1)
 )
 
-
-fun addNewDrink(db: BeerDatabase) {
-    val now = Clock.System.now()
-    val drink = DrinkLibrary.random()
-    db.drinkRecordQueries.insert(
-        now.toDbTime(),
-        name = drink.name,
-        quantity_liters = drink.quantityLiters,
-        abv = drink.abv,
-        image = drink.image.name
-    )
-}

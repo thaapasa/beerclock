@@ -6,8 +6,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
-import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.database.LocalDatabase
+import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.ui.composables.ViewModel
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
@@ -32,7 +32,7 @@ object HistoryScreen : Screen {
 
         return MainLayout(
             content = { innerPadding ->
-                DrinksList(vm.drinks,
+                DrinkList(vm.drinks,
                     modifier = Modifier.padding(innerPadding),
                     onClick = { vm.deleteDrink(it) }
                 )
@@ -42,7 +42,7 @@ object HistoryScreen : Screen {
 }
 
 class HistoryScreenViewModel(private val drinkService: DrinkService) : ViewModel() {
-    val drinks = mutableStateListOf<DrinkRecord>()
+    val drinks = mutableStateListOf<DrinkRecordInfo>()
 
     fun loadTodaysDrinks() {
         launch {
@@ -52,7 +52,7 @@ class HistoryScreenViewModel(private val drinkService: DrinkService) : ViewModel
         }
     }
 
-    fun deleteDrink(drink: DrinkRecord) {
+    fun deleteDrink(drink: DrinkRecordInfo) {
         launch {
             drinkService.deleteDrinkById(drink.id)
             drinks.remove(drink)

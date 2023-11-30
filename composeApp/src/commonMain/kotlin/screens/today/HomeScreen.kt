@@ -17,12 +17,12 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.database.LocalDatabase
+import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.strings
-import fi.tuska.beerclock.screens.history.DrinksList
+import fi.tuska.beerclock.screens.history.DrinkList
 import fi.tuska.beerclock.screens.newdrink.NewDrinkScreen
 import fi.tuska.beerclock.ui.composables.ViewModel
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
@@ -45,7 +45,7 @@ object HomeScreen : Screen {
             Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
                 BacStatusCard()
                 Spacer(modifier = Modifier.height(16.dp))
-                DrinksList(
+                DrinkList(
                     vm.drinks,
                     modifier = Modifier.clip(RoundedCornerShape(12.dp)),
                     onClick = { vm.deleteDrink(it) })
@@ -66,7 +66,7 @@ object HomeScreen : Screen {
 }
 
 class HomeScreenViewModel(private val drinkService: DrinkService) : ViewModel() {
-    val drinks = mutableStateListOf<DrinkRecord>()
+    val drinks = mutableStateListOf<DrinkRecordInfo>()
 
     fun loadTodaysDrinks() {
         launch {
@@ -76,7 +76,7 @@ class HomeScreenViewModel(private val drinkService: DrinkService) : ViewModel() 
         }
     }
 
-    fun deleteDrink(drink: DrinkRecord) {
+    fun deleteDrink(drink: DrinkRecordInfo) {
         launch {
             drinkService.deleteDrinkById(drink.id)
             drinks.remove(drink)

@@ -9,14 +9,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -37,29 +34,16 @@ import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
-import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-@OptIn(ExperimentalMaterial3Api::class)
-fun TimePickerState.Companion.fromLocalTime(localTime: LocalDateTime): TimePickerState {
-    return TimePickerState(
-        initialHour = localTime.hour,
-        initialMinute = localTime.minute,
-        is24Hour = true
-    )
-}
-
-
 object NewDrinkScreen : Screen {
 
-    val gap = 16.dp
+    private val gap = 16.dp
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val coroutineScope = rememberCoroutineScope()
         val db = LocalDatabase.current
         val vm = rememberWithDispose { NewDrinkScreenViewModel(DrinkService(db), navigator) }
 

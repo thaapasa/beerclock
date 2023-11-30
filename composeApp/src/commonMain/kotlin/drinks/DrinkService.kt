@@ -1,10 +1,8 @@
 package fi.tuska.beerclock.drinks
 
 import fi.tuska.beerclock.database.BeerDatabase
-import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.logging.getLogger
-import fi.tuska.beerclock.screens.newdrink.addNewDrink
 import fi.tuska.beerclock.util.ZeroHour
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -22,7 +20,7 @@ private val logger = getLogger("DrinkService")
 
 class DrinkService(private val db: BeerDatabase) {
 
-    suspend fun getDrinksForDay(date: LocalDate): List<DrinkRecord> {
+    suspend fun getDrinksForDay(date: LocalDate): List<DrinkRecordInfo> {
         val zone = TimeZone.currentSystemDefault()
         val startTime = LocalDateTime(date = date, time = ZeroHour).toInstant(zone)
         val endTime = startTime.plus(1, DateTimeUnit.DAY, zone)
@@ -33,10 +31,10 @@ class DrinkService(private val db: BeerDatabase) {
             ).executeAsList()
         }
         logger.info("Found ${drinks.size} drinks for $date")
-        return drinks
+        return drinks.map(::DrinkRecordInfo)
     }
 
-    suspend fun getDrinksForToday(): List<DrinkRecord> {
+    suspend fun getDrinksForToday(): List<DrinkRecordInfo> {
         val zone = TimeZone.currentSystemDefault()
         return getDrinksForDay(Clock.System.now().toLocalDateTime(zone).date)
     }
@@ -49,8 +47,16 @@ class DrinkService(private val db: BeerDatabase) {
     }
 
     suspend fun insertDrink() {
+        val now = Clock.System.now()
+        val drink = ExampleDrinks.random()
         withContext(Dispatchers.IO) {
-            addNewDrink(db)
+            db.drinkRecordQueries.insert(
+                now.toDbTime(),
+                name = drink.name,
+                quantity_liters = drink.quantityLiters,
+                abv = drink.abv,
+                image = drink.image.name
+            )
         }
     }
 }
