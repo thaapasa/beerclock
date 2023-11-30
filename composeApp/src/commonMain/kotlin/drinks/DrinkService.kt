@@ -17,10 +17,14 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 private val logger = getLogger("DrinkService")
 
-class DrinkService(private val db: BeerDatabase) {
+class DrinkService : KoinComponent {
+
+    private val db: BeerDatabase = get()
 
     suspend fun getDrinksForDay(date: LocalDate): List<DrinkRecordInfo> {
         val zone = TimeZone.currentSystemDefault()

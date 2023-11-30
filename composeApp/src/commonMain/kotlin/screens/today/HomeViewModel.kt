@@ -5,8 +5,10 @@ import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.ui.composables.ViewModel
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
 
-class HomeViewModel(private val drinkService: DrinkService) : ViewModel() {
+class HomeViewModel() : ViewModel(), KoinComponent {
+    private val drinkService = DrinkService()
     val drinks = mutableStateListOf<DrinkRecordInfo>()
 
     fun loadTodaysDrinks() {

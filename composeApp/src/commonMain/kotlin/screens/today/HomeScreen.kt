@@ -16,8 +16,6 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.database.LocalDatabase
-import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.strings
 import fi.tuska.beerclock.screens.history.DrinkList
@@ -30,8 +28,7 @@ object HomeScreen : Screen {
 
     @Composable
     override fun Content() {
-        val db = LocalDatabase.current
-        val vm = rememberWithDispose { HomeViewModel(DrinkService(db)) }
+        val vm = rememberWithDispose { HomeViewModel() }
         val navigator = LocalNavigator.currentOrThrow
 
         LaunchedEffect(Unit) {
@@ -56,7 +53,6 @@ object HomeScreen : Screen {
                     modifier = Modifier.size(36.dp)
                 )
             }
-        }
-        )
+        })
     }
 }

@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.database.LocalDatabase
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.localization.strings
 import fi.tuska.beerclock.ui.components.DateInputField
@@ -33,8 +32,7 @@ object NewDrinkScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val db = LocalDatabase.current
-        val vm = rememberWithDispose { NewDrinkViewModel(DrinkService(db), navigator) }
+        val vm = rememberWithDispose { NewDrinkViewModel(DrinkService(), navigator) }
 
         SubLayout(title = strings.newDrink.title, content = { innerPadding ->
             DrinkEditor(vm, modifier = Modifier.padding(innerPadding))

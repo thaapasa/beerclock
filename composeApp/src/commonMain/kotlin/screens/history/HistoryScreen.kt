@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
-import fi.tuska.beerclock.database.LocalDatabase
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
@@ -17,8 +16,7 @@ object HistoryScreen : Screen {
 
     @Composable
     override fun Content() {
-        val db = LocalDatabase.current
-        val vm = rememberWithDispose { HistoryViewModel(DrinkService(db)) }
+        val vm = rememberWithDispose { HistoryViewModel(DrinkService()) }
 
         LaunchedEffect(Unit) {
             withContext(Dispatchers.IO) {

@@ -28,14 +28,6 @@ kotlin {
     }
 
     sourceSets {
-
-        androidMain.dependencies {
-            implementation(libs.compose.ui)
-            implementation(libs.compose.ui.tooling.preview)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.startupRuntime)
-            implementation(libs.sqlDelightAndroid)
-        }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -45,9 +37,22 @@ kotlin {
             implementation(compose.components.resources)
             implementation(libs.voyager)
             implementation(libs.datetime)
+            implementation(libs.koin.core)
         }
+
+        androidMain.dependencies {
+            implementation(libs.compose.ui)
+            implementation(libs.compose.ui.tooling.preview)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.startupRuntime)
+            implementation(libs.sqlDelightAndroid)
+            implementation(libs.koin.core)
+            implementation(libs.koin.android)
+        }
+
         iosMain.dependencies {
             implementation(libs.sqlDelightNative)
+            implementation(libs.koin.core)
         }
     }
 }
