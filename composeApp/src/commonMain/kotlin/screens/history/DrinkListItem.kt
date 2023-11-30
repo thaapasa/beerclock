@@ -19,15 +19,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import fi.tuska.beerclock.database.Drinks
-import fi.tuska.beerclock.database.toInstant
+import fi.tuska.beerclock.database.DrinkRecord
+import fi.tuska.beerclock.database.fromDbTime
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.localization.strings
+import kotlinx.datetime.Instant
 
 @Composable
-fun DrinksListItem(drink: Drinks, onClick: () -> Unit = { }) {
+fun DrinksListItem(drink: DrinkRecord, onClick: () -> Unit = { }) {
     ListItem(
-        overlineContent = { Text(strings.drink.drinkTime(drink.time.toInstant())) },
+        overlineContent = { Text(strings.drink.drinkTime(Instant.fromDbTime(drink.time))) },
         headlineContent = { Text(drink.name) },
         supportingContent = {
             Text(
@@ -86,6 +87,6 @@ fun UnitsAvatar(
 }
 
 @Composable
-fun Drinks.image(): DrinkImage {
+fun DrinkRecord.image(): DrinkImage {
     return DrinkImage.forName(this.image)
 }

@@ -1,0 +1,23 @@
+CREATE TABLE drinkRecord (
+  id INTEGER PRIMARY KEY NOT NULL,
+  time INTEGER NOT NULL,
+  name TEXT NOT NULL,
+  quantity_liters REAL NOT NULL,
+  abv REAL NOT NULL,
+  image TEXT NOT NULL
+);
+
+CREATE INDEX drinkRecord_time ON drinkRecord(time);
+
+selectByTime:
+SELECT *
+FROM drinkRecord
+WHERE time >= ? AND time < ?;
+
+insert:
+INSERT INTO drinkRecord(time, name, quantity_liters, abv, image)
+VALUES (?, ?, ?, ?, ?);
+
+deleteById:
+DELETE FROM drinkRecord
+WHERE id = ?;

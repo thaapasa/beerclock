@@ -11,57 +11,44 @@ import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.database.Drinks
+import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.database.LocalDatabase
+import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.strings
 import fi.tuska.beerclock.screens.history.DrinksList
 import fi.tuska.beerclock.screens.newdrink.NewDrinkScreen
+import fi.tuska.beerclock.ui.composables.ViewModel
+import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 object HomeScreen : Screen {
 
     @Composable
     override fun Content() {
-        val coroutineScope = rememberCoroutineScope()
         val db = LocalDatabase.current
-        val drinksList = remember { mutableStateListOf<Drinks>() }
+        val vm = rememberWithDispose { HomeScreenViewModel(DrinkService(db)) }
         val navigator = LocalNavigator.currentOrThrow
 
         LaunchedEffect(Unit) {
-            withContext(Dispatchers.IO) {
-                val drinks = db.drinksQueries.selectAll().executeAsList()
-                drinksList.addAll(drinks)
-            }
+            vm.loadTodaysDrinks()
         }
         MainLayout(content = { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
                 BacStatusCard()
                 Spacer(modifier = Modifier.height(16.dp))
                 DrinksList(
-                    drinksList,
+                    vm.drinks,
                     modifier = Modifier.clip(RoundedCornerShape(12.dp)),
-                    onClick = {
-                        coroutineScope.launch(Dispatchers.IO) {
-                            db.drinksQueries.delete(it.id)
-                            val drinks = db.drinksQueries.selectAll().executeAsList()
-                            drinksList.clear()
-                            drinksList.addAll(drinks)
-                        }
-                    })
+                    onClick = { vm.deleteDrink(it) })
             }
         }, actionButton = {
             LargeFloatingActionButton(onClick = {
@@ -75,5 +62,24 @@ object HomeScreen : Screen {
             }
         }
         )
+    }
+}
+
+class HomeScreenViewModel(private val drinkService: DrinkService) : ViewModel() {
+    val drinks = mutableStateListOf<DrinkRecord>()
+
+    fun loadTodaysDrinks() {
+        launch {
+            drinks.clear()
+            val newDrinks = drinkService.getDrinksForToday()
+            drinks.addAll(newDrinks)
+        }
+    }
+
+    fun deleteDrink(drink: DrinkRecord) {
+        launch {
+            drinkService.deleteDrinkById(drink.id)
+            drinks.remove(drink)
+        }
     }
 }

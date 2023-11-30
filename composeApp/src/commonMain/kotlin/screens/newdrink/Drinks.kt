@@ -1,7 +1,7 @@
 package fi.tuska.beerclock.screens.newdrink
 
 import fi.tuska.beerclock.database.BeerDatabase
-import fi.tuska.beerclock.database.toUnixTimestamp
+import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.images.DrinkImage
 import kotlinx.datetime.Clock
 
@@ -26,8 +26,8 @@ val DrinkLibrary = listOf(
 fun addNewDrink(db: BeerDatabase) {
     val now = Clock.System.now()
     val drink = DrinkLibrary.random()
-    db.drinksQueries.insert(
-        now.toUnixTimestamp(),
+    db.drinkRecordQueries.insert(
+        now.toDbTime(),
         name = drink.name,
         quantity_liters = drink.quantityLiters,
         abv = drink.abv,
