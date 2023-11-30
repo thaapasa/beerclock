@@ -122,6 +122,7 @@ object FiStrings : Strings {
     override val drink = DrinkData
 
     object DrinkData : Strings.DrinkData {
+        override val image = "Kuva juomasta"
         override val unitLabel = "annosta"
         val unitF = createNumberFormatter(2)
         val abvF = createNumberFormatter(1)

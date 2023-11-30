@@ -54,6 +54,7 @@ interface Strings {
     val drink: DrinkData
 
     interface DrinkData {
+        val image: String
         val unitLabel: String
         fun units(units: Double): String
         fun abv(abv: Double): String

@@ -61,12 +61,16 @@ object NewDrinkScreen : Screen {
                     )
                 }
                 Spacer(modifier = Modifier.height(gap))
-                TextField(
-                    label = { Text(strings.newDrink.nameLabel) },
-                    value = vm.name,
-                    onValueChange = { vm.name = it },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Row(Modifier.fillMaxWidth()) {
+                    TextField(
+                        label = { Text(strings.newDrink.nameLabel) },
+                        value = vm.name,
+                        onValueChange = { vm.name = it },
+                        modifier = Modifier.weight(1f)
+                    )
+                    Spacer(modifier = Modifier.width(gap))
+                    vm.image.smallImage()
+                }
                 Spacer(modifier = Modifier.height(gap))
                 Row(modifier = Modifier.fillMaxWidth()) {
                     DecimalField(

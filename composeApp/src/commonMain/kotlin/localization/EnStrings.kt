@@ -111,6 +111,7 @@ object EnStrings : Strings {
     override val drink = DrinkData
 
     object DrinkData : Strings.DrinkData {
+        override val image = "Image of the drink"
         override val unitLabel = "units"
         val unitF = createNumberFormatter(2)
         val abvF = createNumberFormatter(1)

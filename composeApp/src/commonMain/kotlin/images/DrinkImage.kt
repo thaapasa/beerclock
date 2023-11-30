@@ -1,7 +1,14 @@
 package fi.tuska.beerclock.images
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.dp
+import fi.tuska.beerclock.localization.strings
 import fi.tuska.beerclock.logging.getLogger
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -23,6 +30,15 @@ enum class DrinkImage(val path: String) {
     @Composable
     fun painter(): Painter = painterResource(this.path)
 
+    @Composable
+    fun smallImage(modifier: Modifier = Modifier): Unit {
+        Image(
+            painter = painter(),
+            contentDescription = strings.drink.image,
+            modifier = modifier.width(64.dp).clip(RoundedCornerShape(12.dp)),
+        )
+    }
+
     companion object {
         fun forName(name: String): DrinkImage = try {
             DrinkImage.valueOf(name)
@@ -30,6 +46,5 @@ enum class DrinkImage(val path: String) {
             logger.error("No drink icon found with name $name. Using a generic icon")
             GENERIC_DRINK
         }
-
     }
 }
