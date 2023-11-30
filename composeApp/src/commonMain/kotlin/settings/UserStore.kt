@@ -10,8 +10,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalTime
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
-internal class UserStore {
+internal class UserStore : KoinComponent {
+    private val store: PreferenceStore = get()
 
     var state: UserStore by mutableStateOf(UserStore())
         private set
@@ -50,19 +53,17 @@ internal class UserStore {
 
     private suspend fun setStateValue(stateKey: String, stringified: String) {
         withContext(Dispatchers.IO) {
-            val prefs = PreferenceProvider.getPrefs()
-            prefs.setString(stateKey, stringified)
+            store.setString(stateKey, stringified)
         }
     }
 
     fun load() {
-        val prefs = PreferenceProvider.getPrefs()
-        val weightStr = prefs.getString(PreferenceKeys.weight, state.weightKg.toString())
-        val genderStr = prefs.getString(PreferenceKeys.gender, state.gender.toString())
+        val weightStr = store.getString(PreferenceKeys.weight, state.weightKg.toString())
+        val genderStr = store.getString(PreferenceKeys.gender, state.gender.toString())
         val startOfDayStr =
-            prefs.getString(PreferenceKeys.startOfDay, state.startOfDay.toPrefsString())
+            store.getString(PreferenceKeys.startOfDay, state.startOfDay.toPrefsString())
         val alcoholGramsInUnitStr =
-            prefs.getString(
+            store.getString(
                 PreferenceKeys.alchoholGramsInUnit,
                 state.alchoholGramsInUnit.toString()
             )

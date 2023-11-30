@@ -44,7 +44,6 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.startupRuntime)
             implementation(libs.sqlDelightAndroid)
             implementation(libs.koin.core)
             implementation(libs.koin.android)

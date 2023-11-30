@@ -18,7 +18,6 @@ kotlin = "1.9.20"
 junit = "4.13.2"
 sqldelight = "2.0.0"
 voyager = "1.0.0-rc10"
-startup = "1.1.1"
 datetime = "0.4.1"
 koin = "3.5.0"
 
@@ -41,8 +40,6 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 # Voyager provides navigation
 voyager = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
-# The startup library is used for Android to provide a global reference to the Application Context
-startupRuntime = { module = "androidx.startup:startup-runtime", version.ref = "startup" }
 # SQL library
 sqlDelightAndroid = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqlDelightNative = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }

@@ -2,14 +2,7 @@ package fi.tuska.beerclock.settings
 
 import platform.Foundation.NSUserDefaults
 
-actual object PreferenceProvider {
-
-    actual fun getPrefs(): PreferenceStore {
-        return Prefs()
-    }
-}
-
-private class Prefs : PreferenceStore {
+class IosPreferenceStore() : PreferenceStore {
     private val userDefaults = NSUserDefaults.standardUserDefaults()
 
     override fun getString(key: String, defaultValue: String): String =
