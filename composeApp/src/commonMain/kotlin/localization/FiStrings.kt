@@ -180,6 +180,7 @@ object FiStrings : Strings {
 
     object NewDrinks : Strings.NewDrinkStrings {
         override val title = "Merkkaa juoma"
+        override val selectImageTitle = "Valitse kuva juomalle"
         override val dateLabel = "Juomapäivä"
         override val timeLabel = "Kellonaika"
         override val nameLabel = "Nimi"

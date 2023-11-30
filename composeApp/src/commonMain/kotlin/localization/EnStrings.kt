@@ -170,6 +170,7 @@ object EnStrings : Strings {
 
     object NewDrinks : Strings.NewDrinkStrings {
         override val title = "Add a drink"
+        override val selectImageTitle = "Pick image for the drink"
         override val dateLabel = "Drinking day"
         override val timeLabel = "Time of day"
         override val nameLabel = "Name"

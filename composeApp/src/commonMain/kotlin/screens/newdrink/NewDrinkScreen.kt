@@ -13,7 +13,6 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -31,75 +30,80 @@ import fi.tuska.beerclock.ui.layout.SubLayout
 
 object NewDrinkScreen : Screen {
 
-    private val gap = 16.dp
-
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val db = LocalDatabase.current
         val vm = rememberWithDispose { NewDrinkViewModel(DrinkService(db), navigator) }
 
-        LaunchedEffect(Unit) {
-            vm.randomize()
-        }
-
         SubLayout(title = strings.newDrink.title, content = { innerPadding ->
-            Column(modifier = Modifier.padding(innerPadding).padding(16.dp).fillMaxSize()) {
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    DateInputField(
-                        value = vm.date,
-                        onValueChange = { vm.date = it },
-                        labelText = strings.newDrink.dateLabel,
-                        modifier = Modifier.weight(1f),
-                    )
-                    Spacer(modifier = Modifier.width(gap))
-                    TimeInputField(
-                        value = vm.time,
-                        onValueChange = { vm.time = it },
-                        labelText = strings.newDrink.timeLabel,
-                        modifier = Modifier.weight(1f),
-                    )
-                }
-                Spacer(modifier = Modifier.height(gap))
-                Row(Modifier.fillMaxWidth()) {
-                    TextField(
-                        label = { Text(strings.newDrink.nameLabel) },
-                        value = vm.name,
-                        onValueChange = { vm.name = it },
-                        modifier = Modifier.weight(1f)
-                    )
-                    Spacer(modifier = Modifier.width(gap))
-                    vm.image.smallImage()
-                }
-                Spacer(modifier = Modifier.height(gap))
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    DecimalField(
-                        label = { Text(strings.newDrink.abvLabel) },
-                        value = vm.abv,
-                        onValueChange = { vm.abv = it },
-                        modifier = Modifier.weight(1f),
-                        trailingIcon = { Text(strings.newDrink.abvUnit) }
-                    )
-                    Spacer(modifier = Modifier.width(gap))
-                    DecimalField(
-                        label = { Text(strings.newDrink.quantityLabel) },
-                        value = vm.quantityCl,
-                        onValueChange = { vm.quantityCl = it },
-                        modifier = Modifier.weight(1f),
-                        trailingIcon = { Text(strings.newDrink.quantityUnit) }
-                    )
-                }
-                Slider(
-                    value = vm.quantityCl.toFloat(),
-                    onValueChange = { vm.quantityCl = it.toInt().toDouble() },
-                    valueRange = 1f..75f,
-                    steps = 74
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Row(modifier = Modifier.padding(16.dp).align(Alignment.CenterHorizontally)) {
-                    Button(onClick = { vm.addDrink() }) { Text(strings.newDrink.submit) }
-                }
-            }
+            DrinkEditor(vm, modifier = Modifier.padding(innerPadding))
         })
+    }
+}
+
+private val gap = 16.dp
+
+@Composable
+fun DrinkEditor(vm: NewDrinkViewModel, modifier: Modifier = Modifier) {
+    Column(modifier = modifier.padding(16.dp).fillMaxSize()) {
+        Row(modifier = Modifier.fillMaxWidth()) {
+            DateInputField(
+                value = vm.date,
+                onValueChange = { vm.date = it },
+                labelText = strings.newDrink.dateLabel,
+                modifier = Modifier.weight(1f),
+            )
+            Spacer(modifier = Modifier.width(gap))
+            TimeInputField(
+                value = vm.time,
+                onValueChange = { vm.time = it },
+                labelText = strings.newDrink.timeLabel,
+                modifier = Modifier.weight(1f),
+            )
+        }
+        Spacer(modifier = Modifier.height(gap))
+        Row(Modifier.fillMaxWidth()) {
+            TextField(
+                label = { Text(strings.newDrink.nameLabel) },
+                value = vm.name,
+                onValueChange = { vm.name = it },
+                modifier = Modifier.weight(1f)
+            )
+            Spacer(modifier = Modifier.width(gap))
+            DrinkImageSelectField(
+                value = vm.image,
+                onValueChange = { vm.image = it },
+                titleText = strings.newDrink.selectImageTitle
+            )
+        }
+        Spacer(modifier = Modifier.height(gap))
+        Row(modifier = Modifier.fillMaxWidth()) {
+            DecimalField(
+                label = { Text(strings.newDrink.abvLabel) },
+                value = vm.abv,
+                onValueChange = { vm.abv = it },
+                modifier = Modifier.weight(1f),
+                trailingIcon = { Text(strings.newDrink.abvUnit) }
+            )
+            Spacer(modifier = Modifier.width(gap))
+            DecimalField(
+                label = { Text(strings.newDrink.quantityLabel) },
+                value = vm.quantityCl,
+                onValueChange = { vm.quantityCl = it },
+                modifier = Modifier.weight(1f),
+                trailingIcon = { Text(strings.newDrink.quantityUnit) }
+            )
+        }
+        Slider(
+            value = vm.quantityCl.toFloat(),
+            onValueChange = { vm.quantityCl = it.toInt().toDouble() },
+            valueRange = 1f..75f,
+            steps = 74
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Row(modifier = Modifier.padding(16.dp).align(Alignment.CenterHorizontally)) {
+            Button(onClick = { vm.addDrink() }) { Text(strings.newDrink.submit) }
+        }
     }
 }

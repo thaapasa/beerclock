@@ -98,6 +98,7 @@ interface Strings {
 
     interface NewDrinkStrings {
         val title: String
+        val selectImageTitle: String
         val dateLabel: String
         val timeLabel: String
         val nameLabel: String

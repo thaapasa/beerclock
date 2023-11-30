@@ -32,7 +32,11 @@ class NewDrinkViewModel(
     var date by mutableStateOf(today.date)
     var image by mutableStateOf(DrinkImage.GENERIC_DRINK)
 
-    fun randomize() {
+    init {
+        randomize()
+    }
+
+    private fun randomize() {
         val drink = ExampleDrinks.random()
         name = drink.name
         quantityCl = drink.quantityLiters * 100
