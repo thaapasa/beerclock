@@ -38,7 +38,7 @@ class DrinkRecordInfo(record: DrinkRecord) : KoinComponent {
      * @return the number of units there are in this drink
      */
     fun units(): Double {
-        return alcoholGrams / prefs.prefs.alchoholGramsInUnit
+        return AlcoholCalculator.getUnitsFromAlcoholWeight(alcoholGrams, prefs.prefs)
     }
 
 }

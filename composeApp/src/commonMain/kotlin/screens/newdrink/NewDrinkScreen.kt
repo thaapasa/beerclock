@@ -22,6 +22,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.screens.history.UnitAvatar
 import fi.tuska.beerclock.ui.components.DateInputField
 import fi.tuska.beerclock.ui.components.DecimalField
 import fi.tuska.beerclock.ui.components.TimeInputField
@@ -88,6 +89,7 @@ fun DrinkEditor(vm: NewDrinkViewModel, modifier: Modifier = Modifier) {
             )
         }
         Spacer(modifier = Modifier.height(gap))
+        
         Row(modifier = Modifier.fillMaxWidth()) {
             DecimalField(
                 label = { Text(strings.newDrink.abvLabel) },
@@ -103,6 +105,11 @@ fun DrinkEditor(vm: NewDrinkViewModel, modifier: Modifier = Modifier) {
                 onValueChange = { vm.quantityCl = it },
                 modifier = Modifier.weight(1f),
                 trailingIcon = { Text(strings.newDrink.quantityUnit) }
+            )
+            Spacer(modifier = Modifier.width(gap))
+            UnitAvatar(
+                units = vm.units(),
+                modifier = Modifier.padding(start = 4.dp, top = 4.dp)
             )
         }
         Slider(

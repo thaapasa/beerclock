@@ -16,10 +16,10 @@ import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.localization.strings
 
 @Composable
-fun UnitAvatar(units: Double) {
+fun UnitAvatar(units: Double, modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.size(60.dp)
+        modifier = modifier.size(60.dp)
     ) {
         Box(
             contentAlignment = Alignment.Center,

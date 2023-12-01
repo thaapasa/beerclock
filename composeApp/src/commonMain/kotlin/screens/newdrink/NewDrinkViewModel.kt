@@ -6,25 +6,30 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.navigator.Navigator
 import fi.tuska.beerclock.database.DrinkRecord
+import fi.tuska.beerclock.drinks.AlcoholCalculator
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.drinks.ExampleDrinks
 import fi.tuska.beerclock.drinks.NewDrinkRecord
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.logging.getLogger
+import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.composables.ViewModel
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 private val logger = getLogger("NewDrinkScreen")
 
 class NewDrinkViewModel(
     private val drinkService: DrinkService,
     private val navigator: Navigator
-) : ViewModel() {
+) : ViewModel(), KoinComponent {
     private val times = DrinkTimeService()
     private val drinkTime = times.instantToDrinkTime(Clock.System.now())
+    private val prefs: GlobalUserPreferences = get()
     val drinks = mutableStateListOf<DrinkRecord>()
     var name by mutableStateOf("")
     var abv by mutableStateOf(4.5)
@@ -39,8 +44,13 @@ class NewDrinkViewModel(
 
     fun realTime(): Instant = times.drinkTimeToInstant(date, time)
     fun localRealTime() = times.toLocalDateTime(realTime())
+    fun units(): Double = AlcoholCalculator.getUnitsFromDisplayQuantityAbv(
+        quantityCl = quantityCl,
+        abvPercentage = abv,
+        prefs = prefs.prefs
+    )
 
-    private fun randomize() {
+    fun randomize() {
         val drink = ExampleDrinks.random()
         name = drink.name
         quantityCl = drink.quantityLiters * 100
