@@ -72,6 +72,7 @@ object EnStrings : Strings {
     override val pickTime = "Pick time"
     override val pickDate = "Pick date"
     override val dialogOk = "OK"
+    override val dialogClose = "Close"
 
     private val Countries = mapOf(
         "AT" to "Austria",
@@ -183,7 +184,7 @@ object EnStrings : Strings {
         override val abvUnit = "%"
         override val quantityLabel = "Quantity"
         override val quantityUnit = "cl"
-        override val submit = "Drink!"
+        override val submit = "Ready"
 
         override fun drinkTimeInfo(drinkTime: LocalDateTime) =
             "Drink will be recorded at ${dateTime(drinkTime)}"
@@ -198,7 +199,7 @@ object EnStrings : Strings {
         override val selectDay = "Pick a day"
         override val nextDay = "Next day"
     }
-    
+
 
     /* Gender options */
     override val gender = Gender

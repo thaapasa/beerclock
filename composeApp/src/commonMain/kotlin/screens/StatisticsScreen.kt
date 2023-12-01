@@ -12,10 +12,10 @@ object StatisticsScreen : Screen {
 
     @Composable
     override fun Content() {
-        MainLayout(content = { innerPadding ->
+        MainLayout(showTopBar = false) { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding)) {
                 Text("Tilastot")
             }
-        })
+        }
     }
 }

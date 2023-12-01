@@ -31,44 +31,39 @@ object HistoryScreen : Screen {
             vm.loadDrinks()
         }
 
-        return MainLayout(
-            showTopBar = false,
-            content = { innerPadding ->
-                Column(
-                    modifier = Modifier.padding(innerPadding).padding(16.dp)
-                ) {
-                    SegmentedButton {
-                        AppIcon.CHEVRON_LEFT.iconButton(
-                            contentDescription = strings.history.prevDay,
-                            modifier = Modifier.padding(horizontal = 4.dp)
-                        ) { vm.prevDay() }
-                        SegmentDivider()
-                        Text(
-                            strings.date(vm.date),
-                            modifier = Modifier.weight(1f)
-                                .align(Alignment.CenterVertically),
-                            textAlign = TextAlign.Center
-                        )
-                        SegmentDivider()
-                        DatePickerIcon(
-                            value = vm.date,
-                            onValueChange = { vm.selectDay(it) },
-                            modifier = Modifier.padding(horizontal = 4.dp),
-                            title = strings.history.selectDay
-                        )
-                        SegmentDivider()
-                        AppIcon.CHEVRON_RIGHT.iconButton(
-                            contentDescription = strings.history.nextDay,
-                            modifier = Modifier.padding(horizontal = 4.dp)
-                        ) { vm.nextDay() }
-                    }
-                    DrinkList(vm.drinks,
-                        modifier = Modifier.padding(top = 16.dp)
-                            .clip(RoundedCornerShape(16.dp)),
-                        onClick = { vm.deleteDrink(it) }
+        return MainLayout(showTopBar = false) { innerPadding ->
+            Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
+                SegmentedButton {
+                    AppIcon.CHEVRON_LEFT.iconButton(
+                        contentDescription = strings.history.prevDay,
+                        modifier = Modifier.padding(horizontal = 4.dp)
+                    ) { vm.prevDay() }
+                    SegmentDivider()
+                    Text(
+                        strings.date(vm.date),
+                        modifier = Modifier.weight(1f)
+                            .align(Alignment.CenterVertically),
+                        textAlign = TextAlign.Center
                     )
+                    SegmentDivider()
+                    DatePickerIcon(
+                        value = vm.date,
+                        onValueChange = { vm.selectDay(it) },
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                        title = strings.history.selectDay
+                    )
+                    SegmentDivider()
+                    AppIcon.CHEVRON_RIGHT.iconButton(
+                        contentDescription = strings.history.nextDay,
+                        modifier = Modifier.padding(horizontal = 4.dp)
+                    ) { vm.nextDay() }
                 }
-            },
-        )
+                DrinkList(vm.drinks,
+                    modifier = Modifier.padding(top = 16.dp)
+                        .clip(RoundedCornerShape(16.dp)),
+                    onClick = { vm.deleteDrink(it) }
+                )
+            }
+        }
     }
 }

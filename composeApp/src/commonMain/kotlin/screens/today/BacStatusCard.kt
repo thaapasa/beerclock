@@ -19,13 +19,14 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.images.AppImage
 import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.screens.history.UnitAvatar
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 
 @Composable
-fun BacStatusCard() {
+fun BacStatusCard(vm: HomeViewModel) {
     return Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
@@ -33,11 +34,9 @@ fun BacStatusCard() {
         Row {
             DateView("You are sober", modifier = Modifier.weight(1f).padding(16.dp))
             Row(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    "0.00",
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(16.dp).align(Alignment.CenterVertically)
+                UnitAvatar(
+                    vm.units(),
+                    modifier = Modifier.align(Alignment.CenterVertically).padding(end = 8.dp)
                 )
                 Image(
                     painter = AppImage.GAUGE.painter(),

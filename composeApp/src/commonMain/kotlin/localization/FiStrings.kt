@@ -84,6 +84,7 @@ object FiStrings : Strings {
     override val pickTime = "Valitse kellonaika"
     override val pickDate = "Valitse päivämäärä"
     override val dialogOk = "OK"
+    override val dialogClose = "Sulje"
 
     private val Countries = mapOf(
         "AT" to "Itävalta",
@@ -193,7 +194,7 @@ object FiStrings : Strings {
         override val abvUnit = "%"
         override val quantityLabel = "Määrä"
         override val quantityUnit = "cl"
-        override val submit = "Juo!"
+        override val submit = "Valmis"
 
         override fun drinkTimeInfo(drinkTime: LocalDateTime) =
             "Ajaksi merkataan ${dateTime(drinkTime)}"

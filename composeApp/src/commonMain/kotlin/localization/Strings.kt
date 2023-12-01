@@ -34,6 +34,7 @@ interface Strings {
     val pickTime: String
     val pickDate: String
     val dialogOk: String
+    val dialogClose: String
 
     fun countryName(countryCode: String): String
 

@@ -18,6 +18,7 @@ enum class AppIcon(private val path: String) {
     GRAPH("drawable/icons/graph.xml"),
     CLOCK("drawable/icons/clock.xml"),
     CALENDAR("drawable/icons/calendar.xml"),
+    CLOSE("drawable/icons/close.xml"),
     CHEVRON_LEFT("drawable/icons/chevron_left.xml"),
     CHEVRON_RIGHT("drawable/icons/chevron_right.xml");
 

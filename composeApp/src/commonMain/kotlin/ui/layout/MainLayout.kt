@@ -24,9 +24,9 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainLayout(
-    content: @Composable (PaddingValues) -> Unit,
     actionButton: @Composable () -> Unit = {},
-    showTopBar: Boolean = true
+    showTopBar: Boolean = true,
+    content: @Composable (PaddingValues) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     val navigator = LocalNavigator.currentOrThrow
