@@ -3,9 +3,13 @@ package fi.tuska.beerclock.drinks
 import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.database.fromDbTime
 import fi.tuska.beerclock.images.DrinkImage
+import fi.tuska.beerclock.settings.GlobalUserPreferences
 import kotlinx.datetime.Instant
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class DrinkRecordInfo(private val record: DrinkRecord) {
+class DrinkRecordInfo(record: DrinkRecord) : KoinComponent {
+    private val prefs: GlobalUserPreferences by inject()
     val id = record.id
 
     /** Name of the drink */
@@ -17,15 +21,24 @@ class DrinkRecordInfo(private val record: DrinkRecord) {
     val time = Instant.fromDbTime(record.time)
 
     /** Size of the drink, in cl */
-    val quantityCl = record.quantity_liters / 100.0
+    val quantityCl = record.quantity_liters * 100.0
 
     /** Strength of the drink, or alcohol by volume, as a percentage value (range: 0 - 100) */
     val abvPercentage = record.abv * 100
 
     /** Amount of alcohol in the drink, in liters */
-    fun alcoholLiters(): Double = this.record.quantity_liters * this.record.abv
+    val alcoholLiters: Double = record.quantity_liters * record.abv
 
     /** Amount of alcohol in the drink, in grams */
-    fun alcoholGrams(): Double = this.alcoholLiters() * Constants.alcoholDensity
+    val alcoholGrams: Double = alcoholLiters * Constants.alcoholDensity
+
+    /**
+     * Given the selection of how many grams of alcohol are there in a single standard unit:
+     * (from user preferences):
+     * @return the number of units there are in this drink
+     */
+    fun units(): Double {
+        return alcoholGrams / prefs.prefs.alchoholGramsInUnit
+    }
 
 }

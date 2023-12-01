@@ -120,7 +120,7 @@ object EnStrings : Strings {
         override fun units(units: Double) = unitF(units)
         override fun quantity(quantity: Double) = "${quantityF(quantity)} l"
         override fun itemDescription(quantity: Double, abv: Double): String =
-            "${quantityF(quantity)} l ${abvF(abv)} %"
+            "${quantityF(quantity)} cl ${abvF(abv)} %"
 
         override fun drinkTime(time: Instant): String =
             time.toLocalDateTime(TimeZone.currentSystemDefault())

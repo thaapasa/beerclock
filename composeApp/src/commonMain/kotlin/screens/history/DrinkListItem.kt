@@ -23,7 +23,7 @@ fun DrinkListItem(drink: DrinkRecordInfo, onClick: () -> Unit = { }) {
             )
         },
         leadingContent = { drink.image.smallImage() },
-        trailingContent = { UnitAvatar(units = drink.alcoholGrams()) },
+        trailingContent = { UnitAvatar(units = drink.units()) },
         modifier = Modifier.clickable { onClick() },
         tonalElevation = 8.dp,
         shadowElevation = 16.dp
