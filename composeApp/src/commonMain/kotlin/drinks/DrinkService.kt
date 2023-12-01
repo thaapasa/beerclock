@@ -4,18 +4,13 @@ import fi.tuska.beerclock.database.BeerDatabase
 import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.logging.getLogger
-import fi.tuska.beerclock.util.ZeroHour
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
-import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.plus
-import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -25,15 +20,14 @@ private val logger = getLogger("DrinkService")
 class DrinkService : KoinComponent {
 
     private val db: BeerDatabase = get()
+    private val times = DrinkTimeService()
 
     suspend fun getDrinksForDay(date: LocalDate): List<DrinkRecordInfo> {
-        val zone = TimeZone.currentSystemDefault()
-        val startTime = LocalDateTime(date = date, time = ZeroHour).toInstant(zone)
-        val endTime = startTime.plus(1, DateTimeUnit.DAY, zone)
+        val range = times.dayTimeRange(date)
         val drinks = withContext(Dispatchers.IO) {
             db.drinkRecordQueries.selectByTime(
-                startTime.toDbTime(),
-                endTime.toDbTime()
+                range.start.toDbTime(),
+                range.end.toDbTime()
             ).executeAsList()
         }
         logger.info("Found ${drinks.size} drinks for $date")

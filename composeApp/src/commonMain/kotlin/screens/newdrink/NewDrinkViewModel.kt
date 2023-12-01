@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.navigator.Navigator
 import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.drinks.DrinkService
+import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.drinks.ExampleDrinks
 import fi.tuska.beerclock.drinks.NewDrinkRecord
 import fi.tuska.beerclock.images.DrinkImage
@@ -23,7 +24,8 @@ class NewDrinkViewModel(
     private val drinkService: DrinkService,
     private val navigator: Navigator
 ) : ViewModel() {
-    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+    private val times = DrinkTimeService()
+    private val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
     val drinks = mutableStateListOf<DrinkRecord>()
     var name by mutableStateOf("")
     var abv by mutableStateOf(4.5)
@@ -46,7 +48,7 @@ class NewDrinkViewModel(
 
     private fun toNewDrinkRecord(): NewDrinkRecord {
         return NewDrinkRecord(
-            time = Clock.System.now(),
+            time = times.drinkTimeToInstant(date, time),
             name = name,
             abv = abv / 100.0,
             quantityLiters = quantityCl / 100,

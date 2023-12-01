@@ -44,3 +44,14 @@ fun LocalTime.Companion.fromPrefsString(str: String): LocalTime? {
         null
     }
 }
+
+/**
+ * Closed-open range of time (start time is included, end is not).
+ */
+data class InstantRange(val start: Instant, val end: Instant) {
+    init {
+        require(start <= end) { "Start of the time range must be before the end of the range." }
+    }
+
+    fun contains(instant: Instant): Boolean = instant in start..end && instant != end
+}
