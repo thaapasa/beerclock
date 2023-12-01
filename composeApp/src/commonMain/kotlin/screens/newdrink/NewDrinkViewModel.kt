@@ -35,6 +35,7 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
     var date by mutableStateOf(drinkTime.first)
     var time by mutableStateOf(drinkTime.second)
     var image by mutableStateOf(DrinkImage.GENERIC_DRINK)
+    var saving by mutableStateOf(false)
 
     init {
         randomize()
@@ -68,10 +69,16 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
 
     fun addDrink(afterChanged: (() -> Unit)? = null) {
         launch {
-            val newDrink = toNewDrinkRecord()
-            logger.info("Adding drink to database: $newDrink")
-            drinkService.insertDrink(newDrink)
-            afterChanged?.invoke()
+            if (saving) return@launch
+            saving = true
+            try {
+                val newDrink = toNewDrinkRecord()
+                logger.info("Adding drink to database: $newDrink")
+                drinkService.insertDrink(newDrink)
+                afterChanged?.invoke()
+            } finally {
+                saving = false
+            }
         }
     }
 }

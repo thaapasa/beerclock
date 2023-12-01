@@ -29,6 +29,7 @@ fun AddDrinkDialog(onDrinksUpdated: (() -> Unit)? = null, onClose: () -> Unit) {
                 },
                 textButton = { modifier ->
                     TextButton(
+                        enabled = !vm.saving,
                         onClick = {
                             vm.addDrink {
                                 onDrinksUpdated?.invoke()
