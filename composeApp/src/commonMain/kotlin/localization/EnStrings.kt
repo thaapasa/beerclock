@@ -190,6 +190,16 @@ object EnStrings : Strings {
     }
 
 
+    /* Drink history screen */
+    override val history = History
+
+    object History : Strings.HistoryStrings {
+        override val prevDay = "Previous day"
+        override val selectDay = "Pick a day"
+        override val nextDay = "Next day"
+    }
+    
+
     /* Gender options */
     override val gender = Gender
 

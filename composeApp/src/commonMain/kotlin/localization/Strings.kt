@@ -112,6 +112,16 @@ interface Strings {
     }
 
 
+    /* Drink history screen */
+    val history: HistoryStrings
+
+    interface HistoryStrings {
+        val prevDay: String
+        val selectDay: String
+        val nextDay: String
+    }
+
+
     /* Gender options */
     val gender: GenderStrings
 

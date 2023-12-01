@@ -200,6 +200,16 @@ object FiStrings : Strings {
     }
 
 
+    /* Drink history screen */
+    override val history = History
+
+    object History : Strings.HistoryStrings {
+        override val prevDay = "Edellinen päivä"
+        override val selectDay = "Valitse päivä"
+        override val nextDay = "Seuraava päivä"
+    }
+
+
     /* Gender options */
     override val gender = Gender
 

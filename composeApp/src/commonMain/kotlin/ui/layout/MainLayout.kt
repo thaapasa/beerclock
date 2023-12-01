@@ -25,7 +25,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainLayout(
     content: @Composable (PaddingValues) -> Unit,
-    actionButton: @Composable () -> Unit = {}
+    actionButton: @Composable () -> Unit = {},
+    showTopBar: Boolean = true
 ) {
     val coroutineScope = rememberCoroutineScope()
     val navigator = LocalNavigator.currentOrThrow
@@ -51,12 +52,14 @@ fun MainLayout(
             Scaffold(
                 snackbarHost = { SnackbarHost(snackbarHostState) },
                 topBar = {
-                    TopAppBar(colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        titleContentColor = MaterialTheme.colorScheme.primary,
-                    ), title = { Text(strings.appName) }, actions = {
-                        ToggleDrawerButton(drawerState)
-                    })
+                    if (showTopBar) {
+                        TopAppBar(colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
+                            titleContentColor = MaterialTheme.colorScheme.primary,
+                        ), title = { Text(strings.appName) }, actions = {
+                            ToggleDrawerButton(drawerState)
+                        })
+                    }
                 },
                 floatingActionButton = actionButton,
                 content = content,
