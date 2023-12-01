@@ -2,6 +2,9 @@ package fi.tuska.beerclock.drinks
 
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.InstantRange
+import fi.tuska.beerclock.util.MinutesInDay
+import fi.tuska.beerclock.util.fromMinutesOfDay
+import fi.tuska.beerclock.util.toMinutesOfDay
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -26,7 +29,8 @@ class DrinkTimeService : KoinComponent {
 
     val zone = TimeZone.currentSystemDefault()
 
-    fun toInstant(time: LocalDateTime): Instant = time.toInstant(zone)
+    inline fun toInstant(time: LocalDateTime): Instant = time.toInstant(zone)
+    inline fun toLocalDateTime(instant: Instant): LocalDateTime = instant.toLocalDateTime(zone)
 
     fun dayStartTime(date: LocalDate): Instant =
         toInstant(LocalDateTime(date = date, time = prefs.prefs.startOfDay))
@@ -65,5 +69,28 @@ class DrinkTimeService : KoinComponent {
         val isForYesterday = local.time < prefs.prefs.startOfDay
         val drinkDate = if (isForYesterday) local.date.minus(1, DateTimeUnit.DAY) else local.date
         return drinkDate to local.time
+    }
+
+    /**
+     * Given the time in minutes of day, from the start of the drinking day, return the LocalTime
+     * that corresponds to that time, taking the user's preference (start of drinking day) into
+     * account. Used by drink time slider that allows time to be selected from start of drinking
+     * day to the end of it.
+     */
+    fun timeFromMinuteOfDay(mof: Int): LocalTime {
+        val dayStartMof = prefs.prefs.startOfDay.toMinutesOfDay()
+        val minutes = (dayStartMof + mof) % MinutesInDay
+        return LocalTime.fromMinutesOfDay(minutes)
+    }
+
+    /**
+     * Given a local time, calculate which minute of drinking day it corresponds to, when taking
+     * the user's custom start of day preference into accout. Used by drink time slider that
+     * allows time to be selected from start of drinking day to the end of it.
+     */
+    fun toMinutesOfDay(time: LocalTime): Int {
+        val dayStartMof = prefs.prefs.startOfDay.toMinutesOfDay()
+        val minutes = time.toMinutesOfDay() - dayStartMof
+        return if (minutes >= 0) minutes else minutes + MinutesInDay
     }
 }

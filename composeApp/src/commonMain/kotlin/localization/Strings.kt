@@ -29,6 +29,7 @@ interface Strings {
     fun dateShort(day: LocalDateTime): String = dateShort(day.date)
     fun time(time: LocalTime): String
     fun time(time: LocalDateTime): String = time(time.time)
+    fun dateTime(local: LocalDateTime): String
 
     val pickTime: String
     val pickDate: String
@@ -107,6 +108,7 @@ interface Strings {
         val quantityLabel: String
         val quantityUnit: String
         val submit: String
+        fun drinkTimeInfo(drinkTime: LocalDateTime): String
     }
 
 

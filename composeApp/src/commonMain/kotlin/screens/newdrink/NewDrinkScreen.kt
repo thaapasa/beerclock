@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -60,6 +61,17 @@ fun DrinkEditor(vm: NewDrinkViewModel, modifier: Modifier = Modifier) {
                 modifier = Modifier.weight(1f),
             )
         }
+        DrinkTimeSlider(
+            value = vm.time,
+            onValueChange = { vm.time = it },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Text(
+            strings.newDrink.drinkTimeInfo(vm.localRealTime()),
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier.padding(start = 8.dp, bottom = 4.dp, end = 8.dp),
+        )
+
         Spacer(modifier = Modifier.height(gap))
         Row(Modifier.fillMaxWidth()) {
             TextField(

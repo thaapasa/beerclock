@@ -15,8 +15,7 @@ import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.ui.composables.ViewModel
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.Instant
 
 private val logger = getLogger("NewDrinkScreen")
 
@@ -25,18 +24,21 @@ class NewDrinkViewModel(
     private val navigator: Navigator
 ) : ViewModel() {
     private val times = DrinkTimeService()
-    private val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+    private val drinkTime = times.instantToDrinkTime(Clock.System.now())
     val drinks = mutableStateListOf<DrinkRecord>()
     var name by mutableStateOf("")
     var abv by mutableStateOf(4.5)
     var quantityCl by mutableStateOf(33.0)
-    var time by mutableStateOf(today.time)
-    var date by mutableStateOf(today.date)
+    var date by mutableStateOf(drinkTime.first)
+    var time by mutableStateOf(drinkTime.second)
     var image by mutableStateOf(DrinkImage.GENERIC_DRINK)
 
     init {
         randomize()
     }
+
+    fun realTime(): Instant = times.drinkTimeToInstant(date, time)
+    fun localRealTime() = times.toLocalDateTime(realTime())
 
     private fun randomize() {
         val drink = ExampleDrinks.random()
@@ -48,7 +50,7 @@ class NewDrinkViewModel(
 
     private fun toNewDrinkRecord(): NewDrinkRecord {
         return NewDrinkRecord(
-            time = times.drinkTimeToInstant(date, time),
+            time = realTime(),
             name = name,
             abv = abv / 100.0,
             quantityLiters = quantityCl / 100,

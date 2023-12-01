@@ -5,6 +5,7 @@ import fi.tuska.beerclock.util.zeroPad
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
@@ -74,6 +75,10 @@ object FiStrings : Strings {
 
     override fun time(time: LocalTime): String {
         return "${time.hour}.${time.minute.zeroPad(2)}"
+    }
+
+    override fun dateTime(time: LocalDateTime): String {
+        return "${date(time.date)} klo ${time(time.time)}"
     }
 
     override val pickTime = "Valitse kellonaika"
@@ -189,6 +194,9 @@ object FiStrings : Strings {
         override val quantityLabel = "Määrä"
         override val quantityUnit = "cl"
         override val submit = "Juo!"
+
+        override fun drinkTimeInfo(drinkTime: LocalDateTime) =
+            "Ajaksi merkataan ${dateTime(drinkTime)}"
     }
 
 

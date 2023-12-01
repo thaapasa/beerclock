@@ -13,6 +13,7 @@ import kotlinx.datetime.toLocalDateTime
 private val logger = getLogger("TimeUtils")
 
 val ZeroHour = LocalTime(0, 0, 0)
+val MinutesInDay = 60 * 24
 
 fun LocalDate.toUTCInstant(): Instant {
     val l = LocalDateTime(date = this, time = ZeroHour)
@@ -43,6 +44,15 @@ fun LocalTime.Companion.fromPrefsString(str: String): LocalTime? {
         logger.warn("Error reading time from prefs: ${e.message}")
         null
     }
+}
+
+fun LocalTime.toMinutesOfDay(): Int {
+    return this.hour * 60 + this.minute
+
+}
+
+fun LocalTime.Companion.fromMinutesOfDay(mof: Int): LocalTime {
+    return LocalTime(mof / 60, mof % 60)
 }
 
 /**
