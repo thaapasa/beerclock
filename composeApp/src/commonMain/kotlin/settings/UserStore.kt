@@ -1,9 +1,8 @@
 package fi.tuska.beerclock.settings
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.util.fromPrefsString
+import fi.tuska.beerclock.util.getCurrentThreadName
 import fi.tuska.beerclock.util.safeToDouble
 import fi.tuska.beerclock.util.toPrefsString
 import kotlinx.coroutines.Dispatchers
@@ -15,12 +14,10 @@ import org.koin.core.component.get
 
 internal class UserStore : KoinComponent {
     private val store: PreferenceStore = get()
-
-    var state: UserStore by mutableStateOf(UserStore())
-        private set
+    private val prefs: GlobalUserPreferences = get()
 
     suspend fun setGender(gender: Gender) {
-        if (state.gender == gender) {
+        if (prefs.prefs.gender == gender) {
             return
         }
         setState { copy(gender = gender) }
@@ -28,7 +25,7 @@ internal class UserStore : KoinComponent {
     }
 
     suspend fun setWeight(weight: Double) {
-        if (state.weightKg == weight) {
+        if (prefs.prefs.weightKg == weight) {
             return
         }
         setState { copy(weightKg = weight) }
@@ -36,7 +33,7 @@ internal class UserStore : KoinComponent {
     }
 
     suspend fun setStartOfDay(startOfDay: LocalTime) {
-        if (state.startOfDay == startOfDay) {
+        if (prefs.prefs.startOfDay == startOfDay) {
             return
         }
         setState { copy(startOfDay = startOfDay) }
@@ -44,7 +41,7 @@ internal class UserStore : KoinComponent {
     }
 
     suspend fun setAlcoholGramsInUnit(gramsInUnit: Double) {
-        if (state.alchoholGramsInUnit == gramsInUnit) {
+        if (prefs.prefs.alchoholGramsInUnit == gramsInUnit) {
             return
         }
         setState { copy(alchoholGramsInUnit = gramsInUnit) }
@@ -52,53 +49,16 @@ internal class UserStore : KoinComponent {
     }
 
     private suspend fun setStateValue(stateKey: String, stringified: String) {
+        getLogger("Foo").info("Outer on thread ${getCurrentThreadName()}")
         withContext(Dispatchers.IO) {
+            getLogger("Foo").info("Inner on thread ${getCurrentThreadName()}")
             store.setString(stateKey, stringified)
         }
     }
 
-    fun load() {
-        val weightStr = store.getString(PreferenceKeys.weight, state.weightKg.toString())
-        val genderStr = store.getString(PreferenceKeys.gender, state.gender.toString())
-        val startOfDayStr =
-            store.getString(PreferenceKeys.startOfDay, state.startOfDay.toPrefsString())
-        val alcoholGramsInUnitStr =
-            store.getString(
-                PreferenceKeys.alchoholGramsInUnit,
-                state.alchoholGramsInUnit.toString()
-            )
-
-        setState {
-            copy(
-                weightKg = safeToDouble(weightStr) ?: state.weightKg,
-                gender = Gender.safeValueOf(genderStr) ?: state.gender,
-                startOfDay = LocalTime.fromPrefsString(startOfDayStr) ?: state.startOfDay,
-                alchoholGramsInUnit = safeToDouble(alcoholGramsInUnitStr)
-                    ?: state.alchoholGramsInUnit
-            )
-        }
+    private inline fun setState(update: UserPreferences.() -> UserPreferences) {
+        prefs.update(prefs.prefs.update())
     }
-
-    private inline fun setState(update: UserStore.() -> UserStore) {
-        state = state.update()
-    }
-
-    data class UserStore(
-        /** User gender. Affects BAC calculation formula. */
-        val gender: Gender = Gender.MALE,
-        /** User weight, in kilograms. Affects BAC calculation formula. */
-        val weightKg: Double = 70.0,
-        /**
-         * When the "drinking day" starts. Drinks consumed before this time will be shown
-         * on the previous day's listing.
-         */
-        val startOfDay: LocalTime = LocalTime(6, 0),
-        /**
-         * How many grams of alcohol is there in a single standard unit?
-         * 12.0 grams of alcohol per unit is the default for Finland (and various other countries).
-         */
-        val alchoholGramsInUnit: Double = 12.0
-    )
 
     object PreferenceKeys {
         const val weight = "prefs.user.weight"
@@ -107,4 +67,35 @@ internal class UserStore : KoinComponent {
         const val alchoholGramsInUnit = "prefs.user.alchoholGramsInUnit"
     }
 
+    companion object {
+        /**
+         * Loads the user preferences from the preference store. Falls back to defaults
+         * in case values are missing or if invalid values are stored to the preferences.
+         *
+         * This is called once during app startup. Further changes are automatically applied
+         * to the global user prefs state managed by Koin.
+         *
+         * For simplicity and ease-of-use, this is now just performed on the main UI thread.
+         */
+        fun load(store: PreferenceStore): UserPreferences {
+            val defaults = UserPreferences()
+            val weightStr = store.getString(PreferenceKeys.weight, defaults.weightKg.toString())
+            val genderStr = store.getString(PreferenceKeys.gender, defaults.gender.toString())
+            val startOfDayStr =
+                store.getString(PreferenceKeys.startOfDay, defaults.startOfDay.toPrefsString())
+            val alcoholGramsInUnitStr =
+                store.getString(
+                    PreferenceKeys.alchoholGramsInUnit,
+                    defaults.alchoholGramsInUnit.toString()
+                )
+
+            return UserPreferences(
+                weightKg = safeToDouble(weightStr) ?: defaults.weightKg,
+                gender = Gender.safeValueOf(genderStr) ?: defaults.gender,
+                startOfDay = LocalTime.fromPrefsString(startOfDayStr) ?: defaults.startOfDay,
+                alchoholGramsInUnit = safeToDouble(alcoholGramsInUnitStr)
+                    ?: defaults.alchoholGramsInUnit
+            )
+        }
+    }
 }

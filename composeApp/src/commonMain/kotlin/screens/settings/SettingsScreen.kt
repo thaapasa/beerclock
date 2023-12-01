@@ -34,10 +34,6 @@ fun SettingsPage(innerPadding: PaddingValues) {
 
     val vm = rememberWithDispose { SettingsViewModel() }
 
-    LaunchedEffect(Unit) {
-        vm.loadFromPrefs()
-    }
-
     LaunchedEffect(vm.weightKg) { vm.saveWeight() }
     LaunchedEffect(vm.gender) { vm.saveGender() }
     LaunchedEffect(vm.startOfDay) { vm.saveStartOfDay() }

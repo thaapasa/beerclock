@@ -3,36 +3,30 @@ package fi.tuska.beerclock.screens.settings
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import fi.tuska.beerclock.logging.getLogger
-import fi.tuska.beerclock.settings.Gender
+import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.settings.UserStore
 import fi.tuska.beerclock.ui.composables.ViewModel
-import fi.tuska.beerclock.util.ZeroHour
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
-private val logger = getLogger("SettingsScreen")
+internal class SettingsViewModel : ViewModel(), KoinComponent {
 
-internal class SettingsViewModel : ViewModel() {
+    // Initialize editors based on the global state
+    private val prefs: GlobalUserPreferences = get()
 
-    private val prefs = UserStore()
+    // Push updated to user prefs using the UserStore. The updated will be automatically
+    // reflected in the global user prefs state as well.
+    private val store = UserStore()
 
-    var weightKg by mutableStateOf(0.0)
-    var gender by mutableStateOf(Gender.FEMALE)
-    var startOfDay by mutableStateOf(ZeroHour)
-    var gramsInUnit by mutableStateOf(0.0)
+    var weightKg by mutableStateOf(prefs.prefs.weightKg)
+    var gender by mutableStateOf(prefs.prefs.gender)
+    var startOfDay by mutableStateOf(prefs.prefs.startOfDay)
+    var gramsInUnit by mutableStateOf(prefs.prefs.alchoholGramsInUnit)
 
-    fun loadFromPrefs() = launch {
-        prefs.load()
-        logger.info("Loaded prefs: ${prefs.state}")
-        weightKg = prefs.state.weightKg
-        gender = prefs.state.gender
-        startOfDay = prefs.state.startOfDay
-        gramsInUnit = prefs.state.alchoholGramsInUnit
-    }
-
-    fun saveWeight() = launch { prefs.setWeight(weightKg) }
-    fun saveGender() = launch { prefs.setGender(gender) }
-    fun saveStartOfDay() = launch { prefs.setStartOfDay(startOfDay) }
-    fun saveGramsInUnitText() = launch { prefs.setAlcoholGramsInUnit(gramsInUnit) }
+    fun saveWeight() = launch { store.setWeight(weightKg) }
+    fun saveGender() = launch { store.setGender(gender) }
+    fun saveStartOfDay() = launch { store.setStartOfDay(startOfDay) }
+    fun saveGramsInUnitText() = launch { store.setAlcoholGramsInUnit(gramsInUnit) }
 
 }
