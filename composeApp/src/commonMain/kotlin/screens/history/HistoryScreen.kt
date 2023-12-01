@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.ui.components.DatePickerIcon
 import fi.tuska.beerclock.ui.components.SegmentDivider
 import fi.tuska.beerclock.ui.components.SegmentedButton
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
@@ -49,10 +50,12 @@ object HistoryScreen : Screen {
                             textAlign = TextAlign.Center
                         )
                         SegmentDivider()
-                        AppIcon.CALENDAR.iconButton(
-                            contentDescription = strings.history.selectDay,
-                            modifier = Modifier.padding(horizontal = 4.dp)
-                        ) { }
+                        DatePickerIcon(
+                            value = vm.date,
+                            onValueChange = { vm.selectDay(it) },
+                            modifier = Modifier.padding(horizontal = 4.dp),
+                            title = strings.history.selectDay
+                        )
                         SegmentDivider()
                         AppIcon.CHEVRON_RIGHT.iconButton(
                             contentDescription = strings.history.nextDay,

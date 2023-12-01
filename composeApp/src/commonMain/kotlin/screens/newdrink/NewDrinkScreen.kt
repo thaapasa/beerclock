@@ -113,7 +113,10 @@ fun DrinkEditor(vm: NewDrinkViewModel, modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.weight(1f))
         Row(modifier = Modifier.padding(16.dp).align(Alignment.CenterHorizontally)) {
-            Button(onClick = { vm.addDrink() }) { Text(strings.newDrink.submit) }
+            Button(
+                onClick = { vm.addDrink() },
+                modifier = Modifier.fillMaxWidth()
+            ) { Text(strings.newDrink.submit) }
         }
     }
 }
