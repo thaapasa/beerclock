@@ -25,6 +25,7 @@ fun <T> DropdownSelect(
     valueToText: (value: T) -> String,
     label: @Composable (() -> Unit)? = null,
     placeholder: @Composable (() -> Unit)? = null,
+    showIcon: ((value: T) -> Boolean)? = null,
     iconForValue: @Composable ((value: T) -> Unit)? = null,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -38,7 +39,9 @@ fun <T> DropdownSelect(
             value = valueToText(selected),
             onValueChange = {},
             readOnly = true,
-            leadingIcon = iconForValue?.let { { it(selected) } },
+            leadingIcon = if (showIcon?.invoke(selected) != false) iconForValue?.let {
+                { it(selected) }
+            } else null,
             trailingIcon = { TrailingIcon(expanded = expanded) },
             placeholder = placeholder,
             label = label,
@@ -56,7 +59,9 @@ fun <T> DropdownSelect(
                         onSelect(option)
                         expanded = false
                     },
-                    leadingIcon = iconForValue?.let { { it(option) } },
+                    leadingIcon = if (showIcon?.invoke(option) != false) iconForValue?.let {
+                        { it(option) }
+                    } else null,
                     text = { Text(valueToText(option)) },
                     modifier = Modifier.fillMaxWidth(),
                 )
