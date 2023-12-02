@@ -39,7 +39,7 @@ fun UnitAvatar(units: Double, modifier: Modifier = Modifier) {
                     color = MaterialTheme.colorScheme.onSecondaryContainer
                 )
                 Text(
-                    text = strings.drink.unitLabel,
+                    text = strings.drink.unitLabel(units),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSecondaryContainer
                 )

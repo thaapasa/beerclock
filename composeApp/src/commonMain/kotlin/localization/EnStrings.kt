@@ -73,6 +73,8 @@ object EnStrings : Strings {
     override val pickDate = "Pick date"
     override val dialogOk = "OK"
     override val dialogClose = "Close"
+    override val dialogEdit = "Modify"
+    override val dialogDelete = "Delete"
 
     private val Countries = mapOf(
         "AT" to "Austria",
@@ -118,20 +120,23 @@ object EnStrings : Strings {
 
     object DrinkData : Strings.DrinkData {
         override val image = "Image of the drink"
-        override val unitLabel = "units"
+        override fun unitLabel(units: Double) = if (unitF(units) == "1") "unit" else "units"
         val unitF = createNumberFormatter(2)
         val abvF = createNumberFormatter(1)
         val quantityF = createNumberFormatter(1)
-        override fun abv(abv: Double) = "${abvF(abv)} %"
+        override fun abv(abvPercentage: Double) = "${abvF(abvPercentage)} %"
+        override fun quantity(quantityCl: Double) = "${quantityF(quantityCl)} cl"
         override fun units(units: Double) = unitF(units)
-        override fun quantity(quantity: Double) = "${quantityF(quantity)} l"
-        override fun itemDescription(quantity: Double, abv: Double): String =
-            "${quantityF(quantity)} cl ${abvF(abv)} %"
 
         override fun drinkTime(time: Instant): String =
             time.toLocalDateTime(TimeZone.currentSystemDefault())
                 .let { "${it.hour.zeroPad(2)}:${it.minute.zeroPad(2)}" }
 
+        override val timeInfoLabel = "Drinking time"
+        override val sizeInfoLabel = "Drink size"
+        override val unitsInfoLabel = "Standard units"
+        override val alcoholGramsInfoLabel = "Pure alcohol content"
+        override val burnOffTimeInfoLabel = "Burn-off time"
     }
 
 

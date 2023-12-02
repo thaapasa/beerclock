@@ -85,6 +85,8 @@ object FiStrings : Strings {
     override val pickDate = "Valitse päivämäärä"
     override val dialogOk = "OK"
     override val dialogClose = "Sulje"
+    override val dialogEdit = "Muokkaa"
+    override val dialogDelete = "Poista"
 
     private val Countries = mapOf(
         "AT" to "Itävalta",
@@ -129,19 +131,24 @@ object FiStrings : Strings {
 
     object DrinkData : Strings.DrinkData {
         override val image = "Kuva juomasta"
-        override val unitLabel = "annosta"
+        override fun unitLabel(units: Double) = if (unitF(units) == "1") "annos" else "annosta"
         val unitF = createNumberFormatter(2)
         val abvF = createNumberFormatter(1)
+        val gramsF = createNumberFormatter(2)
         val quantityF = createNumberFormatter(1)
-        override fun abv(abv: Double) = "${abvF(abv)} %"
+        override fun abv(abvPercentage: Double) = "${abvF(abvPercentage)} %"
+        override fun quantity(quantityCl: Double) = "${quantityF(quantityCl)} cl"
         override fun units(units: Double) = unitF(units)
-        override fun quantity(quantity: Double) = "${quantityF(quantity)} l"
-        override fun itemDescription(quantity: Double, abv: Double): String =
-            "${quantityF(quantity)} cl ${abvF(abv)} %"
 
         override fun drinkTime(time: Instant): String =
             time.toLocalDateTime(TimeZone.currentSystemDefault())
                 .let { "klo ${it.hour}:${it.minute.zeroPad(2)}" }
+
+        override val timeInfoLabel = "Joit tämän"
+        override val sizeInfoLabel = "Juoman koko"
+        override val unitsInfoLabel = "Annoksia"
+        override val alcoholGramsInfoLabel = "Puhdasta alkoholia"
+        override val burnOffTimeInfoLabel = "Alkoholin palamisaika"
     }
 
 

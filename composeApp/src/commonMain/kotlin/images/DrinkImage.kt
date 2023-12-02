@@ -1,7 +1,7 @@
 package fi.tuska.beerclock.images
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,11 +31,20 @@ enum class DrinkImage(val path: String) {
     fun painter(): Painter = painterResource(this.path)
 
     @Composable
-    fun smallImage(modifier: Modifier = Modifier): Unit {
+    fun smallImage(modifier: Modifier = Modifier) {
         Image(
             painter = painter(),
             contentDescription = strings.drink.image,
-            modifier = modifier.width(64.dp).clip(RoundedCornerShape(12.dp)),
+            modifier = modifier.size(64.dp).clip(RoundedCornerShape(12.dp)),
+        )
+    }
+
+    @Composable
+    fun largeImage(modifier: Modifier = Modifier) {
+        Image(
+            painter = painter(),
+            contentDescription = strings.drink.image,
+            modifier = modifier.size(128.dp).clip(RoundedCornerShape(12.dp)),
         )
     }
 

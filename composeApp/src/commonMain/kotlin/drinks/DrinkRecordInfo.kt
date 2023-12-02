@@ -7,6 +7,10 @@ import fi.tuska.beerclock.settings.GlobalUserPreferences
 import kotlinx.datetime.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.math.roundToInt
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 
 class DrinkRecordInfo(record: DrinkRecord) : KoinComponent {
     private val prefs: GlobalUserPreferences by inject()
@@ -39,6 +43,18 @@ class DrinkRecordInfo(record: DrinkRecord) : KoinComponent {
      */
     fun units(): Double {
         return AlcoholCalculator.getUnitsFromAlcoholWeight(alcoholGrams, prefs.prefs)
+    }
+
+    /**
+     * Calculate the time it takes for your liver to burn off all the alcohol in this drink.
+     */
+    fun burnOffTime(): Duration {
+        val burnRate = AlcoholCalculator.alcoholGramsBurnedPerHour(prefs.prefs)
+        val hoursToBurn = alcoholGrams / burnRate
+        val minutesToBurn = (hoursToBurn * 60).roundToInt()
+        val fullHours = minutesToBurn / 60
+        val fullMinutes = minutesToBurn % 60
+        return fullHours.hours + fullMinutes.minutes
     }
 
 }

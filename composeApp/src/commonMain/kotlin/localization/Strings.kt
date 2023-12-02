@@ -8,6 +8,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
+import kotlin.time.Duration
 
 val strings: Strings = when (Locale.current.language) {
     "fi" -> FiStrings
@@ -35,6 +36,8 @@ interface Strings {
     val pickDate: String
     val dialogOk: String
     val dialogClose: String
+    val dialogEdit: String
+    val dialogDelete: String
 
     fun countryName(countryCode: String): String
 
@@ -57,12 +60,26 @@ interface Strings {
 
     interface DrinkData {
         val image: String
-        val unitLabel: String
+        fun unitLabel(units: Double): String
+        fun abv(abvPercentage: Double): String
+        fun quantity(quantityCl: Double): String
         fun units(units: Double): String
-        fun abv(abv: Double): String
-        fun quantity(quantity: Double): String
-        fun itemDescription(quantity: Double, abv: Double): String
+        fun drinkSize(quantityCl: Double, abvPercentage: Double): String =
+            "${quantity(quantityCl)} ${abv(abvPercentage)}"
+
         fun drinkTime(time: Instant): String
+
+        val timeInfoLabel: String
+        val sizeInfoLabel: String
+        val unitsInfoLabel: String
+        val alcoholGramsInfoLabel: String
+        val burnOffTimeInfoLabel: String
+        fun unitsInfo(units: Double) = FiStrings.DrinkData.units(units)
+        fun sizeInfo(quantityCl: Double, abvPercentage: Double) =
+            drinkSize(quantityCl, abvPercentage)
+
+        fun alcoholGramsInfo(grams: Double) = "${FiStrings.DrinkData.gramsF(grams)} g"
+        fun burnOffTimeInfo(time: Duration) = time.toString()
     }
 
 
