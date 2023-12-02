@@ -4,10 +4,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,7 +24,6 @@ fun <T> DropdownSelect(
     modifier: Modifier = Modifier,
     valueToText: (value: T) -> String,
     label: @Composable (() -> Unit)? = null,
-    supportingText: @Composable (() -> Unit)? = null,
     placeholder: @Composable (() -> Unit)? = null,
     iconForValue: @Composable ((value: T) -> Unit)? = null,
 ) {
@@ -36,20 +34,21 @@ fun <T> DropdownSelect(
         onExpandedChange = { expanded = it },
         modifier = modifier
     ) {
-        TextField(
+        OutlinedTextField(
             value = valueToText(selected),
             onValueChange = {},
             readOnly = true,
+            leadingIcon = { iconForValue?.let { it(selected) } },
             trailingIcon = { TrailingIcon(expanded = expanded) },
             placeholder = placeholder,
             label = label,
-            supportingText = supportingText,
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
-            modifier = Modifier.menuAnchor().fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().menuAnchor(),
         )
-        ExposedDropdownMenu(expanded = expanded,
-            modifier = Modifier.fillMaxWidth(),
-            onDismissRequest = { expanded = false })
+        ExposedDropdownMenu(
+            expanded = expanded,
+            modifier = Modifier.exposedDropdownSize(matchTextFieldWidth = true),
+            onDismissRequest = { expanded = false }
+        )
         {
             options.forEach { option ->
                 DropdownMenuItem(

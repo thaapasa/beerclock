@@ -56,6 +56,6 @@ fun DecimalField(
                 errorText ?: strings.errors.invalidDecimal
             )
         },
-        isError = !isValidInput,
+        isError = !isValidInput
     )
 }

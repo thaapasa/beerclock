@@ -17,7 +17,6 @@ val countrySelections = SingleUnitWeights.keys.toTypedArray()
 fun AlcoholUnitsDropdown(
     onSelect: (value: Double) -> Unit,
     modifier: Modifier = Modifier,
-    supportingText: @Composable (() -> Unit)? = null,
 ) {
     val options = remember {
         val opts = countrySelections.copyOf()
@@ -39,7 +38,6 @@ fun AlcoholUnitsDropdown(
         },
         placeholder = { Text(text = strings.settings.pickCountry) },
         label = { Text(text = strings.settings.alcoholGramsByCountry) },
-        supportingText = supportingText,
     )
 }
 

@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.localization.strings
 import fi.tuska.beerclock.ui.components.DecimalField
+import fi.tuska.beerclock.ui.components.FieldDescription
 import fi.tuska.beerclock.ui.components.TimeInputField
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
@@ -45,7 +46,7 @@ fun SettingsPage(innerPadding: PaddingValues) {
         DecimalField(
             value = vm.weightKg,
             onValueChange = { vm.weightKg = it },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 0.dp),
             label = { Text(text = strings.settings.weightLabel) },
             trailingIcon = { Text(strings.settings.weightUnit) },
             supportingText = { Text(strings.settings.weightDescription) }
@@ -54,7 +55,10 @@ fun SettingsPage(innerPadding: PaddingValues) {
             selected = vm.gender,
             onSelect = { vm.gender = it },
             modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-            supportingText = { Text(strings.settings.genderDescription) }
+        )
+        FieldDescription(
+            strings.settings.genderDescription,
+            modifier = Modifier.padding(top = 4.dp)
         )
         Spacer(Modifier.height(16.dp))
         TimeInputField(

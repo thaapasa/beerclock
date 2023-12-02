@@ -14,7 +14,6 @@ fun GenderSelector(
     selected: Gender,
     onSelect: (gender: Gender) -> Unit,
     modifier: Modifier = Modifier,
-    supportingText: @Composable (() -> Unit)? = null,
 ) = DropdownSelect(
     options = Gender.values(),
     selected = selected,
@@ -23,7 +22,6 @@ fun GenderSelector(
     valueToText = strings::forGender,
     placeholder = { Text(text = strings.settings.genderLabel) },
     label = { Text(text = strings.settings.genderLabel) },
-    supportingText = supportingText,
     iconForValue = {
         Icon(
             painter = AppIcon.forGender(it).painter(),
