@@ -17,14 +17,20 @@ private val logger = getLogger("DrinkImage")
 
 enum class DrinkImage(val path: String) {
     GENERIC_DRINK("drawable/drinks/generic_drink.webp"),
-    BEER_GLASS_1("drawable/drinks/beer_glass1.webp"),
-    BEER_GLASS_2("drawable/drinks/beer_glass2.webp"),
-    BEER_CAN1("drawable/drinks/beer_can1.webp"),
-    RED_WINE_GLASS1("drawable/drinks/red_wine_glass1.webp"),
-    WHITE_WINE_GLASS1("drawable/drinks/white_wine_glass1.webp"),
-    CHAMPAGNE_GLASS1("drawable/drinks/champagne_glass1.webp"),
-    MARTINI("drawable/drinks/martini.webp"),
-    WHISKY1("drawable/drinks/whisky1.webp");
+    BEER_GLASS_1("drawable/drinks/beer_glass_1.webp"),
+    BEER_BOTTLE_1("drawable/drinks/beer_bottle_1.webp"),
+    BEER_CAN_1("drawable/drinks/beer_can_1.webp"),
+    BEER_CAN_2("drawable/drinks/beer_can_2.webp"),
+    BEER_CAN_3("drawable/drinks/beer_can_3.webp"),
+    BEER_CAN_4("drawable/drinks/beer_can_4.webp"),
+    RED_WINE_GLASS_1("drawable/drinks/red_wine_glass_1.webp"),
+    WHITE_WINE_GLASS_1("drawable/drinks/white_wine_glass_1.webp"),
+    WHITE_WINE_GLASS_2("drawable/drinks/white_wine_glass_2.webp"),
+    WHITE_WINE_BOTTLE_2("drawable/drinks/white_wine_bottle_1.webp"),
+    COGNAC_1("drawable/drinks/cognac_1.webp"),
+    CAIPIROSCA_1("drawable/drinks/caipirosca_1.webp"),
+    CAIPIROSCA_2("drawable/drinks/caipirosca_2.webp"),
+    MARTINI_1("drawable/drinks/martini_1.webp");
 
     @OptIn(ExperimentalResourceApi::class)
     @Composable
