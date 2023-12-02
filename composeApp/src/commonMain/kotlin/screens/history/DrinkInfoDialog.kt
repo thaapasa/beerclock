@@ -35,9 +35,9 @@ val elevation = 24.dp
 @Composable
 fun DrinkInfoDialog(
     drink: DrinkRecordInfo,
-    onClose: () -> Unit = { },
+    onClose: () -> Unit,
+    onDelete: ((drink: DrinkRecordInfo) -> Unit)? = null,
     onModify: (() -> Unit)? = null,
-    onDelete: (() -> Unit)? = null,
 ) {
     val textColor = MaterialTheme.colorScheme.onSurface
 
@@ -70,7 +70,10 @@ fun DrinkInfoDialog(
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Divider(thickness = 1.dp, color = textColor)
+                Divider(
+                    thickness = 1.dp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
                 Spacer(modifier = Modifier.height(16.dp))
                 DrinkInfoTable(drink)
                 DrinkInfoDialogButtons(drink, textColor, onClose, onModify, onDelete)
@@ -86,13 +89,13 @@ fun DrinkInfoDialogButtons(
     textColor: Color,
     onClose: () -> Unit = { },
     onModify: (() -> Unit)? = null,
-    onDelete: (() -> Unit)? = null,
+    onDelete: ((drink: DrinkRecordInfo) -> Unit)? = null,
 ) {
     if (onModify == null && onDelete == null) {
         return
     }
     Spacer(modifier = Modifier.height(16.dp))
-    Divider(thickness = 1.dp, color = textColor)
+    Divider(thickness = 1.dp, color = MaterialTheme.colorScheme.onSurfaceVariant)
     Spacer(modifier = Modifier.height(24.dp))
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -100,7 +103,10 @@ fun DrinkInfoDialogButtons(
     ) {
         onDelete?.let {
             FilledTonalButton(
-                it,
+                {
+                    onDelete(drink)
+                    onClose()
+                },
                 contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                 colors = ButtonDefaults.filledTonalButtonColors(contentColor = MaterialTheme.colorScheme.tertiary)
             ) {

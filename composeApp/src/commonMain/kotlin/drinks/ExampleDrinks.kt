@@ -17,4 +17,3 @@ val ExampleDrinks = listOf(
     DrinkDef("Martini", 0.1, 32.5, DrinkImage.MARTINI_1),
     DrinkDef("Cognac", 0.04, 43.0, DrinkImage.COGNAC_1)
 )
-

@@ -58,10 +58,11 @@ object HistoryScreen : Screen {
                         modifier = Modifier.padding(horizontal = 4.dp)
                     ) { vm.nextDay() }
                 }
-                DrinkList(vm.drinks,
+                DrinkList(
+                    vm.drinks,
                     modifier = Modifier.padding(top = 16.dp)
                         .clip(RoundedCornerShape(16.dp)),
-                    onClick = { vm.deleteDrink(it) }
+                    onDelete = vm::deleteDrink
                 )
             }
         }

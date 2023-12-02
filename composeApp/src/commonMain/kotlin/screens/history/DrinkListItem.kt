@@ -14,7 +14,10 @@ import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.localization.strings
 
 @Composable
-fun DrinkListItem(drink: DrinkRecordInfo, onClick: () -> Unit = { }) {
+fun DrinkListItem(
+    drink: DrinkRecordInfo,
+    onDelete: ((drink: DrinkRecordInfo) -> Unit)? = null,
+) {
     var selected by remember { mutableStateOf(false) }
     ListItem(
         overlineContent = { Text(strings.drink.drinkTime(drink.time)) },
@@ -34,6 +37,10 @@ fun DrinkListItem(drink: DrinkRecordInfo, onClick: () -> Unit = { }) {
         shadowElevation = 16.dp
     )
     if (selected) {
-        DrinkInfoDialog(drink, onClose = { selected = false }, onDelete = onClick, onModify = {})
+        DrinkInfoDialog(
+            drink,
+            onClose = { selected = false },
+            onDelete = onDelete,
+            onModify = {})
     }
 }

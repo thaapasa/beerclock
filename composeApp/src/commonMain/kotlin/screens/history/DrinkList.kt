@@ -9,12 +9,12 @@ import fi.tuska.beerclock.drinks.DrinkRecordInfo
 @Composable
 fun DrinkList(
     drinkList: List<DrinkRecordInfo>,
-    onClick: (drink: DrinkRecordInfo) -> Unit = {},
+    onDelete: ((drink: DrinkRecordInfo) -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     return LazyColumn(modifier = modifier) {
         items(drinkList) {
-            DrinkListItem(it, onClick = { onClick(it) })
+            DrinkListItem(it, onDelete = onDelete)
         }
     }
 }
