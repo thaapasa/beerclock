@@ -153,6 +153,9 @@ object EnStrings : Strings {
 
     object Settings : Strings.SettingsStrings {
         override val title = "Settings"
+        override val localeLabel = "Language"
+        override val phoneLocale = "Use system locale"
+        override val localeDescription = "Select the language for BeerClock."
         override val weightLabel = "Your weight"
         override val weightUnit = "kg"
         override val weightDescription =

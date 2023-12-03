@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
@@ -35,14 +34,17 @@ fun SettingsPage(innerPadding: PaddingValues) {
     val strings = Strings.get()
     val vm = rememberWithDispose { SettingsViewModel() }
 
-    LaunchedEffect(vm.weightKg) { vm.saveWeight() }
-    LaunchedEffect(vm.gender) { vm.saveGender() }
-    LaunchedEffect(vm.startOfDay) { vm.saveStartOfDay() }
-    LaunchedEffect(vm.gramsInUnit) { vm.saveGramsInUnitText() }
+    vm.trackChanges()
 
     Column(
         Modifier.padding(innerPadding).padding(16.dp).fillMaxWidth()
     ) {
+        LanguageDropdown(selected = vm.locale, onSelect = { vm.locale = it })
+        FieldDescription(
+            strings.settings.localeDescription,
+            modifier = Modifier.padding(top = 4.dp)
+        )
+        Spacer(Modifier.height(16.dp))
         DecimalField(
             value = vm.weightKg,
             onValueChange = { vm.weightKg = it },

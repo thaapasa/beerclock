@@ -3,6 +3,7 @@ package fi.tuska.beerclock.settings
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import fi.tuska.beerclock.localization.AppLocale
 import fi.tuska.beerclock.logging.getLogger
 import kotlinx.datetime.LocalTime
 
@@ -20,7 +21,11 @@ data class UserPreferences(
      * How many grams of alcohol is there in a single standard unit?
      * 12.0 grams of alcohol per unit is the default for Finland (and various other countries).
      */
-    val alchoholGramsInUnit: Double = 12.0
+    val alchoholGramsInUnit: Double = 12.0,
+    /**
+     * App locale, if selected from settings (null means follow system locale).
+     */
+    val locale: AppLocale? = null
 )
 
 private val logger = getLogger("UserPreferences")

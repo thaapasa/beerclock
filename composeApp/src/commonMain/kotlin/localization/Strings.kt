@@ -2,6 +2,7 @@ package fi.tuska.beerclock.localization
 
 import androidx.compose.ui.text.intl.Locale
 import fi.tuska.beerclock.settings.Gender
+import fi.tuska.beerclock.settings.GlobalUserPreferences
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -9,20 +10,26 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.time.Duration
 
 interface Strings {
 
     companion object : KoinComponent {
 
-        private fun byLocale(): Strings = when (Locale.current.language) {
+        private val prefs: GlobalUserPreferences by inject()
+
+        fun userLanguage(): String =
+            prefs.prefs.locale?.language ?: Locale.current.language
+
+        inline fun forLanguage(language: String): Strings = when (language) {
             "fi" -> FiStrings
             "en" -> EnStrings
             else -> EnStrings
         }
 
-        fun get(): Strings {
-            return byLocale()
+        inline fun get(): Strings {
+            return forLanguage(userLanguage())
         }
     }
 
@@ -105,6 +112,9 @@ interface Strings {
 
     interface SettingsStrings {
         val title: String
+        val localeLabel: String
+        val phoneLocale: String
+        val localeDescription: String
         val weightLabel: String
         val weightUnit: String
         val weightDescription: String

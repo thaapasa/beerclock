@@ -165,6 +165,9 @@ object FiStrings : Strings {
 
     object Settings : Strings.SettingsStrings {
         override val title = "Asetukset"
+        override val localeLabel = "Kieli"
+        override val phoneLocale = "Puhelimen kielen mukaan"
+        override val localeDescription = "Valitse millä kielellä haluat käyttää Kaljakelloa."
         override val weightLabel = "Painosi"
         override val weightUnit = "kg"
         override val weightDescription =

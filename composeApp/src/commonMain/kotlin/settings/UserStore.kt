@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.settings
 
+import fi.tuska.beerclock.localization.AppLocale
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.util.fromPrefsString
 import fi.tuska.beerclock.util.getCurrentThreadName
@@ -48,6 +49,14 @@ internal class UserStore : KoinComponent {
         setStateValue(PreferenceKeys.alchoholGramsInUnit, gramsInUnit.toString())
     }
 
+    suspend fun setLocale(locale: AppLocale?) {
+        if (prefs.prefs.locale == locale) {
+            return
+        }
+        setState { copy(locale = locale) }
+        setStateValue(PreferenceKeys.locale, locale?.name ?: "")
+    }
+
     private suspend fun setStateValue(stateKey: String, stringified: String) {
         getLogger("Foo").info("Outer on thread ${getCurrentThreadName()}")
         withContext(Dispatchers.IO) {
@@ -65,6 +74,7 @@ internal class UserStore : KoinComponent {
         const val gender = "prefs.user.gender"
         const val startOfDay = "prefs.user.startOfDay"
         const val alchoholGramsInUnit = "prefs.user.alchoholGramsInUnit"
+        const val locale = "prefs.user.locale"
     }
 
     companion object {
@@ -88,13 +98,15 @@ internal class UserStore : KoinComponent {
                     PreferenceKeys.alchoholGramsInUnit,
                     defaults.alchoholGramsInUnit.toString()
                 )
+            val localeStr = store.getString(PreferenceKeys.locale, defaults.locale?.name ?: "")
 
             return UserPreferences(
                 weightKg = safeToDouble(weightStr) ?: defaults.weightKg,
                 gender = Gender.safeValueOf(genderStr) ?: defaults.gender,
                 startOfDay = LocalTime.fromPrefsString(startOfDayStr) ?: defaults.startOfDay,
                 alchoholGramsInUnit = safeToDouble(alcoholGramsInUnitStr)
-                    ?: defaults.alchoholGramsInUnit
+                    ?: defaults.alchoholGramsInUnit,
+                locale = AppLocale.forName(localeStr)
             )
         }
     }

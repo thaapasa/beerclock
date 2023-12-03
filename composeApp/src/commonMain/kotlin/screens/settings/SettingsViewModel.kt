@@ -1,5 +1,7 @@
 package fi.tuska.beerclock.screens.settings
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -23,10 +25,21 @@ internal class SettingsViewModel : ViewModel(), KoinComponent {
     var gender by mutableStateOf(prefs.prefs.gender)
     var startOfDay by mutableStateOf(prefs.prefs.startOfDay)
     var gramsInUnit by mutableStateOf(prefs.prefs.alchoholGramsInUnit)
+    var locale by mutableStateOf(prefs.prefs.locale)
 
     fun saveWeight() = launch { store.setWeight(weightKg) }
     fun saveGender() = launch { store.setGender(gender) }
     fun saveStartOfDay() = launch { store.setStartOfDay(startOfDay) }
     fun saveGramsInUnitText() = launch { store.setAlcoholGramsInUnit(gramsInUnit) }
+    fun saveLocale() = launch { store.setLocale(locale) }
+
+    @Composable
+    fun trackChanges() {
+        LaunchedEffect(weightKg) { saveWeight() }
+        LaunchedEffect(gender) { saveGender() }
+        LaunchedEffect(startOfDay) { saveStartOfDay() }
+        LaunchedEffect(gramsInUnit) { saveGramsInUnitText() }
+        LaunchedEffect(locale) { saveLocale() }
+    }
 
 }
