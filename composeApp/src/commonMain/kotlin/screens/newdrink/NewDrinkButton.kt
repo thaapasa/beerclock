@@ -11,10 +11,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.images.AppIcon
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 
 @Composable
 fun NewDrinkButton(onDrinksUpdated: () -> Unit) {
+    val strings = Strings.get()
     var dialogOpen by remember { mutableStateOf(false) }
     LargeFloatingActionButton(onClick = {
         dialogOpen = true

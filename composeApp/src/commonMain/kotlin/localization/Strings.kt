@@ -8,15 +8,24 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
+import org.koin.core.component.KoinComponent
 import kotlin.time.Duration
 
-val strings: Strings = when (Locale.current.language) {
-    "fi" -> FiStrings
-    "en" -> EnStrings
-    else -> EnStrings
-}
-
 interface Strings {
+
+    companion object : KoinComponent {
+
+        private fun byLocale(): Strings = when (Locale.current.language) {
+            "fi" -> FiStrings
+            "en" -> EnStrings
+            else -> EnStrings
+        }
+
+        fun get(): Strings {
+            return byLocale()
+        }
+    }
+
     val appName: String
 
     fun createNumberFormatter(digits: Int): (value: Double) -> String

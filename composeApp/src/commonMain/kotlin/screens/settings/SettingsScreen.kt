@@ -12,7 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.components.DecimalField
 import fi.tuska.beerclock.ui.components.FieldDescription
 import fi.tuska.beerclock.ui.components.TimeInputField
@@ -25,14 +25,14 @@ object SettingsScreen : Screen {
     override fun Content() {
         SubLayout(
             content = { innerPadding -> SettingsPage(innerPadding) },
-            title = strings.settings.title
+            title = Strings.get().settings.title
         )
     }
 }
 
 @Composable
 fun SettingsPage(innerPadding: PaddingValues) {
-
+    val strings = Strings.get()
     val vm = rememberWithDispose { SettingsViewModel() }
 
     LaunchedEffect(vm.weightKg) { vm.saveWeight() }

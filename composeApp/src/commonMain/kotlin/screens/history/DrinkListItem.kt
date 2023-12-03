@@ -11,13 +11,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 
 @Composable
 fun DrinkListItem(
     drink: DrinkRecordInfo,
     onDelete: ((drink: DrinkRecordInfo) -> Unit)? = null,
 ) {
+    val strings = Strings.get()
     var selected by remember { mutableStateOf(false) }
     ListItem(
         overlineContent = { Text(strings.drink.drinkTime(drink.time)) },

@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.images.AppImage
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.history.UnitAvatar
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
@@ -50,6 +50,7 @@ fun BacStatusCard(vm: HomeViewModel) {
 
 @Composable
 fun DateView(statusText: String, modifier: Modifier = Modifier) {
+    val strings = Strings.get()
     val now = Clock.System.now()
     val zone = TimeZone.currentSystemDefault()
     val time = now.toLocalDateTime(zone)

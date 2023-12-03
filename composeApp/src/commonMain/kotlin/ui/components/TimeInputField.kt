@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.images.AppIcon
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 import kotlinx.datetime.LocalTime
 
 
@@ -37,6 +37,7 @@ fun TimeInputField(
     modifier: Modifier = Modifier,
     labelText: String? = null
 ) {
+    val strings = Strings.get()
     var pickerShown by remember { mutableStateOf(false) }
     var state = rememberTimePickerState(value.hour, value.minute, true)
     LaunchedEffect(value) {

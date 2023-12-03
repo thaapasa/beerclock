@@ -14,11 +14,12 @@ import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SubLayout(content: @Composable (PaddingValues) -> Unit, title: String) {
+    val strings = Strings.get()
     val navigator = LocalNavigator.currentOrThrow
     Scaffold(
         topBar = {

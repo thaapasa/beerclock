@@ -13,10 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 
 @Composable
 fun UnitAvatar(units: Double, modifier: Modifier = Modifier) {
+    val strings = Strings.get()
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier.size(60.dp)

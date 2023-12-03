@@ -16,7 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import fi.tuska.beerclock.images.AppIcon
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.util.fromUTCEpochMillis
 import fi.tuska.beerclock.util.toUTCEpochMillis
 import kotlinx.datetime.LocalDate
@@ -29,7 +29,7 @@ fun DatePickerIcon(
     onValueChange: (date: LocalDate) -> Unit,
     modifier: Modifier = Modifier,
     icon: AppIcon = AppIcon.CALENDAR,
-    title: String = strings.pickDate
+    title: String = Strings.get().pickDate
 ) {
     var pickerShown by remember { mutableStateOf(false) }
     var state = rememberDatePickerState()

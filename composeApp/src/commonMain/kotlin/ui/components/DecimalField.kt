@@ -12,7 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.util.safeToDouble
 
 @Composable
@@ -25,6 +25,7 @@ fun DecimalField(
     modifier: Modifier = Modifier,
     errorText: String? = null
 ) {
+    val strings = Strings.get()
     var textState by remember { mutableStateOf(TextFieldValue(value.toString())) }
     // Update internal state when value from outside changes
     LaunchedEffect(value) {

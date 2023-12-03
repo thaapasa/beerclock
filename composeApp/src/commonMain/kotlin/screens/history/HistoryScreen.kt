@@ -13,7 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.images.AppIcon
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.components.DatePickerIcon
 import fi.tuska.beerclock.ui.components.SegmentDivider
 import fi.tuska.beerclock.ui.components.SegmentedButton
@@ -25,6 +25,7 @@ object HistoryScreen : Screen {
 
     @Composable
     override fun Content() {
+        val strings = Strings.get()
         val vm = rememberWithDispose { HistoryViewModel() }
 
         LaunchedEffect(Unit) {

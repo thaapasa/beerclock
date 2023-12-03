@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.images.AppIcon
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.util.fromUTCEpochMillis
 import fi.tuska.beerclock.util.toUTCEpochMillis
 import kotlinx.datetime.LocalDate
@@ -35,6 +35,7 @@ fun DateInputField(
     modifier: Modifier = Modifier,
     labelText: String? = null
 ) {
+    val strings = Strings.get()
     var pickerShown by remember { mutableStateOf(false) }
     var state = rememberDatePickerState()
     LaunchedEffect(value) {

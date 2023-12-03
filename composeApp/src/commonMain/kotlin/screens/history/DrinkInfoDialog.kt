@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.images.AppIcon
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 
 // Lifted higher to show on top of the drink list
 val elevation = 24.dp
@@ -91,6 +91,7 @@ fun DrinkInfoDialogButtons(
     onModify: (() -> Unit)? = null,
     onDelete: ((drink: DrinkRecordInfo) -> Unit)? = null,
 ) {
+    val strings = Strings.get()
     if (onModify == null && onDelete == null) {
         return
     }
@@ -133,6 +134,7 @@ fun DrinkInfoDialogButtons(
 
 @Composable
 fun DrinkInfoTable(drink: DrinkRecordInfo) {
+    val strings = Strings.get()
     DrinkInfoRow(strings.drink.timeInfoLabel, strings.drink.drinkTime(drink.time))
     DrinkInfoRow(
         strings.drink.sizeInfoLabel,

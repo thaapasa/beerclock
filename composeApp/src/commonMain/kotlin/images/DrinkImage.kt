@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -40,7 +40,7 @@ enum class DrinkImage(val path: String) {
     fun smallImage(modifier: Modifier = Modifier) {
         Image(
             painter = painter(),
-            contentDescription = strings.drink.image,
+            contentDescription = Strings.get().drink.image,
             modifier = modifier.size(64.dp).clip(RoundedCornerShape(12.dp)),
         )
     }
@@ -49,7 +49,7 @@ enum class DrinkImage(val path: String) {
     fun largeImage(modifier: Modifier = Modifier) {
         Image(
             painter = painter(),
-            contentDescription = strings.drink.image,
+            contentDescription = Strings.get().drink.image,
             modifier = modifier.size(128.dp).clip(RoundedCornerShape(12.dp)),
         )
     }

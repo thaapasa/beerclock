@@ -9,7 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import fi.tuska.beerclock.drinks.SingleUnitWeights
 import fi.tuska.beerclock.images.FlagIcon
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.components.DropdownSelect
 
 val countrySelections = SingleUnitWeights.keys.toTypedArray()
@@ -19,6 +19,7 @@ fun AlcoholUnitsDropdown(
     onSelect: (value: Double) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val strings = Strings.get()
     val options = remember {
         val opts = countrySelections.copyOf()
         opts.sortBy(strings::countryName)

@@ -8,11 +8,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.vector.ImageVector
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 import kotlinx.coroutines.launch
 
 @Composable
 fun ToggleDrawerButton(drawerState: DrawerState, icon: ImageVector = Icons.Default.Menu) {
+    val strings = Strings.get()
     val coroutineScope = rememberCoroutineScope()
     IconButton(onClick = {
         coroutineScope.launch {

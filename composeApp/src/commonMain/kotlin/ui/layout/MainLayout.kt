@@ -18,7 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,6 +28,7 @@ fun MainLayout(
     showTopBar: Boolean = true,
     content: @Composable (PaddingValues) -> Unit
 ) {
+    val strings = Strings.get()
     val coroutineScope = rememberCoroutineScope()
     val navigator = LocalNavigator.currentOrThrow
     val snackbarHostState = remember { SnackbarHostState() }

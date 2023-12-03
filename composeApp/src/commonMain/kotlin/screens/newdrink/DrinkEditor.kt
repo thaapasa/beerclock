@@ -15,7 +15,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import fi.tuska.beerclock.localization.strings
+import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.history.UnitAvatar
 import fi.tuska.beerclock.ui.components.DateInputField
 import fi.tuska.beerclock.ui.components.DecimalField
@@ -25,6 +25,7 @@ private val gap = 16.dp
 
 @Composable
 fun DrinkEditor(vm: NewDrinkViewModel, modifier: Modifier = Modifier) {
+    val strings = Strings.get()
     Column(modifier = modifier.padding(16.dp).fillMaxSize()) {
         Row(modifier = Modifier.fillMaxWidth()) {
             DateInputField(
