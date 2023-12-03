@@ -52,7 +52,7 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
     fun randomize() {
         val drink = exampleDrinks().random()
         name = drink.name
-        quantityCl = drink.quantityLiters * 100
+        quantityCl = drink.quantityCl
         abv = drink.abvPercentage
         image = drink.image
     }
