@@ -8,8 +8,8 @@ import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.drinks.AlcoholCalculator
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
-import fi.tuska.beerclock.drinks.ExampleDrinks
 import fi.tuska.beerclock.drinks.NewDrinkRecord
+import fi.tuska.beerclock.drinks.exampleDrinks
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.settings.GlobalUserPreferences
@@ -50,7 +50,7 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
     )
 
     fun randomize() {
-        val drink = ExampleDrinks.random()
+        val drink = exampleDrinks().random()
         name = drink.name
         quantityCl = drink.quantityLiters * 100
         abv = drink.abvPercentage
