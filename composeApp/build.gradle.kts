@@ -38,6 +38,7 @@ kotlin {
             implementation(libs.voyager)
             implementation(libs.datetime)
             implementation(libs.koin.core)
+            implementation(libs.koalaplot)
         }
 
         androidMain.dependencies {
