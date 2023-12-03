@@ -76,31 +76,10 @@ object EnStrings : Strings {
     override val dialogEdit = "Modify"
     override val dialogDelete = "Delete"
 
-    private val Countries = mapOf(
-        "AT" to "Austria",
-        "AU" to "Australia",
-        "CA" to "Canada",
-        "DK" to "Denmark",
-        "ES" to "Spain",
-        "FI" to "Finland",
-        "FR" to "France",
-        "GB" to "United Kingdom",
-        "HU" to "Hungary",
-        "IE" to "Ireland",
-        "IS" to "Iceland",
-        "IT" to "Italy",
-        "JP" to "Japan",
-        "NL" to "Netherlands",
-        "NZ" to "New Zealand",
-        "PL" to "Poland",
-        "PT" to "Portugal",
-        "SE" to "Sweden",
-        "US" to "United States",
-    )
+    override fun countryName(countryCode: String) =
+        Country.forIsoCode(countryCode)?.nameEn ?: countryCode
 
-
-    override fun countryName(countryCode: String) = Countries[countryCode] ?: countryCode
-
+    override fun languageName(locale: AppLocale) = locale.nameEn
 
     /* Main menu */
     override val menu = Menu

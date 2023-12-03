@@ -56,6 +56,7 @@ interface Strings {
     val dialogDelete: String
 
     fun countryName(countryCode: String): String
+    fun languageName(locale: AppLocale): String
 
 
     /* Main menu */

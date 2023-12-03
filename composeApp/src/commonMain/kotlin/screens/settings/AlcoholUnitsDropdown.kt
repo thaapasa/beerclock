@@ -8,7 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import fi.tuska.beerclock.drinks.SingleUnitWeights
-import fi.tuska.beerclock.images.FlagIcon
+import fi.tuska.beerclock.images.FlagImage
+import fi.tuska.beerclock.localization.Country
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.components.DropdownSelect
 
@@ -40,7 +41,7 @@ fun AlcoholUnitsDropdown(
         },
         placeholder = { Text(text = strings.settings.pickCountry) },
         label = { Text(text = strings.settings.alcoholGramsByCountry) },
-        iconForValue = { FlagIcon.forCountry(it)?.image() },
+        iconForValue = { Country.forIsoCode(it)?.let { c -> FlagImage(c) } },
         showIcon = { it != "" }
     )
 }

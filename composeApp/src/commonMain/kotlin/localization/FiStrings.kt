@@ -88,30 +88,10 @@ object FiStrings : Strings {
     override val dialogEdit = "Muokkaa"
     override val dialogDelete = "Poista"
 
-    private val Countries = mapOf(
-        "AT" to "Itävalta",
-        "AU" to "Australia",
-        "CA" to "Kanada",
-        "DK" to "Tanska",
-        "ES" to "Espanja",
-        "FI" to "Suomi",
-        "FR" to "Ranska",
-        "GB" to "Iso-Britannia",
-        "HU" to "Unkari",
-        "IE" to "Irlanti",
-        "IS" to "Islanti",
-        "IT" to "Italia",
-        "JP" to "Japani",
-        "NL" to "Alankomaat",
-        "NZ" to "Uusi-Seelanti",
-        "PL" to "Puola",
-        "PT" to "Portugali",
-        "SE" to "Ruotsi",
-        "US" to "Yhdysvallat",
-    )
+    override fun countryName(countryCode: String) =
+        Country.forIsoCode(countryCode)?.nameFi ?: countryCode
 
-    override fun countryName(countryCode: String) = Countries[countryCode] ?: countryCode
-
+    override fun languageName(locale: AppLocale) = locale.nameFi
 
     /* Main menu */
     override val menu = Menu

@@ -23,7 +23,7 @@ fun LanguageDropdown(
             onSelect(it)
         },
         modifier = modifier,
-        valueToText = { it?.language ?: strings.settings.phoneLocale },
+        valueToText = { it?.let { l -> strings.languageName(l) } ?: strings.settings.phoneLocale },
         label = { Text(text = strings.settings.localeLabel) },
     )
 }
