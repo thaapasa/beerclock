@@ -21,7 +21,7 @@ fun NewDrinkButton(onDrinksUpdated: () -> Unit) {
         dialogOpen = true
     }) {
         Icon(
-            painter = AppIcon.DRINK.painter(),
+            painter = AppIcon.BEER.painter(),
             contentDescription = strings.newDrink.title,
             modifier = Modifier.size(36.dp)
         )

@@ -23,7 +23,7 @@ fun bottomNavigationItems(): List<BottomNavigationItem> {
     return listOf(
         BottomNavigationItem(
             label = strings.menu.today,
-            icon = AppIcon.TODAY,
+            icon = AppIcon.DRINK,
             screen = HomeScreen
         ),
         BottomNavigationItem(
