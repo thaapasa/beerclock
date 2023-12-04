@@ -12,7 +12,8 @@ CREATE INDEX drinkRecord_time ON drinkRecord(time);
 selectByTime:
 SELECT *
 FROM drinkRecord
-WHERE time >= ? AND time < ?;
+WHERE time >= ? AND time < ?
+ORDER BY time ASC;
 
 insert:
 INSERT INTO drinkRecord(time, name, quantity_liters, abv, image)
