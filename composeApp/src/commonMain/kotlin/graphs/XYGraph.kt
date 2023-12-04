@@ -90,7 +90,7 @@ fun XYGraph(
         horizontalMinorGridLineStyle = KoalaPlotTheme.axis.minorGridlineStyle,
         verticalMajorGridLineStyle = KoalaPlotTheme.axis.majorGridlineStyle,
         verticalMinorGridLineStyle = KoalaPlotTheme.axis.minorGridlineStyle,
-        panZoomEnabled = true,
+        panZoomEnabled = false,
         content
     )
 }
