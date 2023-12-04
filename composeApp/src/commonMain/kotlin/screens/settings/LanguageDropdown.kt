@@ -3,6 +3,7 @@ package fi.tuska.beerclock.screens.settings
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import fi.tuska.beerclock.images.FlagImage
 import fi.tuska.beerclock.localization.AppLocale
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.components.DropdownSelect
@@ -25,6 +26,8 @@ fun LanguageDropdown(
         modifier = modifier,
         valueToText = { it?.let { l -> strings.languageName(l) } ?: strings.settings.phoneLocale },
         label = { Text(text = strings.settings.localeLabel) },
+        iconForValue = { it?.let { FlagImage(it.country) } },
+        showIcon = { it != null }
     )
 }
 
