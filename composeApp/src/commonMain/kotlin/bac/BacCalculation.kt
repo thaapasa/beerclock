@@ -18,7 +18,6 @@ class BacCalculation(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
     private val prefs: GlobalUserPreferences = get()
     private val times = DrinkTimeService()
     private val dayStart = times.dayStartTime()
-    private val dayEnd = dayStart + 24.hours
     private val strings = Strings.get()
 
     /**
@@ -31,12 +30,7 @@ class BacCalculation(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
     init {
         val (before, today) = sortedInputDrinks.partition { it.time < dayStart }
         val alcoholAtDayStart = AlcoholRemaining.forDrinks(before, dayStart)
-        val calc = AlcoholBurnCalculation(dayStart, alcoholAtDayStart)
-        today.forEach {
-            calc.update(it)
-        }
-        calc.update(dayEnd, 0.0)
-        events = calc.list()
+        events = AlcoholBurnCalculation.calculate(alcoholAtDayStart, today)
     }
 
     /**
@@ -45,8 +39,10 @@ class BacCalculation(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
     private val maxAlcoholConcentration = events.maxByOrNull { it.alcoholGrams }
         ?.let { AlcoholCalculator.bloodAlcoholConcentration(it.alcoholGrams, prefs.prefs) } ?: 0.0
 
-    private fun dailyHourLabel(hour: Float) = times.toLocalDateTime(dayStart + hour.toInt().hours)
-    private fun Instant.toDailyHours(): Float = (this - dayStart).inHours().toFloat()
+    private fun dailyHourLabel(hour: Float) =
+        times.toLocalDateTime(dayStart + hour.toDouble().hours)
+
+    private inline fun Instant.toDailyHours(): Float = (this - dayStart).inHours().toFloat()
 
     fun asBacGraph() = GraphDefinition(
         xRange = 0f..24f,

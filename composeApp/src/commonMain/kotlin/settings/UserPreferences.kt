@@ -35,6 +35,16 @@ data class UserPreferences(
      * typically body weight (kg) multiplied by 0.71 L/kg for men and 0.58 L/kg for women
      */
     val volumeOfDistribution = gender.volumeOfDistributionMultiplier * weightKg
+
+
+    /**
+     * Estimate of the rate of alcohol games burned per hour.
+     *
+     * From [Wikipedia](https://en.wikipedia.org/wiki/Blood_alcohol_content):
+     * β is the rate at which alcohol is eliminated (g/L/hr); typically 0.15
+     */
+    val alcoholBurnOffRate = 0.15 * volumeOfDistribution
+
 }
 
 private val logger = getLogger("UserPreferences")

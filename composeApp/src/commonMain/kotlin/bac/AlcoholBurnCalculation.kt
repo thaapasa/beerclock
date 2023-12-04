@@ -1,6 +1,5 @@
 package fi.tuska.beerclock.bac
 
-import fi.tuska.beerclock.bac.AlcoholCalculator.alcoholGramsBurnedPerHour
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.inHours
@@ -21,41 +20,53 @@ class AlcoholBurnCalculation(initialTime: Instant, initialAlcoholGrams: Double) 
 
     private var events = mutableListOf(AlcoholAtTime(initialTime, initialAlcoholGrams))
 
-    private var time: Instant = initialTime
-    var alcoholGrams: Double = initialAlcoholGrams
+    private var curTime: Instant = initialTime
+    var curAlcoholGrams: Double = initialAlcoholGrams
         private set
 
-
-    fun get(): AlcoholAtTime = AlcoholAtTime(time, alcoholGrams)
+    fun get(): AlcoholAtTime = AlcoholAtTime(curTime, curAlcoholGrams)
     fun list() = events.toList()
 
     fun update(newTime: Instant, addAlcoholGrams: Double = 0.0) {
-        val timePassed = newTime - time
+        val burnOffRate = prefs.prefs.alcoholBurnOffRate
+        val timePassed = newTime - curTime
         val hoursPassed = timePassed.inHours()
-        if (alcoholGrams > 0) {
-            val hoursToBurnCurrent = alcoholGrams / alcoholGramsBurnedPerHour(prefs.prefs)
+        if (curAlcoholGrams > 0) {
+            val hoursToBurnCurrent = curAlcoholGrams / burnOffRate
             if (hoursToBurnCurrent < hoursPassed) {
-                record(time + hoursToBurnCurrent.hours, 0.0)
+                record(curTime + hoursToBurnCurrent.hours, 0.0)
             }
         }
 
-        val alcoholGramsBurned =
-            if (hoursPassed > 0.0) alcoholGramsBurnedPerHour(prefs.prefs) * hoursPassed
+        val maxAlcoholGramsBurned =
+            if (hoursPassed > 0.0) hoursPassed * burnOffRate
             else 0.0
 
-        alcoholGrams = max(alcoholGrams - alcoholGramsBurned, 0.0)
-        record(newTime, alcoholGrams)
+        curAlcoholGrams = max(curAlcoholGrams - maxAlcoholGramsBurned, 0.0)
+        record(newTime, curAlcoholGrams)
         if (addAlcoholGrams > 0) {
-            alcoholGrams += addAlcoholGrams
-            record(newTime, alcoholGrams + addAlcoholGrams)
+            curAlcoholGrams += addAlcoholGrams
+            record(newTime, curAlcoholGrams)
         }
-        time = newTime
+        curTime = newTime
     }
 
     inline fun update(drink: DrinkRecordInfo) = update(drink.time, drink.alcoholGrams)
 
     private fun record(time: Instant, alcoholGrams: Double) {
         events.add(AlcoholAtTime(time, max(alcoholGrams, 0.0)))
+    }
+
+    companion object {
+        fun calculate(
+            startOfDay: AlcoholAtTime,
+            drinks: List<DrinkRecordInfo>
+        ): List<AlcoholAtTime> {
+            val calc = AlcoholBurnCalculation(startOfDay.time, startOfDay.alcoholGrams)
+            drinks.forEach(calc::update)
+            calc.update(startOfDay.time + 24.hours, 0.0)
+            return calc.list()
+        }
     }
 
 }

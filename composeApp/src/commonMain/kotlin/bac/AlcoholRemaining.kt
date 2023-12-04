@@ -1,6 +1,5 @@
 package fi.tuska.beerclock.bac
 
-import fi.tuska.beerclock.bac.AlcoholCalculator.alcoholGramsBurnedPerHour
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.inHours
@@ -28,7 +27,7 @@ class AlcoholRemaining(initialTime: Instant, initialAlcoholGrams: Double) : Koin
         val hoursPassed = timePassed.inHours()
 
         val alcoholGramsBurned =
-            if (hoursPassed > 0.0) alcoholGramsBurnedPerHour(prefs.prefs) * hoursPassed
+            if (hoursPassed > 0.0) prefs.prefs.alcoholBurnOffRate * hoursPassed
             else 0.0
 
         alcoholGrams = max(alcoholGrams - alcoholGramsBurned, 0.0) + addAlcoholGrams
@@ -41,14 +40,14 @@ class AlcoholRemaining(initialTime: Instant, initialAlcoholGrams: Double) : Koin
         /**
          * @return how much alcohol is remaining at the given time from the given list of drinks
          */
-        fun forDrinks(drinks: List<DrinkRecordInfo>, upToTime: Instant): Double {
+        fun forDrinks(drinks: List<DrinkRecordInfo>, upToTime: Instant): AlcoholAtTime {
             if (drinks.isEmpty()) {
-                return 0.0
+                return AlcoholAtTime(upToTime, 0.0)
             }
             val calc = AlcoholRemaining(drinks.first())
             drinks.drop(1).forEach(calc::update)
             calc.update(upToTime)
-            return calc.alcoholGrams
+            return calc.get()
         }
     }
 }

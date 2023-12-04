@@ -51,7 +51,7 @@ class DrinkRecordInfo(record: DrinkRecord) : KoinComponent {
      * Calculate the time it takes for your liver to burn off all the alcohol in this drink.
      */
     fun burnOffTime(): Duration {
-        val burnRate = AlcoholCalculator.alcoholGramsBurnedPerHour(prefs.prefs)
+        val burnRate = prefs.prefs.alcoholBurnOffRate
         val hoursToBurn = alcoholGrams / burnRate
         val minutesToBurn = (hoursToBurn * 60).roundToInt()
         val fullHours = minutesToBurn / 60
