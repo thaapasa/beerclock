@@ -33,6 +33,21 @@ class BacCalculation(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
         events = AlcoholBurnCalculation.calculate(alcoholAtDayStart, today)
     }
 
+    fun atTime(time: Instant): AlcoholAtTime {
+        val futureIdx = events.indexOfFirst { it.time > time }
+        if (futureIdx <= 0) return AlcoholAtTime(time, 0.0)
+
+        val before = events[futureIdx - 1]
+        val after = events[futureIdx]
+        val toEvent = (time - before.time)
+        val range = (after.time - before.time)
+        val offset = toEvent / range
+
+        val rangeDelta = after.alcoholGrams - before.alcoholGrams
+
+        return AlcoholAtTime(time, before.alcoholGrams + offset * rangeDelta)
+    }
+
     /**
      * The maximum amount of alcohol on the system during the entire day.
      */
@@ -52,11 +67,14 @@ class BacCalculation(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
         formatXLabel = { strings.time(dailyHourLabel(it)) + " " }
     )
 
-    fun asGraphEvents(): List<Point<Float, Float>> =
-        events.map {
-            Point(
-                it.time.toDailyHours(),
-                AlcoholCalculator.bloodAlcoholConcentration(it.alcoholGrams, prefs.prefs).toFloat()
-            )
-        }
+    private inline fun AlcoholAtTime.toGraphPoint(): Point<Float, Float> = Point(
+        time.toDailyHours(),
+        AlcoholCalculator.bloodAlcoholConcentration(alcoholGrams, prefs.prefs).toFloat()
+    )
+
+    fun pastGraphEvents(now: Instant): List<Point<Float, Float>> =
+        (events.filter { it.time <= now } + atTime(now)).map { it.toGraphPoint() }
+
+    fun futureGraphEvents(now: Instant): List<Point<Float, Float>> =
+        (listOf(atTime(now)) + events.filter { it.time > now }).map { it.toGraphPoint() }
 }

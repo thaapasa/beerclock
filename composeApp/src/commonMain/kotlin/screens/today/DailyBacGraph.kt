@@ -10,15 +10,17 @@ import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.bac.BacCalculation
 import fi.tuska.beerclock.graphs.AreaChart
 import fi.tuska.beerclock.graphs.XYGraph
+import kotlinx.datetime.Clock
 
 
 @Composable
 fun DailyBacGraph(bac: BacCalculation, modifier: Modifier = Modifier) {
-
+    val now = Clock.System.now()
     Card(modifier = modifier.fillMaxWidth().height(200.dp)) {
         XYGraph(graph = bac.asBacGraph(), modifier = Modifier.padding(4.dp))
         {
-            AreaChart(bac.asGraphEvents())
+            AreaChart(bac.pastGraphEvents(now))
+            AreaChart(bac.futureGraphEvents(now), alpha = 0.5f)
         }
     }
 }
