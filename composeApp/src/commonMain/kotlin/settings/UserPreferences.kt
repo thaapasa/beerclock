@@ -25,8 +25,17 @@ data class UserPreferences(
     /**
      * App locale, if selected from settings (null means follow system locale).
      */
-    val locale: AppLocale? = null
-)
+    val locale: AppLocale? = null,
+) {
+    /**
+     * Volume of distribution, approximated from body weight and gender multiplier.
+     * See [Wikipedia](https://en.wikipedia.org/wiki/Blood_alcohol_content):
+     *
+     * Vd is the volume of distribution (L);
+     * typically body weight (kg) multiplied by 0.71 L/kg for men and 0.58 L/kg for women
+     */
+    val volumeOfDistribution = gender.volumeOfDistributionMultiplier * weightKg
+}
 
 private val logger = getLogger("UserPreferences")
 

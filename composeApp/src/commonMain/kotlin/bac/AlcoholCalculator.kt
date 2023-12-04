@@ -25,12 +25,14 @@ object AlcoholCalculator {
 
 
     /**
+     * Calculates alcohol burn rate, based on updatd Widmark formula from
+     * [Wikipedia](https://en.wikipedia.org/wiki/Blood_alcohol_content).
+     *
      * @return the amount of alcohol burned (grams / hour).
      */
     fun alcoholGramsBurnedPerHour(prefs: UserPreferences): Double {
-        // The most commonly used estimate is that your body burns alcohol 1 g for each 10 kg
-        // of your weight per hour.
-        return prefs.weightKg / 10.0
+        // β is the rate at which alcohol is eliminated (g/L/hr); typically 0.15
+        return 0.15 * prefs.volumeOfDistribution
     }
 
     /**
@@ -38,6 +40,5 @@ object AlcoholCalculator {
      * The result is the amount by volume, expressed per mille ("promillet" in Finnish).
      */
     fun bloodAlcoholConcentration(alcoholGrams: Double, prefs: UserPreferences): Double =
-        alcoholGrams / (prefs.gender.liquidVolumePercentage * prefs.weightKg)
-
+        alcoholGrams / prefs.volumeOfDistribution
 }
