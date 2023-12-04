@@ -32,14 +32,14 @@ class GraphVM : ViewModel(), KoinComponent {
             xRange = 0f..24f,
             yRange = 0f..1f,
             xTitle = "Aika",
-            yTitle = "Alkoholia veressä ‰",
+            yTitle = "Promillet ‰",
             formatXLabel = { strings.time(hourToTime(it)) + " " }
         )
     }
 }
 
 @Composable
-fun ExampleGraph() {
+fun ExampleGraph(modifier: Modifier = Modifier) {
 
     val vm = rememberWithDispose { GraphVM() }
     val graph = vm.graph()
@@ -54,8 +54,8 @@ fun ExampleGraph() {
     val data1 = data.take(6)
     val data2 = data.takeLast(data.size - 5)
 
-    Card(modifier = Modifier.fillMaxWidth().height(200.dp).padding(top = 8.dp)) {
-        XYGraph(graph = graph)
+    Card(modifier = modifier.fillMaxWidth().height(200.dp)) {
+        XYGraph(graph = graph, modifier = Modifier.padding(4.dp))
         {
             AreaChart(data1)
             AreaChart(data2, alpha = 0.5f)

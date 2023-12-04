@@ -27,8 +27,7 @@ object HomeScreen : Screen {
         ) { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
                 BacStatusCard(vm)
-
-                ExampleGraph()
+                ExampleGraph(modifier = Modifier.padding(top = 16.dp))
             }
         }
     }

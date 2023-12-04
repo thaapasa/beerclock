@@ -12,11 +12,14 @@ import io.github.koalaplot.core.xychart.LineStyle
 inline fun gridLineColor() = MaterialTheme.colorScheme.onSurfaceVariant
 
 @Composable
+inline fun graphLabelColor() = MaterialTheme.colorScheme.onSurfaceVariant
+
+@Composable
 fun GraphTheme(content: @Composable () -> Unit) {
     val grindLIneC = gridLineColor()
 
     KoalaPlotTheme(
-        sizes = KoalaPlotTheme.sizes.copy(gap = 0.dp),
+        sizes = KoalaPlotTheme.sizes.copy(gap = 4.dp),
         axis = KoalaPlotTheme.axis.copy(
             color = grindLIneC,
             minorTickSize = 0.dp,
