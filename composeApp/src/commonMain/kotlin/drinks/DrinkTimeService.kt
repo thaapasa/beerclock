@@ -5,6 +5,7 @@ import fi.tuska.beerclock.util.InstantRange
 import fi.tuska.beerclock.util.MinutesInDay
 import fi.tuska.beerclock.util.fromMinutesOfDay
 import fi.tuska.beerclock.util.toMinutesOfDay
+import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -29,10 +30,13 @@ class DrinkTimeService : KoinComponent {
 
     val zone = TimeZone.currentSystemDefault()
 
+    inline fun now(): Instant = Clock.System.now()
     inline fun toInstant(time: LocalDateTime): Instant = time.toInstant(zone)
     inline fun toLocalDateTime(instant: Instant): LocalDateTime = instant.toLocalDateTime(zone)
+    inline fun toLocalDate(instant: Instant): LocalDate = toLocalDateTime(instant).date
+    inline fun toLocalTime(instant: Instant): LocalTime = toLocalDateTime(instant).time
 
-    fun dayStartTime(date: LocalDate): Instant =
+    fun dayStartTime(date: LocalDate = toLocalDate(now())): Instant =
         toInstant(LocalDateTime(date = date, time = prefs.prefs.startOfDay))
 
     fun dayEndTime(date: LocalDate): Instant =
