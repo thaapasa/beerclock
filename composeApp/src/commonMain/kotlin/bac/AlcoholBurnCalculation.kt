@@ -1,6 +1,7 @@
-package fi.tuska.beerclock.drinks
+package fi.tuska.beerclock.bac
 
-import fi.tuska.beerclock.drinks.AlcoholCalculator.alcoholGramsBurnedPerHour
+import fi.tuska.beerclock.bac.AlcoholCalculator.alcoholGramsBurnedPerHour
+import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.inHours
 import kotlinx.datetime.Instant
@@ -10,19 +11,13 @@ import kotlin.math.max
 import kotlin.time.Duration.Companion.hours
 
 /**
- * Records what the blood alcohol level was at a given time, as grams of alcohol
- * left for your liver to burn.
- */
-data class AlcoholAtTime(val time: Instant, val alcoholGrams: Double)
-
-/**
  * Utility class to ease calculating the alcohol left in your body, in grams.
  * Initialize with the time of the first drink, and the amount of alcohol in that drink;
  * and then call update for each subsequent drink (in ascending timestamp order) to
  * update the blood alcohol status for the next drink.
  */
 class AlcoholBurnCalculation(initialTime: Instant, initialAlcoholGrams: Double) : KoinComponent {
-    constructor(drink: DrinkRecordInfo) : this(drink.time, drink.alcoholGrams)
+    private val prefs: GlobalUserPreferences by inject()
 
     private var events = mutableListOf(AlcoholAtTime(initialTime, initialAlcoholGrams))
 
@@ -30,7 +25,6 @@ class AlcoholBurnCalculation(initialTime: Instant, initialAlcoholGrams: Double) 
     var alcoholGrams: Double = initialAlcoholGrams
         private set
 
-    private val prefs: GlobalUserPreferences by inject()
 
     fun get(): AlcoholAtTime = AlcoholAtTime(time, alcoholGrams)
     fun list() = events.toList()
@@ -64,15 +58,4 @@ class AlcoholBurnCalculation(initialTime: Instant, initialAlcoholGrams: Double) 
         events.add(AlcoholAtTime(time, max(alcoholGrams, 0.0)))
     }
 
-    companion object {
-        fun forDrinks(drinks: List<DrinkRecordInfo>, upToTime: Instant): Double {
-            if (drinks.isEmpty()) {
-                return 0.0
-            }
-            val calc = AlcoholBurnCalculation(drinks.first())
-            drinks.drop(1).forEach(calc::update)
-            calc.update(upToTime)
-            return calc.alcoholGrams
-        }
-    }
 }

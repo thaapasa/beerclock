@@ -4,8 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import fi.tuska.beerclock.bac.AlcoholCalculator
 import fi.tuska.beerclock.database.DrinkRecord
-import fi.tuska.beerclock.drinks.AlcoholCalculator
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.drinks.NewDrinkRecord

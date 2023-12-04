@@ -7,11 +7,10 @@ import fi.tuska.beerclock.logging.getLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.minus
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
@@ -34,9 +33,18 @@ class DrinkService : KoinComponent {
         return drinks.map(::DrinkRecordInfo)
     }
 
-    suspend fun getDrinksForToday(): List<DrinkRecordInfo> {
-        val zone = TimeZone.currentSystemDefault()
-        return getDrinksForDay(Clock.System.now().toLocalDateTime(zone).date)
+    suspend fun getDrinksForHomeScreen(): List<DrinkRecordInfo> {
+        val today = times.toLocalDate()
+        val yesterday = today.minus(1, DateTimeUnit.DAY)
+        val range = times.dayTimeRange(yesterday, today)
+        val drinks = withContext(Dispatchers.IO) {
+            db.drinkRecordQueries.selectByTime(
+                range.start.toDbTime(),
+                range.end.toDbTime()
+            ).executeAsList()
+        }
+        logger.info("Found ${drinks.size} drinks for $yesterday - $today")
+        return drinks.map(::DrinkRecordInfo)
     }
 
     suspend fun deleteDrinkById(id: Long): Unit {

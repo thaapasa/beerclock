@@ -1,5 +1,7 @@
-package fi.tuska.beerclock.drinks
+package fi.tuska.beerclock.bac
 
+import fi.tuska.beerclock.drinks.DrinkRecordInfo
+import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.graphs.GraphDefinition
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.settings.GlobalUserPreferences
@@ -10,7 +12,6 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import kotlin.math.max
 import kotlin.time.Duration.Companion.hours
-
 
 class BacCalculation(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
 
@@ -29,7 +30,7 @@ class BacCalculation(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
 
     init {
         val (before, today) = sortedInputDrinks.partition { it.time < dayStart }
-        val alcoholAtDayStart = AlcoholBurnCalculation.forDrinks(before, dayStart)
+        val alcoholAtDayStart = AlcoholRemaining.forDrinks(before, dayStart)
         val calc = AlcoholBurnCalculation(dayStart, alcoholAtDayStart)
         today.forEach {
             calc.update(it)
@@ -41,7 +42,7 @@ class BacCalculation(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
     /**
      * The maximum amount of alcohol on the system during the entire day.
      */
-    val maxAlcoholConcentration = events.maxByOrNull { it.alcoholGrams }
+    private val maxAlcoholConcentration = events.maxByOrNull { it.alcoholGrams }
         ?.let { AlcoholCalculator.bloodAlcoholConcentration(it.alcoholGrams, prefs.prefs) } ?: 0.0
 
     private fun dailyHourLabel(hour: Float) = times.toLocalDateTime(dayStart + hour.toInt().hours)

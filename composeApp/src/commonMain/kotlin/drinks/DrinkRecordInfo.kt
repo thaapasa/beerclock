@@ -1,5 +1,7 @@
 package fi.tuska.beerclock.drinks
 
+import fi.tuska.beerclock.bac.AlcoholCalculator
+import fi.tuska.beerclock.bac.Constants
 import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.database.fromDbTime
 import fi.tuska.beerclock.images.DrinkImage

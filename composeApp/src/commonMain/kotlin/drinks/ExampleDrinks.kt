@@ -32,4 +32,3 @@ fun exampleDrinks() = when (Strings.userLanguage()) {
     "fi" -> ExampleDrinksFi
     else -> ExampleDrinksEn
 }
-

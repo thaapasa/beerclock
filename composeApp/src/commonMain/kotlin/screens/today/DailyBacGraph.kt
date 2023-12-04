@@ -7,7 +7,7 @@ import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import fi.tuska.beerclock.drinks.BacCalculation
+import fi.tuska.beerclock.bac.BacCalculation
 import fi.tuska.beerclock.graphs.AreaChart
 import fi.tuska.beerclock.graphs.XYGraph
 

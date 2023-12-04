@@ -32,9 +32,11 @@ class DrinkTimeService : KoinComponent {
 
     inline fun now(): Instant = Clock.System.now()
     inline fun toInstant(time: LocalDateTime): Instant = time.toInstant(zone)
-    inline fun toLocalDateTime(instant: Instant): LocalDateTime = instant.toLocalDateTime(zone)
-    inline fun toLocalDate(instant: Instant): LocalDate = toLocalDateTime(instant).date
-    inline fun toLocalTime(instant: Instant): LocalTime = toLocalDateTime(instant).time
+    inline fun toLocalDateTime(instant: Instant = now()): LocalDateTime =
+        instant.toLocalDateTime(zone)
+
+    inline fun toLocalDate(instant: Instant = now()): LocalDate = toLocalDateTime(instant).date
+    inline fun toLocalTime(instant: Instant = now()): LocalTime = toLocalDateTime(instant).time
 
     /** @return the Instant when the given date (default=today) starts */
     fun dayStartTime(date: LocalDate = toLocalDate(now())): Instant =
@@ -52,8 +54,8 @@ class DrinkTimeService : KoinComponent {
      * @return the range of "drinking time" (Instants) covered by the given day. This is affected
      * by the user's preference (start tine of the day).
      */
-    fun dayTimeRange(date: LocalDate): InstantRange =
-        InstantRange(dayStartTime(date), dayEndTime(date))
+    fun dayTimeRange(from: LocalDate, to: LocalDate = from): InstantRange =
+        InstantRange(dayStartTime(from), dayEndTime(to))
 
     /**
      * For a given drinking date and time entered by user:

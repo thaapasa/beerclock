@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.drinks
+package fi.tuska.beerclock.bac
 
 import fi.tuska.beerclock.settings.UserPreferences
 

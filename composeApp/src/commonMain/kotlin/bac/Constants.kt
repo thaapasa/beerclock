@@ -1,5 +1,4 @@
-package fi.tuska.beerclock.drinks
-
+package fi.tuska.beerclock.bac
 
 object Constants {
     /**
