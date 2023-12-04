@@ -34,7 +34,10 @@ fun XYGraph(
         )
     }
     val yAxisModel = remember(graph) {
-        LinearAxisModel(range = graph.yRange)
+        LinearAxisModel(
+            range = graph.yRange,
+            minorTickCount = 4
+        )
     }
     XYChart(
         xAxisModel,
@@ -88,8 +91,8 @@ fun XYGraph(
         // that allows fine-tuning title rendering
         horizontalMajorGridLineStyle = KoalaPlotTheme.axis.majorGridlineStyle,
         horizontalMinorGridLineStyle = KoalaPlotTheme.axis.minorGridlineStyle,
-        verticalMajorGridLineStyle = KoalaPlotTheme.axis.majorGridlineStyle,
-        verticalMinorGridLineStyle = KoalaPlotTheme.axis.minorGridlineStyle,
+        verticalMajorGridLineStyle = NoLine,
+        verticalMinorGridLineStyle = NoLine,
         panZoomEnabled = false,
         content
     )
