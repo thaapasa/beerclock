@@ -33,4 +33,11 @@ object AlcoholCalculator {
         return prefs.weightKg / 10.0
     }
 
+    /**
+     * @return the amount of alcohol in your blood, for the given amount of alcohol consumed.
+     * The result is the amount by volume, expressed per mille ("promillet" in Finnish).
+     */
+    fun bloodAlcoholConcentration(alcoholGrams: Double, prefs: UserPreferences): Double =
+        alcoholGrams / (prefs.gender.liquidVolumePercentage * prefs.weightKg)
+
 }

@@ -1,6 +1,8 @@
 package fi.tuska.beerclock.screens.today
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,7 +29,8 @@ object HomeScreen : Screen {
         ) { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
                 BacStatusCard(vm)
-                ExampleGraph(modifier = Modifier.padding(top = 16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+                DailyBacGraph(bac = vm.bac)
             }
         }
     }

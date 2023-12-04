@@ -25,7 +25,7 @@ fun XYGraph(
 ) {
     val labelColor = graphLabelColor()
     val gridColor = gridLineColor()
-    val xAxisModel = remember(graph.xRange) {
+    val xAxisModel = remember(graph) {
         LinearAxisModel(
             range = graph.xRange,
             minimumMajorTickIncrement = 2f,
@@ -33,7 +33,7 @@ fun XYGraph(
             minorTickCount = 1
         )
     }
-    val yAxisModel = remember(graph.yRange) {
+    val yAxisModel = remember(graph) {
         LinearAxisModel(range = graph.yRange)
     }
     XYChart(

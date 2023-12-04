@@ -127,6 +127,15 @@ object EnStrings : Strings {
     }
 
 
+    /* Home strings */
+    override val home = Home
+
+    object Home : Strings.HomeStrings {
+        override val bacPermilles = "BAC ‰"
+        override val bacTime = "Time"
+    }
+
+
     /* Settings screen */
     override val settings = Settings
 

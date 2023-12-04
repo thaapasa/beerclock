@@ -140,6 +140,15 @@ object FiStrings : Strings {
     }
 
 
+    /* Home strings */
+    override val home = Home
+
+    object Home : Strings.HomeStrings {
+        override val bacPermilles = "Promillet ‰"
+        override val bacTime = "Aika"
+    }
+
+
     /* Settings screen */
     override val settings = Settings
 

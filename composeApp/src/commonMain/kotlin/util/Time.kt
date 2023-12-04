@@ -8,6 +8,7 @@ import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Duration
 
 
 private val logger = getLogger("TimeUtils")
@@ -64,4 +65,10 @@ data class InstantRange(val start: Instant, val end: Instant) {
     }
 
     fun contains(instant: Instant): Boolean = instant in start..end && instant != end
+}
+
+val MillisInHour = 1000 * 60 * 60
+
+fun Duration.inHours(): Double {
+    return inWholeMilliseconds.toDouble() / MillisInHour.toDouble()
 }

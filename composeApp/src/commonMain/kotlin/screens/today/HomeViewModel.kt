@@ -1,6 +1,10 @@
 package fi.tuska.beerclock.screens.today
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import fi.tuska.beerclock.drinks.BacCalculation
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.logging.getLogger
@@ -12,6 +16,8 @@ private val logger = getLogger("HomeViewModel")
 class HomeViewModel : ViewModel() {
     private val drinkService = DrinkService()
     val drinks = mutableStateListOf<DrinkRecordInfo>()
+    var bac by mutableStateOf(BacCalculation(drinks))
+        private set
 
     fun units(): Double = drinks.sumOf { it.units() }
 
@@ -20,6 +26,7 @@ class HomeViewModel : ViewModel() {
             drinks.clear()
             val newDrinks = drinkService.getDrinksForToday()
             drinks.addAll(newDrinks)
+            bac = BacCalculation(drinks)
         }
     }
 

@@ -36,6 +36,7 @@ class DrinkTimeService : KoinComponent {
     inline fun toLocalDate(instant: Instant): LocalDate = toLocalDateTime(instant).date
     inline fun toLocalTime(instant: Instant): LocalTime = toLocalDateTime(instant).time
 
+    /** @return the Instant when the given date (default=today) starts */
     fun dayStartTime(date: LocalDate = toLocalDate(now())): Instant =
         toInstant(LocalDateTime(date = date, time = prefs.prefs.startOfDay))
 

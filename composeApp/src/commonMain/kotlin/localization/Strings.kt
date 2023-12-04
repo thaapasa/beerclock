@@ -108,6 +108,15 @@ interface Strings {
     }
 
 
+    /* Home screen */
+    val home: HomeStrings
+
+    interface HomeStrings {
+        val bacPermilles: String
+        val bacTime: String
+    }
+
+
     /* Settings screen */
     val settings: SettingsStrings
 
