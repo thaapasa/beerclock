@@ -1,8 +1,9 @@
 package fi.tuska.beerclock.bac
 
+import fi.tuska.beerclock.bac.BacFormulas.burnOffAlcohol
+import fi.tuska.beerclock.bac.BacFormulas.timeToBurnAlcohol
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.settings.GlobalUserPreferences
-import fi.tuska.beerclock.util.inHours
 import kotlinx.datetime.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -30,19 +31,14 @@ class AlcoholBurnCalculation(initialTime: Instant, initialAlcoholGrams: Double) 
     fun update(newTime: Instant, addAlcoholGrams: Double = 0.0) {
         val burnOffRate = prefs.prefs.alcoholBurnOffRate
         val timePassed = newTime - curTime
-        val hoursPassed = timePassed.inHours()
         if (curAlcoholGrams > 0) {
-            val hoursToBurnCurrent = curAlcoholGrams / burnOffRate
-            if (hoursToBurnCurrent < hoursPassed) {
-                record(curTime + hoursToBurnCurrent.hours, 0.0)
+            val timeToBurn = timeToBurnAlcohol(curAlcoholGrams, burnOffRate)
+            if (timeToBurn < timePassed) {
+                record(curTime + timeToBurn, 0.0)
             }
         }
 
-        val maxAlcoholGramsBurned =
-            if (hoursPassed > 0.0) hoursPassed * burnOffRate
-            else 0.0
-
-        curAlcoholGrams = max(curAlcoholGrams - maxAlcoholGramsBurned, 0.0)
+        curAlcoholGrams = burnOffAlcohol(curAlcoholGrams, timePassed, burnOffRate)
         record(newTime, curAlcoholGrams)
         if (addAlcoholGrams > 0) {
             curAlcoholGrams += addAlcoholGrams

@@ -6,4 +6,19 @@ import kotlinx.datetime.Instant
  * Records what the blood alcohol level was at a given time, as grams of alcohol
  * left for your liver to burn.
  */
-data class AlcoholAtTime(val time: Instant, val alcoholGrams: Double)
+data class AlcoholAtTime(val time: Instant, val alcoholGrams: Double) {
+
+    fun interpolate(other: AlcoholAtTime, atTime: Instant): AlcoholAtTime {
+        if (time > other.time) {
+            return other.interpolate(this, time)
+        }
+
+        val toEvent = (atTime - this.time)
+        val range = (other.time - this.time)
+        val offset = toEvent / range
+
+        val rangeDelta = other.alcoholGrams - this.alcoholGrams
+
+        return AlcoholAtTime(atTime, this.alcoholGrams + offset * rangeDelta)
+    }
+}

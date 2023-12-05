@@ -1,12 +1,11 @@
 package fi.tuska.beerclock.bac
 
+import fi.tuska.beerclock.bac.BacFormulas.burnOffAlcohol
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.settings.GlobalUserPreferences
-import fi.tuska.beerclock.util.inHours
 import kotlinx.datetime.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import kotlin.math.max
 
 /**
  * Utility class to calculate the amount of alcohol remaining in your body, in grams.
@@ -17,20 +16,14 @@ class AlcoholRemaining(initialTime: Instant, initialAlcoholGrams: Double) : Koin
     private val prefs: GlobalUserPreferences by inject()
 
     private var time: Instant = initialTime
-    var alcoholGrams: Double = initialAlcoholGrams
-        private set
+    private var alcoholGrams: Double = initialAlcoholGrams
 
     fun get(): AlcoholAtTime = AlcoholAtTime(time, alcoholGrams)
 
     fun update(newTime: Instant, addAlcoholGrams: Double = 0.0) {
         val timePassed = newTime - time
-        val hoursPassed = timePassed.inHours()
-
-        val alcoholGramsBurned =
-            if (hoursPassed > 0.0) prefs.prefs.alcoholBurnOffRate * hoursPassed
-            else 0.0
-
-        alcoholGrams = max(alcoholGrams - alcoholGramsBurned, 0.0) + addAlcoholGrams
+        val burnRate = prefs.prefs.alcoholBurnOffRate
+        alcoholGrams = burnOffAlcohol(alcoholGrams, timePassed, burnRate) + addAlcoholGrams
         time = newTime
     }
 

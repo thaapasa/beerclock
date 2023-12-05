@@ -36,16 +36,7 @@ class BacCalculation(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
     fun atTime(time: Instant): AlcoholAtTime {
         val futureIdx = events.indexOfFirst { it.time > time }
         if (futureIdx <= 0) return AlcoholAtTime(time, 0.0)
-
-        val before = events[futureIdx - 1]
-        val after = events[futureIdx]
-        val toEvent = (time - before.time)
-        val range = (after.time - before.time)
-        val offset = toEvent / range
-
-        val rangeDelta = after.alcoholGrams - before.alcoholGrams
-
-        return AlcoholAtTime(time, before.alcoholGrams + offset * rangeDelta)
+        return events[futureIdx - 1].interpolate(events[futureIdx], time)
     }
 
     /**
