@@ -4,7 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import fi.tuska.beerclock.bac.BacCalculation
+import fi.tuska.beerclock.bac.BacStatus
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
@@ -18,7 +18,7 @@ class HomeViewModel : ViewModel() {
     private val drinkService = DrinkService()
     private val times = DrinkTimeService()
     val drinks = mutableStateListOf<DrinkRecordInfo>()
-    var bac by mutableStateOf(BacCalculation(drinks))
+    var bac by mutableStateOf(BacStatus(drinks))
         private set
 
     fun units(): Double = drinks.sumOf { it.units() }
@@ -28,7 +28,7 @@ class HomeViewModel : ViewModel() {
             drinks.clear()
             val newDrinks = drinkService.getDrinksForHomeScreen()
             val dayStart = times.dayStartTime()
-            bac = BacCalculation(newDrinks)
+            bac = BacStatus(newDrinks)
             drinks.addAll(newDrinks.filter { it.time >= dayStart })
         }
     }

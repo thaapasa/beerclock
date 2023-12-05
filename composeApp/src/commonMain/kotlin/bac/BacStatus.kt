@@ -13,7 +13,7 @@ import org.koin.core.component.get
 import kotlin.math.max
 import kotlin.time.Duration.Companion.hours
 
-class BacCalculation(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
+class BacStatus(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
 
     private val prefs: GlobalUserPreferences = get()
     private val times = DrinkTimeService()
@@ -30,7 +30,7 @@ class BacCalculation(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
     init {
         val (before, today) = sortedInputDrinks.partition { it.time < dayStart }
         val alcoholAtDayStart = AlcoholRemaining.forDrinks(before, dayStart)
-        events = AlcoholBurnCalculation.calculate(alcoholAtDayStart, today)
+        events = InstantBacCalculator.calculate(alcoholAtDayStart, today)
     }
 
     fun atTime(time: Instant): AlcoholAtTime {

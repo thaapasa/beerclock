@@ -16,7 +16,7 @@ import kotlin.time.Duration.Companion.hours
  * and then call update for each subsequent drink (in ascending timestamp order) to
  * update the blood alcohol status for the next drink.
  */
-class AlcoholBurnCalculation(initialTime: Instant, initialAlcoholGrams: Double) : KoinComponent {
+class InstantBacCalculator(initialTime: Instant, initialAlcoholGrams: Double) : KoinComponent {
     private val prefs: GlobalUserPreferences by inject()
 
     private var events = mutableListOf(AlcoholAtTime(initialTime, initialAlcoholGrams))
@@ -58,7 +58,7 @@ class AlcoholBurnCalculation(initialTime: Instant, initialAlcoholGrams: Double) 
             startOfDay: AlcoholAtTime,
             drinks: List<DrinkRecordInfo>
         ): List<AlcoholAtTime> {
-            val calc = AlcoholBurnCalculation(startOfDay.time, startOfDay.alcoholGrams)
+            val calc = InstantBacCalculator(startOfDay.time, startOfDay.alcoholGrams)
             drinks.forEach(calc::update)
             calc.update(startOfDay.time + 24.hours, 0.0)
             return calc.list()
