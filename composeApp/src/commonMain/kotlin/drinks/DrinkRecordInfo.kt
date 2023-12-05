@@ -1,7 +1,6 @@
 package fi.tuska.beerclock.drinks
 
-import fi.tuska.beerclock.bac.AlcoholCalculator
-import fi.tuska.beerclock.bac.Constants
+import fi.tuska.beerclock.bac.BacFormulas
 import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.database.fromDbTime
 import fi.tuska.beerclock.images.DrinkImage
@@ -36,7 +35,7 @@ class DrinkRecordInfo(record: DrinkRecord) : KoinComponent {
     val alcoholLiters: Double = record.quantity_liters * record.abv
 
     /** Amount of alcohol in the drink, in grams */
-    val alcoholGrams: Double = alcoholLiters * Constants.alcoholDensity
+    val alcoholGrams: Double = alcoholLiters * BacFormulas.alcoholDensity
 
     /**
      * Given the selection of how many grams of alcohol are there in a single standard unit:
@@ -44,7 +43,7 @@ class DrinkRecordInfo(record: DrinkRecord) : KoinComponent {
      * @return the number of units there are in this drink
      */
     fun units(): Double {
-        return AlcoholCalculator.getUnitsFromAlcoholWeight(alcoholGrams, prefs.prefs)
+        return BacFormulas.getUnitsFromAlcoholWeight(alcoholGrams, prefs.prefs)
     }
 
     /**

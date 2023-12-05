@@ -52,7 +52,7 @@ class BacCalculation(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
      * The maximum amount of alcohol on the system during the entire day.
      */
     private val maxAlcoholConcentration = events.maxByOrNull { it.alcoholGrams }
-        ?.let { AlcoholCalculator.bloodAlcoholConcentration(it.alcoholGrams, prefs.prefs) } ?: 0.0
+        ?.let { BacFormulas.bloodAlcoholConcentration(it.alcoholGrams, prefs.prefs) } ?: 0.0
 
     private fun dailyHourLabel(hour: Float) =
         times.toLocalDateTime(dayStart + hour.toDouble().hours)
@@ -69,7 +69,7 @@ class BacCalculation(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
 
     private inline fun AlcoholAtTime.toGraphPoint(): Point<Float, Float> = Point(
         time.toDailyHours(),
-        AlcoholCalculator.bloodAlcoholConcentration(alcoholGrams, prefs.prefs).toFloat()
+        BacFormulas.bloodAlcoholConcentration(alcoholGrams, prefs.prefs).toFloat()
     )
 
     fun pastGraphEvents(now: Instant): List<Point<Float, Float>> =

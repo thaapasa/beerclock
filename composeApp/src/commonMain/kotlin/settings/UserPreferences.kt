@@ -3,6 +3,7 @@ package fi.tuska.beerclock.settings
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import fi.tuska.beerclock.bac.BacFormulas
 import fi.tuska.beerclock.localization.AppLocale
 import fi.tuska.beerclock.logging.getLogger
 import kotlinx.datetime.LocalTime
@@ -29,21 +30,14 @@ data class UserPreferences(
 ) {
     /**
      * Volume of distribution, approximated from body weight and gender multiplier.
-     * See [Wikipedia](https://en.wikipedia.org/wiki/Blood_alcohol_content):
-     *
-     * Vd is the volume of distribution (L);
-     * typically body weight (kg) multiplied by 0.71 L/kg for men and 0.58 L/kg for women
      */
-    val volumeOfDistribution = gender.volumeOfDistributionMultiplier * weightKg
-
+    val volumeOfDistribution =
+        BacFormulas.volumeOfDistribution(weightKg, gender.volumeOfDistributionMultiplier)
 
     /**
-     * Estimate of the rate of alcohol games burned per hour.
-     *
-     * From [Wikipedia](https://en.wikipedia.org/wiki/Blood_alcohol_content):
-     * β is the rate at which alcohol is eliminated (g/L/hr); typically 0.15
+     * Estimate of the rate of alcohol games burned per hour (g/h).
      */
-    val alcoholBurnOffRate = 0.15 * volumeOfDistribution
+    val alcoholBurnOffRate = BacFormulas.alcoholBurnOffRate(volumeOfDistribution)
 
 }
 
