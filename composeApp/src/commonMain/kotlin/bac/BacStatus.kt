@@ -25,24 +25,32 @@ class BacStatus(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
      * grams of unburned alcohol in your body.
      * Includes events at the start and end of the day, recording the states there.
      */
-    private val events: List<AlcoholAtTime>
+    private val instantEvents: List<AlcoholAtTime>
+    private val smoothedEvents: List<AlcoholAtTime>
 
     init {
         val (before, today) = sortedInputDrinks.partition { it.time < dayStart }
         val alcoholAtDayStart = AlcoholRemaining.forDrinks(before, dayStart)
-        events = InstantBacCalculator.calculate(alcoholAtDayStart, today)
+        instantEvents = InstantBacCalculator.calculate(alcoholAtDayStart, today)
+        smoothedEvents = AbsorbEstimatingBacCalculator.calculate(alcoholAtDayStart, today)
     }
 
     fun atTime(time: Instant): AlcoholAtTime {
-        val futureIdx = events.indexOfFirst { it.time > time }
+        val futureIdx = instantEvents.indexOfFirst { it.time > time }
         if (futureIdx <= 0) return AlcoholAtTime(time, 0.0)
-        return events[futureIdx - 1].interpolate(events[futureIdx], time)
+        return instantEvents[futureIdx - 1].interpolate(instantEvents[futureIdx], time)
+    }
+
+    fun smoothAtTime(time: Instant): AlcoholAtTime {
+        val futureIdx = smoothedEvents.indexOfFirst { it.time > time }
+        if (futureIdx <= 0) return AlcoholAtTime(time, 0.0)
+        return smoothedEvents[futureIdx - 1].interpolate(smoothedEvents[futureIdx], time)
     }
 
     /**
      * The maximum amount of alcohol on the system during the entire day.
      */
-    private val maxAlcoholConcentration = events.maxByOrNull { it.alcoholGrams }
+    private val maxAlcoholConcentration = instantEvents.maxByOrNull { it.alcoholGrams }
         ?.let { BacFormulas.bloodAlcoholConcentration(it.alcoholGrams, prefs.prefs) } ?: 0.0
 
     private fun dailyHourLabel(hour: Float) =
@@ -63,9 +71,15 @@ class BacStatus(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
         BacFormulas.bloodAlcoholConcentration(alcoholGrams, prefs.prefs).toFloat()
     )
 
-    fun pastGraphEvents(now: Instant): List<Point<Float, Float>> =
-        (events.filter { it.time <= now } + atTime(now)).map { it.toGraphPoint() }
+    fun pastSmoothGraphEvents(now: Instant): List<Point<Float, Float>> =
+        (smoothedEvents.filter { it.time <= now } + smoothAtTime(now)).map { it.toGraphPoint() }
 
-    fun futureGraphEvents(now: Instant): List<Point<Float, Float>> =
-        (listOf(atTime(now)) + events.filter { it.time > now }).map { it.toGraphPoint() }
+    fun pastInstantGraphEvents(now: Instant): List<Point<Float, Float>> =
+        (instantEvents.filter { it.time <= now } + atTime(now)).map { it.toGraphPoint() }
+
+    fun futureSmoothGraphEvents(now: Instant): List<Point<Float, Float>> =
+        (listOf(atTime(now)) + smoothedEvents.filter { it.time > now }).map { it.toGraphPoint() }
+
+    fun futureInstantGraphEvents(now: Instant): List<Point<Float, Float>> =
+        (listOf(atTime(now)) + instantEvents.filter { it.time > now }).map { it.toGraphPoint() }
 }

@@ -2,9 +2,21 @@ package fi.tuska.beerclock.bac
 
 import fi.tuska.beerclock.settings.UserPreferences
 import fi.tuska.beerclock.util.inHours
+import kotlinx.datetime.Instant
 import kotlin.math.max
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.hours
+
+/**
+ * This class defines how a drink is absorbed into the body. For the given time period, this
+ * drink causes an increase of `gramsPerHour` grams of alcohol / hour, into the body. At the
+ * end of the period, it is assumed that the entire drink is consumed.
+ */
+data class AbsorptionSchedule(
+    val gramsPerHour: Double,
+    val startTime: Instant,
+    val endTime: Instant
+)
 
 /**
  * This object defines all the formulas relevant for calculating the blood alcohol concentration
@@ -94,4 +106,33 @@ object BacFormulas {
     ): Double =
         max(fromAlcoholGrams - alcoholBurnedDuring(time, alcoholBurnOffRate), 0.0)
 
+
+    /**
+     * Quoting from [Alcohol Metabolism](https://www.bgsu.edu/recwell/wellness-connection/alcohol-education/alcohol-metabolism.html):
+     * The full effects of a drink are felt within 15 to 45 minutes depending on the speed of absorption.
+     *
+     * I'm playing it safe here and erring on the side that it's noticeable quicker, so assume
+     * 15 minutes = 0.25 hours for one standard drink to be absorbed.
+     * I'm using 14 grams for standard drink here, since that's the standard for US.
+     */
+    val timeToAbsorbAlcoholGram: Duration = (0.25 / 14.0).hours
+
+    val simpleAlcoholAbsorptionRate: Double = 1.0 / timeToAbsorbAlcoholGram.inHours()
+
+    /**
+     * Makes a really rough estimate on how long it could take for the drink to be absorbed
+     * into your body.
+     */
+    inline fun timeToAbsorbGrams(alcoholGrams: Double): Duration {
+        return timeToAbsorbAlcoholGram * alcoholGrams
+    }
+
+    /**
+     * Calculate an estimated schedule on the rate of alcohol absorption for the given amount
+     * of alcohol, starting at the given starting time.
+     */
+    inline fun absorptionSchedule(alcoholGrams: Double, startTime: Instant): AbsorptionSchedule {
+        val duration = timeToAbsorbGrams(alcoholGrams)
+        return AbsorptionSchedule(simpleAlcoholAbsorptionRate, startTime, startTime + duration)
+    }
 }

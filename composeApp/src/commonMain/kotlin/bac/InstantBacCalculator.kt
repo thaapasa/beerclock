@@ -22,8 +22,7 @@ class InstantBacCalculator(initialTime: Instant, initialAlcoholGrams: Double) : 
     private var events = mutableListOf(AlcoholAtTime(initialTime, initialAlcoholGrams))
 
     private var curTime: Instant = initialTime
-    var curAlcoholGrams: Double = initialAlcoholGrams
-        private set
+    private var curAlcoholGrams: Double = initialAlcoholGrams
 
     fun get(): AlcoholAtTime = AlcoholAtTime(curTime, curAlcoholGrams)
     fun list() = events.toList()
