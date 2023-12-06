@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,10 +16,9 @@ import kotlinx.datetime.Clock
 fun DailyBacGraph(bac: BacStatus, modifier: Modifier = Modifier) {
     val now = Clock.System.now()
     val graph = bac.graphData
-    Card(modifier = modifier.fillMaxWidth().height(300.dp)) {
+    Card(modifier = modifier.fillMaxWidth().height(240.dp)) {
         XYGraph(graph = graph.graphDef(), modifier = Modifier.padding(4.dp))
         {
-            bac.graphData2.drawAreas(this, now, MaterialTheme.colorScheme.tertiary)
             graph.drawAreas(this, now)
         }
     }
