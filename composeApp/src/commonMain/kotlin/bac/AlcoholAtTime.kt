@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.bac
 
+import fi.tuska.beerclock.util.TimeInterval
 import kotlinx.datetime.Instant
 
 /**
@@ -27,6 +28,10 @@ data class AlcoholAtTime(val time: Instant, val alcoholGrams: Double) {
             val futureIdx = list.indexOfFirst { it.time > time }
             if (futureIdx <= 0) return AlcoholAtTime(time, 0.0)
             return list[futureIdx - 1].interpolate(list[futureIdx], time)
+        }
+
+        inline fun timeRange(list: List<AlcoholAtTime>): TimeInterval {
+            return TimeInterval(list.first().time, list.last().time)
         }
     }
 }

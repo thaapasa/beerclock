@@ -2,8 +2,8 @@ package fi.tuska.beerclock.bac
 
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.DrinkTimeService
-import kotlinx.datetime.Instant
 import org.koin.core.component.KoinComponent
+import kotlin.time.Duration.Companion.minutes
 
 class BacStatus(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
 
@@ -22,14 +22,8 @@ class BacStatus(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
         val (before, today) = sortedInputDrinks.partition { it.time < dayStart }
         val alcoholAtDayStart = AlcoholRemaining.forDrinks(before, dayStart)
         instantEvents = InstantBacCalculator.calculate(alcoholAtDayStart, today)
-        val smoothedEvents = AbsorbEstimatingBacCalculator.calculate(alcoholAtDayStart, today)
-        graphData = BacGraphData(smoothedEvents)
-    }
-
-    fun atTime(time: Instant): AlcoholAtTime {
-        val futureIdx = instantEvents.indexOfFirst { it.time > time }
-        if (futureIdx <= 0) return AlcoholAtTime(time, 0.0)
-        return instantEvents[futureIdx - 1].interpolate(instantEvents[futureIdx], time)
+        val estimatedEvents = AbsorbEstimatingBacCalculator.calculate(alcoholAtDayStart, today)
+        graphData = BacGraphData.smoothed(estimatedEvents, 10.minutes)
     }
 
 }

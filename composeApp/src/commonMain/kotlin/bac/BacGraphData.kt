@@ -21,7 +21,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
-class BacGraphData(private val events: List<AlcoholAtTime>, resolution: Duration = 10.minutes) :
+class BacGraphData(private val events: List<AlcoholAtTime>) :
     KoinComponent {
 
     private val prefs: GlobalUserPreferences = get()
@@ -49,7 +49,6 @@ class BacGraphData(private val events: List<AlcoholAtTime>, resolution: Duration
         formatXLabel = { strings.time(dailyHourLabel(it)) + " " }
     )
 
-
     fun pastEvents(now: Instant): List<Point<Float, Float>> =
         (events.filter { it.time <= now } + atTime(now)).map { it.toGraphPoint() }
 
@@ -72,5 +71,11 @@ class BacGraphData(private val events: List<AlcoholAtTime>, resolution: Duration
     ) {
         scope.AreaChart(pastEvents(now), color = color, alpha = 0.8f)
         scope.AreaChart(futureEvents(now), color = color, alpha = 0.3f)
+    }
+
+    companion object {
+        fun smoothed(events: List<AlcoholAtTime>, resolution: Duration = 10.minutes): BacGraphData {
+            return BacGraphData(BacEventSmoother.smooth(events, resolution))
+        }
     }
 }

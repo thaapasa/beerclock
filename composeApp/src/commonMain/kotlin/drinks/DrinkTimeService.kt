@@ -1,8 +1,8 @@
 package fi.tuska.beerclock.drinks
 
 import fi.tuska.beerclock.settings.GlobalUserPreferences
-import fi.tuska.beerclock.util.InstantRange
 import fi.tuska.beerclock.util.MinutesInDay
+import fi.tuska.beerclock.util.TimeInterval
 import fi.tuska.beerclock.util.fromMinutesOfDay
 import fi.tuska.beerclock.util.toMinutesOfDay
 import kotlinx.datetime.Clock
@@ -54,8 +54,8 @@ class DrinkTimeService : KoinComponent {
      * @return the range of "drinking time" (Instants) covered by the given day. This is affected
      * by the user's preference (start tine of the day).
      */
-    fun dayTimeRange(from: LocalDate, to: LocalDate = from): InstantRange =
-        InstantRange(dayStartTime(from), dayEndTime(to))
+    fun dayTimeRange(from: LocalDate, to: LocalDate = from): TimeInterval =
+        TimeInterval(dayStartTime(from), dayEndTime(to))
 
     /**
      * For a given drinking date and time entered by user:

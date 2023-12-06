@@ -50,22 +50,10 @@ fun LocalTime.Companion.fromPrefsString(str: String): LocalTime? {
 
 fun LocalTime.toMinutesOfDay(): Int {
     return this.hour * 60 + this.minute
-
 }
 
 fun LocalTime.Companion.fromMinutesOfDay(mof: Int): LocalTime {
     return LocalTime(mof / 60, mof % 60)
-}
-
-/**
- * Closed-open range of time (start time is included, end is not).
- */
-data class InstantRange(val start: Instant, val end: Instant) {
-    init {
-        require(start <= end) { "Start of the time range must be before the end of the range." }
-    }
-
-    fun contains(instant: Instant): Boolean = instant in start..end && instant != end
 }
 
 fun Duration.inHours(): Double {
