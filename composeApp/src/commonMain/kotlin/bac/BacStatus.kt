@@ -23,7 +23,7 @@ class BacStatus(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
         val alcoholAtDayStart = AlcoholRemaining.forDrinks(before, dayStart)
         instantEvents = InstantBacCalculator.calculate(alcoholAtDayStart, today)
         val estimatedEvents = AbsorbEstimatingBacCalculator.calculate(alcoholAtDayStart, today)
-        graphData = BacGraphData.smoothed(estimatedEvents, 10.minutes)
+        graphData = BacGraphData.smoothed(estimatedEvents, 3.minutes)
     }
 
 }
