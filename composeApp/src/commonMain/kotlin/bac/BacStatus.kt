@@ -17,6 +17,7 @@ class BacStatus(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
      */
     private val instantEvents: List<AlcoholAtTime>
     val graphData: BacGraphData
+    val graphData2: BacGraphData
 
     init {
         val (before, today) = sortedInputDrinks.partition { it.time < dayStart }
@@ -24,6 +25,7 @@ class BacStatus(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
         instantEvents = InstantBacCalculator.calculate(alcoholAtDayStart, today)
         val estimatedEvents = AbsorbEstimatingBacCalculator.calculate(alcoholAtDayStart, today)
         graphData = BacGraphData.smoothed(estimatedEvents, 3.minutes)
+        graphData2 = BacGraphData(estimatedEvents)
     }
 
 }

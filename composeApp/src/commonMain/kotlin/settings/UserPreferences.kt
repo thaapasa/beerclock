@@ -17,7 +17,7 @@ data class UserPreferences(
      * When the "drinking day" starts. Drinks consumed before this time will be shown
      * on the previous day's listing.
      */
-    val startOfDay: LocalTime = LocalTime(6, 0),
+    val startOfDay: LocalTime = LocalTime(4, 0),
     /**
      * How many grams of alcohol is there in a single standard unit?
      * 12.0 grams of alcohol per unit is the default for Finland (and various other countries).

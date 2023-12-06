@@ -43,16 +43,16 @@ class BacGraphData(private val events: List<AlcoholAtTime>) :
 
     fun graphDef() = GraphDefinition(
         xRange = 0f..24f,
-        yRange = 0f..max(1.0, maxAlcoholConcentration + 0.1).toFloat(),
+        yRange = 0f..max(0.7, maxAlcoholConcentration + 0.1).toFloat(),
         xTitle = strings.home.bacTime,
         yTitle = strings.home.bacPermilles,
         formatXLabel = { strings.time(dailyHourLabel(it)) + " " }
     )
 
-    fun pastEvents(now: Instant): List<Point<Float, Float>> =
+    private fun pastEvents(now: Instant): List<Point<Float, Float>> =
         (events.filter { it.time <= now } + atTime(now)).map { it.toGraphPoint() }
 
-    fun futureEvents(now: Instant): List<Point<Float, Float>> =
+    private fun futureEvents(now: Instant): List<Point<Float, Float>> =
         (listOf(atTime(now)) + events.filter { it.time > now }).map { it.toGraphPoint() }
 
 
