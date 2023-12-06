@@ -12,6 +12,6 @@ fun Int.zeroPad(length: Int): String {
     return this.toString().padStart(length, '0')
 }
 
-fun Int.clamp(min: Int, max: Int): Int {
+inline fun Int.clamp(min: Int, max: Int): Int {
     return if (this < min) min else if (this > max) max else this
 }

@@ -2,7 +2,7 @@ package fi.tuska.beerclock.bac
 
 import fi.tuska.beerclock.bac.AlcoholAtTime.Companion.interpolateFromList
 import fi.tuska.beerclock.bac.AlcoholAtTime.Companion.timeRange
-import fi.tuska.beerclock.util.clamp
+import fi.tuska.beerclock.util.clampIndex
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
@@ -39,11 +39,9 @@ internal object WeightedAverage {
 
     private inline fun List<AlcoholAtTime>.weightedValue(pos: Int): AlcoholAtTime {
         val values =
-            wRange.map { p ->
-                get(
-                    (p + pos).clamp(0, size - 1)
-                ).alcoholGrams * weights[p + weightHalf] / weightTotal
+            wRange.map {
+                get(clampIndex(it + pos)).alcoholGrams * weights[it + weightHalf]
             }
-        return AlcoholAtTime(get(pos).time, values.sum())
+        return AlcoholAtTime(get(pos).time, values.sum() / weightTotal)
     }
 }
