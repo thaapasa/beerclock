@@ -21,4 +21,12 @@ data class AlcoholAtTime(val time: Instant, val alcoholGrams: Double) {
 
         return AlcoholAtTime(atTime, this.alcoholGrams + offset * rangeDelta)
     }
+
+    companion object {
+        inline fun interpolateFromList(list: List<AlcoholAtTime>, time: Instant): AlcoholAtTime {
+            val futureIdx = list.indexOfFirst { it.time > time }
+            if (futureIdx <= 0) return AlcoholAtTime(time, 0.0)
+            return list[futureIdx - 1].interpolate(list[futureIdx], time)
+        }
+    }
 }
