@@ -180,11 +180,12 @@ object FiStrings : Strings {
     }
 
 
-    /* New drink screen */
-    override val newDrink = NewDrinks
+    /* Drink dialog */
+    override val drinkDialog = DrinksDialog
 
-    object NewDrinks : Strings.NewDrinkStrings {
-        override val title = "Merkkaa juoma"
+    object DrinksDialog : Strings.DrinkDialogStrings {
+        override val createTitle = "Merkkaa juoma"
+        override val modifyTitle = "Muokkaa juomaa"
         override val selectImageTitle = "Valitse kuva juomalle"
         override val dateLabel = "Juomapäivä"
         override val timeLabel = "Kellonaika"

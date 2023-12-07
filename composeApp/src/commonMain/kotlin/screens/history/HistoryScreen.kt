@@ -32,7 +32,7 @@ object HistoryScreen : Screen {
             vm.loadDrinks()
         }
 
-        return MainLayout(showTopBar = false) { innerPadding ->
+        MainLayout(showTopBar = false) { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
                 SegmentedButton {
                     AppIcon.CHEVRON_LEFT.iconButton(
@@ -68,5 +68,7 @@ object HistoryScreen : Screen {
                 )
             }
         }
+        // Render drink edit dialog when drink is selected for modification
+        vm.EditDialog()
     }
 }

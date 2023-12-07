@@ -141,11 +141,12 @@ interface Strings {
     }
 
 
-    /* New drink screen */
-    val newDrink: NewDrinkStrings
+    /* Drink dialog strings */
+    val drinkDialog: DrinkDialogStrings
 
-    interface NewDrinkStrings {
-        val title: String
+    interface DrinkDialogStrings {
+        val createTitle: String
+        val modifyTitle: String
         val selectImageTitle: String
         val dateLabel: String
         val timeLabel: String

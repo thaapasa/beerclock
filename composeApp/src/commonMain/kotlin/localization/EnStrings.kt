@@ -167,11 +167,12 @@ object EnStrings : Strings {
     }
 
 
-    /* New drink screen */
-    override val newDrink = NewDrinks
+    /* Drink dialog */
+    override val drinkDialog = DrinksDialog
 
-    object NewDrinks : Strings.NewDrinkStrings {
-        override val title = "Add a drink"
+    object DrinksDialog : Strings.DrinkDialogStrings {
+        override val createTitle = "Add a drink"
+        override val modifyTitle = "Edit drink"
         override val selectImageTitle = "Pick image for the drink"
         override val dateLabel = "Drinking day"
         override val timeLabel = "Time of day"

@@ -54,7 +54,7 @@ class DrinkService : KoinComponent {
         logger.info("Deleted drink $id")
     }
 
-    suspend fun insertDrink(drink: NewDrinkRecord) {
+    suspend fun insertDrink(drink: DrinkDetailsFromEditor) {
         withContext(Dispatchers.IO) {
             db.drinkRecordQueries.insert(
                 time = drink.time.toDbTime(),
@@ -65,9 +65,22 @@ class DrinkService : KoinComponent {
             )
         }
     }
+
+    suspend fun updateDrink(id: Long, drink: DrinkDetailsFromEditor) {
+        withContext(Dispatchers.IO) {
+            db.drinkRecordQueries.update(
+                time = drink.time.toDbTime(),
+                name = drink.name,
+                quantity_liters = drink.quantityLiters,
+                abv = drink.abv,
+                image = drink.image.name,
+                id = id
+            )
+        }
+    }
 }
 
-data class NewDrinkRecord(
+data class DrinkDetailsFromEditor(
     val name: String,
     val abv: Double,
     val quantityLiters: Double,

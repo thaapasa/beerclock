@@ -7,9 +7,9 @@ import androidx.compose.runtime.setValue
 import fi.tuska.beerclock.bac.BacFormulas
 import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
+import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
-import fi.tuska.beerclock.drinks.NewDrinkRecord
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.composables.ViewModel
@@ -17,6 +17,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalTime
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
@@ -25,14 +27,12 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     private val times = DrinkTimeService()
     private val prefs: GlobalUserPreferences = get()
 
-    private val drinkTime = times.instantToDrinkTime(Clock.System.now())
-
     val drinks = mutableStateListOf<DrinkRecord>()
     var name by mutableStateOf("")
     var abv by mutableStateOf(4.5)
     var quantityCl by mutableStateOf(33.0)
-    var date by mutableStateOf(drinkTime.first)
-    var time by mutableStateOf(drinkTime.second)
+    var date by mutableStateOf(LocalDate(2000, 1, 1))
+    var time by mutableStateOf(LocalTime(0, 0, 0))
     var image by mutableStateOf(DrinkImage.GENERIC_DRINK)
     var isSaving by mutableStateOf(false)
 
@@ -44,15 +44,18 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
         prefs = prefs.prefs
     )
 
-    protected fun setValues(drink: BasicDrinkInfo) {
+    protected fun setValues(drink: BasicDrinkInfo, realTime: Instant = Clock.System.now()) {
         name = drink.name
         quantityCl = drink.quantityCl
         abv = drink.abvPercentage
         image = drink.image
+        val drinkTime = times.instantToDrinkTime(realTime)
+        date = drinkTime.first
+        time = drinkTime.second
     }
 
-    protected fun toNewDrinkRecord(): NewDrinkRecord {
-        return NewDrinkRecord(
+    protected fun toSaveDetails(): DrinkDetailsFromEditor {
+        return DrinkDetailsFromEditor(
             time = realTime(),
             name = name,
             abv = abv / 100.0,

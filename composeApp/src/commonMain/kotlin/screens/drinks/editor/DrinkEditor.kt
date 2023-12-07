@@ -32,14 +32,14 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier) {
             DateInputField(
                 value = vm.date,
                 onValueChange = { vm.date = it },
-                labelText = strings.newDrink.dateLabel,
+                labelText = strings.drinkDialog.dateLabel,
                 modifier = Modifier.weight(1f),
             )
             Spacer(modifier = Modifier.width(gap))
             TimeInputField(
                 value = vm.time,
                 onValueChange = { vm.time = it },
-                labelText = strings.newDrink.timeLabel,
+                labelText = strings.drinkDialog.timeLabel,
                 modifier = Modifier.weight(1f),
             )
         }
@@ -49,7 +49,7 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth()
         )
         Text(
-            strings.newDrink.drinkTimeInfo(vm.localRealTime()),
+            strings.drinkDialog.drinkTimeInfo(vm.localRealTime()),
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.padding(start = 8.dp, bottom = 4.dp, end = 8.dp),
         )
@@ -57,7 +57,7 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(gap))
         Row(Modifier.fillMaxWidth()) {
             TextField(
-                label = { Text(strings.newDrink.nameLabel) },
+                label = { Text(strings.drinkDialog.nameLabel) },
                 value = vm.name,
                 onValueChange = { vm.name = it },
                 modifier = Modifier.weight(1f)
@@ -66,26 +66,26 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier) {
             DrinkImageSelectField(
                 value = vm.image,
                 onValueChange = { vm.image = it },
-                titleText = strings.newDrink.selectImageTitle
+                titleText = strings.drinkDialog.selectImageTitle
             )
         }
         Spacer(modifier = Modifier.height(gap))
 
         Row(modifier = Modifier.fillMaxWidth()) {
             DecimalField(
-                label = { Text(strings.newDrink.abvLabel) },
+                label = { Text(strings.drinkDialog.abvLabel) },
                 value = vm.abv,
                 onValueChange = { vm.abv = it },
                 modifier = Modifier.weight(1f),
-                trailingIcon = { Text(strings.newDrink.abvUnit) }
+                trailingIcon = { Text(strings.drinkDialog.abvUnit) }
             )
             Spacer(modifier = Modifier.width(gap))
             DecimalField(
-                label = { Text(strings.newDrink.quantityLabel) },
+                label = { Text(strings.drinkDialog.quantityLabel) },
                 value = vm.quantityCl,
                 onValueChange = { vm.quantityCl = it },
                 modifier = Modifier.weight(1f),
-                trailingIcon = { Text(strings.newDrink.quantityUnit) }
+                trailingIcon = { Text(strings.drinkDialog.quantityUnit) }
             )
             Spacer(modifier = Modifier.width(gap))
             UnitAvatar(

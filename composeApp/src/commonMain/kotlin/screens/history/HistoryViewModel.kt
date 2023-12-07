@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.screens.history
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -7,6 +8,7 @@ import androidx.compose.runtime.setValue
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
+import fi.tuska.beerclock.screens.drinks.modify.EditDrinkDialog
 import fi.tuska.beerclock.ui.composables.ViewModel
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -22,6 +24,8 @@ class HistoryViewModel : ViewModel() {
 
     var date by mutableStateOf(times.toLocalDateTime(Clock.System.now()).date)
         private set
+
+    private var editingDrink by mutableStateOf<DrinkRecordInfo?>(null)
 
     fun loadDrinks() {
         launch {
@@ -47,8 +51,17 @@ class HistoryViewModel : ViewModel() {
     }
 
     fun modifyDrink(drink: DrinkRecordInfo) {
-        launch {
-            
+        editingDrink = drink
+    }
+
+    @Composable
+    fun EditDialog() {
+        val drink = editingDrink
+        if (drink != null) {
+            EditDrinkDialog(drink, onClose = {
+                editingDrink = null
+                loadDrinks()
+            })
         }
     }
 }

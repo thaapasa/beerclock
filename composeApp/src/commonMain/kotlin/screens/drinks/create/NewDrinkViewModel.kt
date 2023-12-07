@@ -19,7 +19,7 @@ class NewDrinkViewModel : DrinkEditorViewModel() {
 
     fun addDrink(afterChanged: (() -> Unit)? = null) {
         savingAction {
-            val newDrink = toNewDrinkRecord()
+            val newDrink = toSaveDetails()
             logger.info("Adding drink to database: $newDrink")
             drinkService.insertDrink(newDrink)
             afterChanged?.invoke()
