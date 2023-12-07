@@ -22,7 +22,6 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
@@ -36,8 +35,8 @@ val elevation = 24.dp
 fun DrinkInfoDialog(
     drink: DrinkRecordInfo,
     onClose: () -> Unit,
+    onModify: ((drink: DrinkRecordInfo) -> Unit)? = null,
     onDelete: ((drink: DrinkRecordInfo) -> Unit)? = null,
-    onModify: (() -> Unit)? = null,
 ) {
     val textColor = MaterialTheme.colorScheme.onSurface
 
@@ -76,7 +75,11 @@ fun DrinkInfoDialog(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 DrinkInfoTable(drink)
-                DrinkInfoDialogButtons(drink, textColor, onClose, onModify, onDelete)
+                DrinkInfoDialogButtons(
+                    drink,
+                    onModify = { onModify?.invoke(it).also { onClose() } },
+                    onDelete = { onDelete?.invoke(it).also { onClose() } },
+                )
             }
         }
     }
@@ -86,9 +89,7 @@ fun DrinkInfoDialog(
 @Composable
 fun DrinkInfoDialogButtons(
     drink: DrinkRecordInfo,
-    textColor: Color,
-    onClose: () -> Unit = { },
-    onModify: (() -> Unit)? = null,
+    onModify: ((drink: DrinkRecordInfo) -> Unit)? = null,
     onDelete: ((drink: DrinkRecordInfo) -> Unit)? = null,
 ) {
     val strings = Strings.get()
@@ -104,10 +105,7 @@ fun DrinkInfoDialogButtons(
     ) {
         onDelete?.let {
             FilledTonalButton(
-                {
-                    onDelete(drink)
-                    onClose()
-                },
+                { it(drink) },
                 contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                 colors = ButtonDefaults.filledTonalButtonColors(contentColor = MaterialTheme.colorScheme.tertiary)
             ) {
@@ -120,7 +118,7 @@ fun DrinkInfoDialogButtons(
         Spacer(modifier = Modifier.width(16.dp))
         onModify?.let {
             FilledTonalButton(
-                it,
+                { it(drink) },
                 contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                 colors = ButtonDefaults.filledTonalButtonColors(contentColor = MaterialTheme.colorScheme.primary)
             ) {

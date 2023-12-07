@@ -63,7 +63,8 @@ object HistoryScreen : Screen {
                     vm.drinks,
                     modifier = Modifier.padding(top = 16.dp)
                         .clip(RoundedCornerShape(16.dp)),
-                    onDelete = vm::deleteDrink
+                    onModify = vm::modifyDrink,
+                    onDelete = vm::deleteDrink,
                 )
             }
         }

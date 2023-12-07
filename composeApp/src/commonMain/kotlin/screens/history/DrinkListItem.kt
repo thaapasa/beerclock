@@ -16,6 +16,7 @@ import fi.tuska.beerclock.localization.Strings
 @Composable
 fun DrinkListItem(
     drink: DrinkRecordInfo,
+    onModify: ((drink: DrinkRecordInfo) -> Unit)? = null,
     onDelete: ((drink: DrinkRecordInfo) -> Unit)? = null,
 ) {
     val strings = Strings.get()
@@ -42,6 +43,7 @@ fun DrinkListItem(
             drink,
             onClose = { selected = false },
             onDelete = onDelete,
-            onModify = {})
+            onModify = onModify
+        )
     }
 }

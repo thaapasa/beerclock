@@ -45,4 +45,10 @@ class HistoryViewModel : ViewModel() {
             drinks.remove(drink)
         }
     }
+
+    fun modifyDrink(drink: DrinkRecordInfo) {
+        launch {
+            
+        }
+    }
 }
