@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.screens.newdrink
+package fi.tuska.beerclock.screens.drinks.editor
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.drinks.DrinkEditorViewModel
 import fi.tuska.beerclock.screens.history.UnitAvatar
 import fi.tuska.beerclock.ui.components.DateInputField
 import fi.tuska.beerclock.ui.components.DecimalField
@@ -24,7 +25,7 @@ import fi.tuska.beerclock.ui.components.TimeInputField
 private val gap = 16.dp
 
 @Composable
-fun DrinkEditor(vm: NewDrinkViewModel, modifier: Modifier = Modifier) {
+fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier) {
     val strings = Strings.get()
     Column(modifier = modifier.padding(16.dp).fillMaxSize()) {
         Row(modifier = Modifier.fillMaxWidth()) {

@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.screens.newdrink
+package fi.tuska.beerclock.screens.drinks.create
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon

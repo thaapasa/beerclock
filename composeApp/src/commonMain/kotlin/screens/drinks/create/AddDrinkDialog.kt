@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.screens.newdrink
+package fi.tuska.beerclock.screens.drinks.create
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.drinks.editor.DrinkEditor
 import fi.tuska.beerclock.ui.components.DialogHeader
 import fi.tuska.beerclock.ui.components.FullScreenDialog
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
@@ -30,7 +31,7 @@ fun AddDrinkDialog(onDrinksUpdated: (() -> Unit)? = null, onClose: () -> Unit) {
                 },
                 textButton = { modifier ->
                     TextButton(
-                        enabled = !vm.saving,
+                        enabled = !vm.isSaving,
                         onClick = {
                             vm.addDrink {
                                 onDrinksUpdated?.invoke()

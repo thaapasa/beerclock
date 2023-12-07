@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.screens.newdrink
+package fi.tuska.beerclock.screens.drinks.editor
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

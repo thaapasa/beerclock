@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.screens.newdrink
+package fi.tuska.beerclock.screens.drinks
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -9,24 +9,22 @@ import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.drinks.NewDrinkRecord
-import fi.tuska.beerclock.drinks.exampleDrinks
 import fi.tuska.beerclock.images.DrinkImage
-import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.composables.ViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
-private val logger = getLogger("NewDrinkScreen")
-
-class NewDrinkViewModel : ViewModel(), KoinComponent {
-    private val drinkService = DrinkService()
+open class DrinkEditorViewModel : ViewModel(), KoinComponent {
+    protected val drinkService = DrinkService()
     private val times = DrinkTimeService()
-    private val drinkTime = times.instantToDrinkTime(Clock.System.now())
     private val prefs: GlobalUserPreferences = get()
+
+    private val drinkTime = times.instantToDrinkTime(Clock.System.now())
 
     val drinks = mutableStateListOf<DrinkRecord>()
     var name by mutableStateOf("")
@@ -35,11 +33,7 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
     var date by mutableStateOf(drinkTime.first)
     var time by mutableStateOf(drinkTime.second)
     var image by mutableStateOf(DrinkImage.GENERIC_DRINK)
-    var saving by mutableStateOf(false)
-
-    init {
-        randomize()
-    }
+    var isSaving by mutableStateOf(false)
 
     fun realTime(): Instant = times.drinkTimeToInstant(date, time)
     fun localRealTime() = times.toLocalDateTime(realTime())
@@ -49,15 +43,7 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
         prefs = prefs.prefs
     )
 
-    fun randomize() {
-        val drink = exampleDrinks().random()
-        name = drink.name
-        quantityCl = drink.quantityCl
-        abv = drink.abvPercentage
-        image = drink.image
-    }
-
-    private fun toNewDrinkRecord(): NewDrinkRecord {
+    protected fun toNewDrinkRecord(): NewDrinkRecord {
         return NewDrinkRecord(
             time = realTime(),
             name = name,
@@ -67,17 +53,14 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
         )
     }
 
-    fun addDrink(afterChanged: (() -> Unit)? = null) {
+    protected fun savingAction(action: suspend (scope: CoroutineScope) -> Unit) {
         launch {
-            if (saving) return@launch
-            saving = true
+            if (isSaving) return@launch
+            isSaving = true
             try {
-                val newDrink = toNewDrinkRecord()
-                logger.info("Adding drink to database: $newDrink")
-                drinkService.insertDrink(newDrink)
-                afterChanged?.invoke()
+                action(this)
             } finally {
-                saving = false
+                isSaving = false
             }
         }
     }
