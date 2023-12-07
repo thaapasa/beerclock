@@ -19,6 +19,7 @@ import fi.tuska.beerclock.util.safeToDouble
 fun DecimalField(
     value: Double,
     onValueChange: (value: Double) -> Unit,
+    leadingIcon: @Composable (() -> Unit)? = null,
     label: @Composable (() -> Unit)? = null,
     supportingText: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
@@ -41,6 +42,7 @@ fun DecimalField(
         label = label,
         modifier = modifier,
         value = textState,
+        leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
         onValueChange = {
             // Update the state only for valid decimal numbers

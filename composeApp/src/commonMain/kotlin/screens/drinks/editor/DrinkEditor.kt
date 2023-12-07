@@ -7,14 +7,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.drinks.DrinkEditorViewModel
 import fi.tuska.beerclock.screens.history.UnitAvatar
@@ -43,11 +46,17 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier) {
                 modifier = Modifier.weight(1f),
             )
         }
-        DrinkTimeSlider(
-            value = vm.time,
-            onValueChange = { vm.time = it },
-            modifier = Modifier.fillMaxWidth()
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            AppIcon.CLOCK.icon(
+                strings.drinkDialog.timeLabel,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            DrinkTimeSlider(
+                value = vm.time,
+                onValueChange = { vm.time = it },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
         Text(
             strings.drinkDialog.drinkTimeInfo(vm.localRealTime()),
             style = MaterialTheme.typography.bodySmall,
@@ -56,7 +65,7 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(gap))
         Row(Modifier.fillMaxWidth()) {
-            TextField(
+            OutlinedTextField(
                 label = { Text(strings.drinkDialog.nameLabel) },
                 value = vm.name,
                 onValueChange = { vm.name = it },
@@ -77,6 +86,7 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier) {
                 value = vm.abv,
                 onValueChange = { vm.abv = it },
                 modifier = Modifier.weight(1f),
+                leadingIcon = { AppIcon.BOLT.icon(modifier = Modifier.size(16.dp)) },
                 trailingIcon = { Text(strings.drinkDialog.abvUnit) }
             )
             Spacer(modifier = Modifier.width(gap))
@@ -85,6 +95,7 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier) {
                 value = vm.quantityCl,
                 onValueChange = { vm.quantityCl = it },
                 modifier = Modifier.weight(1f),
+                leadingIcon = { AppIcon.GLASS_FULL.icon(modifier = Modifier.size(16.dp)) },
                 trailingIcon = { Text(strings.drinkDialog.quantityUnit) }
             )
             Spacer(modifier = Modifier.width(gap))
@@ -93,11 +104,16 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(start = 4.dp, top = 4.dp)
             )
         }
-        Slider(
-            value = vm.quantityCl.toFloat(),
-            onValueChange = { vm.quantityCl = it.toInt().toDouble() },
-            valueRange = 1f..75f,
-            steps = 74
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            AppIcon.GLASS_FULL.icon(
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Slider(
+                value = vm.quantityCl.toFloat(),
+                onValueChange = { vm.quantityCl = it.toInt().toDouble() },
+                valueRange = 1f..75f,
+                steps = 74,
+            )
+        }
     }
 }
