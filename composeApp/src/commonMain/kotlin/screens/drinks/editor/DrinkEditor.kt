@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.drinks.DrinkEditorViewModel
-import fi.tuska.beerclock.screens.history.UnitAvatar
 import fi.tuska.beerclock.ui.components.DateInputField
 import fi.tuska.beerclock.ui.components.DecimalField
 import fi.tuska.beerclock.ui.components.TimeInputField
+import fi.tuska.beerclock.ui.components.UnitAvatar
 
 private val gap = 16.dp
 
