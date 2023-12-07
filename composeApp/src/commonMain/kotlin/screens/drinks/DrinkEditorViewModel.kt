@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import fi.tuska.beerclock.bac.BacFormulas
 import fi.tuska.beerclock.database.DrinkRecord
+import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.drinks.NewDrinkRecord
@@ -42,6 +43,13 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
         abvPercentage = abv,
         prefs = prefs.prefs
     )
+
+    protected fun setValues(drink: BasicDrinkInfo) {
+        name = drink.name
+        quantityCl = drink.quantityCl
+        abv = drink.abvPercentage
+        image = drink.image
+    }
 
     protected fun toNewDrinkRecord(): NewDrinkRecord {
         return NewDrinkRecord(

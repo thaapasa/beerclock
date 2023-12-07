@@ -14,10 +14,7 @@ class NewDrinkViewModel : DrinkEditorViewModel() {
 
     private fun randomize() {
         val drink = exampleDrinks().random()
-        name = drink.name
-        quantityCl = drink.quantityCl
-        abv = drink.abvPercentage
-        image = drink.image
+        setValues(drink)
     }
 
     fun addDrink(afterChanged: (() -> Unit)? = null) {

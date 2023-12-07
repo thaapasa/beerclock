@@ -4,11 +4,11 @@ import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.localization.Strings
 
 data class DrinkDef(
-    val name: String,
-    val quantityCl: Double,
-    val abvPercentage: Double, // Alcohol by volume in percentage
-    val image: DrinkImage
-)
+    override val name: String,
+    override val quantityCl: Double,
+    override val abvPercentage: Double, // Alcohol by volume in percentage
+    override val image: DrinkImage
+) : BasicDrinkInfo
 
 val ExampleDrinksEn = listOf(
     DrinkDef("Large brewski", 50.0, 4.6, DrinkImage.BEER_GLASS_1),
