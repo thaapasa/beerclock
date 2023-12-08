@@ -27,6 +27,7 @@ fun Gauge(
     position: Double,
     value: String,
     iconPainter: Painter? = null,
+    icon: @Composable (() -> Unit)? = null,
     color: Color = MaterialTheme.colorScheme.primary,
     modifier: Modifier = Modifier
 ) {
@@ -59,16 +60,19 @@ fun Gauge(
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.align(Alignment.Center),
         )
-        iconPainter?.let {
+        (iconPainter ?: icon)?.let {
             Box(
                 modifier = Modifier.fillMaxWidth(0.25f)
                     .align(Alignment.BottomCenter)
             ) {
-                Icon(
-                    contentDescription = "Gauge icon",
-                    painter = it,
-                    tint = color
-                )
+                iconPainter?.let {
+                    Icon(
+                        contentDescription = "Gauge icon",
+                        painter = it,
+                        tint = color
+                    )
+                }
+                icon?.invoke()
             }
         }
     }
