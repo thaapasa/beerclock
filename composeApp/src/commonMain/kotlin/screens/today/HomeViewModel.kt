@@ -35,8 +35,8 @@ class HomeViewModel : ViewModel(), KoinComponent {
     val drinks = mutableStateListOf<DrinkRecordInfo>()
     var bacStatus by mutableStateOf(BacStatus(drinks, drinkDay))
         private set
-
     var now by mutableStateOf(Clock.System.now())
+    var isYesterday by mutableStateOf(times.toLocalDateTime(now).time < prefs.prefs.startOfDay)
 
     var units by mutableStateOf(0.0f)
     var unitsPosition by mutableStateOf(0.0f)
@@ -79,6 +79,7 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     fun updateBacStatus() {
         now = Clock.System.now()
+        isYesterday = times.toLocalDateTime(now).time < prefs.prefs.startOfDay
         bac = bloodAlcoholConcentration(
             bacStatus.atTime(now).alcoholGrams,
             prefs.prefs

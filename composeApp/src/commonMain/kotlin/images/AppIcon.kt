@@ -28,6 +28,7 @@ enum class AppIcon(private val path: String) {
     BOLT("drawable/icons/bolt.xml"),
     GLASS_FULL("drawable/icons/glass_full.xml"),
     WATER_DROP("drawable/icons/water_drop.xml"),
+    MOON("drawable/icons/moon.xml"),
     CHEVRON_LEFT("drawable/icons/chevron_left.xml"),
     CHEVRON_RIGHT("drawable/icons/chevron_right.xml");
 

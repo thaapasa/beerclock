@@ -33,7 +33,13 @@ fun BacStatusCard(vm: HomeViewModel) {
         val units = animateFloatAsState(targetValue = vm.units)
         val unitsPosition = animateFloatAsState(targetValue = vm.unitsPosition)
         Row {
-            DateView(vm.drinkDay, modifier = Modifier.weight(1f).padding(16.dp))
+            DateView(vm.drinkDay, modifier = Modifier.padding(16.dp))
+            if (vm.isYesterday) {
+                AppIcon.MOON.icon(
+                    modifier = Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp)
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
             Row(modifier = Modifier.padding(8.dp)) {
                 Gauge(
                     value = strings.drink.units(bac.value.toDouble()),
