@@ -13,6 +13,8 @@ import fi.tuska.beerclock.util.inHours
 import io.github.koalaplot.core.line.Point
 import io.github.koalaplot.core.xychart.XYChartScope
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalTime
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import kotlin.math.max
@@ -40,9 +42,11 @@ class BacGraphData(private val events: List<AlcoholAtTime>) :
     private val maxAlcoholConcentration = events.maxByOrNull { it.alcoholGrams }
         ?.let { BacFormulas.bloodAlcoholConcentration(it.alcoholGrams, prefs.prefs) } ?: 0.0
 
+    val maxY = max(0.7, maxAlcoholConcentration + 0.1).toFloat()
+
     fun graphDef() = GraphDefinition(
         xRange = 0f..24f,
-        yRange = 0f..max(0.7, maxAlcoholConcentration + 0.1).toFloat(),
+        yRange = 0f..maxY,
         xTitle = strings.home.bacTime,
         yTitle = strings.home.bacPermilles,
         formatXLabel = { strings.time(dailyHourLabel(it)) + " " }
@@ -61,6 +65,12 @@ class BacGraphData(private val events: List<AlcoholAtTime>) :
         time.toDailyHours(),
         BacFormulas.bloodAlcoholConcentration(alcoholGrams, prefs.prefs).toFloat()
     )
+
+    fun toGraphX(time: LocalTime): Float {
+        val local = times.toLocalDateTime(dayStart)
+        val instant = times.toInstant(LocalDateTime(local.date, time))
+        return instant.toDailyHours()
+    }
 
     @Composable
     fun drawAreas(
