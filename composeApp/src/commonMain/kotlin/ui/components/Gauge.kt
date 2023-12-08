@@ -20,11 +20,11 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 
-val gapDegrees = 60.0f
+const val gapDegrees = 60.0f
 
 @Composable
 fun Gauge(
-    position: Double,
+    position: Float,
     value: String,
     iconPainter: Painter? = null,
     icon: @Composable (() -> Unit)? = null,
@@ -49,7 +49,7 @@ fun Gauge(
             drawArc(
                 color = color,
                 startAngle = 90.0f + gapDegrees / 2.0f,
-                sweepAngle = ((360.0 - gapDegrees) * position).toFloat(),
+                sweepAngle = ((360.0f - gapDegrees) * position),
                 useCenter = false,
                 style = Stroke(width = 8f, cap = StrokeCap.Round),
             )

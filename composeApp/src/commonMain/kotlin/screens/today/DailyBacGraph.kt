@@ -10,11 +10,15 @@ import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.bac.BacStatus
 import fi.tuska.beerclock.graphs.XYGraph
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 
 
 @Composable
-fun DailyBacGraph(bac: BacStatus, modifier: Modifier = Modifier) {
-    val now = Clock.System.now()
+fun DailyBacGraph(
+    bac: BacStatus,
+    now: Instant = Clock.System.now(),
+    modifier: Modifier = Modifier
+) {
     val graph = bac.graphData
     Card(modifier = modifier.fillMaxWidth().height(240.dp)) {
         XYGraph(graph = graph.graphDef(), modifier = Modifier.padding(4.dp))

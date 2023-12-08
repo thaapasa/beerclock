@@ -10,7 +10,7 @@ import kotlin.time.Duration.Companion.minutes
 class BacStatus(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
 
     private val times = DrinkTimeService()
-    private val dayStart = times.dayStartTime()
+    val dayStart = times.dayStartTime()
 
     /**
      * List of the different BAC levels at different points during the day, measured in

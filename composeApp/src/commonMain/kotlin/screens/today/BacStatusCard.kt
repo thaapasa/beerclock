@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.screens.today
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,20 +30,24 @@ fun BacStatusCard(vm: HomeViewModel) {
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
+        val bacPosition = animateFloatAsState(targetValue = vm.bacPosition)
+        val bac = animateFloatAsState(targetValue = vm.bac)
+        val units = animateFloatAsState(targetValue = vm.units)
+        val unitsPosition = animateFloatAsState(targetValue = vm.unitsPosition)
         Row {
             DateView(modifier = Modifier.weight(1f).padding(16.dp))
             Row(modifier = Modifier.padding(8.dp)) {
                 Gauge(
-                    value = strings.drink.units(vm.bac()),
-                    position = vm.bacPosition(),
+                    value = strings.drink.units(bac.value.toDouble()),
+                    position = bacPosition.value,
                     modifier = Modifier.size(64.dp),
                     icon = { Text(text = "‰", color = MaterialTheme.colorScheme.primary) },
                     color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Gauge(
-                    value = strings.drink.units(vm.units()),
-                    position = vm.unitsPosition(),
+                    value = strings.drink.units(units.value.toDouble()),
+                    position = unitsPosition.value,
                     modifier = Modifier.size(64.dp),
                     iconPainter = AppIcon.DRINK.painter(),
                 )

@@ -9,8 +9,12 @@ private val logger = getLogger("ViewModel")
 
 open class ViewModel : CoroutineScope by CoroutineScope(Dispatchers.Main), Disposable {
 
+    protected var isActive = true
+        private set
+
     override fun onDispose() {
         logger.debug("Disposing ${this::class.simpleName}")
         cancel() // Cancel all coroutines when the ViewModel is cleared
+        isActive = false
     }
 }

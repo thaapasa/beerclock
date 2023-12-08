@@ -30,7 +30,7 @@ object HomeScreen : Screen {
             Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
                 BacStatusCard(vm)
                 Spacer(modifier = Modifier.height(16.dp))
-                DailyBacGraph(bac = vm.bacStatus)
+                DailyBacGraph(bac = vm.bacStatus, now = vm.now)
             }
         }
     }
