@@ -31,15 +31,28 @@ class DrinkTimeService : KoinComponent {
     val zone = TimeZone.currentSystemDefault()
 
     inline fun now(): Instant = Clock.System.now()
+
     inline fun toInstant(time: LocalDateTime): Instant = time.toInstant(zone)
     inline fun toLocalDateTime(instant: Instant = now()): LocalDateTime =
         instant.toLocalDateTime(zone)
 
-    inline fun toLocalDate(instant: Instant = now()): LocalDate = toLocalDateTime(instant).date
-    inline fun toLocalTime(instant: Instant = now()): LocalTime = toLocalDateTime(instant).time
+    /**
+     * Return the date which the given time is considered to be part of, as per user preferences.
+     * This allows early morning hours to be considered part of yesterday.
+     *
+     * @return the "drinking day" for the given instant.
+     */
+    fun currentDrinkDay(atTime: Instant = now()): LocalDate {
+        val local = toLocalDateTime(atTime)
+        if (local.time < prefs.prefs.startOfDay) {
+            // It's still yesterday (we'd like to think). Blimey!
+            return local.date.minus(1, DateTimeUnit.DAY)
+        }
+        return local.date
+    }
 
     /** @return the Instant when the given date (default=today) starts */
-    fun dayStartTime(date: LocalDate = toLocalDate(now())): Instant =
+    fun dayStartTime(date: LocalDate = currentDrinkDay()): Instant =
         toInstant(LocalDateTime(date = date, time = prefs.prefs.startOfDay))
 
     fun dayEndTime(date: LocalDate): Instant =

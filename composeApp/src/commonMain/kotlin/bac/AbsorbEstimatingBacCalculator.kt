@@ -3,7 +3,6 @@ package fi.tuska.beerclock.bac
 import fi.tuska.beerclock.bac.BacFormulas.absorptionSchedule
 import fi.tuska.beerclock.bac.BacFormulas.alcoholBurnOffRate
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
-import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.inHours
 import kotlinx.datetime.Instant
@@ -48,7 +47,6 @@ class AbsorbEstimatingBacCalculator(initialTime: Instant, initialAlcoholGrams: D
         val rate = currentAlcoholChangeRate()
         val duration = toTime - curTime
         curAlcoholGrams = max(curAlcoholGrams + rate * duration.inHours(), 0.0)
-        getLogger("ABE").info("rate is now $rate, alcoholGrams $curAlcoholGrams")
         curTime = toTime
         record(curTime, curAlcoholGrams)
         // Drop schedules that are past

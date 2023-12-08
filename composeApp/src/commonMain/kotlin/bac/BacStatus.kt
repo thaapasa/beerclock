@@ -4,13 +4,14 @@ import fi.tuska.beerclock.bac.AlcoholAtTime.Companion.interpolateFromList
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
 import org.koin.core.component.KoinComponent
 import kotlin.time.Duration.Companion.minutes
 
-class BacStatus(sortedInputDrinks: List<DrinkRecordInfo>) : KoinComponent {
+class BacStatus(sortedInputDrinks: List<DrinkRecordInfo>, drinkDay: LocalDate) : KoinComponent {
 
     private val times = DrinkTimeService()
-    val dayStart = times.dayStartTime()
+    private val dayStart = times.dayStartTime(drinkDay)
 
     /**
      * List of the different BAC levels at different points during the day, measured in

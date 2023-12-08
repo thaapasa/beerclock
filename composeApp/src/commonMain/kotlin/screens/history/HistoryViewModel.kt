@@ -11,7 +11,6 @@ import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.screens.drinks.modify.EditDrinkDialog
 import fi.tuska.beerclock.ui.composables.ViewModel
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.minus
@@ -22,7 +21,7 @@ class HistoryViewModel : ViewModel() {
     private val drinkService = DrinkService()
     val drinks = mutableStateListOf<DrinkRecordInfo>()
 
-    var date by mutableStateOf(times.toLocalDateTime(Clock.System.now()).date)
+    var date by mutableStateOf(times.currentDrinkDay())
         private set
 
     private var editingDrink by mutableStateOf<DrinkRecordInfo?>(null)

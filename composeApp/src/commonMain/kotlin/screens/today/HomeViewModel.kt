@@ -31,8 +31,9 @@ class HomeViewModel : ViewModel(), KoinComponent {
     private val times = DrinkTimeService()
     private val prefs: GlobalUserPreferences = get()
 
+    var drinkDay by mutableStateOf(times.currentDrinkDay())
     val drinks = mutableStateListOf<DrinkRecordInfo>()
-    var bacStatus by mutableStateOf(BacStatus(drinks))
+    var bacStatus by mutableStateOf(BacStatus(drinks, drinkDay))
         private set
 
     var now by mutableStateOf(Clock.System.now())
@@ -59,16 +60,18 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     fun loadTodaysDrinks() {
         launch {
-            val newDrinks = drinkService.getDrinksForHomeScreen()
+            drinkDay = times.currentDrinkDay()
+            logger.info("Loading today's drinks for $drinkDay")
+            val newDrinks = drinkService.getDrinksForHomeScreen(drinkDay)
             setDrinks(newDrinks)
         }
     }
 
     private fun setDrinks(newDrinks: List<DrinkRecordInfo>) {
         drinks.clear()
-        val dayStart = times.dayStartTime()
+        val dayStart = times.dayStartTime(drinkDay)
         drinks.addAll(newDrinks.filter { it.time >= dayStart })
-        bacStatus = BacStatus(newDrinks)
+        bacStatus = BacStatus(newDrinks, drinkDay)
         units = drinks.sumOf { it.units() }.toFloat()
         unitsPosition = min(units / maxUnitsPosition, 1.0).toFloat()
         updateBacStatus()
@@ -82,7 +85,7 @@ class HomeViewModel : ViewModel(), KoinComponent {
         ).toFloat()
         bacPosition = min(bac / maxBacPosition, 1.0).toFloat()
 
-        if (bacStatus.dayStart != times.dayStartTime()) {
+        if (drinkDay != times.currentDrinkDay()) {
             logger.info("New drink day starts, reload drinks")
             loadTodaysDrinks()
         }

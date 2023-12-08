@@ -18,9 +18,7 @@ import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.components.Gauge
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.LocalDate
 
 
 @Composable
@@ -35,7 +33,7 @@ fun BacStatusCard(vm: HomeViewModel) {
         val units = animateFloatAsState(targetValue = vm.units)
         val unitsPosition = animateFloatAsState(targetValue = vm.unitsPosition)
         Row {
-            DateView(modifier = Modifier.weight(1f).padding(16.dp))
+            DateView(vm.drinkDay, modifier = Modifier.weight(1f).padding(16.dp))
             Row(modifier = Modifier.padding(8.dp)) {
                 Gauge(
                     value = strings.drink.units(bac.value.toDouble()),
@@ -57,18 +55,15 @@ fun BacStatusCard(vm: HomeViewModel) {
 }
 
 @Composable
-fun DateView(modifier: Modifier = Modifier) {
+fun DateView(drinkDay: LocalDate, modifier: Modifier = Modifier) {
     val strings = Strings.get()
-    val now = Clock.System.now()
-    val zone = TimeZone.currentSystemDefault()
-    val time = now.toLocalDateTime(zone)
     return Column(modifier = modifier) {
         Text(
-            strings.weekday(time.dayOfWeek).replaceFirstChar { it.titlecase() },
+            strings.weekday(drinkDay.dayOfWeek).replaceFirstChar { it.titlecase() },
             style = MaterialTheme.typography.titleSmall
         )
         Text(
-            strings.dateShort(time),
+            strings.dateShort(drinkDay),
             style = MaterialTheme.typography.titleLarge
         )
     }

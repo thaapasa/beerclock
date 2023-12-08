@@ -12,7 +12,6 @@ import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.inHours
 import io.github.koalaplot.core.line.Point
 import io.github.koalaplot.core.xychart.XYChartScope
-import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -28,7 +27,7 @@ class BacGraphData(private val events: List<AlcoholAtTime>) :
     private val times = DrinkTimeService()
     private val strings = Strings.get()
     private val dayStart =
-        times.dayStartTime(times.toLocalDate(events.firstOrNull()?.time ?: Clock.System.now()))
+        times.dayStartTime(times.currentDrinkDay(events.firstOrNull()?.time ?: times.now()))
 
     private fun dailyHourLabel(hour: Float) =
         times.toLocalDateTime(dayStart + hour.toDouble().hours)
@@ -66,7 +65,7 @@ class BacGraphData(private val events: List<AlcoholAtTime>) :
     @Composable
     fun drawAreas(
         scope: XYChartScope<Float, Float>,
-        now: Instant = Clock.System.now(),
+        now: Instant,
         color: Color = MaterialTheme.colorScheme.primary
     ) {
         scope.AreaChart(pastEvents(now), color = color, alpha = 0.8f)

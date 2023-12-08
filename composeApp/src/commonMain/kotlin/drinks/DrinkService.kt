@@ -33,8 +33,7 @@ class DrinkService : KoinComponent {
         return drinks.map(::DrinkRecordInfo)
     }
 
-    suspend fun getDrinksForHomeScreen(): List<DrinkRecordInfo> {
-        val today = times.toLocalDate()
+    suspend fun getDrinksForHomeScreen(today: LocalDate): List<DrinkRecordInfo> {
         val yesterday = today.minus(1, DateTimeUnit.DAY)
         val range = times.dayTimeRange(yesterday, today)
         val drinks = withContext(Dispatchers.IO) {
