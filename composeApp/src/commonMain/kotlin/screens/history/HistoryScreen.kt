@@ -1,8 +1,10 @@
 package fi.tuska.beerclock.screens.history
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,6 +21,7 @@ import fi.tuska.beerclock.ui.components.SegmentDivider
 import fi.tuska.beerclock.ui.components.SegmentedButton
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
+import kotlinx.datetime.LocalDate
 
 
 object HistoryScreen : Screen {
@@ -40,12 +43,7 @@ object HistoryScreen : Screen {
                         modifier = Modifier.padding(horizontal = 4.dp)
                     ) { vm.prevDay() }
                     SegmentDivider()
-                    Text(
-                        strings.date(vm.date),
-                        modifier = Modifier.weight(1f)
-                            .align(Alignment.CenterVertically),
-                        textAlign = TextAlign.Center
-                    )
+                    DateTitle(vm.date)
                     SegmentDivider()
                     DatePickerIcon(
                         value = vm.date,
@@ -70,5 +68,25 @@ object HistoryScreen : Screen {
         }
         // Render drink edit dialog when drink is selected for modification
         vm.EditDialog()
+    }
+}
+
+@Composable
+fun RowScope.DateTitle(date: LocalDate) {
+    val strings = Strings.get()
+    Column(Modifier.weight(1f).align(Alignment.CenterVertically)) {
+        Text(
+            strings.settings.dateTitle(date),
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodyMedium
+        )
+        Text(
+            strings.settings.weekTitle(date),
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodySmall
+        )
+
     }
 }

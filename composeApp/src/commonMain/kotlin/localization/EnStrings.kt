@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.localization
 
 import fi.tuska.beerclock.drinks.SingleUnitWeights
+import fi.tuska.beerclock.util.toWeekOfYear
 import fi.tuska.beerclock.util.zeroPad
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
@@ -141,6 +142,10 @@ object EnStrings : Strings {
 
     object Settings : Strings.SettingsStrings {
         override val title = "Settings"
+        override fun dateTitle(day: LocalDate) = "${weekdayShort(day.dayOfWeek)}, ${date(day)}"
+
+        override fun weekTitle(day: LocalDate) = "Week ${day.toWeekOfYear().weekNumber}"
+
         override val localeLabel = "Language"
         override val phoneLocale = "Use system locale"
         override val localeDescription = "Select the language for BeerClock."

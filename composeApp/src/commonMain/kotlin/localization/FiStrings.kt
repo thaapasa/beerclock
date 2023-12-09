@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.localization
 
 import fi.tuska.beerclock.drinks.SingleUnitWeights
+import fi.tuska.beerclock.util.toWeekOfYear
 import fi.tuska.beerclock.util.zeroPad
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
@@ -152,8 +153,14 @@ object FiStrings : Strings {
     /* Settings screen */
     override val settings = Settings
 
+
     object Settings : Strings.SettingsStrings {
         override val title = "Asetukset"
+        override fun dateTitle(day: LocalDate) =
+            "${weekdayShort(day.dayOfWeek).replaceFirstChar { it.uppercase() }} ${date(day)}"
+
+        override fun weekTitle(day: LocalDate) = "Viikko ${day.toWeekOfYear().weekNumber}"
+
         override val localeLabel = "Kieli"
         override val phoneLocale = "Puhelimen kielen mukaan"
         override val localeDescription = "Valitse millä kielellä haluat käyttää Kaljakelloa."

@@ -122,6 +122,8 @@ interface Strings {
 
     interface SettingsStrings {
         val title: String
+        fun dateTitle(date: LocalDate): String
+        fun weekTitle(date: LocalDate): String
         val localeLabel: String
         val phoneLocale: String
         val localeDescription: String

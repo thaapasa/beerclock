@@ -59,3 +59,7 @@ fun LocalTime.Companion.fromMinutesOfDay(mof: Int): LocalTime {
 fun Duration.inHours(): Double {
     return toDouble(DurationUnit.HOURS)
 }
+
+data class WeekOfYear(val weekNumber: Int, val year: Int)
+
+expect fun LocalDate.toWeekOfYear(): WeekOfYear
