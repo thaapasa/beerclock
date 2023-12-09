@@ -34,6 +34,7 @@ fun DailyBacGraph(
         XYGraph(graph = graph.graphDef(), modifier = Modifier.padding(4.dp))
         {
             DaySeparator(this, graph.toGraphX(ZeroHour) + 24f, graph.maxY)
+            DrivingLimit(this, bac.drivingLimitBac().toFloat(), 24f)
             graph.drawAreas(this, now)
         }
     }
@@ -52,14 +53,30 @@ fun DaySeparator(scope: XYChartScope<Float, Float>, x: Float, maxY: Float) {
     )
     scope.LineChart(
         data = listOf(Point(x, maxY * 0.95f)),
-        lineStyle = LineStyle(
-            brush = SolidColor(MaterialTheme.colorScheme.onSurfaceVariant),
-            strokeWidth = 1.dp,
-            alpha = 0.5f
-        ),
         symbol = {
             AppIcon.MOON.icon(
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(14.dp).alpha(0.8f),
+            )
+        }
+    )
+}
+
+@Composable
+fun DrivingLimit(scope: XYChartScope<Float, Float>, yPos: Float, maxX: Float) {
+    scope.LineChart(
+        data = listOf(Point(0f, yPos), Point(maxX, yPos)),
+        lineStyle = LineStyle(
+            brush = SolidColor(MaterialTheme.colorScheme.tertiary),
+            strokeWidth = 2.dp,
+            alpha = 0.8f
+        ),
+    )
+    scope.LineChart(
+        data = listOf(Point(maxX - 0.7f, yPos + 0.04f)),
+        symbol = {
+            AppIcon.CAR.icon(
+                tint = MaterialTheme.colorScheme.tertiary,
                 modifier = Modifier.size(14.dp).alpha(0.8f),
             )
         }

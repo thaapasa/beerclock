@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,9 +41,10 @@ fun SettingsPage(innerPadding: PaddingValues) {
 
     vm.trackChanges()
     val iconColor = MaterialTheme.colorScheme.onSurfaceVariant
+    val scrollState = rememberScrollState()
 
     Column(
-        Modifier.padding(innerPadding).padding(16.dp).fillMaxWidth()
+        Modifier.padding(innerPadding).padding(16.dp).fillMaxWidth().verticalScroll(scrollState),
     ) {
         FormGroup(groupIcon = { AppIcon.LANGUAGE.icon(tint = iconColor) }) {
             LanguageDropdown(selected = vm.locale, onSelect = { vm.locale = it })
@@ -98,5 +101,22 @@ fun SettingsPage(innerPadding: PaddingValues) {
             Spacer(Modifier.height(16.dp))
             AlcoholUnitsDropdown(onSelect = { vm.gramsInUnit = it })
         }
+        Spacer(Modifier.height(16.dp))
+        FormGroup(groupIcon = { AppIcon.CAR.icon(tint = iconColor) }) {
+            DecimalField(
+                value = vm.drivingLimitBac,
+                onValueChange = { vm.drivingLimitBac = it },
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(strings.settings.drivingLimitBacLabel) },
+                supportingText = { Text(strings.settings.drivingLimitBacDescription) },
+                trailingIcon = {
+                    Text(
+                        strings.settings.drivingLimitBacUnit,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+            )
+        }
+        Spacer(Modifier.height(16.dp))
     }
 }

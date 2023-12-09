@@ -17,6 +17,14 @@ internal class UserStore : KoinComponent {
     private val store: PreferenceStore = get()
     private val prefs: GlobalUserPreferences = get()
 
+    suspend fun setLocale(locale: AppLocale?) {
+        if (prefs.prefs.locale == locale) {
+            return
+        }
+        setState { copy(locale = locale) }
+        setStateValue(PreferenceKeys.locale, locale?.name ?: "")
+    }
+
     suspend fun setGender(gender: Gender) {
         if (prefs.prefs.gender == gender) {
             return
@@ -49,12 +57,12 @@ internal class UserStore : KoinComponent {
         setStateValue(PreferenceKeys.alchoholGramsInUnit, gramsInUnit.toString())
     }
 
-    suspend fun setLocale(locale: AppLocale?) {
-        if (prefs.prefs.locale == locale) {
+    suspend fun setDrivingLimitBac(drivingLimitBac: Double) {
+        if (prefs.prefs.drivingLimitBac == drivingLimitBac) {
             return
         }
-        setState { copy(locale = locale) }
-        setStateValue(PreferenceKeys.locale, locale?.name ?: "")
+        setState { copy(drivingLimitBac = drivingLimitBac) }
+        setStateValue(PreferenceKeys.drivingLimitBac, drivingLimitBac.toString())
     }
 
     private suspend fun setStateValue(stateKey: String, stringified: String) {
@@ -70,11 +78,12 @@ internal class UserStore : KoinComponent {
     }
 
     object PreferenceKeys {
+        const val locale = "prefs.user.locale"
         const val weight = "prefs.user.weight"
         const val gender = "prefs.user.gender"
         const val startOfDay = "prefs.user.startOfDay"
         const val alchoholGramsInUnit = "prefs.user.alchoholGramsInUnit"
-        const val locale = "prefs.user.locale"
+        const val drivingLimitBac = "prefs.user.drivingLimitBac"
     }
 
     companion object {

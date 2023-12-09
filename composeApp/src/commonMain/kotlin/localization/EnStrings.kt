@@ -159,6 +159,10 @@ object EnStrings : Strings {
         override val alcoholGramsDescription =
             "How many grams of alcohol are there in one standard drink (1 unit)? You can also select preset options from the dropdown below."
         override val alcoholGramsByCountry = "Grams by countries"
+        override val drivingLimitBacLabel = "Driving limit"
+        override val drivingLimitBacUnit = "‰"
+        override val drivingLimitBacDescription =
+            "Maximum blood alcohol concentration for driving in your country. This is 0.5 ‰ in Finland."
 
         override fun alcoholGramsByCountryOption(countryCode: String) =
             "${countryName(countryCode)} (${SingleUnitWeights[countryCode]} g/unit)"

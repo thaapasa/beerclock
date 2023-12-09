@@ -172,6 +172,10 @@ object FiStrings : Strings {
         override val alcoholGramsDescription =
             "Kuinka monta grammaa alkoholia on yhdessä annoksessa? Voit myös valita maan mukaan alla olevasta valintalaatikosta."
         override val alcoholGramsByCountry = "Painot maiden mukaan"
+        override val drivingLimitBacLabel = "Autoiluraja"
+        override val drivingLimitBacUnit = "‰"
+        override val drivingLimitBacDescription =
+            "Autoilun promilleraja maassasi. Suomessa tämä on 0,5 ‰."
 
         override fun alcoholGramsByCountryOption(countryCode: String) =
             "${countryName(countryCode)}: ${SingleUnitWeights[countryCode]} g/annos"

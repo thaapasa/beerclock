@@ -9,6 +9,10 @@ import fi.tuska.beerclock.logging.getLogger
 import kotlinx.datetime.LocalTime
 
 data class UserPreferences(
+    /**
+     * App locale, if selected from settings (null means follow system locale).
+     */
+    val locale: AppLocale? = null,
     /** User gender. Affects BAC calculation formula. */
     val gender: Gender = Gender.MALE,
     /** User weight, in kilograms. Affects BAC calculation formula. */
@@ -24,9 +28,9 @@ data class UserPreferences(
      */
     val alchoholGramsInUnit: Double = 12.0,
     /**
-     * App locale, if selected from settings (null means follow system locale).
+     * What is the limit of blood alcohol concentration (per mille) for driving?
      */
-    val locale: AppLocale? = null,
+    val drivingLimitBac: Double = 0.5,
 ) {
     /**
      * Volume of distribution, approximated from body weight and gender multiplier.

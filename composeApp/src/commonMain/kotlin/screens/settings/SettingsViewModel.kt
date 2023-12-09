@@ -21,25 +21,28 @@ internal class SettingsViewModel : ViewModel(), KoinComponent {
     // reflected in the global user prefs state as well.
     private val store = UserStore()
 
+    var locale by mutableStateOf(prefs.prefs.locale)
     var weightKg by mutableStateOf(prefs.prefs.weightKg)
     var gender by mutableStateOf(prefs.prefs.gender)
     var startOfDay by mutableStateOf(prefs.prefs.startOfDay)
     var gramsInUnit by mutableStateOf(prefs.prefs.alchoholGramsInUnit)
-    var locale by mutableStateOf(prefs.prefs.locale)
+    var drivingLimitBac by mutableStateOf(prefs.prefs.drivingLimitBac)
 
     fun saveWeight() = launch { store.setWeight(weightKg) }
     fun saveGender() = launch { store.setGender(gender) }
     fun saveStartOfDay() = launch { store.setStartOfDay(startOfDay) }
     fun saveGramsInUnitText() = launch { store.setAlcoholGramsInUnit(gramsInUnit) }
     fun saveLocale() = launch { store.setLocale(locale) }
+    fun saveDrivingLimitBac() = launch { store.setDrivingLimitBac(drivingLimitBac) }
 
     @Composable
     fun trackChanges() {
+        LaunchedEffect(locale) { saveLocale() }
         LaunchedEffect(weightKg) { saveWeight() }
         LaunchedEffect(gender) { saveGender() }
         LaunchedEffect(startOfDay) { saveStartOfDay() }
         LaunchedEffect(gramsInUnit) { saveGramsInUnitText() }
-        LaunchedEffect(locale) { saveLocale() }
+        LaunchedEffect(drivingLimitBac) { saveDrivingLimitBac() }
     }
 
 }

@@ -136,6 +136,9 @@ interface Strings {
         val alcoholGramsUnit: String
         val alcoholGramsDescription: String
         val alcoholGramsByCountry: String
+        val drivingLimitBacLabel: String
+        val drivingLimitBacUnit: String
+        val drivingLimitBacDescription: String
         fun alcoholGramsByCountryOption(countryCode: String): String
         val pickCountry: String
     }
