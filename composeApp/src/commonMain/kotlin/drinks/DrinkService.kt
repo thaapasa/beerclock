@@ -25,8 +25,8 @@ class DrinkService : KoinComponent {
         val range = times.dayTimeRange(date)
         val drinks = withContext(Dispatchers.IO) {
             db.drinkRecordQueries.selectByTime(
-                range.start.toDbTime(),
-                range.end.toDbTime()
+                startTime = range.start.toDbTime(),
+                endTime = range.end.toDbTime(),
             ).executeAsList()
         }
         logger.info("Found ${drinks.size} drinks for $date")
@@ -38,8 +38,8 @@ class DrinkService : KoinComponent {
         val range = times.dayTimeRange(yesterday, today)
         val drinks = withContext(Dispatchers.IO) {
             db.drinkRecordQueries.selectByTime(
-                range.start.toDbTime(),
-                range.end.toDbTime()
+                startTime = range.start.toDbTime(),
+                endTime = range.end.toDbTime(),
             ).executeAsList()
         }
         logger.info("Found ${drinks.size} drinks for $yesterday - $today")
@@ -48,7 +48,7 @@ class DrinkService : KoinComponent {
 
     suspend fun deleteDrinkById(id: Long): Unit {
         withContext(Dispatchers.IO) {
-            db.drinkRecordQueries.deleteById(id)
+            db.drinkRecordQueries.deleteById(id = id)
         }
         logger.info("Deleted drink $id")
     }
@@ -58,9 +58,9 @@ class DrinkService : KoinComponent {
             db.drinkRecordQueries.insert(
                 time = drink.time.toDbTime(),
                 name = drink.name,
-                quantity_liters = drink.quantityLiters,
+                quantityLiters = drink.quantityLiters,
                 abv = drink.abv,
-                image = drink.image.name
+                image = drink.image.name,
             )
         }
     }
@@ -68,12 +68,12 @@ class DrinkService : KoinComponent {
     suspend fun updateDrink(id: Long, drink: DrinkDetailsFromEditor) {
         withContext(Dispatchers.IO) {
             db.drinkRecordQueries.update(
+                id = id,
                 time = drink.time.toDbTime(),
                 name = drink.name,
-                quantity_liters = drink.quantityLiters,
+                quantityLiters = drink.quantityLiters,
                 abv = drink.abv,
                 image = drink.image.name,
-                id = id
             )
         }
     }
@@ -84,5 +84,5 @@ data class DrinkDetailsFromEditor(
     val abv: Double,
     val quantityLiters: Double,
     val time: Instant,
-    val image: DrinkImage
+    val image: DrinkImage,
 )

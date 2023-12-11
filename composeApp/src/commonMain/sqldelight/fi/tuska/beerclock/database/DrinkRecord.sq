@@ -12,18 +12,18 @@ CREATE INDEX drinkRecord_time ON drinkRecord(time);
 selectByTime:
 SELECT *
 FROM drinkRecord
-WHERE time >= ? AND time < ?
+WHERE time >= :startTime AND time < :endTime
 ORDER BY time ASC;
 
 insert:
 INSERT INTO drinkRecord(time, name, quantity_liters, abv, image)
-VALUES (?, ?, ?, ?, ?);
+VALUES (:time, :name, :quantityLiters, :abv, :image);
 
 update:
 UPDATE drinkRecord
-SET time=?, name=?, quantity_liters=?, abv=?, image=?
-WHERE id=?;
+SET time=:time, name=:name, quantity_liters=:quantityLiters, abv=:abv, image=:image
+WHERE id=:id;
 
 deleteById:
 DELETE FROM drinkRecord
-WHERE id = ?;
+WHERE id = :id;
