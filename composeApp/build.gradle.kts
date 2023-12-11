@@ -49,6 +49,7 @@ kotlin {
             implementation(libs.sqldelight.android)
             implementation(libs.koin.core)
             implementation(libs.koin.android)
+            implementation(libs.requery)
         }
 
         iosMain.dependencies {

@@ -18,6 +18,7 @@ androidx-espresso-core = "3.5.1"
 kotlin = "1.9.21"
 junit = "4.13.2"
 sqldelight = "2.0.0"
+requery = "3.43.0"
 voyager = "1.0.0-rc10"
 datetime = "0.4.1"
 koin = "3.5.0"
@@ -53,6 +54,8 @@ koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", versi
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 # Koalaplot for drawing graphs
 koalaplot = { module = "io.github.koalaplot:koalaplot-core", version.ref = "koalaplot" }
+# Requery updates SQLDelight databases for Android
+requery = { module = "com.github.requery:sqlite-android", version.ref = "requery" }
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }

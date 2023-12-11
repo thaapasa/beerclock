@@ -5,6 +5,7 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import fi.tuska.beerclock.database.BeerDatabase
 import fi.tuska.beerclock.settings.AndroidPreferenceStore
 import fi.tuska.beerclock.settings.PreferenceStore
+import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory
 import org.koin.dsl.module
 
 /**
@@ -16,6 +17,7 @@ actual fun platformModule() = module {
             schema = BeerDatabase.Schema,
             context = get(),
             name = "beerdatabase.db",
+            factory = RequerySQLiteOpenHelperFactory(),
         )
     }
     single<PreferenceStore> { AndroidPreferenceStore(get()) }
