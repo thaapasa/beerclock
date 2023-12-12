@@ -21,6 +21,22 @@ Prompt: dark and moody image of a beer glass as a clock with the time slowly tic
 Read the [project diary](./diary/README.md) for some description in
 how the project was setup.
 
+## Libraries
+
+BeerClock uses [SQLite](https://www.sqlite.org/index.html) as the database
+to store the drink data. For Android, the SQLite backend is replaced with
+[requery](https://github.com/requery/requery) to get a newer version.
+
+The SQLite version installed:
+
+- Android: 3.43.0 (from requery)
+- iOS: supplied by platform (cumulative usage 2023/12):
+    - iOS 17.0: 3.39.5 (4.9 %)
+    - iOS 16.0: 3.39.0 (82.4 %)
+    - iOS 15.0: 3.36.0 (92.9 %)
+    - iOS 14.1: 3.32.3 (95.4 %, project build target)
+- Minimum SQLite version: `3.23.3`
+
 ## Troubleshooting
 
 See the [troubleshooting](./diary/Troubleshooting.md) documentation for
