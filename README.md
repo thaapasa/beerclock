@@ -35,7 +35,7 @@ The SQLite version installed:
     - iOS 16.0: 3.39.0 (82.4 %)
     - iOS 15.0: 3.36.0 (92.9 %)
     - iOS 14.1: 3.32.3 (95.4 %, project build target)
-- Minimum SQLite version: `3.23.3`
+- Minimum SQLite version: `3.32.3`
 
 ## Troubleshooting
 

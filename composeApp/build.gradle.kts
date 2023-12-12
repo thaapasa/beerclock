@@ -109,6 +109,7 @@ sqldelight {
     databases {
         create("BeerDatabase") {
             packageName.set("fi.tuska.beerclock.database")
+            dialect(libs.sqldelight.dialect)
         }
     }
 }

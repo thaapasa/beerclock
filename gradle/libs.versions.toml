@@ -48,6 +48,7 @@ voyager = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voy
 sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
 sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
+sqldelight-dialect = { module = "app.cash.sqldelight:sqlite-3-30-dialect", version.ref = "sqldelight" }
 datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
 # Koin for dependency injection
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
