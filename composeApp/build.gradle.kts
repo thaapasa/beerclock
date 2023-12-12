@@ -35,6 +35,7 @@ kotlin {
             implementation(compose.material3)
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+            implementation(libs.sqldelight.runtime)
             implementation(libs.voyager)
             implementation(libs.datetime)
             implementation(libs.koin.core)
@@ -45,13 +46,13 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.sqlDelightAndroid)
+            implementation(libs.sqldelight.android)
             implementation(libs.koin.core)
             implementation(libs.koin.android)
         }
 
         iosMain.dependencies {
-            implementation(libs.sqlDelightNative)
+            implementation(libs.sqldelight.native)
             implementation(libs.koin.core)
         }
     }

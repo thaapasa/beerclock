@@ -43,8 +43,9 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 # Voyager provides navigation
 voyager = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 # SQL library
-sqlDelightAndroid = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
-sqlDelightNative = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
 datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
 # Koin for dependency injection
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
