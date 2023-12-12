@@ -27,14 +27,14 @@ import kotlinx.datetime.Instant
 fun DailyBacGraph(
     bac: BacStatus,
     now: Instant = Clock.System.now(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val graph = bac.graphData
     Card(modifier = modifier.fillMaxWidth().height(240.dp)) {
         XYGraph(graph = graph.graphDef(), modifier = Modifier.padding(4.dp))
         {
             DaySeparator(this, graph.toGraphX(ZeroHour) + 24f, graph.maxY)
-            DrivingLimit(this, bac.drivingLimitBac().toFloat(), 24f)
+            DrivingLimit(this, bac.drivingLimitBac().toFloat(), maxX = 24f, maxY = graph.maxY)
             graph.drawAreas(this, now)
         }
     }
@@ -63,7 +63,8 @@ fun DaySeparator(scope: XYChartScope<Float, Float>, x: Float, maxY: Float) {
 }
 
 @Composable
-fun DrivingLimit(scope: XYChartScope<Float, Float>, yPos: Float, maxX: Float) {
+fun DrivingLimit(scope: XYChartScope<Float, Float>, yPos: Float, maxX: Float, maxY: Float) {
+    val yOffs = maxY * 0.025f / yPos
     scope.LineChart(
         data = listOf(Point(0f, yPos), Point(maxX, yPos)),
         lineStyle = LineStyle(
@@ -73,7 +74,7 @@ fun DrivingLimit(scope: XYChartScope<Float, Float>, yPos: Float, maxX: Float) {
         ),
     )
     scope.LineChart(
-        data = listOf(Point(maxX - 0.7f, yPos + 0.04f)),
+        data = listOf(Point(maxX - 0.7f, yPos + yOffs)),
         symbol = {
             AppIcon.CAR.icon(
                 tint = MaterialTheme.colorScheme.tertiary,
