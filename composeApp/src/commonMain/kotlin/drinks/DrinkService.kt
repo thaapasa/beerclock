@@ -55,13 +55,21 @@ class DrinkService : KoinComponent {
 
     suspend fun insertDrink(drink: DrinkDetailsFromEditor) {
         withContext(Dispatchers.IO) {
-            db.drinkRecordQueries.insert(
-                time = drink.time.toDbTime(),
-                name = drink.name,
-                quantityLiters = drink.quantityLiters,
-                abv = drink.abv,
-                image = drink.image.name,
-            )
+            db.transaction {
+                db.drinkRecordQueries.insert(
+                    time = drink.time.toDbTime(),
+                    name = drink.name,
+                    quantityLiters = drink.quantityLiters,
+                    abv = drink.abv,
+                    image = drink.image.name,
+                )
+                db.drinkInfoQueries.insert(
+                    name = drink.name,
+                    quantityLiters = drink.quantityLiters,
+                    abv = drink.abv,
+                    image = drink.image.name,
+                )
+            }
         }
     }
 

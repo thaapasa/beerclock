@@ -45,10 +45,10 @@ class HomeViewModel : ViewModel(), KoinComponent {
     var bacPosition by mutableStateOf(0.0f)
 
     init {
-        updateBacContinuosly()
+        updateBacContinuously()
     }
 
-    private fun updateBacContinuosly() {
+    private fun updateBacContinuously() {
         launch {
             while (isActive) {
                 delay(pauseBetweenUpdates.inWholeMilliseconds)
