@@ -17,12 +17,13 @@ androidx-test-junit = "1.1.5"
 androidx-espresso-core = "3.5.1"
 kotlin = "1.9.21"
 junit = "4.13.2"
-sqldelight = "2.0.0"
+sqldelight = "2.0.1"
 requery = "3.43.0"
 voyager = "1.0.0-rc10"
 datetime = "0.4.1"
 koin = "3.5.0"
 koalaplot = "0.4.0"
+stately = "2.0.5"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -56,6 +57,9 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koalaplot = { module = "io.github.koalaplot:koalaplot-core", version.ref = "koalaplot" }
 # Requery updates SQLDelight databases for Android
 requery = { module = "com.github.requery:sqlite-android", version.ref = "requery" }
+# Stately is a state utility library to facilitate state management in Kotlin Multiplatform
+# This seems to be required by SQLDelight 2.0.1 for iOS, but it's not automatically added
+stately-common = { module = "co.touchlab:stately-common", version.ref = "stately" }
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
