@@ -1,5 +1,8 @@
 package fi.tuska.beerclock.di
 
+import fi.tuska.beerclock.database.BeerDatabase
+import fi.tuska.beerclock.database.DatabaseInfo
+import fi.tuska.beerclock.database.DbInfoQueries
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.settings.UserStore
 import org.koin.core.context.startKoin
@@ -18,7 +21,13 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
 fun initKoin() = initKoin {}
 
 fun commonModule() = module {
+    single { BeerDatabase(get()) }
     single(createdAtStart = true) { GlobalUserPreferences(UserStore.load(get())) }
+    single(createdAtStart = true) {
+        DatabaseInfo(
+            DbInfoQueries(get()).dbVersion().executeAsOne()
+        )
+    }
 }
 
 expect fun platformModule(): Module
