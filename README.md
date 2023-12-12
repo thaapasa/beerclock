@@ -21,6 +21,15 @@ Prompt: dark and moody image of a beer glass as a clock with the time slowly tic
 Read the [project diary](./diary/README.md) for some description in
 how the project was setup.
 
+## Supported platforms and minimum required OS level
+
+- Android 8.0 Oreo (API level 26)
+    - Cumulative usage 2023/12: `94.9 %`
+    - Required to get datetime functions from `java.time`
+- iOS 14.1
+    - Cumulative usage 2023/12: `95.4 %`
+    - Required by Compose Multiplatform
+
 ## Libraries
 
 BeerClock uses [SQLite](https://www.sqlite.org/index.html) as the database
