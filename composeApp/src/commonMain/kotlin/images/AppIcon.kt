@@ -12,26 +12,28 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 enum class AppIcon(private val path: String) {
-    MALE("drawable/icons/male.xml"),
-    FEMALE("drawable/icons/female.xml"),
+    ADD_CIRCLE("drawable/icons/add_circle.xml"),
     BEER("drawable/icons/sports_bar.xml"),
-    DRINK("drawable/icons/local_bar.xml"),
-    HISTORY("drawable/icons/history.xml"),
-    GRAPH("drawable/icons/graph.xml"),
-    CLOCK("drawable/icons/clock.xml"),
-    CALENDAR("drawable/icons/calendar.xml"),
-    CLOSE("drawable/icons/close.xml"),
-    EDIT("drawable/icons/edit.xml"),
-    DELETE("drawable/icons/delete.xml"),
-    LANGUAGE("drawable/icons/language.xml"),
-    PERSON("drawable/icons/person.xml"),
-    CAR("drawable/icons/car.xml"),
     BOLT("drawable/icons/bolt.xml"),
-    GLASS_FULL("drawable/icons/glass_full.xml"),
-    WATER_DROP("drawable/icons/water_drop.xml"),
-    MOON("drawable/icons/moon.xml"),
+    CALENDAR("drawable/icons/calendar.xml"),
+    CAR("drawable/icons/car.xml"),
     CHEVRON_LEFT("drawable/icons/chevron_left.xml"),
-    CHEVRON_RIGHT("drawable/icons/chevron_right.xml");
+    CHEVRON_RIGHT("drawable/icons/chevron_right.xml"),
+    CLOCK("drawable/icons/clock.xml"),
+    CLOSE("drawable/icons/close.xml"),
+    DELETE("drawable/icons/delete.xml"),
+    DRINK("drawable/icons/local_bar.xml"),
+    EDIT("drawable/icons/edit.xml"),
+    FEMALE("drawable/icons/female.xml"),
+    GLASS_FULL("drawable/icons/glass_full.xml"),
+    GRAPH("drawable/icons/graph.xml"),
+    HISTORY("drawable/icons/history.xml"),
+    LANGUAGE("drawable/icons/language.xml"),
+    MALE("drawable/icons/male.xml"),
+    MOON("drawable/icons/moon.xml"),
+    PERSON("drawable/icons/person.xml"),
+    SEARCH("drawable/icons/search.xml"),
+    WATER_DROP("drawable/icons/water_drop.xml");
 
     @OptIn(ExperimentalResourceApi::class)
     @Composable
@@ -43,7 +45,7 @@ enum class AppIcon(private val path: String) {
     fun icon(
         contentDescription: String = name,
         modifier: Modifier = Modifier,
-        tint: Color = LocalContentColor.current
+        tint: Color = LocalContentColor.current,
     ) {
         Icon(
             painter = painter(),
@@ -57,7 +59,7 @@ enum class AppIcon(private val path: String) {
     fun iconButton(
         contentDescription: String = name,
         modifier: Modifier = Modifier,
-        onClick: () -> Unit
+        onClick: () -> Unit,
     ) {
         IconButton(onClick = onClick, content = { icon(contentDescription) }, modifier = modifier)
     }

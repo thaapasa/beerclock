@@ -137,6 +137,15 @@ object EnStrings : Strings {
     }
 
 
+    /* New drink search screen */
+    override val newdrink = NewDrinkSearch
+
+    object NewDrinkSearch : Strings.NewDrinkSearchStrings {
+        override val searchPlaceholder = "Search for strings"
+        override val latestDrinksTitle = "Latest drinks"
+    }
+
+
     /* Settings screen */
     override val settings = Settings
 

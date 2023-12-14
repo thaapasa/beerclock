@@ -1,15 +1,20 @@
 package fi.tuska.beerclock.screens.drinks.create
 
+import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.exampleDrinks
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.screens.drinks.DrinkEditorViewModel
 
 private val logger = getLogger("NewDrinkScreen")
 
-class NewDrinkViewModel : DrinkEditorViewModel() {
+class NewDrinkViewModel(proto: BasicDrinkInfo?) : DrinkEditorViewModel() {
 
     init {
-        randomize()
+        if (proto != null) {
+            setValues(proto)
+        } else {
+            randomize()
+        }
     }
 
     private fun randomize() {

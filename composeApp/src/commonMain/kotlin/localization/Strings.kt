@@ -117,6 +117,15 @@ interface Strings {
     }
 
 
+    /* New drink search screen */
+    val newdrink: NewDrinkSearchStrings
+
+    interface NewDrinkSearchStrings {
+        val searchPlaceholder: String
+        val latestDrinksTitle: String
+    }
+
+
     /* Settings screen */
     val settings: SettingsStrings
 

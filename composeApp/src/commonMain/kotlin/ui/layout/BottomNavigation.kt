@@ -15,7 +15,7 @@ import fi.tuska.beerclock.screens.today.HomeScreen
 data class BottomNavigationItem(
     val label: String,
     val icon: AppIcon,
-    val screen: Screen
+    val screen: Screen,
 )
 
 fun bottomNavigationItems(): List<BottomNavigationItem> {

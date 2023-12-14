@@ -18,7 +18,7 @@ import fi.tuska.beerclock.localization.Strings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SubLayout(content: @Composable (PaddingValues) -> Unit, title: String) {
+fun SubLayout(title: String, content: @Composable (PaddingValues) -> Unit) {
     val strings = Strings.get()
     val navigator = LocalNavigator.currentOrThrow
     Scaffold(

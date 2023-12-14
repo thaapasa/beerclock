@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.drinks.editor.DrinkEditor
@@ -14,8 +15,12 @@ import fi.tuska.beerclock.ui.components.FullScreenDialog
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 
 @Composable
-fun AddDrinkDialog(onDrinksUpdated: (() -> Unit)? = null, onClose: () -> Unit) {
-    val vm = rememberWithDispose { NewDrinkViewModel() }
+fun AddDrinkDialog(
+    proto: BasicDrinkInfo? = null,
+    onDrinksUpdated: (() -> Unit)? = null,
+    onClose: () -> Unit,
+) {
+    val vm = rememberWithDispose { NewDrinkViewModel(proto) }
 
     FullScreenDialog(onDismissRequest = onClose) {
         val strings = Strings.get()

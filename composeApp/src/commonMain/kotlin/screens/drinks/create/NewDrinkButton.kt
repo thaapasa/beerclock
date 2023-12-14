@@ -4,29 +4,25 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.newdrink.NewDrinkSearchScreen
 
 @Composable
-fun NewDrinkButton(onDrinksUpdated: () -> Unit) {
+fun NewDrinkButton() {
     val strings = Strings.get()
-    var dialogOpen by remember { mutableStateOf(false) }
+    val navigator = LocalNavigator.currentOrThrow
     LargeFloatingActionButton(onClick = {
-        dialogOpen = true
+        navigator.push(NewDrinkSearchScreen)
     }) {
         Icon(
             painter = AppIcon.BEER.painter(),
             contentDescription = strings.drinkDialog.createTitle,
             modifier = Modifier.size(36.dp)
         )
-    }
-    if (dialogOpen) {
-        AddDrinkDialog(onDrinksUpdated = onDrinksUpdated) { dialogOpen = false }
     }
 }

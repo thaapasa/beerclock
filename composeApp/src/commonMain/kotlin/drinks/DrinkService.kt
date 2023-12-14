@@ -46,6 +46,15 @@ class DrinkService : KoinComponent {
         return drinks.map(::DrinkRecordInfo)
     }
 
+    suspend fun getLatestDrinks(limit: Long): List<LatestDrinkInfo> {
+        val drinks = withContext(Dispatchers.IO) {
+            db.drinkRecordQueries.selectLatestDrinks(
+                limit = limit
+            ).executeAsList()
+        }
+        return drinks.map(::LatestDrinkInfo)
+    }
+
     suspend fun deleteDrinkById(id: Long): Unit {
         withContext(Dispatchers.IO) {
             db.drinkRecordQueries.deleteById(id = id)

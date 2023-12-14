@@ -150,9 +150,17 @@ object FiStrings : Strings {
     }
 
 
+    /* New drink search screen */
+    override val newdrink = NewDrinkSearch
+
+    object NewDrinkSearch : Strings.NewDrinkSearchStrings {
+        override val searchPlaceholder = "Hae juomia"
+        override val latestDrinksTitle = "Viimeisimmät juomat"
+    }
+
+
     /* Settings screen */
     override val settings = Settings
-
 
     object Settings : Strings.SettingsStrings {
         override val title = "Asetukset"

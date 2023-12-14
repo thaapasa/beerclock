@@ -25,7 +25,7 @@ object HomeScreen : Screen {
         }
 
         MainLayout(
-            actionButton = { NewDrinkButton(onDrinksUpdated = vm::reload) }
+            actionButton = { NewDrinkButton() }
         ) { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
                 BacStatusCard(vm)

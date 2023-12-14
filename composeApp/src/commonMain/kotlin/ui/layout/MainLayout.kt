@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 fun MainLayout(
     actionButton: @Composable () -> Unit = {},
     showTopBar: Boolean = true,
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable (PaddingValues) -> Unit,
 ) {
     val strings = Strings.get()
     val coroutineScope = rememberCoroutineScope()
@@ -66,7 +66,7 @@ fun MainLayout(
                 content = content,
                 bottomBar = {
                     BottomNavigationBar(current = navigator.lastItem, onNavigate = {
-                        navigator.replace(it)
+                        navigator.replaceAll(it)
                     })
                 }
             )

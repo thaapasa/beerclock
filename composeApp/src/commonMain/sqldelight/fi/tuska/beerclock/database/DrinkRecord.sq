@@ -27,3 +27,9 @@ WHERE id=:id;
 deleteById:
 DELETE FROM drinkRecord
 WHERE id = :id;
+
+selectLatestDrinks:
+SELECT DISTINCT name, quantity_liters, abv, image
+FROM drinkRecord
+ORDER BY time DESC
+LIMIT :limit;

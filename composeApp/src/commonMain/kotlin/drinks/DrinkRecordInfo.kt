@@ -56,9 +56,7 @@ class DrinkRecordInfo(record: DrinkRecord) : KoinComponent, BasicDrinkInfo {
      * (from user preferences):
      * @return the number of units there are in this drink
      */
-    fun units(): Double {
-        return BacFormulas.getUnitsFromAlcoholWeight(alcoholGrams, prefs.prefs)
-    }
+    fun units() = BacFormulas.getUnitsFromAlcoholWeight(alcoholGrams, prefs.prefs)
 
     /**
      * Calculate the time it takes for your liver to burn off all the alcohol in this drink.
