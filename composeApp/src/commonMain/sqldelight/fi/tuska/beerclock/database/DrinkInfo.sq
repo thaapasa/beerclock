@@ -1,6 +1,6 @@
 CREATE TABLE drinkInfo (
   id INTEGER PRIMARY KEY NOT NULL,
-  name TEXT NOT NULL,
+  name TEXT NOT NULL COLLATE NOCASE,
   quantity_liters REAL NOT NULL,
   abv REAL NOT NULL,
   image TEXT NOT NULL,
@@ -22,3 +22,9 @@ DO UPDATE SET drink_count = drink_count + 1;
 deleteById:
 DELETE FROM drinkInfo
 WHERE id = :id;
+
+findMatchingByName:
+SELECT *
+FROM drinkInfo
+WHERE name LIKE '%' || :name || '%'
+LIMIT :limit;

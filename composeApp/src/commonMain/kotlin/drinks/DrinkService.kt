@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.drinks
 
 import fi.tuska.beerclock.database.BeerDatabase
+import fi.tuska.beerclock.database.DrinkInfo
 import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.logging.getLogger
@@ -53,6 +54,13 @@ class DrinkService : KoinComponent {
             ).executeAsList()
         }
         return drinks.map(::LatestDrinkInfo)
+    }
+
+    suspend fun findMatchingDrinksByName(name: String, limit: Long): List<DrinkInfo> {
+        val drinks = withContext(Dispatchers.IO) {
+            db.drinkInfoQueries.findMatchingByName(name, limit).executeAsList()
+        }
+        return drinks
     }
 
     suspend fun deleteDrinkById(id: Long): Unit {
