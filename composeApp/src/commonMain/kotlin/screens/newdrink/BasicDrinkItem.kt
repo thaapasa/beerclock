@@ -1,7 +1,9 @@
 package fi.tuska.beerclock.screens.newdrink
 
 import androidx.compose.foundation.clickable
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,14 +15,14 @@ import fi.tuska.beerclock.ui.components.UnitAvatar
 @Composable
 fun BasicDrinkItem(
     drink: BasicDrinkInfo,
-    onClick: (drinkInfo: BasicDrinkInfo) -> Unit = {},
+    onClick: (drinkInfo: BasicDrinkInfo?) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     if (drink is TextDrinkInfo) {
-        TextDrinkItem(drink)
+        TextDrinkItem(drink, modifier = modifier)
         return
     }
-    
+
     val strings = Strings.get()
     ListItem(
         headlineContent = { Text(drink.name) },
@@ -50,6 +52,11 @@ fun TextDrinkItem(
     ListItem(
         headlineContent = { Text(drink.name) },
         modifier = modifier,
+        trailingContent = {
+            IconButton(onClick = drink.onClick) {
+                drink.icon.icon(tint = MaterialTheme.colorScheme.primary)
+            }
+        },
         tonalElevation = 1.dp,
         shadowElevation = 16.dp
     )

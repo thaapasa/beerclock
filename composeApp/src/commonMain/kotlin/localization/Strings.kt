@@ -79,7 +79,7 @@ interface Strings {
 
     interface DrinkData {
         val image: String
-        fun unitLabel(units: Double) = if (get().dec2F(units) == "1") "unit" else "units"
+        fun unitLabel(units: Double): String
         fun units(units: Double) = get().dec2F(units)
         fun abv(abvPercentage: Double) = "${get().dec1F(abvPercentage)} %"
         fun quantity(quantityCl: Double) = "${get().dec1F(quantityCl)} cl"

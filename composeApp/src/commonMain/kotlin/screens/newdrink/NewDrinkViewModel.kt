@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.DrinkService
+import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.composables.ViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -37,7 +38,9 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
                             listOf(
                                 TextDrinkInfo(
                                     "list-title",
-                                    strings.newdrink.latestDrinksTitle
+                                    strings.newdrink.latestDrinksTitle,
+                                    icon = AppIcon.ADD_CIRCLE,
+                                    onClick = { selectDrink(null) }
                                 )
                             ) + latest
                         )

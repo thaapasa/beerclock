@@ -105,6 +105,9 @@ object EnStrings : Strings {
     object DrinkData : Strings.DrinkData {
         override val image = "Image of the drink"
 
+        override fun unitLabel(units: Double) =
+            if (Strings.get().dec2F(units) == "1") "unit" else "units"
+
         override fun drinkTime(time: Instant): String =
             time.toLocalDateTime(TimeZone.currentSystemDefault())
                 .let { "${it.hour.zeroPad(2)}:${it.minute.zeroPad(2)}" }

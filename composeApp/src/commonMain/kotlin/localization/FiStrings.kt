@@ -115,6 +115,8 @@ object FiStrings : Strings {
 
     object DrinkData : Strings.DrinkData {
         override val image = "Kuva juomasta"
+        override fun unitLabel(units: Double) =
+            if (Strings.get().dec2F(units) == "1") "annos" else "annosta"
 
         override fun drinkTime(time: Instant): String =
             time.toLocalDateTime(TimeZone.currentSystemDefault())
