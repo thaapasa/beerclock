@@ -3,7 +3,12 @@ package fi.tuska.beerclock.drinks
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.localization.Strings
 
-class DrinkDef(name: String, quantityCl: Double, abvPercentage: Double, image: DrinkImage) :
+class DrinkDef(
+    name: String,
+    quantityCl: Double = 10.0,
+    abvPercentage: Double = 5.0,
+    image: DrinkImage = DrinkImage.GENERIC_DRINK,
+) :
     BasicDrinkInfo(
         name = name,
         quantityCl = quantityCl,

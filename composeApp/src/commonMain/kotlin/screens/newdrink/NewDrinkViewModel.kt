@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
+import fi.tuska.beerclock.drinks.DrinkDef
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
@@ -29,15 +30,28 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
     val searchResults: StateFlow<List<BasicDrinkInfo>> =
         snapshotFlow { searchQuery }
             .debounce(300)
-            .flatMapLatest {
+            .flatMapLatest { drinkName ->
                 when {
-                    it.isNotBlank() -> flow { emit(drinks.findMatchingDrinksByName(it, 10)) }
+                    drinkName.isNotBlank() -> flow {
+                        val matching = drinks.findMatchingDrinksByName(drinkName, 10)
+                        emit(
+                            listOf(
+                                TextDrinkInfo(
+                                    "add-new-title",
+                                    strings.newdrink.addNewDrink(drinkName),
+                                    icon = AppIcon.ADD_CIRCLE,
+                                    onClick = { selectDrink(DrinkDef(name = drinkName)) }
+                                )
+                            ) + matching
+                        )
+                    }
+
                     else -> flow {
                         val latest = drinks.getLatestDrinks(15)
                         emit(
                             listOf(
                                 TextDrinkInfo(
-                                    "list-title",
+                                    "latest-title",
                                     strings.newdrink.latestDrinksTitle,
                                     icon = AppIcon.ADD_CIRCLE,
                                     onClick = { selectDrink(null) }

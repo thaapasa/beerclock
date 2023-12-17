@@ -153,6 +153,7 @@ object FiStrings : Strings {
     object NewDrinkSearch : Strings.NewDrinkSearchStrings {
         override val searchPlaceholder = "Hae juomia"
         override val latestDrinksTitle = "Viimeisimmät juomat"
+        override fun addNewDrink(name: String) = "Uusi juoma: $name"
     }
 
 

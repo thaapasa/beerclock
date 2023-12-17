@@ -128,6 +128,7 @@ interface Strings {
     interface NewDrinkSearchStrings {
         val searchPlaceholder: String
         val latestDrinksTitle: String
+        fun addNewDrink(name: String): String
     }
 
 
