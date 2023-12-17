@@ -56,7 +56,7 @@ object NewDrinkSearchScreen : Screen {
                             key = { index -> searchResults[index].id },
                             itemContent = { index ->
                                 val drink = searchResults[index]
-                                DrinkInfoItem(drink = drink)
+                                DrinkInfoItem(drink = drink, onClick = vm::selectDrink)
                             }
                         )
                     }
@@ -64,7 +64,7 @@ object NewDrinkSearchScreen : Screen {
 
                 if (!vm.active) {
                     Spacer(modifier = Modifier.height(16.dp))
-                    LatestDrinks(vm::addDrink)
+                    LatestDrinks(vm::selectDrink)
                 }
             }
             if (vm.dialogOpen) {

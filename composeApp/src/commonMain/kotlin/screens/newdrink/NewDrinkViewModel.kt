@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.DrinkService
-import fi.tuska.beerclock.drinks.LatestDrinkInfo
 import fi.tuska.beerclock.ui.composables.ViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -43,7 +42,7 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
         private set
     var proto: BasicDrinkInfo? = null
 
-    fun addDrink(latest: LatestDrinkInfo?) {
+    fun selectDrink(latest: BasicDrinkInfo?) {
         if (dialogOpen) {
             return
         }

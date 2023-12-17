@@ -1,4 +1,4 @@
-CREATE TABLE drinkInfo (
+CREATE TABLE drinkLibrary (
   id INTEGER PRIMARY KEY NOT NULL,
   name TEXT NOT NULL COLLATE NOCASE,
   quantity_liters REAL NOT NULL,
@@ -7,24 +7,24 @@ CREATE TABLE drinkInfo (
   drink_count INTEGER NOT NULL DEFAULT 1
 );
 
-CREATE UNIQUE INDEX drinkInfo_name_idx ON drinkInfo(name);
+CREATE UNIQUE INDEX drinkLibrary_name_idx ON drinkLibrary(name);
 
 selectAll:
 SELECT *
-FROM drinkInfo;
+FROM drinkLibrary;
 
 insert:
-INSERT INTO drinkInfo(name, quantity_liters, abv, image)
+INSERT INTO drinkLibrary(name, quantity_liters, abv, image)
 VALUES (:name, :quantityLiters, :abv, :image)
 ON CONFLICT (name)
 DO UPDATE SET drink_count = drink_count + 1;
 
 deleteById:
-DELETE FROM drinkInfo
+DELETE FROM drinkLibrary
 WHERE id = :id;
 
 findMatchingByName:
 SELECT *
-FROM drinkInfo
+FROM drinkLibrary
 WHERE name LIKE '%' || :name || '%'
 LIMIT :limit;

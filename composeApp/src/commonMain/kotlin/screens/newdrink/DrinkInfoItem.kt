@@ -6,8 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import fi.tuska.beerclock.database.DrinkInfo
-import fi.tuska.beerclock.images.DrinkImage
+import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.components.UnitAvatar
 
@@ -23,13 +22,13 @@ fun DrinkInfoItem(
         supportingContent = {
             Text(
                 strings.drink.drinkSize(
-                    quantityCl = drink.quantity_liters * 10,
-                    abvPercentage = drink.abv * 100
+                    quantityCl = drink.quantityCl,
+                    abvPercentage = drink.abvPercentage
                 )
             )
         },
         modifier = modifier.clickable { onClick(drink) },
-        leadingContent = { DrinkImage.forName(drink.image).smallImage() },
+        leadingContent = { drink.image.smallImage() },
         trailingContent = { UnitAvatar(units = 1.0) },
         tonalElevation = 1.dp,
         shadowElevation = 16.dp

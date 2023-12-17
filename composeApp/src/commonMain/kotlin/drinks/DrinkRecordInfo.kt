@@ -13,20 +13,9 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
-interface BasicDrinkInfo {
-    /** Name of the drink */
-    val name: String
-
-    /** Size of the drink, in cl */
-    val quantityCl: Double
-
-    /** Strength of the drink, or alcohol by volume, as a percentage value (range: 0 - 100) */
-    val abvPercentage: Double
-
-    /** Image of the drink */
-    val image: DrinkImage
-}
-
+/**
+ * Used to record that a drink has been drunk at a specified time.
+ */
 class DrinkRecordInfo(record: DrinkRecord) : KoinComponent, BasicDrinkInfo {
     private val prefs: GlobalUserPreferences by inject()
     val id = record.id

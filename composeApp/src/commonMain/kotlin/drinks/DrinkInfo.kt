@@ -1,19 +1,20 @@
 package fi.tuska.beerclock.drinks
 
 import fi.tuska.beerclock.bac.BacFormulas
-import fi.tuska.beerclock.database.SelectLatestDrinks
+import fi.tuska.beerclock.database.DrinkLibrary
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 /**
- * Used to convey information about latest drinks that have been consumed,
- * without taking into account the specific times.
+ * An item in the drink library. These can be searched from new drink screen and used
+ * to create new drink record entries.
  */
-class LatestDrinkInfo(record: SelectLatestDrinks) : KoinComponent, BasicDrinkInfo {
+class DrinkInfo(record: DrinkLibrary) : KoinComponent, BasicDrinkInfo {
     private val prefs: GlobalUserPreferences by inject()
     override val name = record.name
+    val id = record.id
     val abv = record.abv
     val quantityLiters = record.quantity_liters
     override val quantityCl = record.quantity_liters * 100
