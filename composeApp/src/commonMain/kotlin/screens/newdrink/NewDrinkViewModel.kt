@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 
@@ -29,37 +30,15 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
 
     val searchResults: StateFlow<List<BasicDrinkInfo>> =
         snapshotFlow { searchQuery }
-            .debounce(300)
-            .flatMapLatest { drinkName ->
+            // Do not debounce for empty string to get latest drinks list ASAP
+            .debounce { if (it.isEmpty()) 0 else 300 }
+            .flatMapLatest {
                 when {
-                    drinkName.isNotBlank() -> flow {
-                        val matching = drinks.findMatchingDrinksByName(drinkName, 10)
-                        emit(
-                            listOf(
-                                TextDrinkInfo(
-                                    "add-new-title",
-                                    strings.newdrink.addNewDrink(drinkName),
-                                    icon = AppIcon.ADD_CIRCLE,
-                                    onClick = { selectDrink(DrinkDef(name = drinkName)) }
-                                )
-                            ) + matching
-                        )
-                    }
-
-                    else -> flow {
-                        val latest = drinks.getLatestDrinks(15)
-                        emit(
-                            listOf(
-                                TextDrinkInfo(
-                                    "latest-title",
-                                    strings.newdrink.latestDrinksTitle,
-                                    icon = AppIcon.ADD_CIRCLE,
-                                    onClick = { selectDrink(null) }
-                                )
-                            ) + latest
-                        )
-                    }
+                    it.isNotBlank() -> flowMatchingDrinks(it)
+                    else -> flowLatestDrinks()
                 }
+            }.onStart {
+                flowLatestDrinks()
             }.stateIn(
                 scope = this,
                 initialValue = emptyList(),
@@ -81,4 +60,33 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
     fun closeDialog() {
         dialogOpen = false
     }
+
+    private fun flowMatchingDrinks(drinkName: String) = flow {
+        val matching = drinks.findMatchingDrinksByName(drinkName, 10)
+        emit(
+            listOf(
+                TextDrinkInfo(
+                    "add-new-title",
+                    strings.newdrink.addNewDrink(drinkName),
+                    icon = AppIcon.ADD_CIRCLE,
+                    onClick = { selectDrink(DrinkDef(name = drinkName)) }
+                )
+            ) + matching
+        )
+    }
+
+    private fun flowLatestDrinks() = flow {
+        val latest = drinks.getLatestDrinks(15)
+        emit(
+            listOf(
+                TextDrinkInfo(
+                    "latest-title",
+                    strings.newdrink.latestDrinksTitle,
+                    icon = AppIcon.ADD_CIRCLE,
+                    onClick = { selectDrink(null) }
+                )
+            ) + latest
+        )
+    }
+
 }
