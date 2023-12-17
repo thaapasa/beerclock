@@ -22,6 +22,10 @@ object EnStrings : Strings {
         groupingSeparator = ','
     )
 
+    override val dec1F = createNumberFormatter(1)
+    override val dec2F = createNumberFormatter(2)
+
+
     override fun weekday(day: DayOfWeek): String {
         return when (day) {
             DayOfWeek.MONDAY -> "Monday"
@@ -100,13 +104,6 @@ object EnStrings : Strings {
 
     object DrinkData : Strings.DrinkData {
         override val image = "Image of the drink"
-        override fun unitLabel(units: Double) = if (unitF(units) == "1") "unit" else "units"
-        val unitF = createNumberFormatter(2)
-        val abvF = createNumberFormatter(1)
-        val quantityF = createNumberFormatter(1)
-        override fun abv(abvPercentage: Double) = "${abvF(abvPercentage)} %"
-        override fun quantity(quantityCl: Double) = "${quantityF(quantityCl)} cl"
-        override fun units(units: Double) = unitF(units)
 
         override fun drinkTime(time: Instant): String =
             time.toLocalDateTime(TimeZone.currentSystemDefault())

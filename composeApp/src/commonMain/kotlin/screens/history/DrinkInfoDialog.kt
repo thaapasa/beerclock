@@ -141,7 +141,7 @@ fun DrinkInfoTable(drink: DrinkRecordInfo) {
     DrinkInfoRow(strings.drink.unitsInfoLabel, strings.drink.unitsInfo(drink.units()))
     DrinkInfoRow(
         strings.drink.alcoholGramsInfoLabel,
-        strings.drink.alcoholGramsInfo(drink.alcoholGrams)
+        strings.drink.alcoholAmountInfo(grams = drink.alcoholGrams, liters = drink.alcoholLiters)
     )
     DrinkInfoRow(
         strings.drink.burnOffTimeInfoLabel,

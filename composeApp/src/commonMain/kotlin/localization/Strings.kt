@@ -36,6 +36,8 @@ interface Strings {
     val appName: String
 
     fun createNumberFormatter(digits: Int): (value: Double) -> String
+    val dec1F: (value: Double) -> String
+    val dec2F: (value: Double) -> String
 
     fun weekday(day: DayOfWeek): String
     fun weekdayShort(day: DayOfWeek): String
@@ -77,10 +79,11 @@ interface Strings {
 
     interface DrinkData {
         val image: String
-        fun unitLabel(units: Double): String
-        fun abv(abvPercentage: Double): String
-        fun quantity(quantityCl: Double): String
-        fun units(units: Double): String
+        fun unitLabel(units: Double) = if (get().dec2F(units) == "1") "unit" else "units"
+        fun units(units: Double) = get().dec2F(units)
+        fun abv(abvPercentage: Double) = "${get().dec1F(abvPercentage)} %"
+        fun quantity(quantityCl: Double) = "${get().dec1F(quantityCl)} cl"
+
         fun drinkSize(quantityCl: Double, abvPercentage: Double): String =
             "${quantity(quantityCl)} ${abv(abvPercentage)}"
 
@@ -91,11 +94,13 @@ interface Strings {
         val unitsInfoLabel: String
         val alcoholGramsInfoLabel: String
         val burnOffTimeInfoLabel: String
-        fun unitsInfo(units: Double) = FiStrings.DrinkData.units(units)
+        fun unitsInfo(units: Double) = units(units)
         fun sizeInfo(quantityCl: Double, abvPercentage: Double) =
             drinkSize(quantityCl, abvPercentage)
 
-        fun alcoholGramsInfo(grams: Double) = "${FiStrings.DrinkData.gramsF(grams)} g"
+        fun alcoholAmountInfo(grams: Double, liters: Double) =
+            "${get().dec2F(liters * 100)} cl = ${get().dec1F(grams)} g"
+
         fun burnOffTimeInfo(time: Duration) = time.toString()
     }
 
