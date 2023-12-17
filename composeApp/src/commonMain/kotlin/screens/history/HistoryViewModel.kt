@@ -29,7 +29,7 @@ class HistoryViewModel : ViewModel() {
     fun loadDrinks() {
         launch {
             drinks.clear()
-            val newDrinks = drinkService.getDrinksForDay(date)
+            val newDrinks = drinkService.getDrinksForDay(date).reversed()
             drinks.addAll(newDrinks)
         }
     }
