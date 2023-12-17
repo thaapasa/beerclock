@@ -173,10 +173,10 @@ object FiStrings : Strings {
         override val weightLabel = "Painosi"
         override val weightUnit = "kg"
         override val weightDescription =
-            "Painosi vaikuttaa laskentakaavoihin. Ylimääräiset kilot eivät vaikuta alkoholin palamiseen, joten syötä oma arviosi ihannepainostasi."
+            "Nesteen määrä elimistössäsi arvioidaan painosi mukaan. Ylimääräiset kilot eivät vaikuta nesteen määrään, joten syötä oma arviosi ihannepainostasi."
         override val genderLabel = "Sukupuolesi"
         override val genderDescription =
-            "Sukupuolesi vaikuttaa laskentakaavioihin. Valitse se sukupuoli joka on lähinnä ruumiinrakennettasi."
+            "Sukupuolesi vaikuttaa nesteen määrään elimistössäsi. Valitse se sukupuoli joka on lähinnä ruumiinrakennettasi."
         override val startOfDay = "Uusi päivä alkaa"
         override val startOfDayDescription =
             "Milloin uusi päivä alkaa. Tätä ennen juodut juomat merkataan edellisen päivän kirjanpitoon."
@@ -184,7 +184,7 @@ object FiStrings : Strings {
         override val alcoholGramsUnit = "g/annos"
         override val alcoholGramsDescription =
             "Kuinka monta grammaa alkoholia on yhdessä annoksessa? Voit myös valita maan mukaan alla olevasta valintalaatikosta."
-        override val alcoholGramsByCountry = "Painot maiden mukaan"
+        override val alcoholGramsByCountry = "Annokset maiden mukaan"
         override val drivingLimitBacLabel = "Autoiluraja"
         override val drivingLimitBacUnit = "‰"
         override val drivingLimitBacDescription =

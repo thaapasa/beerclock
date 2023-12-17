@@ -162,10 +162,10 @@ object EnStrings : Strings {
         override val weightLabel = "Your weight"
         override val weightUnit = "kg"
         override val weightDescription =
-            "Your weight affects the calculation formulas. Extra kilos do not affect the burning of alcohol, so enter your own estimate of your ideal weight."
+            "The amount of water in your body is estimated based on your weight. Extra weight kilos do not affect that amount, so enter your own estimate of your ideal weight."
         override val genderLabel = "Your gender"
         override val genderDescription =
-            "Your gender affects the calculation formulas. Choose the gender that is closest to your body structure."
+            "Your gender affects the amount of water in your body. Choose the gender that is closest to your body structure."
         override val startOfDay = "Start of a new day"
         override val startOfDayDescription =
             "When does the new day start? Drinks consumed before this time will be listed under the previous day."
@@ -173,7 +173,7 @@ object EnStrings : Strings {
         override val alcoholGramsUnit = "g/unit"
         override val alcoholGramsDescription =
             "How many grams of alcohol are there in one standard drink (1 unit)? You can also select preset options from the dropdown below."
-        override val alcoholGramsByCountry = "Grams by countries"
+        override val alcoholGramsByCountry = "Units by countries"
         override val drivingLimitBacLabel = "Driving limit"
         override val drivingLimitBacUnit = "‰"
         override val drivingLimitBacDescription =
