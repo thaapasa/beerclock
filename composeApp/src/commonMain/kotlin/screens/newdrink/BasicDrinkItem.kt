@@ -6,15 +6,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import fi.tuska.beerclock.drinks.LatestDrinkInfo
+import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.components.UnitAvatar
 
 @Composable
-fun LatestDrinkItem(
-    drink: LatestDrinkInfo,
-    onAddDrink: (drink: LatestDrinkInfo?) -> Unit,
+fun BasicDrinkItem(
+    drink: BasicDrinkInfo,
+    onClick: (drinkInfo: BasicDrinkInfo) -> Unit = {},
+    modifier: Modifier = Modifier,
 ) {
+    if (drink is TextDrinkInfo) {
+        TextDrinkItem(drink)
+        return
+    }
+    
     val strings = Strings.get()
     ListItem(
         headlineContent = { Text(drink.name) },
@@ -26,9 +32,24 @@ fun LatestDrinkItem(
                 )
             )
         },
-        modifier = Modifier.clickable { onAddDrink(drink) },
-        leadingContent = { drink.image.smallImage() },
-        trailingContent = { UnitAvatar(units = drink.units()) },
+        modifier = modifier.clickable { onClick(drink) },
+        leadingContent = { drink.image?.smallImage() },
+        trailingContent = {
+            UnitAvatar(units = drink.units())
+        },
+        tonalElevation = 1.dp,
+        shadowElevation = 16.dp
+    )
+}
+
+@Composable
+fun TextDrinkItem(
+    drink: TextDrinkInfo,
+    modifier: Modifier = Modifier,
+) {
+    ListItem(
+        headlineContent = { Text(drink.name) },
+        modifier = modifier,
         tonalElevation = 1.dp,
         shadowElevation = 16.dp
     )

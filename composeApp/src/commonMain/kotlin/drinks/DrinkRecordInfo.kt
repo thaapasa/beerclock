@@ -19,6 +19,7 @@ import kotlin.time.Duration.Companion.minutes
 class DrinkRecordInfo(record: DrinkRecord) : KoinComponent, BasicDrinkInfo {
     private val prefs: GlobalUserPreferences by inject()
     val id = record.id
+    override val key = record.id
 
     /** Name of the drink */
     override val name = record.name
@@ -45,7 +46,7 @@ class DrinkRecordInfo(record: DrinkRecord) : KoinComponent, BasicDrinkInfo {
      * (from user preferences):
      * @return the number of units there are in this drink
      */
-    fun units() = BacFormulas.getUnitsFromAlcoholWeight(alcoholGrams, prefs.prefs)
+    override fun units() = BacFormulas.getUnitsFromAlcoholWeight(alcoholGrams, prefs.prefs)
 
     /**
      * Calculate the time it takes for your liver to burn off all the alcohol in this drink.

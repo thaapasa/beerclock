@@ -6,14 +6,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.DrinkService
+import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.composables.ViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 
@@ -22,14 +23,25 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
     private val drinks = DrinkService()
 
     var searchQuery by mutableStateOf("")
+    private val strings = Strings.get()
 
-    val searchResults =
+    val searchResults: StateFlow<List<BasicDrinkInfo>> =
         snapshotFlow { searchQuery }
             .debounce(300)
             .flatMapLatest {
                 when {
                     it.isNotBlank() -> flow { emit(drinks.findMatchingDrinksByName(it, 10)) }
-                    else -> flowOf(emptyList())
+                    else -> flow {
+                        val latest = drinks.getLatestDrinks(15)
+                        emit(
+                            listOf(
+                                TextDrinkInfo(
+                                    "list-title",
+                                    strings.newdrink.latestDrinksTitle
+                                )
+                            ) + latest
+                        )
+                    }
                 }
             }.stateIn(
                 scope = this,
@@ -37,7 +49,6 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
                 started = SharingStarted.WhileSubscribed(5_000)
             )
 
-    var active by mutableStateOf(false)
     var dialogOpen by mutableStateOf(false)
         private set
     var proto: BasicDrinkInfo? = null

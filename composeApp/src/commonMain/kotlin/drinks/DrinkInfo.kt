@@ -15,6 +15,7 @@ class DrinkInfo(record: DrinkLibrary) : KoinComponent, BasicDrinkInfo {
     private val prefs: GlobalUserPreferences by inject()
     override val name = record.name
     val id = record.id
+    override val key = record.id
     val abv = record.abv
     val quantityLiters = record.quantity_liters
     override val quantityCl = record.quantity_liters * 100
@@ -32,7 +33,7 @@ class DrinkInfo(record: DrinkLibrary) : KoinComponent, BasicDrinkInfo {
      * (from user preferences):
      * @return the number of units there are in this drink
      */
-    fun units() = BacFormulas.getUnitsFromAlcoholWeight(alcoholGrams, prefs.prefs)
+    override fun units() = BacFormulas.getUnitsFromAlcoholWeight(alcoholGrams, prefs.prefs)
 
     override fun toString() = "$name ($quantityCl cl $abvPercentage %)"
 }

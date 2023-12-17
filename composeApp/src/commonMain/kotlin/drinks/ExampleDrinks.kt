@@ -7,8 +7,11 @@ data class DrinkDef(
     override val name: String,
     override val quantityCl: Double,
     override val abvPercentage: Double, // Alcohol by volume in percentage
-    override val image: DrinkImage
-) : BasicDrinkInfo
+    override val image: DrinkImage,
+) : BasicDrinkInfo {
+    override val key = name
+    override fun units() = 1.0
+}
 
 val ExampleDrinksEn = listOf(
     DrinkDef("Large brewski", 50.0, 4.6, DrinkImage.BEER_GLASS_1),

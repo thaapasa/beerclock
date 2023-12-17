@@ -1,10 +1,8 @@
 package fi.tuska.beerclock.screens.newdrink
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -14,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -37,13 +34,13 @@ object NewDrinkSearchScreen : Screen {
         val searchResults by vm.searchResults.collectAsState()
 
         MainLayout(showTopBar = false) { innerPadding ->
-            Column(modifier = Modifier.padding(innerPadding).padding(16.dp).fillMaxSize()) {
+            Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
                 SearchBar(
                     vm.searchQuery,
                     onQueryChange = { vm.searchQuery = it },
                     placeholder = { Text(strings.newdrink.searchPlaceholder) },
-                    active = vm.active,
-                    onActiveChange = { vm.active = it },
+                    active = true,
+                    onActiveChange = {},
                     onSearch = {},
                     leadingIcon = { AppIcon.SEARCH.icon() },
                     modifier = Modifier.fillMaxWidth()
@@ -53,18 +50,13 @@ object NewDrinkSearchScreen : Screen {
                     ) {
                         items(
                             count = searchResults.size,
-                            key = { index -> searchResults[index].id },
+                            key = { index -> searchResults[index].key },
                             itemContent = { index ->
                                 val drink = searchResults[index]
-                                DrinkInfoItem(drink = drink, onClick = vm::selectDrink)
+                                BasicDrinkItem(drink = drink, onClick = vm::selectDrink)
                             }
                         )
                     }
-                }
-
-                if (!vm.active) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    LatestDrinks(vm::selectDrink)
                 }
             }
             if (vm.dialogOpen) {
