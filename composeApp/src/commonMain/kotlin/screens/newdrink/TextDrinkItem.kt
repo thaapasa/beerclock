@@ -13,5 +13,5 @@ class TextDrinkInfo(
     name = name,
     quantityCl = 0.0,
     abvPercentage = 0.0,
-    image = DrinkImage.GENERIC_DRINK
+    image = DrinkImage.GENERIC_DRINK,
 )

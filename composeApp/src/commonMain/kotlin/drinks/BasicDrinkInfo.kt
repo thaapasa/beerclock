@@ -19,6 +19,8 @@ abstract class BasicDrinkInfo(
     val abvPercentage: Double,
     /** Image of the drink */
     val image: DrinkImage,
+    /** Categorization of the drink */
+    val category: Category? = null,
 ) : KoinComponent {
     protected val prefs: GlobalUserPreferences = get()
 

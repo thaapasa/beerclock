@@ -12,7 +12,7 @@ class DrinkRecordInfo(record: DrinkRecord) : BasicDrinkInfo(
     name = record.name,
     quantityCl = record.quantity_liters * 100,
     abvPercentage = record.abv * 100,
-    image = DrinkImage.forName(record.image)
+    image = DrinkImage.forName(record.image),
 ) {
     val id = record.id
     override val key = record.id
