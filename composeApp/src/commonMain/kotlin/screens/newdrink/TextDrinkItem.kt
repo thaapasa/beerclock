@@ -7,6 +7,7 @@ import fi.tuska.beerclock.images.DrinkImage
 class TextDrinkInfo(
     override val key: String,
     name: String,
+    val description: String? = null,
     val icon: AppIcon,
     val onClick: () -> Unit,
 ) : BasicDrinkInfo(

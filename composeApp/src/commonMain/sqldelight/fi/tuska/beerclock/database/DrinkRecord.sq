@@ -2,6 +2,7 @@ CREATE TABLE drinkRecord (
   id INTEGER PRIMARY KEY NOT NULL,
   time INTEGER NOT NULL,
   name TEXT NOT NULL,
+  category TEXT,
   quantity_liters REAL NOT NULL,
   abv REAL NOT NULL,
   image TEXT NOT NULL
@@ -16,12 +17,12 @@ WHERE time >= :startTime AND time < :endTime
 ORDER BY time ASC;
 
 insert:
-INSERT INTO drinkRecord(time, name, quantity_liters, abv, image)
-VALUES (:time, :name, :quantityLiters, :abv, :image);
+INSERT INTO drinkRecord(time, name, category, quantity_liters, abv, image)
+VALUES (:time, :name, :category, :quantityLiters, :abv, :image);
 
 update:
 UPDATE drinkRecord
-SET time=:time, name=:name, quantity_liters=:quantityLiters, abv=:abv, image=:image
+SET time=:time, name=:name, category=:category, quantity_liters=:quantityLiters, abv=:abv, image=:image
 WHERE id=:id;
 
 deleteById:
@@ -29,7 +30,7 @@ DELETE FROM drinkRecord
 WHERE id = :id;
 
 selectLatestDrinks:
-SELECT DISTINCT name, quantity_liters, abv, image
+SELECT DISTINCT name, category, quantity_liters, abv, image
 FROM drinkRecord
 ORDER BY time DESC
 LIMIT :limit;

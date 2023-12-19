@@ -1,9 +1,7 @@
 package fi.tuska.beerclock.settings
 
 import fi.tuska.beerclock.localization.AppLocale
-import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.util.fromPrefsString
-import fi.tuska.beerclock.util.getCurrentThreadName
 import fi.tuska.beerclock.util.safeToDouble
 import fi.tuska.beerclock.util.toPrefsString
 import kotlinx.coroutines.Dispatchers
@@ -66,9 +64,7 @@ internal class UserStore : KoinComponent {
     }
 
     private suspend fun setStateValue(stateKey: String, stringified: String) {
-        getLogger("Foo").info("Outer on thread ${getCurrentThreadName()}")
         withContext(Dispatchers.IO) {
-            getLogger("Foo").info("Inner on thread ${getCurrentThreadName()}")
             store.setString(stateKey, stringified)
         }
     }

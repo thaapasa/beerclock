@@ -12,13 +12,15 @@ import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.composables.ViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
@@ -37,8 +39,6 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
                     it.isNotBlank() -> flowMatchingDrinks(it)
                     else -> flowLatestDrinks()
                 }
-            }.onStart {
-                flowLatestDrinks()
             }.stateIn(
                 scope = this,
                 initialValue = emptyList(),
@@ -61,18 +61,33 @@ class NewDrinkViewModel : ViewModel(), KoinComponent {
         dialogOpen = false
     }
 
-    private fun flowMatchingDrinks(drinkName: String) = flow {
-        val matching = drinks.findMatchingDrinksByName(drinkName, 10)
-        emit(
-            listOf(
-                TextDrinkInfo(
-                    "add-new-title",
-                    strings.newdrink.addNewDrink(drinkName),
-                    icon = AppIcon.ADD_CIRCLE,
-                    onClick = { selectDrink(DrinkDef(name = drinkName)) }
-                )
-            ) + matching
-        )
+    private fun flowMatchingDrinks(drinkName: String): Flow<List<BasicDrinkInfo>> =
+        drinks.flowMatchingDrinksByName(drinkName, 10).map { matching ->
+            val header = listOf(TextDrinkInfo(
+                "add-new-title",
+                strings.newdrink.addNewDrink(drinkName),
+                icon = AppIcon.ADD_CIRCLE,
+                onClick = { selectDrink(DrinkDef(name = drinkName)) }
+            ))
+            if (matching.isEmpty()) {
+                if (!drinks.libraryHasDrinks()) {
+                    return@map header + TextDrinkInfo(
+                        "empty-library-note",
+                        strings.newdrink.emptyLibraryTitle,
+                        description = strings.newdrink.emptyLibraryDescription,
+                        icon = AppIcon.DRINK,
+                        onClick = { addExampleDrinks() }
+                    )
+                }
+            }
+            return@map header + matching
+        }
+
+
+    private fun addExampleDrinks() {
+        launch {
+            drinks.addExampleDrinks()
+        }
     }
 
     private fun flowLatestDrinks() = flow {

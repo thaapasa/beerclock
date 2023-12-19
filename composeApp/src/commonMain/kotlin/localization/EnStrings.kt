@@ -143,6 +143,8 @@ object EnStrings : Strings {
     object NewDrinkSearch : Strings.NewDrinkSearchStrings {
         override val searchPlaceholder = "Search for strings"
         override val latestDrinksTitle = "Latest drinks"
+        override val emptyLibraryTitle = "No drinks in the library"
+        override val emptyLibraryDescription = "Add example drinks by clicking here"
         override fun addNewDrink(name: String) = "New drink: $name"
     }
 

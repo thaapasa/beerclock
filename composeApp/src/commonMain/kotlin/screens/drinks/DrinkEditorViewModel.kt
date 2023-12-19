@@ -61,6 +61,7 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
             abv = abv / 100.0,
             quantityLiters = quantityCl / 100,
             image = image,
+            category = null,
         )
     }
 

@@ -128,6 +128,8 @@ interface Strings {
     interface NewDrinkSearchStrings {
         val searchPlaceholder: String
         val latestDrinksTitle: String
+        val emptyLibraryTitle: String
+        val emptyLibraryDescription: String
         fun addNewDrink(name: String): String
     }
 

@@ -1,7 +1,6 @@
 package fi.tuska.beerclock.screens.newdrink
 
 import androidx.compose.foundation.clickable
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -51,11 +50,10 @@ fun TextDrinkItem(
 ) {
     ListItem(
         headlineContent = { Text(drink.name) },
-        modifier = modifier,
+        supportingContent = { drink.description?.let { Text(it) } },
+        modifier = modifier.clickable(onClick = drink.onClick),
         trailingContent = {
-            IconButton(onClick = drink.onClick) {
-                drink.icon.icon(tint = MaterialTheme.colorScheme.primary)
-            }
+            drink.icon.icon(tint = MaterialTheme.colorScheme.primary)
         },
         tonalElevation = 1.dp,
         shadowElevation = 16.dp

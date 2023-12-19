@@ -1,11 +1,17 @@
 package fi.tuska.beerclock.drinks
 
+import app.cash.sqldelight.Query
 import fi.tuska.beerclock.database.BeerDatabase
 import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.logging.getLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
@@ -55,11 +61,16 @@ class DrinkService : KoinComponent {
         return drinks.map(::LatestDrinkInfo)
     }
 
-    suspend fun findMatchingDrinksByName(name: String, limit: Long): List<DrinkInfo> {
-        val drinks = withContext(Dispatchers.IO) {
-            db.drinkLibraryQueries.findMatchingByName(name, limit).executeAsList()
+    fun flowMatchingDrinksByName(name: String, limit: Long): Flow<List<DrinkInfo>> {
+        val drinks = db.drinkLibraryQueries.findMatchingByName(name, limit).asFlow()
+        return drinks.map { it.map(::DrinkInfo) }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun libraryHasDrinks(): Boolean {
+        val result = withContext(Dispatchers.IO) {
+            db.drinkLibraryQueries.hasDrinks().executeAsList()
         }
-        return drinks.map(::DrinkInfo)
+        return result.isNotEmpty()
     }
 
     suspend fun deleteDrinkById(id: Long): Unit {
@@ -75,12 +86,14 @@ class DrinkService : KoinComponent {
                 db.drinkRecordQueries.insert(
                     time = drink.time.toDbTime(),
                     name = drink.name,
+                    category = drink.category?.name,
                     quantityLiters = drink.quantityLiters,
                     abv = drink.abv,
                     image = drink.image.name,
                 )
                 db.drinkLibraryQueries.insert(
                     name = drink.name,
+                    category = drink.category?.name,
                     quantityLiters = drink.quantityLiters,
                     abv = drink.abv,
                     image = drink.image.name,
@@ -95,18 +108,51 @@ class DrinkService : KoinComponent {
                 id = id,
                 time = drink.time.toDbTime(),
                 name = drink.name,
+                category = drink.category?.name,
                 quantityLiters = drink.quantityLiters,
                 abv = drink.abv,
                 image = drink.image.name,
             )
         }
     }
+
+    suspend fun addExampleDrinks() {
+        withContext(Dispatchers.IO) {
+            db.transaction {
+                exampleDrinks().forEach {
+                    db.drinkLibraryQueries.insert(
+                        name = it.name,
+                        category = it.category?.name,
+                        quantityLiters = it.quantityCl / 100.0,
+                        abv = it.abvPercentage / 100.0,
+                        image = it.image.name,
+                    )
+                }
+            }
+        }
+    }
 }
 
 data class DrinkDetailsFromEditor(
     val name: String,
+    val category: Category?,
     val abv: Double,
     val quantityLiters: Double,
     val time: Instant,
     val image: DrinkImage,
 )
+
+fun <T : Any> Query<T>.asFlow(): Flow<List<T>> = callbackFlow {
+    val listener = Query.Listener {
+        val items = executeAsList()
+        trySend(items)
+    }
+    logger.info("ADDING RESULT LISTENER")
+    addListener(listener)
+    val items = executeAsList()
+    trySend(items)
+    awaitClose {
+        logger.info("REMOVING RESULT LISTENER")
+        removeListener(listener)
+    }
+}

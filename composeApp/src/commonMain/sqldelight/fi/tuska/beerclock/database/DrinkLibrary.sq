@@ -1,6 +1,9 @@
 CREATE TABLE drinkLibrary (
   id INTEGER PRIMARY KEY NOT NULL,
   name TEXT NOT NULL COLLATE NOCASE,
+  created INTEGER NOT NULL,
+  updated INTEGER NOT NULL,
+  category TEXT,
   quantity_liters REAL NOT NULL,
   abv REAL NOT NULL,
   image TEXT NOT NULL,
@@ -9,15 +12,26 @@ CREATE TABLE drinkLibrary (
 
 CREATE UNIQUE INDEX drinkLibrary_name_idx ON drinkLibrary(name);
 
+hasDrinks:
+SELECT TRUE AS "hasDrinks"
+  FROM drinkLibrary
+  LIMIT 1;
+
 selectAll:
 SELECT *
 FROM drinkLibrary;
 
 insert:
-INSERT INTO drinkLibrary(name, quantity_liters, abv, image)
-VALUES (:name, :quantityLiters, :abv, :image)
+INSERT INTO drinkLibrary(name, category, quantity_liters, abv, image, created, updated)
+VALUES (:name, :category, :quantityLiters, :abv, :image,
+    strftime('%s', 'now'), strftime('%s', 'now'))
 ON CONFLICT (name)
-DO UPDATE SET drink_count = drink_count + 1;
+DO UPDATE SET category = excluded.category,
+  image = excluded.image,
+  drink_count = drink_count + 1,
+  abv = excluded.abv,
+  updated = strftime('%s', 'now');
+-- Do not update quantity, as that may change
 
 deleteById:
 DELETE FROM drinkLibrary
