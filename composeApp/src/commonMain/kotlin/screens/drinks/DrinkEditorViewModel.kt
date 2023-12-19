@@ -44,6 +44,10 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
         prefs = prefs.prefs
     )
 
+    fun isValid(): Boolean {
+        return name.isNotBlank() && quantityCl > 0.0
+    }
+
     protected fun setValues(drink: BasicDrinkInfo, realTime: Instant = Clock.System.now()) {
         name = drink.name
         quantityCl = drink.quantityCl

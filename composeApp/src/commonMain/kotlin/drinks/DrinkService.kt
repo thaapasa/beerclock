@@ -91,7 +91,7 @@ class DrinkService : KoinComponent {
                     abv = drink.abv,
                     image = drink.image.name,
                 )
-                db.drinkLibraryQueries.insert(
+                db.drinkLibraryQueries.recordDrunk(
                     name = drink.name,
                     category = drink.category?.name,
                     quantityLiters = drink.quantityLiters,

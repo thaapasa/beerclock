@@ -18,7 +18,7 @@ import fi.tuska.beerclock.ui.composables.rememberWithDispose
 fun EditDrinkDialog(
     drink: DrinkRecordInfo,
     onDrinksUpdated: (() -> Unit)? = null,
-    onClose: () -> Unit
+    onClose: () -> Unit,
 ) {
     val vm = rememberWithDispose { EditDrinkViewModel(drink) }
 
@@ -36,7 +36,7 @@ fun EditDrinkDialog(
                 },
                 textButton = { modifier ->
                     TextButton(
-                        enabled = !vm.isSaving,
+                        enabled = !vm.isSaving && vm.isValid(),
                         onClick = {
                             vm.saveDrink {
                                 onDrinksUpdated?.invoke()
