@@ -105,6 +105,7 @@ object FiStrings : Strings {
         override val menu = "Valikko"
         override val today = "Tänään"
         override val settings = "Asetukset"
+        override val drinkLibrary = "Juomakirjasto"
         override val history = "Historia"
         override val statistics = "Tilastot"
     }

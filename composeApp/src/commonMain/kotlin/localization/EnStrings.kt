@@ -94,6 +94,7 @@ object EnStrings : Strings {
         override val menu = "Menu"
         override val today = "Today"
         override val settings = "Settings"
+        override val drinkLibrary = "Drink library"
         override val history = "History"
         override val statistics = "Statistics"
     }

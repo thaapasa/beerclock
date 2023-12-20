@@ -21,6 +21,11 @@ selectAll:
 SELECT *
 FROM drinkLibrary;
 
+selectAllByCategory:
+SELECT *
+FROM drinkLibrary
+WHERE category IN (:categories);
+
 insert:
 INSERT INTO drinkLibrary(name, category, quantity_liters, abv, image, created, updated)
 VALUES (:name, :category, :quantityLiters, :abv, :image,

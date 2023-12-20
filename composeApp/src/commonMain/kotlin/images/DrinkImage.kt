@@ -46,6 +46,16 @@ enum class DrinkImage(val path: String) {
     }
 
     @Composable
+    fun image(modifier: Modifier = Modifier) {
+        Image(
+            painter = painter(),
+            contentDescription = Strings.get().drink.image,
+            modifier = modifier,
+        )
+    }
+
+
+    @Composable
     fun largeImage(modifier: Modifier = Modifier) {
         Image(
             painter = painter(),

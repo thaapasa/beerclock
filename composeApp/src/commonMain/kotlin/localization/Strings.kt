@@ -69,6 +69,7 @@ interface Strings {
         val menu: String
         val today: String
         val settings: String
+        val drinkLibrary: String
         val history: String
         val statistics: String
     }
