@@ -1,4 +1,4 @@
-rootProject.name = "BeerClock"
+rootProject.name = "beerclock"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
