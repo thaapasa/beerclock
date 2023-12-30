@@ -16,7 +16,7 @@ import org.jetbrains.compose.resources.painterResource
 private val logger = getLogger("CategoryImage")
 
 enum class CategoryImage(val path: String) {
-    CAT_BEERS("drawable/categories/cat_beers.webp"),
+    CAT_BEERS("drawable/categories/cat_beer.webp"),
     CAT_CIDERS("drawable/categories/cat_ciders.webp"),
     CAT_WINES("drawable/categories/cat_wines.webp"),
     CAT_COCKTAILS("drawable/categories/cat_cocktails.webp"),

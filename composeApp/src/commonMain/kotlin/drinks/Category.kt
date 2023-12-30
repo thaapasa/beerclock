@@ -1,8 +1,8 @@
 package fi.tuska.beerclock.drinks
 
 import fi.tuska.beerclock.images.CategoryImage
-import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.logging.getLogger
+
 
 private val logger = getLogger("DrinkCategory")
 
@@ -15,7 +15,11 @@ enum class Category(val image: CategoryImage, nameEn: String, nameFi: String) {
         "Cocktails and Mixed Drinks",
         "Cocktailit ja juomasekoitukset"
     ),
-    SPIRITS(CategoryImage.CAT_SPIRITS, "Spirits and Liqueurs", "Väkevät alkoholijuomat ja liköörit"),
+    SPIRITS(
+        CategoryImage.CAT_SPIRITS,
+        "Spirits and Liqueurs",
+        "Väkevät alkoholijuomat ja liköörit"
+    ),
     WARM_DRINKS(CategoryImage.CAT_WARM_DRINKS, "Warm Alcoholic Drinks", "Lämpimät alkoholijuomat"),
     SPECIALITY(CategoryImage.CAT_SPECIALITY, "Speciality Drinks", "Erikoisjuomat"),
     LOW_ALCOHOL(CategoryImage.CAT_LOW_ALCOHOL, "Low-Alcohol Drinks", "Miedot alkoholijuomat");
