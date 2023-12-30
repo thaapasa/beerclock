@@ -2,6 +2,7 @@ package fi.tuska.beerclock.screens.library
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.drinks.Category
 
+
+private val borderWidth = 3.dp
+private val halfBorder = borderWidth / 2
 
 @Composable
 fun CategoryBar(
@@ -32,24 +36,33 @@ fun CategoryBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Category.entries.map { cat ->
-                cat.image.image(
-                    modifier = Modifier
-                        .let {
-                            if (selected.contains(cat)) it.padding(2.dp)
-                            else it.padding(3.dp)
-                        }
-                        .weight(1f)
+                Box(
+                    modifier = Modifier.weight(1f).padding(1.dp)
                         .let {
                             if (selected.contains(cat)) it.border(
-                                3.dp,
+                                halfBorder,
                                 color = MaterialTheme.colorScheme.primary,
                                 shape = RoundedCornerShape(50)
                             )
                             else it
                         }
+                        .padding(halfBorder)
                         .clip(RoundedCornerShape(50))
-                        .clickable { toggle(cat) }
-                )
+                ) {
+                    cat.image.image(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .let {
+                                if (selected.contains(cat)) it.border(
+                                    halfBorder,
+                                    color = MaterialTheme.colorScheme.primary,
+                                    shape = RoundedCornerShape(50)
+                                ) else it
+                            }
+                            .clip(RoundedCornerShape(50))
+                            .clickable { toggle(cat) }
+                    )
+                }
             }
         }
     }
