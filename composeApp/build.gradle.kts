@@ -42,6 +42,10 @@ kotlin {
             implementation(libs.koalaplot)
         }
 
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
+
         androidMain.dependencies {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
