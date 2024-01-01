@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.screens.newdrink.BasicDrinkItem
+import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
 
 object DrinkLibraryScreen : Screen {
@@ -32,7 +33,7 @@ object DrinkLibraryScreen : Screen {
 
 @Composable
 fun DrinkLibraryPage(innerPadding: PaddingValues) {
-    val vm = DrinkLibraryViewModel()
+    val vm = rememberWithDispose { DrinkLibraryViewModel() }
     val searchResults by vm.libraryResults.collectAsState()
     Column(
         Modifier.padding(innerPadding).padding(top = 16.dp)

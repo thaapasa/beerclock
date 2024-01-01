@@ -26,7 +26,7 @@ fun CategoryBar(
     selected: Set<Category>,
     toggle: (category: Category) -> Unit,
 ) {
-
+    
     Surface(
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(50))
