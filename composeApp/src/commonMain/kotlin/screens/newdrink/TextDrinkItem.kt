@@ -8,8 +8,8 @@ class TextDrinkInfo(
     override val key: String,
     name: String,
     val description: String? = null,
-    val icon: AppIcon,
-    val onClick: () -> Unit,
+    val icon: AppIcon? = null,
+    val onClick: () -> Unit = {},
 ) : BasicDrinkInfo(
     name = name,
     quantityCl = 0.0,

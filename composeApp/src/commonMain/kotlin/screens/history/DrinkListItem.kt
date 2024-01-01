@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
+import fi.tuska.beerclock.images.smallImage
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.components.UnitAvatar
 

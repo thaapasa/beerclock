@@ -1,7 +1,7 @@
 package fi.tuska.beerclock.drinks
 
 import fi.tuska.beerclock.bac.BacFormulas
-import fi.tuska.beerclock.images.DrinkImage
+import fi.tuska.beerclock.images.Image
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -18,7 +18,7 @@ abstract class BasicDrinkInfo(
     /** Strength of the drink, or alcohol by volume, as a percentage value (range: 0 - 100) */
     val abvPercentage: Double,
     /** Image of the drink */
-    val image: DrinkImage,
+    val image: Image,
     /** Categorization of the drink */
     val category: Category? = null,
 ) : KoinComponent {

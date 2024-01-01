@@ -11,7 +11,7 @@ import fi.tuska.beerclock.settings.Gender
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-enum class AppIcon(private val path: String) {
+enum class AppIcon(private val path: String) : Image {
     ADD_CIRCLE("drawable/icons/add_circle.xml"),
     BEER("drawable/icons/sports_bar.xml"),
     BOLT("drawable/icons/bolt.xml"),
@@ -37,7 +37,7 @@ enum class AppIcon(private val path: String) {
 
     @OptIn(ExperimentalResourceApi::class)
     @Composable
-    fun painter(): Painter {
+    override fun painter(): Painter {
         return painterResource(this.path)
     }
 

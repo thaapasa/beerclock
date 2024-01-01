@@ -52,7 +52,7 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
         name = drink.name
         quantityCl = drink.quantityCl
         abv = drink.abvPercentage
-        image = drink.image ?: DrinkImage.GENERIC_DRINK
+        image = if (drink.image is DrinkImage) drink.image else DrinkImage.GENERIC_DRINK
         val drinkTime = times.instantToDrinkTime(realTime)
         date = drinkTime.first
         time = drinkTime.second

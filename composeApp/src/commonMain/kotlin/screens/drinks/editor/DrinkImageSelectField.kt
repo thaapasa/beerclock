@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.images.DrinkImage
+import fi.tuska.beerclock.images.smallImage
 import fi.tuska.beerclock.ui.components.ImageSelectField
 
 private val drinkOptions = DrinkImage.values().toList()
@@ -12,7 +13,7 @@ private val drinkOptions = DrinkImage.values().toList()
 fun DrinkImageSelectField(
     value: DrinkImage,
     onValueChange: (image: DrinkImage) -> Unit,
-    titleText: String? = null
+    titleText: String? = null,
 ) {
     ImageSelectField(
         value = value,

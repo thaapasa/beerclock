@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.localization
 
 import androidx.compose.ui.text.intl.Locale
+import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.settings.Gender
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import kotlinx.datetime.DayOfWeek
@@ -89,6 +90,8 @@ interface Strings {
             "${quantity(quantityCl)} ${abv(abvPercentage)}"
 
         fun drinkTime(time: Instant): String
+
+        fun categoryName(category: Category?): String
 
         val timeInfoLabel: String
         val sizeInfoLabel: String

@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.drinks.Category
+import fi.tuska.beerclock.images.image
 
 
 private val borderWidth = 3.dp
@@ -26,7 +27,7 @@ fun CategoryBar(
     selected: Set<Category>,
     toggle: (category: Category) -> Unit,
 ) {
-    
+
     Surface(
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(50))

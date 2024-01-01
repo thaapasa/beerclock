@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.localization
 
+import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.SingleUnitWeights
 import fi.tuska.beerclock.util.toWeekOfYear
 import fi.tuska.beerclock.util.zeroPad
@@ -122,6 +123,8 @@ object FiStrings : Strings {
         override fun drinkTime(time: Instant): String =
             time.toLocalDateTime(TimeZone.currentSystemDefault())
                 .let { "klo ${it.hour}:${it.minute.zeroPad(2)}" }
+
+        override fun categoryName(category: Category?) = category?.nameFi ?: "Ei kategoriaa"
 
         override val timeInfoLabel = "Joit tämän"
         override val sizeInfoLabel = "Juoman koko"

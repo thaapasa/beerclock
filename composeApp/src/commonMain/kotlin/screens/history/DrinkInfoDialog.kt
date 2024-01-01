@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.images.AppIcon
+import fi.tuska.beerclock.images.largeImage
 import fi.tuska.beerclock.localization.Strings
 
 // Lifted higher to show on top of the drink list

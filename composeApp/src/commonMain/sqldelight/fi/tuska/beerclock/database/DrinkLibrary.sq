@@ -24,7 +24,7 @@ FROM drinkLibrary;
 selectAllByCategory:
 SELECT *
 FROM drinkLibrary
-WHERE category IN :categories;
+WHERE category IN :categories OR category IS NULL;
 
 insert:
 INSERT INTO drinkLibrary(name, category, quantity_liters, abv, image, created, updated)

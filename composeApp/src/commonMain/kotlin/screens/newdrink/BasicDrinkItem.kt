@@ -8,7 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
+import fi.tuska.beerclock.images.smallImage
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.library.CategoryHeaderInfo
+import fi.tuska.beerclock.screens.library.CategoryHeaderItem
 import fi.tuska.beerclock.ui.components.UnitAvatar
 
 @Composable
@@ -19,6 +22,9 @@ fun BasicDrinkItem(
 ) {
     if (drink is TextDrinkInfo) {
         TextDrinkItem(drink, modifier = modifier)
+        return
+    } else if (drink is CategoryHeaderInfo) {
+        CategoryHeaderItem(drink, modifier = modifier)
         return
     }
 
@@ -34,7 +40,7 @@ fun BasicDrinkItem(
             )
         },
         modifier = modifier.clickable { onClick(drink) },
-        leadingContent = { drink.image?.smallImage() },
+        leadingContent = { drink.image.smallImage() },
         trailingContent = {
             UnitAvatar(units = drink.units())
         },
@@ -53,7 +59,7 @@ fun TextDrinkItem(
         supportingContent = { drink.description?.let { Text(it) } },
         modifier = modifier.clickable(onClick = drink.onClick),
         trailingContent = {
-            drink.icon.icon(tint = MaterialTheme.colorScheme.primary)
+            drink.icon?.icon(tint = MaterialTheme.colorScheme.primary)
         },
         tonalElevation = 1.dp,
         shadowElevation = 16.dp
