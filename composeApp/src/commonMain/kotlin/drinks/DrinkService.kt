@@ -68,7 +68,7 @@ class DrinkService : KoinComponent {
 
     fun flowDrinksForCategories(categories: Set<Category>): Flow<List<DrinkInfo>> {
         val flow = if (categories.isEmpty()) db.drinkLibraryQueries.selectAll().asFlow()
-        else db.drinkLibraryQueries.selectAllByCategory(categories.joinToString(",") { it.name })
+        else db.drinkLibraryQueries.selectAllByCategory(categories.map { it.toString() })
             .asFlow()
         return flow.map { it.map(::DrinkInfo) }.flowOn(Dispatchers.IO)
     }
