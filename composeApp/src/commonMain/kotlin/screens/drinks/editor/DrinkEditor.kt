@@ -80,6 +80,9 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier) {
         }
         Spacer(modifier = Modifier.height(gap))
 
+        CategorySelector(vm.category, { vm.category = it })
+        Spacer(modifier = Modifier.height(gap))
+
         Row(modifier = Modifier.fillMaxWidth()) {
             DecimalField(
                 label = { Text(strings.drinkDialog.abvLabel) },

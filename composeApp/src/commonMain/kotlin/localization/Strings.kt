@@ -93,6 +93,7 @@ interface Strings {
 
         fun categoryName(category: Category?): String
 
+        val categoryLabel: String
         val timeInfoLabel: String
         val sizeInfoLabel: String
         val unitsInfoLabel: String

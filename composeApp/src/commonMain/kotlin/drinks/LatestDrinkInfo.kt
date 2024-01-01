@@ -14,6 +14,6 @@ class LatestDrinkInfo(record: SelectLatestDrinks) : BasicDrinkInfo(
     image = DrinkImage.forName(record.image),
     category = record.category?.let { Category.forName(it) }
 ) {
-    override val key = record.name
+    override val key = with(record) { "$name.$category.$quantity_liters.$abv.$image" }
     override fun toString() = "$name ($quantityCl cl $abvPercentage %)"
 }

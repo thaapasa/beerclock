@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import fi.tuska.beerclock.bac.BacFormulas
 import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
+import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
@@ -34,6 +35,7 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     var date by mutableStateOf(LocalDate(2000, 1, 1))
     var time by mutableStateOf(LocalTime(0, 0, 0))
     var image by mutableStateOf(DrinkImage.GENERIC_DRINK)
+    var category by mutableStateOf<Category?>(null)
     var isSaving by mutableStateOf(false)
 
     fun realTime(): Instant = times.drinkTimeToInstant(date, time)
@@ -53,6 +55,7 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
         quantityCl = drink.quantityCl
         abv = drink.abvPercentage
         image = if (drink.image is DrinkImage) drink.image else DrinkImage.GENERIC_DRINK
+        category = drink.category
         val drinkTime = times.instantToDrinkTime(realTime)
         date = drinkTime.first
         time = drinkTime.second
@@ -65,7 +68,7 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
             abv = abv / 100.0,
             quantityLiters = quantityCl / 100,
             image = image,
-            category = null,
+            category = category,
         )
     }
 

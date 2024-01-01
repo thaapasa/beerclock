@@ -115,6 +115,7 @@ object EnStrings : Strings {
                 .let { "${it.hour.zeroPad(2)}:${it.minute.zeroPad(2)}" }
 
         override fun categoryName(category: Category?) = category?.nameEn ?: "No category"
+        override val categoryLabel = "Category"
 
         override val timeInfoLabel = "Drinking time"
         override val sizeInfoLabel = "Drink size"

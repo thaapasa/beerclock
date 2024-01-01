@@ -126,6 +126,7 @@ object FiStrings : Strings {
 
         override fun categoryName(category: Category?) = category?.nameFi ?: "Ei kategoriaa"
 
+        override val categoryLabel = "Kategoria"
         override val timeInfoLabel = "Joit tämän"
         override val sizeInfoLabel = "Juoman koko"
         override val unitsInfoLabel = "Annoksia"
