@@ -109,6 +109,18 @@ class DrinkService : KoinComponent {
         }
     }
 
+    suspend fun insertDrinkInfo(drink: DrinkDetailsFromEditor) {
+        withContext(Dispatchers.IO) {
+            db.drinkLibraryQueries.insert(
+                name = drink.name,
+                category = drink.category?.name,
+                quantityLiters = drink.quantityLiters,
+                abv = drink.abv,
+                image = drink.image.name,
+            )
+        }
+    }
+
     suspend fun updateDrinkRecord(id: Long, drink: DrinkDetailsFromEditor) {
         withContext(Dispatchers.IO) {
             db.drinkRecordQueries.update(

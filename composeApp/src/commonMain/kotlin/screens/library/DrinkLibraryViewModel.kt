@@ -14,6 +14,7 @@ import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
+import fi.tuska.beerclock.screens.library.create.CreateDrinkInfoDialog
 import fi.tuska.beerclock.screens.library.modify.EditDrinkInfoDialog
 import fi.tuska.beerclock.ui.composables.ViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -77,13 +78,23 @@ class DrinkLibraryViewModel : ViewModel(), KoinComponent {
         this.editingDrink = drink
     }
 
+    fun addNewDrink() {
+        this.editingDrink = NewDrink
+    }
+    
+    private fun closeEdit() {
+        this.editingDrink = null
+    }
+
     @Composable
     fun EditorDialog() {
         val drink = editingDrink
         if (drink != null) {
-            EditDrinkInfoDialog(drink, onClose = {
-                editingDrink = null
-            })
+            if (drink == NewDrink) {
+                CreateDrinkInfoDialog(onClose = this::closeEdit)
+            } else {
+                EditDrinkInfoDialog(drink, onClose = this::closeEdit)
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.ui.layout
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,7 +19,11 @@ import fi.tuska.beerclock.localization.Strings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SubLayout(title: String, content: @Composable (PaddingValues) -> Unit) {
+fun SubLayout(
+    title: String,
+    actions: @Composable RowScope.() -> Unit = {},
+    content: @Composable (PaddingValues) -> Unit,
+) {
     val strings = Strings.get()
     val navigator = LocalNavigator.currentOrThrow
     Scaffold(
@@ -27,6 +32,7 @@ fun SubLayout(title: String, content: @Composable (PaddingValues) -> Unit) {
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 titleContentColor = MaterialTheme.colorScheme.primary,
             ),
+                actions = actions,
                 title = { Text(title) },
                 navigationIcon = {
                     IconButton({ navigator.pop() }) {

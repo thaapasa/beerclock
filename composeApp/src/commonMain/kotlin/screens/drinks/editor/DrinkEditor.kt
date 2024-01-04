@@ -28,42 +28,44 @@ import fi.tuska.beerclock.ui.components.UnitAvatar
 private val gap = 16.dp
 
 @Composable
-fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier) {
+fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTime: Boolean = true) {
     val strings = Strings.get()
     Column(modifier = modifier.padding(16.dp).fillMaxSize()) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            DateInputField(
-                value = vm.date,
-                onValueChange = { vm.date = it },
-                labelText = strings.drinkDialog.dateLabel,
-                modifier = Modifier.weight(1f),
+        if (showTime) {
+            Row(modifier = Modifier.fillMaxWidth()) {
+                DateInputField(
+                    value = vm.date,
+                    onValueChange = { vm.date = it },
+                    labelText = strings.drinkDialog.dateLabel,
+                    modifier = Modifier.weight(1f),
+                )
+                Spacer(modifier = Modifier.width(gap))
+                TimeInputField(
+                    value = vm.time,
+                    onValueChange = { vm.time = it },
+                    labelText = strings.drinkDialog.timeLabel,
+                    modifier = Modifier.weight(1f),
+                )
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                AppIcon.CLOCK.icon(
+                    strings.drinkDialog.timeLabel,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                DrinkTimeSlider(
+                    value = vm.time,
+                    onValueChange = { vm.time = it },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            Text(
+                strings.drinkDialog.drinkTimeInfo(vm.localRealTime()),
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(start = 8.dp, bottom = 4.dp, end = 8.dp),
             )
-            Spacer(modifier = Modifier.width(gap))
-            TimeInputField(
-                value = vm.time,
-                onValueChange = { vm.time = it },
-                labelText = strings.drinkDialog.timeLabel,
-                modifier = Modifier.weight(1f),
-            )
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            AppIcon.CLOCK.icon(
-                strings.drinkDialog.timeLabel,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            DrinkTimeSlider(
-                value = vm.time,
-                onValueChange = { vm.time = it },
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-        Text(
-            strings.drinkDialog.drinkTimeInfo(vm.localRealTime()),
-            style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.padding(start = 8.dp, bottom = 4.dp, end = 8.dp),
-        )
 
-        Spacer(modifier = Modifier.height(gap))
+            Spacer(modifier = Modifier.height(gap))
+        }
         Row(Modifier.fillMaxWidth()) {
             OutlinedTextField(
                 label = { Text(strings.drinkDialog.nameLabel) },

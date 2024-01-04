@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.drinks.DrinkInfo
+import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.newdrink.BasicDrinkItem
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
@@ -25,18 +28,22 @@ object DrinkLibraryScreen : Screen {
 
     @Composable
     override fun Content() {
+        val vm = rememberWithDispose { DrinkLibraryViewModel() }
         val strings = Strings.get()
         SubLayout(
-            content = { innerPadding -> DrinkLibraryPage(innerPadding) },
-            title = strings.library.title
-        )
+            title = strings.library.title,
+            actions = {
+                IconButton(onClick = vm::addNewDrink) {
+                    AppIcon.ADD_CIRCLE.icon(tint = MaterialTheme.colorScheme.primary)
+                }
+            },
+            content = { innerPadding -> DrinkLibraryPage(innerPadding, vm) })
     }
 }
 
 
 @Composable
-fun DrinkLibraryPage(innerPadding: PaddingValues) {
-    val vm = rememberWithDispose { DrinkLibraryViewModel() }
+fun DrinkLibraryPage(innerPadding: PaddingValues, vm: DrinkLibraryViewModel) {
     val searchResults by vm.libraryResults.collectAsState()
     Column(
         Modifier.padding(innerPadding).padding(top = 16.dp)

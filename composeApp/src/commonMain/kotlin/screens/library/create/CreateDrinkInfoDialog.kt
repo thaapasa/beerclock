@@ -1,4 +1,4 @@
-package fi.tuska.beerclock.screens.library.modify
+package fi.tuska.beerclock.screens.library.create
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -6,7 +6,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.drinks.editor.DrinkEditor
@@ -15,18 +14,17 @@ import fi.tuska.beerclock.ui.components.FullScreenDialog
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 
 @Composable
-fun EditDrinkInfoDialog(
-    drink: DrinkInfo,
+fun CreateDrinkInfoDialog(
     onDrinksUpdated: (() -> Unit)? = null,
     onClose: () -> Unit,
 ) {
-    val vm = rememberWithDispose { EditDrinkInfoViewModel(drink) }
+    val vm = rememberWithDispose { CreateDrinkInfoViewModel() }
     val strings = Strings.get()
 
     FullScreenDialog(onDismissRequest = onClose) {
         Column(modifier = Modifier.fillMaxWidth()) {
             DialogHeader(
-                titleText = strings.library.editDrinkTitle,
+                titleText = strings.library.newDrinkTitle,
                 leadingIcon = { modifier ->
                     AppIcon.CLOSE.iconButton(
                         onClick = onClose,
