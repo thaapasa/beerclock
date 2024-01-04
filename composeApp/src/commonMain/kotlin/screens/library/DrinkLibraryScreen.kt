@@ -62,7 +62,7 @@ fun DrinkLibraryPage(innerPadding: PaddingValues, vm: DrinkLibraryViewModel) {
                     val drink = searchResults[index]
                     BasicDrinkItem(drink = drink, onClick = {
                         if (drink is DrinkInfo) {
-                            vm.editDrink(drink)
+                            vm.viewDrink(drink)
                         }
                     })
                 }

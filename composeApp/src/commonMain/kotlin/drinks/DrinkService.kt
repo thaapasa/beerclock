@@ -87,6 +87,13 @@ class DrinkService : KoinComponent {
         logger.info("Deleted drink $id")
     }
 
+    suspend fun deleteDrinkInfoById(id: Long): Unit {
+        withContext(Dispatchers.IO) {
+            db.drinkLibraryQueries.deleteById(id = id)
+        }
+        logger.info("Deleted drink $id")
+    }
+
     suspend fun insertDrink(drink: DrinkDetailsFromEditor) {
         withContext(Dispatchers.IO) {
             db.transaction {

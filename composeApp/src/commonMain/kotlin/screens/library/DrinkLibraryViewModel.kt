@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
 
@@ -50,6 +51,7 @@ class DrinkLibraryViewModel : ViewModel(), KoinComponent {
     var selections by mutableStateOf<Map<Category, Boolean>>(mapOf())
         private set
 
+    private var viewingDrink by mutableStateOf<DrinkInfo?>(null)
     private var editingDrink by mutableStateOf<DrinkInfo?>(null)
 
     val libraryResults: StateFlow<List<BasicDrinkInfo>> =
@@ -74,20 +76,48 @@ class DrinkLibraryViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun editDrink(drink: DrinkInfo) {
+
+    fun addNewDrink() {
+        this.viewingDrink = null
+        this.editingDrink = NewDrink
+    }
+
+    fun viewDrink(drink: DrinkInfo) {
+        this.viewingDrink = drink
+        this.editingDrink = null
+    }
+
+    private fun editDrink(drink: DrinkInfo) {
+        this.viewingDrink = null
         this.editingDrink = drink
     }
 
-    fun addNewDrink() {
-        this.editingDrink = NewDrink
+    private fun deleteDrink(drink: DrinkInfo) {
+        launch {
+            drinks.deleteDrinkInfoById(drink.id)
+        }
+        closeEdit()
     }
-    
+
     private fun closeEdit() {
         this.editingDrink = null
     }
 
+    private fun closeView() {
+        this.viewingDrink = null
+    }
+
     @Composable
     fun EditorDialog() {
+        val viewDrink = viewingDrink
+        if (viewDrink != null) {
+            DrinkItemInfoDialog(
+                viewDrink,
+                onClose = this::closeView,
+                onModify = this::editDrink,
+                onDelete = this::deleteDrink
+            )
+        }
         val drink = editingDrink
         if (drink != null) {
             if (drink == NewDrink) {
