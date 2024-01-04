@@ -21,6 +21,7 @@ enum class DrinkImage(val path: String) : Image {
     WHITE_WINE_GLASS_2("drawable/drinks/white_wine_glass_2.webp"),
     WHITE_WINE_BOTTLE_2("drawable/drinks/white_wine_bottle_1.webp"),
     COGNAC_1("drawable/drinks/cognac_1.webp"),
+    VODKA_1("drawable/drinks/vodka_1.webp"),
     CAIPIROSCA_1("drawable/drinks/caipirosca_1.webp"),
     CAIPIROSCA_2("drawable/drinks/caipirosca_2.webp"),
     MARTINI_1("drawable/drinks/martini_1.webp");
@@ -28,7 +29,7 @@ enum class DrinkImage(val path: String) : Image {
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun painter(): Painter = painterResource(this.path)
-    
+
     companion object {
         fun forName(name: String): DrinkImage = try {
             DrinkImage.valueOf(name)
