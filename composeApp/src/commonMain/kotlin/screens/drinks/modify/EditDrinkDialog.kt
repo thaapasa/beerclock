@@ -21,9 +21,9 @@ fun EditDrinkDialog(
     onClose: () -> Unit,
 ) {
     val vm = rememberWithDispose { EditDrinkViewModel(drink) }
+    val strings = Strings.get()
 
     FullScreenDialog(onDismissRequest = onClose) {
-        val strings = Strings.get()
         Column(modifier = Modifier.fillMaxWidth()) {
             DialogHeader(
                 titleText = strings.drinkDialog.createTitle,

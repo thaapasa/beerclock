@@ -127,6 +127,17 @@ interface Strings {
     }
 
 
+    /* Drink library screen */
+    val library: DrinkLibraryStrings
+
+    interface DrinkLibraryStrings {
+        val title: String
+        val newDrinkTitle: String
+        val editDrinkTitle: String
+        val saveDrinkTitle: String
+    }
+
+
     /* New drink search screen */
     val newdrink: NewDrinkSearchStrings
 

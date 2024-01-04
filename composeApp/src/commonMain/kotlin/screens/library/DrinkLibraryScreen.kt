@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import fi.tuska.beerclock.drinks.DrinkInfo
+import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.newdrink.BasicDrinkItem
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
@@ -23,9 +25,10 @@ object DrinkLibraryScreen : Screen {
 
     @Composable
     override fun Content() {
+        val strings = Strings.get()
         SubLayout(
             content = { innerPadding -> DrinkLibraryPage(innerPadding) },
-            title = "Juomakirjasto"
+            title = strings.library.title
         )
     }
 }
@@ -50,10 +53,15 @@ fun DrinkLibraryPage(innerPadding: PaddingValues) {
                 key = { index -> searchResults[index].key },
                 itemContent = { index ->
                     val drink = searchResults[index]
-                    BasicDrinkItem(drink = drink)
+                    BasicDrinkItem(drink = drink, onClick = {
+                        if (drink is DrinkInfo) {
+                            vm.editDrink(drink)
+                        }
+                    })
                 }
             )
         }
+        vm.EditorDialog()
     }
 
 }

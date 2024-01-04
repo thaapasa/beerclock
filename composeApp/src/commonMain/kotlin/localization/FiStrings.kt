@@ -152,6 +152,17 @@ object FiStrings : Strings {
     }
 
 
+    /* Drink library screen */
+    override val library = DrinkLibrary
+
+    object DrinkLibrary : Strings.DrinkLibraryStrings {
+        override val title = "Juomakirjasto"
+        override val newDrinkTitle = "Lisää juoma"
+        override val editDrinkTitle = "Muokkaa juomaa"
+        override val saveDrinkTitle = "Tallenna"
+    }
+
+
     /* New drink search screen */
     override val newdrink = NewDrinkSearch
 

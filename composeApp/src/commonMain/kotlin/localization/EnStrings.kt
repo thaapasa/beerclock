@@ -142,6 +142,17 @@ object EnStrings : Strings {
     }
 
 
+    /* Drink library screen */
+    override val library = DrinkLibrary
+
+    object DrinkLibrary : Strings.DrinkLibraryStrings {
+        override val title = "Drink library"
+        override val newDrinkTitle = "Add new drink"
+        override val editDrinkTitle = "Modify drink"
+        override val saveDrinkTitle = "Save"
+    }
+    
+
     /* New drink search screen */
     override val newdrink = NewDrinkSearch
 

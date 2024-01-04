@@ -33,6 +33,11 @@ VALUES (:name, :category, :quantityLiters, :abv, :image,
 ON CONFLICT (name) DO NOTHING;
 
 
+update:
+UPDATE drinkLibrary
+SET name=:name, category=:category, quantity_liters=:quantityLiters, abv=:abv, image=:image, updated=strftime('%s', 'now')
+WHERE id=:id;
+
 recordDrunk:
 INSERT INTO drinkLibrary(name, category, quantity_liters, abv, image, drink_count, created, updated)
 VALUES (:name, :category, :quantityLiters, :abv, :image, 1,

@@ -109,11 +109,24 @@ class DrinkService : KoinComponent {
         }
     }
 
-    suspend fun updateDrink(id: Long, drink: DrinkDetailsFromEditor) {
+    suspend fun updateDrinkRecord(id: Long, drink: DrinkDetailsFromEditor) {
         withContext(Dispatchers.IO) {
             db.drinkRecordQueries.update(
                 id = id,
                 time = drink.time.toDbTime(),
+                name = drink.name,
+                category = drink.category?.name,
+                quantityLiters = drink.quantityLiters,
+                abv = drink.abv,
+                image = drink.image.name,
+            )
+        }
+    }
+
+    suspend fun updateDrinkInfo(id: Long, drink: DrinkDetailsFromEditor) {
+        withContext(Dispatchers.IO) {
+            db.drinkLibraryQueries.update(
+                id = id,
                 name = drink.name,
                 category = drink.category?.name,
                 quantityLiters = drink.quantityLiters,

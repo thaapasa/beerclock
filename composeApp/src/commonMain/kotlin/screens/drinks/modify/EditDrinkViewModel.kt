@@ -16,7 +16,7 @@ class EditDrinkViewModel(val drink: DrinkRecordInfo) : DrinkEditorViewModel() {
         savingAction {
             val modifiedDrink = toSaveDetails()
             logger.info("Updating drink ${drink.id} to database: $modifiedDrink")
-            drinkService.updateDrink(drink.id, modifiedDrink)
+            drinkService.updateDrinkRecord(drink.id, modifiedDrink)
             afterChanged?.invoke()
         }
     }
