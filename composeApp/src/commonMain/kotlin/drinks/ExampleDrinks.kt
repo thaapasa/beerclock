@@ -35,7 +35,7 @@ fun createExampleDrinks(l: (en: String, fi: String) -> String) = listOf(
         l("Honey Mead", "Hunajaviini (sima)"),
         20.0,
         10.0,
-        DrinkImage.CIDER_BOTTLE_1
+        DrinkImage.MEAD_1
     ),
     DrinkDef(Category.WINES, l("Red Wine", "Punaviini"), 16.0, 13.0, DrinkImage.RED_WINE_GLASS_1),
     DrinkDef(
@@ -55,13 +55,13 @@ fun createExampleDrinks(l: (en: String, fi: String) -> String) = listOf(
     DrinkDef(Category.COCKTAILS, "Margarita", 10.0, 20.0, DrinkImage.MARGARITA_1),
     DrinkDef(Category.COCKTAILS, "Martini", 10.0, 18.0, DrinkImage.MARTINI_1),
     DrinkDef(Category.SPIRITS, l("Cognac", "Konjakki"), 4.0, 43.0, DrinkImage.COGNAC_1),
-    DrinkDef(Category.SPIRITS, l("Whisky", "Viski"), 4.0, 43.0, DrinkImage.COGNAC_1),
+    DrinkDef(Category.SPIRITS, l("Whisky", "Viski"), 4.0, 43.0, DrinkImage.WHISKY_1),
     DrinkDef(Category.SPIRITS, "Vodka", 4.0, 40.0, DrinkImage.VODKA_1),
     DrinkDef(Category.WARM_DRINKS, "Irish Coffee", 20.0, 12.0, DrinkImage.IRISH_COFFEE_1),
     DrinkDef(Category.WARM_DRINKS, l("Mulled Wine", "Glögi"), 20.0, 10.0, DrinkImage.MULLED_WINE_1),
     DrinkDef(Category.SPECIALITY, "Sake", 10.0, 17.0, DrinkImage.SAKE_GLASS_1),
-    DrinkDef(Category.LOW_ALCOHOL, "Shandy", 50.0, 2.5, DrinkImage.COGNAC_1),
-    DrinkDef(Category.LOW_ALCOHOL, "Spritzer", 20.0, 6.5, DrinkImage.COGNAC_1),
+    DrinkDef(Category.LOW_ALCOHOL, "Shandy", 50.0, 2.5, DrinkImage.SHANDY_1),
+    DrinkDef(Category.LOW_ALCOHOL, "Spritzer", 20.0, 6.5, DrinkImage.SPRITZER_1),
 )
 
 
