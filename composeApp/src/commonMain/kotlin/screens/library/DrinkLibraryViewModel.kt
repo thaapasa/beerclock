@@ -76,7 +76,12 @@ class DrinkLibraryViewModel : ViewModel(), KoinComponent {
         }
     }
 
-
+    fun addExampleDrinks() {
+        launch {
+            drinks.addExampleDrinks()
+        }
+    }
+    
     fun addNewDrink() {
         this.viewingDrink = null
         this.editingDrink = NewDrink

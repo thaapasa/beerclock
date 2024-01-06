@@ -30,8 +30,12 @@ insert:
 INSERT INTO drinkLibrary(name, category, quantity_liters, abv, image, created, updated)
 VALUES (:name, :category, :quantityLiters, :abv, :image,
     strftime('%s', 'now'), strftime('%s', 'now'))
-ON CONFLICT (name) DO NOTHING;
-
+ON CONFLICT (name)
+DO UPDATE SET category = excluded.category,
+    quantity_liters = excluded.quantity_liters,
+    abv = excluded.abv,
+    image = excluded.image,
+    updated = strftime('%s', 'now');
 
 update:
 UPDATE drinkLibrary
