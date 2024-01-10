@@ -58,6 +58,13 @@ fun createExampleDrinks(l: (en: String, fi: String) -> String) = listOf(
         10.0,
         DrinkImage.MEAD_1
     ),
+    DrinkDef(
+        Category.CIDERS,
+        l("Gin Long Drink", "Lonkero"),
+        33.0,
+        4.7,
+        DrinkImage.LONKERO_1
+    ),
     DrinkDef(Category.WINES, l("Red Wine", "Punaviini"), 12.0, 13.0, DrinkImage.RED_WINE_GLASS_1),
     DrinkDef(
         Category.WINES,
