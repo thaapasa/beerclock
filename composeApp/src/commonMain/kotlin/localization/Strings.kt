@@ -70,6 +70,7 @@ interface Strings {
         val menu: String
         val today: String
         val settings: String
+        val about: String
         val drinkLibrary: String
         val history: String
         val statistics: String
@@ -124,6 +125,18 @@ interface Strings {
     interface HomeStrings {
         val bacPermilles: String
         val bacTime: String
+    }
+
+
+    /* About screen */
+    val about: AboutStrings
+
+    interface AboutStrings {
+        val title: String
+        val appVersion: String
+        val deviceModel: String
+        val osVersion: String
+        val sqliteVersion: String
     }
 
 

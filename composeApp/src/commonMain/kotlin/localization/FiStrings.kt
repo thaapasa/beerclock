@@ -106,6 +106,7 @@ object FiStrings : Strings {
         override val menu = "Valikko"
         override val today = "Tänään"
         override val settings = "Asetukset"
+        override val about = "Tietoja sovelluksesta"
         override val drinkLibrary = "Juomakirjasto"
         override val history = "Historia"
         override val statistics = "Tilastot"
@@ -149,6 +150,18 @@ object FiStrings : Strings {
     object Home : Strings.HomeStrings {
         override val bacPermilles = "Promillet ‰"
         override val bacTime = "Aika"
+    }
+
+
+    /* About page strings */
+    override val about = About
+
+    object About : Strings.AboutStrings {
+        override val title = "Tietoja sovelluksesta"
+        override val appVersion = "Sovelluksen versio"
+        override val deviceModel = "Laite"
+        override val osVersion = "Järjestelmän versio"
+        override val sqliteVersion = "SQLiten versio"
     }
 
 

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.about.AboutScreen
 import fi.tuska.beerclock.screens.library.DrinkLibraryScreen
 import fi.tuska.beerclock.screens.settings.SettingsScreen
 
@@ -22,6 +23,10 @@ fun MainMenu(onNavigate: (select: Screen) -> Unit) {
         DropdownMenuItem(
             onClick = { onNavigate(DrinkLibraryScreen) },
             text = { Text(Strings.get().menu.drinkLibrary) }
+        )
+        DropdownMenuItem(
+            onClick = { onNavigate(AboutScreen) },
+            text = { Text(Strings.get().menu.about) }
         )
     }
 }

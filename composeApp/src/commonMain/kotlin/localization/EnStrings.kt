@@ -95,6 +95,7 @@ object EnStrings : Strings {
         override val menu = "Menu"
         override val today = "Today"
         override val settings = "Settings"
+        override val about = "About the app"
         override val drinkLibrary = "Drink library"
         override val history = "History"
         override val statistics = "Statistics"
@@ -142,6 +143,18 @@ object EnStrings : Strings {
     }
 
 
+    /* About page strings */
+    override val about = About
+
+    object About : Strings.AboutStrings {
+        override val title = "About the app"
+        override val appVersion = "App version"
+        override val deviceModel = "Device model"
+        override val osVersion = "OS version"
+        override val sqliteVersion = "SQLite version"
+    }
+
+
     /* Drink library screen */
     override val library = DrinkLibrary
 
@@ -151,7 +164,7 @@ object EnStrings : Strings {
         override val editDrinkTitle = "Modify drink"
         override val saveDrinkTitle = "Save"
     }
-    
+
 
     /* New drink search screen */
     override val newdrink = NewDrinkSearch
