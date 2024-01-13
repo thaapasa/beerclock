@@ -152,6 +152,7 @@ object EnStrings : Strings {
         override val deviceModel = "Device model"
         override val osVersion = "OS version"
         override val sqliteVersion = "SQLite version"
+        override val dbVersion = "Database version"
     }
 
 

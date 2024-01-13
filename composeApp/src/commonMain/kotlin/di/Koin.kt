@@ -25,7 +25,8 @@ fun commonModule() = module {
     single(createdAtStart = true) { GlobalUserPreferences(UserStore.load(get())) }
     single(createdAtStart = true) {
         DatabaseInfo(
-            DbInfoQueries(get()).dbVersion().executeAsOne()
+            sqliteVersion = DbInfoQueries(get()).dbVersion().executeAsOne(),
+            databaseVersion = BeerDatabase.Schema.version
         )
     }
 }

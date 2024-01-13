@@ -137,6 +137,7 @@ interface Strings {
         val deviceModel: String
         val osVersion: String
         val sqliteVersion: String
+        val dbVersion: String
     }
 
 

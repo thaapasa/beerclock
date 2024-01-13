@@ -44,6 +44,7 @@ fun AboutPage(innerPadding: PaddingValues) {
         InfoItem(strings.about.deviceModel, vm.deviceModel)
         InfoItem(strings.about.osVersion, vm.osVersion)
         InfoItem(strings.about.sqliteVersion, vm.dbInfo.sqliteVersion)
+        InfoItem(strings.about.dbVersion, vm.dbInfo.databaseVersion.toString())
     }
 }
 

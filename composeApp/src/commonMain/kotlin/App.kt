@@ -29,6 +29,6 @@ class AppData : KoinComponent {
     val dbInfo: DatabaseInfo = get()
 
     init {
-        logger.info("BeerClock starting with SQLite ${dbInfo.sqliteVersion}")
+        logger.info("BeerClock starting with SQLite ${dbInfo.sqliteVersion}, DB version ${dbInfo.databaseVersion}")
     }
 }
