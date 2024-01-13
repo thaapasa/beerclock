@@ -21,6 +21,8 @@ internal class SettingsViewModel : ViewModel(), KoinComponent {
     // reflected in the global user prefs state as well.
     private val store = UserStore()
 
+    var settingsTab by mutableStateOf(SettingsTabs.USER)
+
     var locale by mutableStateOf(prefs.prefs.locale)
     var weightKg by mutableStateOf(prefs.prefs.weightKg)
     var gender by mutableStateOf(prefs.prefs.gender)

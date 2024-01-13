@@ -194,6 +194,9 @@ object FiStrings : Strings {
 
     object Settings : Strings.SettingsStrings {
         override val title = "Asetukset"
+        override val userSettingsTitle = "Käyttäjä"
+        override val drinkSettingsTitle = "Juomat"
+
         override fun dateTitle(day: LocalDate) =
             "${weekdayShort(day.dayOfWeek).replaceFirstChar { it.uppercase() }} ${date(day)}"
 

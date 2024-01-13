@@ -184,6 +184,8 @@ object EnStrings : Strings {
 
     object Settings : Strings.SettingsStrings {
         override val title = "Settings"
+        override val userSettingsTitle = "User"
+        override val drinkSettingsTitle = "Drinks"
         override fun dateTitle(day: LocalDate) = "${weekdayShort(day.dayOfWeek)}, ${date(day)}"
 
         override fun weekTitle(day: LocalDate) = "Week ${day.toWeekOfYear().weekNumber}"

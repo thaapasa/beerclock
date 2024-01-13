@@ -40,7 +40,7 @@ object HistoryScreen : Screen {
                 SegmentedButton {
                     AppIcon.CHEVRON_LEFT.iconButton(
                         contentDescription = strings.history.prevDay,
-                        modifier = Modifier.padding(horizontal = 4.dp)
+                        modifier = Modifier.padding(start = 8.dp, end = 4.dp)
                     ) { vm.prevDay() }
                     SegmentDivider()
                     DateTitle(vm.date)
@@ -54,7 +54,7 @@ object HistoryScreen : Screen {
                     SegmentDivider()
                     AppIcon.CHEVRON_RIGHT.iconButton(
                         contentDescription = strings.history.nextDay,
-                        modifier = Modifier.padding(horizontal = 4.dp)
+                        modifier = Modifier.padding(start = 4.dp, end = 8.dp)
                     ) { vm.nextDay() }
                 }
                 DrinkList(

@@ -169,6 +169,8 @@ interface Strings {
 
     interface SettingsStrings {
         val title: String
+        val userSettingsTitle: String
+        val drinkSettingsTitle: String
         fun dateTitle(date: LocalDate): String
         fun weekTitle(date: LocalDate): String
         val localeLabel: String
