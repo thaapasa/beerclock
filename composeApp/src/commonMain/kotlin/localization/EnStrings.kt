@@ -186,6 +186,7 @@ object EnStrings : Strings {
         override val title = "Settings"
         override val userSettingsTitle = "User"
         override val drinkSettingsTitle = "Drinks"
+        override val dataImportTitle = "Import data"
         override fun dateTitle(day: LocalDate) = "${weekdayShort(day.dayOfWeek)}, ${date(day)}"
 
         override fun weekTitle(day: LocalDate) = "Week ${day.toWeekOfYear().weekNumber}"
@@ -217,6 +218,14 @@ object EnStrings : Strings {
             "${countryName(countryCode)} (${SingleUnitWeights[countryCode]} g/unit)"
 
         override val pickCountry = "Select country"
+
+        override val importJAlcoMeterTitle = "Import data from jAlcoMeter"
+        override val importJAlcoMeterDescriptions = listOf(
+            "You can import data from jAlcoMeter into BeerClock. First select 'Create backup' from jAlcometer settings, and then 'Import data' from this page.",
+            "jAlcoMeter backups are named 'jAlcoMeter-backup.[date]-[order-number].db'. Pick the one you wish to import from the popup list.",
+            "If you want to import the backup into a new device, you need to transfer the jAlcoMeter backup files manually into the new device. The backups are found in the folder '/sdcard/jAlcoMeter'. Move that folder into this device so that BeerClock can locate the backup files."
+        )
+        override val importJAlcoMeterData = "Import data"
     }
 
 
