@@ -5,7 +5,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import fi.tuska.beerclock.backup.importDataFromJAlcoMeter
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.settings.UserStore
 import fi.tuska.beerclock.ui.composables.ViewModel
@@ -46,10 +45,6 @@ internal class SettingsViewModel : ViewModel(), KoinComponent {
         LaunchedEffect(startOfDay) { saveStartOfDay() }
         LaunchedEffect(gramsInUnit) { saveGramsInUnitText() }
         LaunchedEffect(drivingLimitBac) { saveDrivingLimitBac() }
-    }
-
-    fun importFromJAlcoMeter() {
-        importDataFromJAlcoMeter()
     }
 
 }
