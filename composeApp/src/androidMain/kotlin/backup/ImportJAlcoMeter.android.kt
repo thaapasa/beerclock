@@ -7,11 +7,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import fi.tuska.beerclock.backup.jalcometer.importJAlcometerData
 import fi.tuska.beerclock.logging.getLogger
 import io.requery.android.database.sqlite.SQLiteDatabase
 import java.io.File
 
-private val logger = getLogger("JAlcoMeterImporter")
+
+private val logger = getLogger("ImportJAlcoMeter")
 
 actual fun isJAlcoMeterImportSupported(): Boolean {
     return true
@@ -22,7 +24,6 @@ actual fun ImportJAlkaMetriDataButton(title: String, modifier: Modifier) {
     val context = LocalContext.current
     FilePicker(
         onFilePicked = { file ->
-            logger.info("Picked $file")
             file?.let { importJAlcoMeterBackupData(context, it) }
         },
     ) { onClick -> Button(onClick = onClick) { Text(title) } }
@@ -51,9 +52,4 @@ fun importJAlcoMeterDB(context: Context, filePath: String) {
         null,
         SQLiteDatabase.OPEN_READONLY
     ).use(::importJAlcometerData)
-}
-
-fun importJAlcometerData(db: SQLiteDatabase) {
-    val cats = db.queryNumEntries("categories")
-    logger.info("There are $cats categories")
 }
