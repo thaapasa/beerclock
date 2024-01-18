@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.screens.settings
 
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,7 +13,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
-internal class SettingsViewModel : ViewModel(), KoinComponent {
+internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(), KoinComponent {
 
     // Initialize editors based on the global state
     private val prefs: GlobalUserPreferences = get()

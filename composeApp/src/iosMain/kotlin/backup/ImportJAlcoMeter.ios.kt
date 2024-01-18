@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.backup
 
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
@@ -8,7 +9,11 @@ actual fun isJAlcoMeterImportSupported(): Boolean {
 }
 
 @Composable
-actual fun ImportJAlkaMetriDataButton(title: String, modifier: Modifier) {
+actual fun ImportJAlkaMetriDataButton(
+    title: String,
+    modifier: Modifier,
+    snackbar: SnackbarHostState,
+) {
     // Can't import on iOS
 }
 

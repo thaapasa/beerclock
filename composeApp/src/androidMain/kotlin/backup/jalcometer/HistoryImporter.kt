@@ -6,6 +6,7 @@ import fi.tuska.beerclock.database.batchOperate
 import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.database.toSequence
 import fi.tuska.beerclock.images.DrinkImage
+import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import io.requery.android.database.sqlite.SQLiteDatabase
 import kotlinx.datetime.Instant
@@ -18,9 +19,10 @@ import java.time.format.DateTimeFormatter
 
 private val logger = getLogger("HistoryImporter")
 
-fun importHistory(srcDb: SQLiteDatabase) {
+fun importHistory(srcDb: SQLiteDatabase, showStatus: (msg: String) -> Unit) {
     val targetDb: BeerDatabase by inject(BeerDatabase::class.java)
     val rows = srcDb.queryNumEntries("history")
+    val strings = Strings.get()
     logger.info("There are $rows rows of history")
     val cursor =
         srcDb.query("SELECT id, name, strength, volume, icon, time, comment FROM history ORDER BY time DESC")
@@ -28,6 +30,7 @@ fun importHistory(srcDb: SQLiteDatabase) {
     targetDb.batchOperate(
         seq.map(JAlcometerHistory::fromDb),
         500,
+        afterEach = { showStatus(strings.settings.importMsgImportingDrink(it, rows)) }
     ) { row -> importHistoryRow(targetDb, row) }
 }
 

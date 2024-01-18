@@ -5,8 +5,8 @@ import io.requery.android.database.sqlite.SQLiteDatabase
 
 private val logger = getLogger("JAlcoMeterDataImporter")
 
-fun importJAlcometerData(db: SQLiteDatabase) {
+fun importJAlcometerData(db: SQLiteDatabase, showStatus: (msg: String) -> Unit) {
     logger.info("Starting jAlcoMeter data import")
-    importHistory(db)
+    importHistory(db, showStatus)
     logger.info("jAlcoMeter data import complete!")
 }

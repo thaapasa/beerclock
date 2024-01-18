@@ -227,6 +227,12 @@ object EnStrings : Strings {
             "After you have moved the backup file into an accessible location, select 'Import data' from this page and locate the file with the file browser that pops up to start the import process.",
         )
         override val importJAlcoMeterData = "Import data"
+
+        override val importMsgStarting = "Starting data import from jAlcoMeter"
+        override fun importMsgImportingDrink(cur: Long, max: Long) = "Importing drink $cur / $max"
+        override val importMsgComplete = "Data successfully imported from jAlcoMeter"
+        override val importMsgError = "There was an error while importing data from jAlcoMeter"
+
     }
 
 

@@ -25,6 +25,9 @@ internal fun ColumnScope.DataImportSettings(vm: SettingsViewModel) {
             Text(it, style = MaterialTheme.typography.bodySmall)
         }
         Spacer(modifier = Modifier.height(16.dp))
-        ImportJAlkaMetriDataButton(title = strings.settings.importJAlcoMeterData)
+        ImportJAlkaMetriDataButton(
+            title = strings.settings.importJAlcoMeterData,
+            snackbar = vm.snackbar
+        )
     }
 }

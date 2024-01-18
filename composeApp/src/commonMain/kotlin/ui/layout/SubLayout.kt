@@ -2,6 +2,8 @@ package fi.tuska.beerclock.ui.layout
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,10 +25,12 @@ fun SubLayout(
     title: String,
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
+    snackbarHostState: SnackbarHostState? = null,
 ) {
     val strings = Strings.get()
     val navigator = LocalNavigator.currentOrThrow
     Scaffold(
+        snackbarHost = { snackbarHostState?.let { SnackbarHost(it) } },
         topBar = {
             TopAppBar(colors = topAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
