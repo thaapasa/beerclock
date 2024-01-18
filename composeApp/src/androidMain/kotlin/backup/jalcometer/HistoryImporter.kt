@@ -32,7 +32,8 @@ fun importHistory(srcDb: SQLiteDatabase) {
 }
 
 fun importHistoryRow(db: BeerDatabase, row: JAlcometerHistory) {
-    db.drinkRecordQueries.insert(
+    db.drinkRecordQueries.import(
+        importId = row.id,
         time = row.time.toDbTime(),
         name = row.name,
         image = row.image.name,

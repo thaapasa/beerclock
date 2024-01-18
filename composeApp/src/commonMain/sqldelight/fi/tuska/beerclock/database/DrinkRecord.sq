@@ -1,5 +1,6 @@
 CREATE TABLE drinkRecord (
   id INTEGER PRIMARY KEY NOT NULL,
+  import_id INTEGER UNIQUE,
   time INTEGER NOT NULL,
   name TEXT NOT NULL,
   category TEXT,
@@ -19,6 +20,13 @@ ORDER BY time ASC;
 insert:
 INSERT INTO drinkRecord(time, name, category, quantity_liters, abv, image)
 VALUES (:time, :name, :category, :quantityLiters, :abv, :image);
+
+import:
+INSERT INTO drinkRecord(import_id, time, name, category, quantity_liters, abv, image)
+VALUES (:importId, :time, :name, :category, :quantityLiters, :abv, :image)
+ON CONFLICT (import_id) DO UPDATE
+SET time=excluded.time, name=excluded.name, category=excluded.category,
+    quantity_liters=excluded.quantity_liters, abv=excluded.abv, image=excluded.image;
 
 update:
 UPDATE drinkRecord
