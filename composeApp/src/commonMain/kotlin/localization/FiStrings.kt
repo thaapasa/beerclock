@@ -196,6 +196,7 @@ object FiStrings : Strings {
         override val title = "Asetukset"
         override val userSettingsTitle = "Käyttäjä"
         override val drinkSettingsTitle = "Juomat"
+        override val dataImportTitle = "Tuo tiedot"
 
         override fun dateTitle(day: LocalDate) =
             "${weekdayShort(day.dayOfWeek).replaceFirstChar { it.uppercase() }} ${date(day)}"
@@ -229,6 +230,16 @@ object FiStrings : Strings {
             "${countryName(countryCode)}: ${SingleUnitWeights[countryCode]} g/annos"
 
         override val pickCountry = "Valitse maa"
+
+        override val importJAlcoMeterTitle = "Tuo tiedot jAlkaMetristä"
+        override val importJAlcoMeterDescriptions = listOf(
+            "Voit tuoda tiedot Kaljakelloon jAlkaMetristä. Tätä varten sinun täytyy ensin valita jAlkaMetrin asetuksista 'Luo varmuuskopio' ja sen jälkeen paikallistaa luotu varmuuskopiotiedosto.",
+            "jAlkaMetrin varmuuskopiot ovat nimeltään 'jAlcoMeter-backup.[päivämäärä]-[järjestysnumero].db', ja ne löytyvät yleensä hakemistosta '/sdcard/jAlcoMeter'.",
+            "Johtuen Androidin uusista tiedostojenkäyttörajoituksista sinun täytyy etsiä tämä tiedosto käsin ja siirtää se esim. puhelimesi lataukset (Downloads) -kansioon",
+            "Kun olet siirtänyt tiedoston, valites 'Tuo tiedot' tältä sivulta ja etsi varmuuskopiotiedosto esiin tulevalla tiedostoselaimella.",
+        )
+        override val importJAlcoMeterData = "Tuo tiedot"
+
     }
 
 

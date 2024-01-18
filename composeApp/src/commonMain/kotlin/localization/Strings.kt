@@ -171,6 +171,7 @@ interface Strings {
         val title: String
         val userSettingsTitle: String
         val drinkSettingsTitle: String
+        val dataImportTitle: String
         fun dateTitle(date: LocalDate): String
         fun weekTitle(date: LocalDate): String
         val localeLabel: String
@@ -192,6 +193,10 @@ interface Strings {
         val drivingLimitBacDescription: String
         fun alcoholGramsByCountryOption(countryCode: String): String
         val pickCountry: String
+
+        val importJAlcoMeterTitle: String
+        val importJAlcoMeterDescriptions: List<String>
+        val importJAlcoMeterData: String
     }
 
 

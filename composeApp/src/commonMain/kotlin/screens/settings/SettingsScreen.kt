@@ -46,6 +46,7 @@ fun SettingsPage(innerPadding: PaddingValues) {
         when (vm.settingsTab) {
             SettingsTabs.USER -> UserSettings(vm)
             SettingsTabs.DRINK -> DrinkSettings(vm)
+            SettingsTabs.IMPORT -> DataImportSettings(vm)
         }
 
         Spacer(Modifier.height(16.dp))
