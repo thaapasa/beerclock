@@ -233,9 +233,10 @@ object FiStrings : Strings {
 
         override val importJAlcoMeterTitle = "Tuo tiedot jAlkaMetristä"
         override val importJAlcoMeterDescriptions = listOf(
-            "Voit tuoda tiedot Kaljakelloon jAlkaMetristä. Valitse ensin jAlkaMetrin asetuksista 'Luo varmuuskopio', ja sen jälkeen 'Tuo tiedot' tältä sivulta.",
-            "jAlkaMetrin varmuuskopiot ovat nimeltään 'jAlcoMeter-backup.[päivämäärä]-[järjestysnumero].db'. Valitse listasta se varmuuskopio jonka haluat ladata.",
-            "Jos haluat siirtää varmuuskopion uuteen laitteeseen, sinun täytyy siirtää jAlkaMetrin varmuuskopiotiedosto itse uudelle laitteelle. Varmuuskopiot löytyvät hakemistosta /sdcard/jAlcoMeter. Siirrä kyseinen hakemisto tälle laitteelle niin Kaljakello löytää varmuuskopiot."
+            "Voit tuoda tiedot Kaljakelloon jAlkaMetristä. Tätä varten sinun täytyy ensin valita jAlkaMetrin asetuksista 'Luo varmuuskopio' ja sen jälkeen paikallistaa luotu varmuuskopiotiedosto.",
+            "jAlkaMetrin varmuuskopiot ovat nimeltään 'jAlcoMeter-backup.[päivämäärä]-[järjestysnumero].db', ja ne löytyvät yleensä hakemistosta '/sdcard/jAlcoMeter'.",
+            "Johtuen Androidin uusista tiedostojenkäyttörajoituksista sinun täytyy etsiä tämä tiedosto käsin ja siirtää se esim. puhelimesi lataukset (Downloads) -kansioon",
+            "Kun olet siirtänyt tiedoston, valites 'Tuo tiedot' tältä sivulta ja etsi varmuuskopiotiedosto esiin tulevalla tiedostoselaimella.",
         )
         override val importJAlcoMeterData = "Tuo tiedot"
 

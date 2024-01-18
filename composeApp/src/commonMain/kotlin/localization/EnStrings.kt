@@ -221,9 +221,10 @@ object EnStrings : Strings {
 
         override val importJAlcoMeterTitle = "Import data from jAlcoMeter"
         override val importJAlcoMeterDescriptions = listOf(
-            "You can import data from jAlcoMeter into BeerClock. First select 'Create backup' from jAlcometer settings, and then 'Import data' from this page.",
-            "jAlcoMeter backups are named 'jAlcoMeter-backup.[date]-[order-number].db'. Pick the one you wish to import from the popup list.",
-            "If you want to import the backup into a new device, you need to transfer the jAlcoMeter backup files manually into the new device. The backups are found in the folder '/sdcard/jAlcoMeter'. Move that folder into this device so that BeerClock can locate the backup files."
+            "You can import data from jAlcoMeter into BeerClock. For this you need to first select 'Create backup' from jAlcometer settings, and then locate the created backup file.",
+            "jAlcoMeter backups are named 'jAlcoMeter-backup.[date]-[order-number].db', and they are normally created at the folder '/sdcard/jAlcoMeter' on your phone.",
+            "Due to Android's new file browsing restrictions, you need to locate the backup file manually and transfer it to e.g. the Downloads folder.",
+            "After you have moved the backup file into an accessible location, select 'Import data' from this page and locate the file with the file browser that pops up to start the import process.",
         )
         override val importJAlcoMeterData = "Import data"
     }
