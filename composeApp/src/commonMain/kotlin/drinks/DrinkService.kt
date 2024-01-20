@@ -24,7 +24,7 @@ private val logger = getLogger("DrinkService")
 
 class DrinkService : KoinComponent {
 
-    private val db: BeerDatabase = get()
+    val db: BeerDatabase = get()
     private val times = DrinkTimeService()
 
     suspend fun getDrinksForDay(date: LocalDate): List<DrinkRecordInfo> {
@@ -97,34 +97,14 @@ class DrinkService : KoinComponent {
     suspend fun insertDrink(drink: DrinkDetailsFromEditor) {
         withContext(Dispatchers.IO) {
             db.transaction {
-                db.drinkRecordQueries.insert(
-                    time = drink.time.toDbTime(),
-                    name = drink.name,
-                    category = drink.category?.name,
-                    quantityLiters = drink.quantityLiters,
-                    abv = drink.abv,
-                    image = drink.image.name,
-                )
-                db.drinkLibraryQueries.recordDrunk(
-                    name = drink.name,
-                    category = drink.category?.name,
-                    quantityLiters = drink.quantityLiters,
-                    abv = drink.abv,
-                    image = drink.image.name,
-                )
+                operations.insertDrink(drink)
             }
         }
     }
 
     suspend fun insertDrinkInfo(drink: DrinkDetailsFromEditor) {
         withContext(Dispatchers.IO) {
-            db.drinkLibraryQueries.insert(
-                name = drink.name,
-                category = drink.category?.name,
-                quantityLiters = drink.quantityLiters,
-                abv = drink.abv,
-                image = drink.image.name,
-            )
+            operations.insertDrinkInfo(drink)
         }
     }
 
@@ -170,6 +150,57 @@ class DrinkService : KoinComponent {
             }
         }
     }
+
+    val operations = DrinkOperations(db)
+}
+
+class DrinkOperations(private val db: BeerDatabase) {
+    fun insertDrink(drink: DrinkDetailsFromEditor) {
+        db.drinkRecordQueries.insert(
+            time = drink.time.toDbTime(),
+            name = drink.name,
+            category = drink.category?.name,
+            quantityLiters = drink.quantityLiters,
+            abv = drink.abv,
+            image = drink.image.name,
+        )
+        db.drinkLibraryQueries.recordDrunk(
+            name = drink.name,
+            category = drink.category?.name,
+            quantityLiters = drink.quantityLiters,
+            abv = drink.abv,
+            image = drink.image.name,
+        )
+    }
+
+    fun importDrink(importId: Long, drink: DrinkDetailsFromEditor) {
+        db.drinkRecordQueries.import(
+            importId = importId,
+            time = drink.time.toDbTime(),
+            name = drink.name,
+            category = drink.category?.name,
+            quantityLiters = drink.quantityLiters,
+            abv = drink.abv,
+            image = drink.image.name,
+        )
+        db.drinkLibraryQueries.importDrunk(
+            name = drink.name,
+        )
+    }
+
+    fun insertDrinkInfo(drink: DrinkDetailsFromEditor) {
+        db.drinkLibraryQueries.insert(
+            name = drink.name,
+            category = drink.category?.name,
+            quantityLiters = drink.quantityLiters,
+            abv = drink.abv,
+            image = drink.image.name,
+        )
+    }
+
+    fun getDrinkLibrary(): List<DrinkInfo> {
+        return db.drinkLibraryQueries.selectAll().executeAsList().map(::DrinkInfo)
+    }
 }
 
 data class DrinkDetailsFromEditor(
@@ -186,12 +217,10 @@ fun <T : Any> Query<T>.asFlow(): Flow<List<T>> = callbackFlow {
         val items = executeAsList()
         trySend(items)
     }
-    logger.info("ADDING RESULT LISTENER")
     addListener(listener)
     val items = executeAsList()
     trySend(items)
     awaitClose {
-        logger.info("REMOVING RESULT LISTENER")
         removeListener(listener)
     }
 }

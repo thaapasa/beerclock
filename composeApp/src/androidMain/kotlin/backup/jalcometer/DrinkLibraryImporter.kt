@@ -1,30 +1,27 @@
 package fi.tuska.beerclock.backup.jalcometer
 
 import android.database.Cursor
-import fi.tuska.beerclock.database.BeerDatabase
+import fi.tuska.beerclock.database.batchOperate
 import fi.tuska.beerclock.database.toSequence
+import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
-import io.requery.android.database.sqlite.SQLiteDatabase
-import org.koin.java.KoinJavaComponent
+import kotlinx.datetime.Clock
 
 
 private val logger = getLogger("HistoryImporter")
 
 fun importDrinkLibrary(
-    srcDb: SQLiteDatabase,
-    targetDb: BeerDatabase,
+    ctx: ImportContext,
     categories: Map<Long, JAlcoMeterCategory>,
-    showStatus: (status: ImportStatus) -> Unit,
 ) {
-    val targetDb: BeerDatabase by KoinJavaComponent.inject(BeerDatabase::class.java)
-    val rows = srcDb.queryNumEntries("drinks")
+    val rows = ctx.db.queryNumEntries("drinks")
     val strings = Strings.get()
     logger.info("There are $rows drinks in drinks library")
-    showStatus(ImportStatus(strings.settings.importMsgImportingLibrary))
+    ctx.showStatus(ImportStatus(strings.settings.importMsgImportingLibrary))
     val cursor =
-        srcDb.query(
+        ctx.db.query(
             """
             SELECT d.id, d.name, d.cat_id, d.strength, d.icon, d.comment,
               s.name AS size_name, s.volume
@@ -42,18 +39,9 @@ fun importDrinkLibrary(
             ORDER BY first_size_mapping.pos;
             """.trimMargin()
         )
-    val drinks = cursor.toSequence().map { JAlcoMeterDrink.fromDb(it, categories) }.toList()
-    logger.info("Drinks: ${drinks.joinToString("\n")}")
-    targetDb.transaction {
-        drinks.forEach {
-            targetDb.drinkLibraryQueries.insert(
-                name = it.name,
-                category = it.category?.name,
-                quantityLiters = it.volume,
-                abv = it.strength / 100.0,
-                image = it.image.name,
-            )
-        }
+    val drinks = cursor.toSequence().map { JAlcoMeterDrink.fromDb(it, categories) }
+    ctx.drinkService.db.batchOperate(drinks, batchSize = 250) {
+        ctx.drinkService.operations.insertDrinkInfo(it.toEditorData())
     }
 }
 
@@ -89,6 +77,15 @@ data class JAlcoMeterDrink(
                 )
             }
     }
+
+    fun toEditorData(): DrinkDetailsFromEditor = DrinkDetailsFromEditor(
+        name = name,
+        category = category,
+        abv = strength / 100.0,
+        quantityLiters = volume,
+        time = Clock.System.now(),
+        image = image
+    )
 
     override fun toString() = "$id: $name, $sizeName ($volume l $strength %) $icon -> $category"
 }

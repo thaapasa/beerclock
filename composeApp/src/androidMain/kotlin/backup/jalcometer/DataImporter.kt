@@ -1,19 +1,23 @@
 package fi.tuska.beerclock.backup.jalcometer
 
-import fi.tuska.beerclock.database.BeerDatabase
+import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.logging.getLogger
 import io.requery.android.database.sqlite.SQLiteDatabase
-import org.koin.java.KoinJavaComponent
 
 private val logger = getLogger("JAlcoMeterDataImporter")
 
-fun importJAlcometerData(db: SQLiteDatabase, showStatus: (status: ImportStatus) -> Unit) {
-    logger.info("Starting jAlcoMeter data import")
-    val targetDb: BeerDatabase by KoinJavaComponent.inject(BeerDatabase::class.java)
+data class ImportContext(
+    val db: SQLiteDatabase,
+    val drinkService: DrinkService,
+    val showStatus: (status: ImportStatus) -> Unit,
+)
 
-    val categories = readCategories(db)
+fun importJAlcometerData(ctx: ImportContext) {
+    logger.info("Starting jAlcoMeter data import")
+
+    val categories = readCategories(ctx)
     logger.info("Existing categories: $categories")
-    val drinks = importDrinkLibrary(db, targetDb, categories, showStatus)
-    importHistory(db, targetDb, showStatus)
+    importDrinkLibrary(ctx, categories)
+    importHistory(ctx)
     logger.info("jAlcoMeter data import complete!")
 }

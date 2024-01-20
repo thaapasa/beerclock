@@ -17,5 +17,5 @@ class DrinkInfo(record: DrinkLibrary) : BasicDrinkInfo(
     val id = record.id
     override val key = record.id
 
-    override fun toString() = "$name ($quantityCl cl $abvPercentage %)"
+    override fun toString() = "$name ($quantityCl cl $abvPercentage %, ${category ?: "-"})"
 }

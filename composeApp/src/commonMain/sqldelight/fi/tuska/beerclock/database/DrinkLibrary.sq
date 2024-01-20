@@ -54,6 +54,13 @@ DO UPDATE SET category = excluded.category,
   updated = strftime('%s', 'now');
 -- Do not update quantity, as that may change
 
+importDrunk:
+UPDATE drinkLibrary
+SET drink_count = drink_count + 1,
+  updated = strftime('%s', 'now')
+WHERE name=:name;
+
+
 deleteById:
 DELETE FROM drinkLibrary
 WHERE id = :id;

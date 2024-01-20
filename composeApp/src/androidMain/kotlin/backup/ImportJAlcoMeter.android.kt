@@ -11,9 +11,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import fi.tuska.beerclock.backup.jalcometer.ImportContext
 import fi.tuska.beerclock.backup.jalcometer.ImportStatus
 import fi.tuska.beerclock.backup.jalcometer.StatusDisplay
 import fi.tuska.beerclock.backup.jalcometer.importJAlcometerData
+import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.ui.composables.ViewModel
@@ -53,7 +55,9 @@ class ImportJAlkaMetriViewModel(
     var importing by mutableStateOf(false)
         private set
 
-    var status by mutableStateOf<ImportStatus?>(null)
+    private val drinkService: DrinkService = DrinkService()
+
+    private var status by mutableStateOf<ImportStatus?>(null)
 
     fun import(file: Uri) {
         if (importing) return
@@ -109,7 +113,7 @@ class ImportJAlkaMetriViewModel(
             filePath,
             null,
             SQLiteDatabase.OPEN_READONLY
-        ).use { importJAlcometerData(it, showStatus) }
+        ).use { importJAlcometerData(ImportContext(it, drinkService, showStatus)) }
     }
 
 }

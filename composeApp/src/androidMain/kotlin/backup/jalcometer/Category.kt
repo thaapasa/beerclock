@@ -3,11 +3,10 @@ package fi.tuska.beerclock.backup.jalcometer
 import android.database.Cursor
 import fi.tuska.beerclock.database.toSequence
 import fi.tuska.beerclock.drinks.Category
-import io.requery.android.database.sqlite.SQLiteDatabase
 
-fun readCategories(srcDb: SQLiteDatabase): Map<Long, JAlcoMeterCategory> {
+fun readCategories(ctx: ImportContext): Map<Long, JAlcoMeterCategory> {
     val cursor =
-        srcDb.query("SELECT id, name, icon FROM categories")
+        ctx.db.query("SELECT id, name, icon FROM categories")
     val seq = cursor.toSequence()
     val categories = seq.map { JAlcoMeterCategory.fromDb(it) }.toList()
     return mapOf(*categories.map { Pair(it.id, it) }.toTypedArray())
