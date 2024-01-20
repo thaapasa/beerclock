@@ -241,6 +241,7 @@ object FiStrings : Strings {
         override val importJAlcoMeterData = "Tuo tiedot"
 
         override val importMsgStarting = "Tuodaan tietoja jAlkaMetristä..."
+        override val importMsgImportingLibrary = "Tuodaan juomakirjastoa..."
         override fun importMsgImportingDrink(cur: Long, max: Long) = "Tuodaan juomaa $cur / $max"
         override val importMsgComplete = "Tietojen tuominen jAlkaMetristä onnistui!"
         override val importMsgError = "Tietojen tuominen jAlkaMetristä epäonnistui"

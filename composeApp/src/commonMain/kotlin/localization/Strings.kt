@@ -198,6 +198,7 @@ interface Strings {
         val importJAlcoMeterDescriptions: List<String>
         val importJAlcoMeterData: String
         val importMsgStarting: String
+        val importMsgImportingLibrary: String
         fun importMsgImportingDrink(cur: Long, max: Long): String
         val importMsgComplete: String
         val importMsgError: String

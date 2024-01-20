@@ -229,6 +229,7 @@ object EnStrings : Strings {
         override val importJAlcoMeterData = "Import data"
 
         override val importMsgStarting = "Starting data import from jAlcoMeter"
+        override val importMsgImportingLibrary = "Importing drink library..."
         override fun importMsgImportingDrink(cur: Long, max: Long) = "Importing drink $cur / $max"
         override val importMsgComplete = "Data successfully imported from jAlcoMeter"
         override val importMsgError = "There was an error while importing data from jAlcoMeter"

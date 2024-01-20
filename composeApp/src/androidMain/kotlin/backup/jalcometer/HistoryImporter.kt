@@ -13,14 +13,16 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toKotlinLocalDateTime
-import org.koin.java.KoinJavaComponent.inject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 private val logger = getLogger("HistoryImporter")
 
-fun importHistory(srcDb: SQLiteDatabase, showStatus: (msg: String) -> Unit) {
-    val targetDb: BeerDatabase by inject(BeerDatabase::class.java)
+fun importHistory(
+    srcDb: SQLiteDatabase,
+    targetDb: BeerDatabase,
+    showStatus: (status: ImportStatus) -> Unit,
+) {
     val rows = srcDb.queryNumEntries("history")
     val strings = Strings.get()
     logger.info("There are $rows rows of history")
@@ -28,9 +30,16 @@ fun importHistory(srcDb: SQLiteDatabase, showStatus: (msg: String) -> Unit) {
         srcDb.query("SELECT id, name, strength, volume, icon, time, comment FROM history ORDER BY time DESC")
     val seq = cursor.toSequence()
     targetDb.batchOperate(
-        seq.map(JAlcometerHistory::fromDb),
+        seq.map { JAlcometerHistory.fromDb(it) },
         500,
-        afterEach = { showStatus(strings.settings.importMsgImportingDrink(it, rows)) }
+        afterEach = {
+            showStatus(
+                ImportStatus(
+                    strings.settings.importMsgImportingDrink(it, rows),
+                    it.toFloat() / rows.toFloat()
+                )
+            )
+        }
     ) { row -> importHistoryRow(targetDb, row) }
 }
 
@@ -59,17 +68,18 @@ data class JAlcometerHistory(
     val time = Instant.fromJAlcometerTime(dbTime)
 
     companion object {
-        fun fromDb(cursor: Cursor): JAlcometerHistory = with(cursor) {
-            return JAlcometerHistory(
-                id = getLong(0),
-                name = getString(1),
-                strength = getDouble(2),
-                volume = getDouble(3),
-                icon = getString(4),
-                dbTime = getString(5),
-                comment = getString(6)
-            )
-        }
+        fun fromDb(cursor: Cursor): JAlcometerHistory =
+            with(cursor) {
+                return JAlcometerHistory(
+                    id = getLong(0),
+                    name = getString(1),
+                    strength = getDouble(2),
+                    volume = getDouble(3),
+                    icon = getString(4),
+                    dbTime = getString(5),
+                    comment = getString(6),
+                )
+            }
     }
 
     override fun toString() = "$id: $name ($volume l $strength %) $image @ $time"

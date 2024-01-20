@@ -2,10 +2,8 @@ package fi.tuska.beerclock.backup
 
 import android.content.Context
 import android.net.Uri
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,7 +11,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import fi.tuska.beerclock.backup.jalcometer.ImportStatus
+import fi.tuska.beerclock.backup.jalcometer.StatusDisplay
 import fi.tuska.beerclock.backup.jalcometer.importJAlcometerData
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
@@ -54,7 +53,7 @@ class ImportJAlkaMetriViewModel(
     var importing by mutableStateOf(false)
         private set
 
-    var statusMsg by mutableStateOf<String?>(null)
+    var status by mutableStateOf<ImportStatus?>(null)
 
     fun import(file: Uri) {
         if (importing) return
@@ -62,16 +61,16 @@ class ImportJAlkaMetriViewModel(
         val strings = Strings.get()
         launch(Dispatchers.IO) {
             try {
-                statusMsg = strings.settings.importMsgStarting
+                status = ImportStatus(strings.settings.importMsgStarting)
                 val start = Clock.System.now()
                 importJAlcoMeterBackupData(context, file)
                 val delta = Clock.System.now() - start
                 logger.info("jAlcoMeter data import took $delta")
-                statusMsg = strings.settings.importMsgComplete
+                status = ImportStatus(strings.settings.importMsgComplete, 1f)
                 launch { snackbar.showSnackbar(strings.settings.importMsgComplete) }
             } catch (e: Exception) {
                 logger.error("Error importing data from jAlcoMeter: ${e.message}")
-                statusMsg = strings.settings.importMsgError
+                status = ImportStatus(strings.settings.importMsgError, 0f)
             } finally {
                 importing = false
             }
@@ -80,12 +79,8 @@ class ImportJAlkaMetriViewModel(
 
     @Composable
     fun Status() {
-        statusMsg?.let {
-            Text(
-                it,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 8.dp)
-            )
+        status?.let {
+            StatusDisplay(it)
         }
     }
 
@@ -96,7 +91,7 @@ class ImportJAlkaMetriViewModel(
             return
         }
         try {
-            importJAlcoMeterDB(importedFile.path) { statusMsg = it }
+            importJAlcoMeterDB(importedFile.path) { status = it }
         } finally {
             when (importedFile.delete()) {
                 true -> logger.debug("Deleted temporary import file $importedFile")
@@ -107,7 +102,7 @@ class ImportJAlkaMetriViewModel(
 
     private fun importJAlcoMeterDB(
         filePath: String,
-        showStatus: (mgs: String) -> Unit,
+        showStatus: (mgs: ImportStatus) -> Unit,
     ) {
         logger.info("Loading imported jAlcoMeter DB from $filePath")
         SQLiteDatabase.openDatabase(
