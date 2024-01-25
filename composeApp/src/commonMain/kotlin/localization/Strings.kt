@@ -194,6 +194,11 @@ interface Strings {
         fun alcoholGramsByCountryOption(countryCode: String): String
         val pickCountry: String
 
+        val importExportTitle: String
+        val importExportDescription: List<String>
+        val exportDb: String
+        val importDb: String
+
         val importJAlcoMeterTitle: String
         val importJAlcoMeterDescriptions: List<String>
         val importJAlcoMeterData: String

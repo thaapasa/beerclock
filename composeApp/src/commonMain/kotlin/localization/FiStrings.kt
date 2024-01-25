@@ -231,6 +231,17 @@ object FiStrings : Strings {
 
         override val pickCountry = "Valitse maa"
 
+        override val importExportTitle = "Luo tai lataa varmuuskopio"
+        override val importExportDescription = listOf(
+            "Jos haluat poistaa sovelluksen tai siirtää sen toiseen puhelimeen, voit luoda varmuuskopion Kaljakellon tietokannasta.",
+            "Tietokanta sisältää kaikki juomamerkintäsi sekä juomakirjastosi, mutta ei henkilökohtaisia asetuksiasi asetussivuilta.",
+            "Luodaksesi varmuuskopion valitse 'Tallenna' ja valitse hakemisto minne haluat varmuuskopion tallentuvan.",
+            "Siirrä varmuuskopio haluamallasi tavalla uudelle laitteelle, valitse 'Lataa', ja valitse varmuuskopiotiedosto ladataksesi sen Kaljakelloon.",
+            "Varmuuskopion lataaminen poistaa kaikki nykyiset juomatietosi sovelluksesta, joten käytä ominaisuutta omalla vastuullasi!",
+        )
+        override val exportDb = "Tallenna"
+        override val importDb = "Lataa"
+
         override val importJAlcoMeterTitle = "Tuo tiedot jAlkaMetristä"
         override val importJAlcoMeterDescriptions = listOf(
             "Voit tuoda tiedot Kaljakelloon jAlkaMetristä. Tätä varten sinun täytyy ensin valita jAlkaMetrin asetuksista 'Luo varmuuskopio' ja sen jälkeen paikallistaa luotu varmuuskopiotiedosto.",

@@ -6,6 +6,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import fi.tuska.beerclock.backup.isDataImportExportSupported
+import fi.tuska.beerclock.backup.isJAlcoMeterImportSupported
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.settings.UserStore
 import fi.tuska.beerclock.ui.composables.ViewModel
@@ -47,5 +49,9 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
         LaunchedEffect(gramsInUnit) { saveGramsInUnitText() }
         LaunchedEffect(drivingLimitBac) { saveDrivingLimitBac() }
     }
+
+    val canImportExportDb by lazy { isDataImportExportSupported() }
+    val canImportFromJAlcoMeter by lazy { isJAlcoMeterImportSupported() }
+    val showImportTab by lazy { canImportExportDb || canImportFromJAlcoMeter }
 
 }

@@ -41,9 +41,8 @@ fun SettingsPage(innerPadding: PaddingValues, snackbar: SnackbarHostState) {
         Modifier.padding(innerPadding).padding(16.dp).fillMaxWidth().verticalScroll(scrollState),
     ) {
         SettingsTabs(
-            selected = vm.settingsTab,
+            vm,
             modifier = Modifier.padding(bottom = 32.dp),
-            onSelect = { vm.settingsTab = it }
         )
 
         when (vm.settingsTab) {

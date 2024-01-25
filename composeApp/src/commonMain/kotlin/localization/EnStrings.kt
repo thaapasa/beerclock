@@ -219,6 +219,17 @@ object EnStrings : Strings {
 
         override val pickCountry = "Select country"
 
+        override val importExportTitle = "Create or load backup files"
+        override val importExportDescription = listOf(
+            "If you wish to delete the app or move it to another phone, you can create a backup file of the BeerClock database.",
+            "The backup database will contain all the drink records and your drink library, but your personal preferences from the settings pages will not be included.",
+            "To create the backup file, select 'Create backup file', and select the directory where that file will be saved to. BeerClock will then export a backup copy of the app's database.",
+            "Move the file to the new phone (you can share it using any file sharing method you like), and then select 'Load from backup', and browse to the file on that phone to load it.",
+            "Loading a backup file will erase all data currently in the app database, so proceed at your own risk!"
+        )
+        override val exportDb = "Create backup"
+        override val importDb = "Load backup"
+
         override val importJAlcoMeterTitle = "Import data from jAlcoMeter"
         override val importJAlcoMeterDescriptions = listOf(
             "You can import data from jAlcoMeter into BeerClock. For this you need to first select 'Create backup' from jAlcometer settings, and then locate the created backup file.",

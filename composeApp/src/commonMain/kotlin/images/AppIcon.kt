@@ -33,6 +33,7 @@ enum class AppIcon(private val path: String) : Image {
     MALE("drawable/icons/male.xml"),
     MOON("drawable/icons/moon.xml"),
     PERSON("drawable/icons/person.xml"),
+    SAVE_AS("drawable/icons/save_as.xml"),
     SEARCH("drawable/icons/search.xml"),
     WATER_DROP("drawable/icons/water_drop.xml");
 
