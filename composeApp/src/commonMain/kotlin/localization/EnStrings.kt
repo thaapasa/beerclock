@@ -230,9 +230,8 @@ object EnStrings : Strings {
         override val exportDb = "Create backup"
         override val importDb = "Load backup"
 
-        override fun exportDataMsgComplete(filename: String?) =
-            if (filename != null) "Exported BeerClock data to $filename" else "Exported BeerClock data successfully!"
-
+        override fun exportDataMsgComplete(filename: String?, libraryDrinks: Long, records: Long) =
+            "Exported $records drink records and $libraryDrinks drinks in library ${if (filename != null) "to $filename" else "succesfully"}"
 
         override val exportDataMsgError = "There was an error exporting the data, please try again"
 

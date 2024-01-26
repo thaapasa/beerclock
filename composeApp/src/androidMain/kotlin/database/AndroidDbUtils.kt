@@ -2,6 +2,8 @@ package fi.tuska.beerclock.database
 
 import android.database.Cursor
 import fi.tuska.beerclock.logging.getLogger
+import io.requery.android.database.sqlite.SQLiteDatabase
+import java.io.File
 
 private val logger = getLogger("AndroidDbUtils")
 
@@ -38,3 +40,9 @@ fun <T> BeerDatabase.batchOperate(
         logger.debug("Ending transaction for batch $batch")
     }
 }
+
+fun <T> processSQLiteDatabase(file: File, process: (db: SQLiteDatabase) -> T): T =
+    SQLiteDatabase.openDatabase(
+        file.path, null, SQLiteDatabase.OPEN_READONLY
+    ).use { process(it) }
+

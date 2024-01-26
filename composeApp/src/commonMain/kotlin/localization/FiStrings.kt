@@ -242,8 +242,8 @@ object FiStrings : Strings {
         override val exportDb = "Tallenna"
         override val importDb = "Lataa"
 
-        override fun exportDataMsgComplete(filename: String?) =
-            if (filename != null) "Varmuuskopio luotu tiedostoon $filename" else "Varmuuskopio luotu!"
+        override fun exportDataMsgComplete(filename: String?, libraryDrinks: Long, records: Long) =
+            "Luotu varmuuskopio${if (filename != null) "tiedostoon $filename" else ""}: $records kirjausta, $libraryDrinks juomaa juomakirjastossa"
 
         override val exportDataMsgError = "Varmuuskopion luominen epäonnistui, yritä uudelleen"
 

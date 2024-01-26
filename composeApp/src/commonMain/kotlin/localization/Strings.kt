@@ -198,7 +198,7 @@ interface Strings {
         val importExportDescription: List<String>
         val exportDb: String
         val importDb: String
-        fun exportDataMsgComplete(filename: String?): String
+        fun exportDataMsgComplete(filename: String?, libraryDrinks: Long, records: Long): String
         val exportDataMsgError: String
 
         val importJAlcoMeterTitle: String

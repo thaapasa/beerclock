@@ -1,6 +1,6 @@
 package fi.tuska.beerclock.screens.settings
 
-import androidx.compose.material.SnackbarHostState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,7 +24,7 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
     // reflected in the global user prefs state as well.
     private val store = UserStore()
 
-    var settingsTab by mutableStateOf(SettingsTabs.USER)
+    var settingsTab by mutableStateOf(SettingsTabs.IMPORT)
 
     var locale by mutableStateOf(prefs.prefs.locale)
     var weightKg by mutableStateOf(prefs.prefs.weightKg)

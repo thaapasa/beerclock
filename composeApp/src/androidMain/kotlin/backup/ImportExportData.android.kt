@@ -1,7 +1,7 @@
 package fi.tuska.beerclock.backup
 
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material3.Button
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -30,7 +30,7 @@ actual fun ExportDataButton(
         mode = FileMode.CREATE,
         initialName = vm.getInitialFilename()
     ) { onClick ->
-        Button(onClick = onClick, modifier = modifier) {
+        Button(onClick = onClick, modifier = modifier, enabled = !vm.importing) {
             Text(title)
         }
     }
