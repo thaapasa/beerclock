@@ -6,11 +6,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import fi.tuska.beerclock.logging.getLogger
+import androidx.compose.ui.platform.LocalContext
+import fi.tuska.beerclock.backup.data.ExportDataViewModel
+import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import kotlinx.coroutines.launch
-
-
-private val logger = getLogger("ImportExportData")
 
 
 actual fun isDataImportExportSupported(): Boolean {
@@ -23,12 +22,17 @@ actual fun ExportDataButton(
     modifier: Modifier,
     snackbar: SnackbarHostState,
 ) {
-    val scope = rememberCoroutineScope()
-    Button(
-        onClick = { scope.launch { snackbar.showSnackbar("Coming soon") } },
-        modifier = modifier
-    ) {
-        Text(title)
+    val context = LocalContext.current
+    val vm = rememberWithDispose { ExportDataViewModel(context, snackbar) }
+
+    FilePicker(
+        onFilePicked = { file -> file?.let(vm::export) },
+        mode = FileMode.CREATE,
+        initialName = vm.getInitialFilename()
+    ) { onClick ->
+        Button(onClick = onClick, modifier = modifier) {
+            Text(title)
+        }
     }
 }
 

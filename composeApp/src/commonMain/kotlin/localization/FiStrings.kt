@@ -242,6 +242,11 @@ object FiStrings : Strings {
         override val exportDb = "Tallenna"
         override val importDb = "Lataa"
 
+        override fun exportDataMsgComplete(filename: String?) =
+            if (filename != null) "Varmuuskopio luotu tiedostoon $filename" else "Varmuuskopio luotu!"
+
+        override val exportDataMsgError = "Varmuuskopion luominen epäonnistui, yritä uudelleen"
+
         override val importJAlcoMeterTitle = "Tuo tiedot jAlkaMetristä"
         override val importJAlcoMeterDescriptions = listOf(
             "Voit tuoda tiedot Kaljakelloon jAlkaMetristä. Tätä varten sinun täytyy ensin valita jAlkaMetrin asetuksista 'Luo varmuuskopio' ja sen jälkeen paikallistaa luotu varmuuskopiotiedosto.",
@@ -251,11 +256,13 @@ object FiStrings : Strings {
         )
         override val importJAlcoMeterData = "Tuo tiedot"
 
-        override val importMsgStarting = "Tuodaan tietoja jAlkaMetristä..."
-        override val importMsgImportingLibrary = "Tuodaan juomakirjastoa..."
-        override fun importMsgImportingDrink(cur: Long, max: Long) = "Tuodaan juomaa $cur / $max"
-        override val importMsgComplete = "Tietojen tuominen jAlkaMetristä onnistui!"
-        override val importMsgError = "Tietojen tuominen jAlkaMetristä epäonnistui"
+        override val importJAlcoMeterMsgStarting = "Tuodaan tietoja jAlkaMetristä..."
+        override val importJAlcoMeterMsgImportingLibrary = "Tuodaan juomakirjastoa..."
+        override fun importJAlcoMeterMsgImportingDrink(cur: Long, max: Long) =
+            "Tuodaan juomaa $cur / $max"
+
+        override val importJAlcoMeterMsgComplete = "Tietojen tuominen jAlkaMetristä onnistui!"
+        override val importJAlcoMeterMsgError = "Tietojen tuominen jAlkaMetristä epäonnistui"
     }
 
 

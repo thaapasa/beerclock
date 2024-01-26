@@ -19,7 +19,7 @@ fun importDrinkLibrary(
     val rows = ctx.db.queryNumEntries("drinks")
     val strings = Strings.get()
     logger.info("There are $rows drinks in drinks library")
-    ctx.showStatus(ImportStatus(strings.settings.importMsgImportingLibrary))
+    ctx.showStatus(ImportStatus(strings.settings.importJAlcoMeterMsgImportingLibrary))
     val cursor =
         ctx.db.query(
             """

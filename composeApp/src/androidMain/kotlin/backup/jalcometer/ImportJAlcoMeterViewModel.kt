@@ -40,16 +40,16 @@ class ImportJAlkaMetriViewModel(
         val strings = Strings.get()
         launch(Dispatchers.IO) {
             try {
-                status = ImportStatus(strings.settings.importMsgStarting)
+                status = ImportStatus(strings.settings.importJAlcoMeterMsgStarting)
                 val start = Clock.System.now()
                 importJAlcoMeterBackupData(context, file)
                 val delta = Clock.System.now() - start
                 logger.info("jAlcoMeter data import took $delta")
-                status = ImportStatus(strings.settings.importMsgComplete, 1f)
-                launch { snackbar.showSnackbar(strings.settings.importMsgComplete) }
+                status = ImportStatus(strings.settings.importJAlcoMeterMsgComplete, 1f)
+                launch { snackbar.showSnackbar(strings.settings.importJAlcoMeterMsgComplete) }
             } catch (e: Exception) {
                 logger.error("Error importing data from jAlcoMeter: ${e.message}")
-                status = ImportStatus(strings.settings.importMsgError, 0f)
+                status = ImportStatus(strings.settings.importJAlcoMeterMsgError, 0f)
             } finally {
                 importing = false
             }
@@ -66,10 +66,8 @@ class ImportJAlkaMetriViewModel(
     private fun importJAlcoMeterBackupData(context: Context, file: Uri) {
         // We need to import the file in the app's own directory so that we can read it with SQLite
         val importedFile = File(context.filesDir, "jalcometer-import.db")
-        if (!file.copyTo(context, importedFile)) {
-            return
-        }
         try {
+            file.copyTo(context, importedFile)
             importJAlcoMeterDB(importedFile.path) { status = it }
         } finally {
             when (importedFile.delete()) {
