@@ -24,7 +24,7 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
     // reflected in the global user prefs state as well.
     private val store = UserStore()
 
-    var settingsTab by mutableStateOf(SettingsTabs.IMPORT)
+    var settingsTab by mutableStateOf(SettingsTabs.USER)
 
     var locale by mutableStateOf(prefs.prefs.locale)
     var weightKg by mutableStateOf(prefs.prefs.weightKg)

@@ -9,6 +9,8 @@ import org.jetbrains.compose.resources.painterResource
 private val logger = getLogger("DrinkImage")
 
 enum class DrinkImage(val path: String) : Image {
+    CAT_BEERS("drawable/categories/cat_beer.webp"),
+    CAT_CIDERS("drawable/categories/cat_ciders.webp"),
     BEER_GLASS_1("drawable/drinks/beer_glass_1.webp"),
     BEER_GLASS_2("drawable/drinks/beer_glass_2.webp"),
     BEER_STEIN_1("drawable/drinks/beer_stein_1.webp"),
@@ -30,6 +32,7 @@ enum class DrinkImage(val path: String) : Image {
     BEER_CAN_5("drawable/drinks/beer_can_5.webp"),
     BEER_CAN_6("drawable/drinks/beer_can_6.webp"),
     LONKERO_1("drawable/drinks/lonkero_1.webp"),
+    CAT_WINES("drawable/categories/cat_wines.webp"),
     RED_WINE_GLASS_1("drawable/drinks/red_wine_glass_1.webp"),
     WHITE_WINE_GLASS_1("drawable/drinks/white_wine_glass_1.webp"),
     WHITE_WINE_GLASS_2("drawable/drinks/white_wine_glass_2.webp"),
@@ -44,6 +47,7 @@ enum class DrinkImage(val path: String) : Image {
     WHITE_WINE_BOTTLE_3("drawable/drinks/white_wine_bottle_3.webp"),
     CHAMPAGNE_BOTTLE_1("drawable/drinks/champagne_bottle_1.webp"),
     CHAMPAGNE_BOTTLE_2("drawable/drinks/champagne_bottle_2.webp"),
+    CAT_COCKTAILS("drawable/categories/cat_cocktails.webp"),
     GENERIC_DRINK("drawable/drinks/generic_drink.webp"),
     MARTINI_1("drawable/drinks/martini_1.webp"),
     DAIQUIRI_1("drawable/drinks/daiquiri_1.webp"),
@@ -62,6 +66,7 @@ enum class DrinkImage(val path: String) : Image {
     MOCKTAIL_2("drawable/drinks/mocktail_2.webp"),
     WHITE_RUSSIAN_1("drawable/drinks/white_russian_1.webp"),
     BLOODY_MARY_1("drawable/drinks/bloody_mary_1.webp"),
+    CAT_SPIRITS("drawable/categories/cat_spirits.webp"),
     COGNAC_1("drawable/drinks/cognac_1.webp"),
     WHISKY_1("drawable/drinks/whisky_1.webp"),
     WHISKY_2("drawable/drinks/whisky_2.webp"),
@@ -76,6 +81,7 @@ enum class DrinkImage(val path: String) : Image {
     LIQUEUR_1("drawable/drinks/liqueur_1.webp"),
     LIQUEUR_2("drawable/drinks/liqueur_2.webp"),
     GIN_1("drawable/drinks/gin_1.webp"),
+    CAT_WARM_DRINKS("drawable/categories/cat_warm_drinks.webp"),
     IRISH_COFFEE_1("drawable/drinks/irish_coffee_1.webp"),
     MULLED_WINE_1("drawable/drinks/mulled_wine_1.webp"),
     VODKA_BOTTLE_1("drawable/drinks/vodka_bottle_1.webp"),
@@ -84,7 +90,9 @@ enum class DrinkImage(val path: String) : Image {
     RUM_BOTTLE_1("drawable/drinks/rum_bottle_1.webp"),
     GIN_BOTTLE_1("drawable/drinks/gin_bottle_1.webp"),
     POISON_1("drawable/drinks/poison_1.webp"),
+    CAT_SPECIALITY("drawable/categories/cat_speciality.webp"),
     SAKE_BOTTLE_1("drawable/drinks/sake_bottle_1.webp"),
+    CAT_LOW_ALCOHOL("drawable/categories/cat_low_alcohol.webp"),
     WATER_GLASS_1("drawable/drinks/water_glass_1.webp"),
     ;
 
