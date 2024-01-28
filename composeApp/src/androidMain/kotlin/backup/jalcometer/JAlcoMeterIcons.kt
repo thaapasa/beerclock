@@ -19,7 +19,7 @@ val jAlcometerIconMapping = mapOf(
     "drink_cider_bottle" to DrinkImage.CIDER_BOTTLE_1,
 
     // Wines
-    "cat_wines" to DrinkImage.RED_WINE_GLASS_1,
+    "cat_wines" to DrinkImage.CAT_WINES,
     "drink_wine_dessert" to DrinkImage.DESSERT_WINE_1,
     "drink_wine_red" to DrinkImage.RED_WINE_GLASS_1,
     "drink_wine_white" to DrinkImage.WHITE_WINE_GLASS_1,
@@ -28,7 +28,7 @@ val jAlcometerIconMapping = mapOf(
 
     // Long drinks
     "cat_longdrinks" to DrinkImage.PINA_COLADA_1,
-    "cat_cocktails" to DrinkImage.DAIQUIRI_1,
+    "cat_cocktails" to DrinkImage.CAT_COCKTAILS,
     "drink_caipirosca" to DrinkImage.CAIPIROSCA_2,
     "drink_long_drink" to DrinkImage.PUNCH_2,
     "drink_cocktail_red" to DrinkImage.COSMOPOLITAN_1,
@@ -38,17 +38,17 @@ val jAlcometerIconMapping = mapOf(
     "drink_martini" to DrinkImage.MARTINI_1,
 
     // Spirits
-    "cat_spirits" to DrinkImage.SAKE_BOTTLE_1,
+    "cat_spirits" to DrinkImage.CAT_SPIRITS,
     "drink_shot" to DrinkImage.TEQUILA_1,
     "drink_whisky" to DrinkImage.WHISKY_1,
     "drink_whisky_bottle" to DrinkImage.WHISKY_BOTTLE_1,
     "drink_whisky_bottle2" to DrinkImage.RUM_BOTTLE_1,
     "drink_rum" to DrinkImage.POISON_1,
     "drink_vodka" to DrinkImage.VODKA_BOTTLE_1,
-    "drink_vodka2" to DrinkImage.VODKA_BOTTLE_1,
+    "drink_vodka2" to DrinkImage.VODKA_BOTTLE_2,
     "drink_gin" to DrinkImage.GIN_BOTTLE_1,
 
     // Punches
-    "cat_punches" to DrinkImage.PUNCH_1,
+    "cat_punches" to DrinkImage.CAT_PUNCHES,
     "drink_punch" to DrinkImage.PUNCH_1
 )
