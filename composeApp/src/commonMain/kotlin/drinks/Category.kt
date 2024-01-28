@@ -12,24 +12,17 @@ enum class Category(
     val nameFi: String,
     val order: Int,
 ) {
-    BEERS(DrinkImage.CAT_BEERS, "Beers", "Oluet", 1),
-    CIDERS(DrinkImage.CAT_CIDERS, "Ciders and Meads", "Siiderit ja simat", 2),
-    WINES(DrinkImage.CAT_WINES, "Wines", "Viinit", 3),
+    BEERS(DrinkImage.CAT_BEERS, "Beers and Ciders", "Oluet ja siiderit", 1),
+    WINES(DrinkImage.CAT_WINES, "Wines", "Viinit", 2),
     COCKTAILS(
         DrinkImage.CAT_COCKTAILS,
         "Cocktails and Mixed Drinks",
-        "Cocktailit ja juomasekoitukset", 4
+        "Cocktailit ja juomasekoitukset", 3
     ),
     SPIRITS(
         DrinkImage.CAT_SPIRITS,
         "Spirits and Liqueurs",
-        "Väkevät alkoholijuomat ja liköörit", 5
-    ),
-    WARM_DRINKS(
-        DrinkImage.CAT_WARM_DRINKS,
-        "Warm Alcoholic Drinks",
-        "Lämpimät alkoholijuomat",
-        6
+        "Väkevät alkoholijuomat ja liköörit", 4
     ),
     SPECIALITY(DrinkImage.CAT_SPECIALITY, "Speciality Drinks", "Erikoisjuomat", 7),
     LOW_ALCOHOL(DrinkImage.CAT_LOW_ALCOHOL, "Low-Alcohol Drinks", "Miedot alkoholijuomat", 8);

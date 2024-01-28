@@ -45,21 +45,14 @@ fun createExampleDrinks(l: (en: String, fi: String) -> String) = listOf(
         DrinkImage.BEER_CAN_6
     ),
     DrinkDef(
-        Category.CIDERS,
+        Category.BEERS,
         l("Cider", "Siideri"),
         33.0,
         4.7,
         DrinkImage.CIDER_BOTTLE_1
     ),
     DrinkDef(
-        Category.CIDERS,
-        l("Honey Mead", "Hunajaviini (sima)"),
-        20.0,
-        10.0,
-        DrinkImage.MEAD_1
-    ),
-    DrinkDef(
-        Category.CIDERS,
+        Category.BEERS,
         l("Gin Long Drink", "Lonkero"),
         33.0,
         4.7,
@@ -117,6 +110,13 @@ fun createExampleDrinks(l: (en: String, fi: String) -> String) = listOf(
         16.0,
         DrinkImage.MOJITO_1
     ),
+    DrinkDef(
+        Category.COCKTAILS,
+        l("Punch", "Booli"),
+        20.0,
+        7.5,
+        DrinkImage.PUNCH_1
+    ),
     DrinkDef(Category.SPIRITS, l("Cognac", "Konjakki"), 4.0, 43.0, DrinkImage.COGNAC_1),
     DrinkDef(Category.SPIRITS, l("Whisky", "Viski"), 4.0, 43.0, DrinkImage.WHISKY_1),
     DrinkDef(Category.SPIRITS, l("Rum", "Rommi"), 4.0, 40.0, DrinkImage.RUM_1),
@@ -126,8 +126,8 @@ fun createExampleDrinks(l: (en: String, fi: String) -> String) = listOf(
     DrinkDef(Category.SPIRITS, "Vodka", 4.0, 40.0, DrinkImage.VODKA_1),
     DrinkDef(Category.SPIRITS, "Gin", 4.0, 40.0, DrinkImage.GIN_1),
     DrinkDef(Category.SPIRITS, "Tequila", 4.0, 38.0, DrinkImage.TEQUILA_1),
-    DrinkDef(Category.WARM_DRINKS, "Irish Coffee", 24.0, 7.0, DrinkImage.IRISH_COFFEE_1),
-    DrinkDef(Category.WARM_DRINKS, l("Mulled Wine", "Glögi"), 20.0, 10.0, DrinkImage.MULLED_WINE_1),
+    DrinkDef(Category.SPECIALITY, "Irish Coffee", 24.0, 7.0, DrinkImage.IRISH_COFFEE_1),
+    DrinkDef(Category.SPECIALITY, l("Mulled Wine", "Glögi"), 20.0, 10.0, DrinkImage.MULLED_WINE_1),
     DrinkDef(Category.SPECIALITY, "Sake", 10.0, 17.0, DrinkImage.SAKE_GLASS_1),
     DrinkDef(Category.SPECIALITY, l("Absinthe", "Absintti"), 4.0, 68.0, DrinkImage.ABSINTHE_1),
     DrinkDef(Category.LOW_ALCOHOL, "Shandy", 50.0, 2.5, DrinkImage.SHANDY_1),
