@@ -1,11 +1,13 @@
 package fi.tuska.beerclock.screens.settings
 
-import androidx.compose.material.SnackbarHostState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import fi.tuska.beerclock.backup.isDataImportExportSupported
+import fi.tuska.beerclock.backup.isJAlcoMeterImportSupported
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.settings.UserStore
 import fi.tuska.beerclock.ui.composables.ViewModel
@@ -22,7 +24,7 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
     // reflected in the global user prefs state as well.
     private val store = UserStore()
 
-    var settingsTab by mutableStateOf(SettingsTabs.USER)
+    var settingsTab by mutableStateOf(SettingsTabs.IMPORT)
 
     var locale by mutableStateOf(prefs.prefs.locale)
     var weightKg by mutableStateOf(prefs.prefs.weightKg)
@@ -47,5 +49,9 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
         LaunchedEffect(gramsInUnit) { saveGramsInUnitText() }
         LaunchedEffect(drivingLimitBac) { saveDrivingLimitBac() }
     }
+
+    val canImportExportDb by lazy { isDataImportExportSupported() }
+    val canImportFromJAlcoMeter by lazy { isJAlcoMeterImportSupported() }
+    val showImportTab by lazy { canImportExportDb || canImportFromJAlcoMeter }
 
 }

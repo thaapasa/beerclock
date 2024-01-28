@@ -4,10 +4,17 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
-expect fun isJAlcoMeterImportSupported(): Boolean
+expect fun isDataImportExportSupported(): Boolean
 
 @Composable
-expect fun ImportJAlkaMetriDataButton(
+expect fun ExportDataButton(
+    title: String,
+    modifier: Modifier = Modifier,
+    snackbar: SnackbarHostState,
+)
+
+@Composable
+expect fun ImportDataButton(
     title: String,
     modifier: Modifier = Modifier,
     snackbar: SnackbarHostState,

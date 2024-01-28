@@ -33,7 +33,7 @@ fun importHistory(ctx: ImportContext) {
         afterEach = {
             ctx.showStatus(
                 ImportStatus(
-                    strings.settings.importMsgImportingDrink(it, rows),
+                    strings.settings.importJAlcoMeterMsgImportingDrink(it, rows),
                     it.toFloat() / rows.toFloat()
                 )
             )

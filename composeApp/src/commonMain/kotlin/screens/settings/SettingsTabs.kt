@@ -2,7 +2,6 @@ package fi.tuska.beerclock.screens.settings
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import fi.tuska.beerclock.backup.isJAlcoMeterImportSupported
 import fi.tuska.beerclock.ui.components.Tab
 import fi.tuska.beerclock.ui.components.TabSwitcher
 
@@ -13,19 +12,18 @@ val DrinkSettingsTab = Tab({ it.settings.drinkSettingsTitle }, SettingsTabs.DRIN
 val ImportTab = Tab({ it.settings.dataImportTitle }, SettingsTabs.IMPORT)
 
 @Composable
-fun SettingsTabs(
-    selected: SettingsTabs,
-    onSelect: (tab: SettingsTabs) -> Unit,
+internal fun SettingsTabs(
+    vm: SettingsViewModel,
     modifier: Modifier = Modifier,
 ) {
     val tabs =
-        listOf(UserSettingsTab, DrinkSettingsTab) + (if (isJAlcoMeterImportSupported()) listOf(
+        listOf(UserSettingsTab, DrinkSettingsTab) + (if (vm.showImportTab) listOf(
             ImportTab
         ) else listOf())
 
     TabSwitcher(
         tabs = tabs,
         modifier = modifier,
-        selectedTab = selected,
-        onClick = { tab -> onSelect(tab.data) })
+        selectedTab = vm.settingsTab,
+        onClick = { tab -> vm.settingsTab = tab.data })
 }

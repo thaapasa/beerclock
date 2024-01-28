@@ -231,6 +231,22 @@ object FiStrings : Strings {
 
         override val pickCountry = "Valitse maa"
 
+        override val importExportTitle = "Luo tai lataa varmuuskopio"
+        override val importExportDescription = listOf(
+            "Jos haluat poistaa sovelluksen tai siirtää sen toiseen puhelimeen, voit luoda varmuuskopion Kaljakellon tietokannasta.",
+            "Tietokanta sisältää kaikki juomamerkintäsi sekä juomakirjastosi, mutta ei henkilökohtaisia asetuksiasi asetussivuilta.",
+            "Luodaksesi varmuuskopion valitse 'Tallenna' ja valitse hakemisto minne haluat varmuuskopion tallentuvan.",
+            "Siirrä varmuuskopio haluamallasi tavalla uudelle laitteelle, valitse 'Lataa', ja valitse varmuuskopiotiedosto ladataksesi sen Kaljakelloon.",
+            "Varmuuskopion lataaminen poistaa kaikki nykyiset juomatietosi sovelluksesta, joten käytä ominaisuutta omalla vastuullasi!",
+        )
+        override val exportDb = "Tallenna"
+        override val importDb = "Lataa"
+
+        override fun exportDataMsgComplete(filename: String?, libraryDrinks: Long, records: Long) =
+            "Luotu varmuuskopio${if (filename != null) "tiedostoon $filename" else ""}: $records kirjausta, $libraryDrinks juomaa juomakirjastossa"
+
+        override val exportDataMsgError = "Varmuuskopion luominen epäonnistui, yritä uudelleen"
+
         override val importJAlcoMeterTitle = "Tuo tiedot jAlkaMetristä"
         override val importJAlcoMeterDescriptions = listOf(
             "Voit tuoda tiedot Kaljakelloon jAlkaMetristä. Tätä varten sinun täytyy ensin valita jAlkaMetrin asetuksista 'Luo varmuuskopio' ja sen jälkeen paikallistaa luotu varmuuskopiotiedosto.",
@@ -240,11 +256,13 @@ object FiStrings : Strings {
         )
         override val importJAlcoMeterData = "Tuo tiedot"
 
-        override val importMsgStarting = "Tuodaan tietoja jAlkaMetristä..."
-        override val importMsgImportingLibrary = "Tuodaan juomakirjastoa..."
-        override fun importMsgImportingDrink(cur: Long, max: Long) = "Tuodaan juomaa $cur / $max"
-        override val importMsgComplete = "Tietojen tuominen jAlkaMetristä onnistui!"
-        override val importMsgError = "Tietojen tuominen jAlkaMetristä epäonnistui"
+        override val importJAlcoMeterMsgStarting = "Tuodaan tietoja jAlkaMetristä..."
+        override val importJAlcoMeterMsgImportingLibrary = "Tuodaan juomakirjastoa..."
+        override fun importJAlcoMeterMsgImportingDrink(cur: Long, max: Long) =
+            "Tuodaan juomaa $cur / $max"
+
+        override val importJAlcoMeterMsgComplete = "Tietojen tuominen jAlkaMetristä onnistui!"
+        override val importJAlcoMeterMsgError = "Tietojen tuominen jAlkaMetristä epäonnistui"
     }
 
 
