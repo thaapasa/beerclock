@@ -114,6 +114,7 @@ sqldelight {
         create("BeerDatabase") {
             packageName.set("fi.tuska.beerclock.database")
             dialect(libs.sqldelight.dialect)
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight/databases"))
         }
     }
 }
