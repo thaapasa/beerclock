@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import cafe.adriel.voyager.navigator.Navigator
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.DrinkDef
 import fi.tuska.beerclock.drinks.DrinkService
@@ -24,11 +25,20 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-class NewDrinkViewModel : ViewModel(), KoinComponent {
+class NewDrinkViewModel(val navigator: Navigator) : ViewModel(), KoinComponent {
     private val drinks = DrinkService()
 
     var searchQuery by mutableStateOf("")
     private val strings = Strings.get()
+    var active by mutableStateOf(true)
+        private set
+
+    fun toggleActive(state: Boolean) {
+        this.active = state
+        if (!state) {
+            navigator.pop()
+        }
+    }
 
     val searchResults: StateFlow<List<BasicDrinkInfo>> =
         snapshotFlow { searchQuery }

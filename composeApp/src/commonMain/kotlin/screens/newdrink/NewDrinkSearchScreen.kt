@@ -29,8 +29,8 @@ object NewDrinkSearchScreen : Screen {
     @Composable
     override fun Content() {
         val strings = Strings.get()
-        val vm = rememberWithDispose { NewDrinkViewModel() }
         val navigator = LocalNavigator.currentOrThrow
+        val vm = rememberWithDispose { NewDrinkViewModel(navigator) }
         val searchResults by vm.searchResults.collectAsState()
 
         MainLayout(showTopBar = false) { innerPadding ->
@@ -39,8 +39,8 @@ object NewDrinkSearchScreen : Screen {
                     vm.searchQuery,
                     onQueryChange = { vm.searchQuery = it },
                     placeholder = { Text(strings.newdrink.searchPlaceholder) },
-                    active = true,
-                    onActiveChange = {},
+                    active = vm.active,
+                    onActiveChange = vm::toggleActive,
                     onSearch = {},
                     leadingIcon = { AppIcon.SEARCH.icon() },
                     modifier = Modifier.fillMaxWidth()
