@@ -178,10 +178,11 @@ interface Strings {
         val phoneLocale: String
         val localeDescription: String
         val weightLabel: String
-        val weightUnit: String
+        val unitKilogram: String
         val weightDescription: String
         val genderLabel: String
         val genderDescription: String
+        fun burnoffDescription(volume: Double, rate: Double): String
         val startOfDay: String
         val startOfDayDescription: String
         val alcoholGramsLabel: String
@@ -189,8 +190,13 @@ interface Strings {
         val alcoholGramsDescription: String
         val alcoholGramsByCountry: String
         val drivingLimitBacLabel: String
-        val drivingLimitBacUnit: String
         val drivingLimitBacDescription: String
+        val unitPermille: String
+        val maxBacLabel: String
+        val maxBacDescription: String
+        val maxDailyUnitsLabel: String
+        val maxDailyUnitsDescription: String
+        val unitStandardDrinks: String
         fun alcoholGramsByCountryOption(countryCode: String): String
         val pickCountry: String
 

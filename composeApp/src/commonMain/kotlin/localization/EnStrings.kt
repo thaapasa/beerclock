@@ -195,12 +195,18 @@ object EnStrings : Strings {
         override val phoneLocale = "Use system locale"
         override val localeDescription = "Select the language for BeerClock."
         override val weightLabel = "Your weight"
-        override val weightUnit = "kg"
+        override val unitKilogram = "kg"
         override val weightDescription =
             "The amount of water in your body is estimated based on your weight. Extra weight kilos do not affect that amount, so enter your own estimate of your ideal weight."
         override val genderLabel = "Your gender"
         override val genderDescription =
             "Your gender affects the amount of water in your body. Choose the gender that is closest to your body structure."
+
+        override fun burnoffDescription(volume: Double, rate: Double) =
+            "According to the data you've entered, your body contains ${dec1F(volume)} liters of water, and you burn of alcohol at a rate of ${
+                dec1F(rate)
+            } g/h."
+
         override val startOfDay = "Start of a new day"
         override val startOfDayDescription =
             "When does the new day start? Drinks consumed before this time will be listed under the previous day."
@@ -210,9 +216,17 @@ object EnStrings : Strings {
             "How many grams of alcohol are there in one standard drink (1 unit)? You can also select preset options from the dropdown below."
         override val alcoholGramsByCountry = "Units by countries"
         override val drivingLimitBacLabel = "Driving limit"
-        override val drivingLimitBacUnit = "‰"
+        override val unitPermille = "‰"
         override val drivingLimitBacDescription =
             "Maximum blood alcohol concentration for driving in your country. This is 0.5 ‰ in Finland."
+
+        override val maxBacLabel = "Maximum BAC"
+        override val maxBacDescription =
+            "This determines the BAC ‰ that is shown in the app gauges."
+        override val maxDailyUnitsLabel = "Maximum daily units"
+        override val maxDailyUnitsDescription =
+            "This determines what is the maximum value for daily standard drink units the app gauges show."
+        override val unitStandardDrinks = "units"
 
         override fun alcoholGramsByCountryOption(countryCode: String) =
             "${countryName(countryCode)} (${SingleUnitWeights[countryCode]} g/unit)"

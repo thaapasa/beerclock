@@ -25,6 +25,7 @@ enum class AppIcon(private val path: String) : Image {
     DRINK("drawable/icons/local_bar.xml"),
     EDIT("drawable/icons/edit.xml"),
     FEMALE("drawable/icons/female.xml"),
+    GAUGE("drawable/icons/speed.xml"),
     GLASS_FULL("drawable/icons/glass_full.xml"),
     GRAPH("drawable/icons/graph.xml"),
     HISTORY("drawable/icons/history.xml"),

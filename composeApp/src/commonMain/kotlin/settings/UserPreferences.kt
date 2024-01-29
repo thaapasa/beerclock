@@ -31,6 +31,14 @@ data class UserPreferences(
      * What is the limit of blood alcohol concentration (per mille) for driving?
      */
     val drivingLimitBac: Double = 0.5,
+    /**
+     * What is the maximum number of units the app gauges show on the daily status view?
+     */
+    val maxDailyUnits: Double = 7.0,
+    /**
+     * What is the maximum BAC per mille value the app gauges show on the daily status view?
+     */
+    val maxBAC: Double = 1.0,
 ) {
     /**
      * Volume of distribution, approximated from body weight and gender multiplier.

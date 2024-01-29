@@ -36,7 +36,7 @@ internal fun ColumnScope.UserSettings(vm: SettingsViewModel) {
             onValueChange = { vm.weightKg = it },
             modifier = Modifier.fillMaxWidth().padding(bottom = 0.dp),
             label = { Text(text = strings.settings.weightLabel) },
-            trailingIcon = { Text(strings.settings.weightUnit) },
+            trailingIcon = { Text(strings.settings.unitKilogram) },
             supportingText = { Text(strings.settings.weightDescription) }
         )
         GenderSelector(
@@ -47,6 +47,13 @@ internal fun ColumnScope.UserSettings(vm: SettingsViewModel) {
         FieldDescription(
             strings.settings.genderDescription,
             modifier = Modifier.padding(top = 4.dp)
+        )
+        FieldDescription(
+            strings.settings.burnoffDescription(
+                volume = vm.volumeOfDistribution(),
+                rate = vm.alcoholBurnOffRate()
+            ),
+            modifier = Modifier.padding(top = 8.dp)
         )
     }
     Spacer(Modifier.height(16.dp))

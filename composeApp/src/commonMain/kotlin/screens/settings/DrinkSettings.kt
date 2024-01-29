@@ -47,11 +47,40 @@ internal fun ColumnScope.DrinkSettings(vm: SettingsViewModel) {
             supportingText = { Text(strings.settings.drivingLimitBacDescription) },
             trailingIcon = {
                 Text(
-                    strings.settings.drivingLimitBacUnit,
+                    strings.settings.unitPermille,
                     modifier = Modifier.padding(16.dp)
                 )
             }
         )
     }
-
+    Spacer(Modifier.height(16.dp))
+    FormGroup(groupIcon = { AppIcon.GAUGE.icon(tint = iconColor) }) {
+        DecimalField(
+            value = vm.maxBAC,
+            onValueChange = { vm.maxBAC = it },
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(strings.settings.maxBacLabel) },
+            supportingText = { Text(strings.settings.maxBacDescription) },
+            trailingIcon = {
+                Text(
+                    strings.settings.unitPermille,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        )
+        Spacer(Modifier.height(16.dp))
+        DecimalField(
+            value = vm.maxDailyUnits,
+            onValueChange = { vm.maxDailyUnits = it },
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(strings.settings.maxDailyUnitsLabel) },
+            supportingText = { Text(strings.settings.maxDailyUnitsDescription) },
+            trailingIcon = {
+                Text(
+                    strings.settings.unitStandardDrinks,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        )
+    }
 }

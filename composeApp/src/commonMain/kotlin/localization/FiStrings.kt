@@ -207,12 +207,18 @@ object FiStrings : Strings {
         override val phoneLocale = "Puhelimen kielen mukaan"
         override val localeDescription = "Valitse millä kielellä haluat käyttää Kaljakelloa."
         override val weightLabel = "Painosi"
-        override val weightUnit = "kg"
+        override val unitKilogram = "kg"
         override val weightDescription =
             "Nesteen määrä elimistössäsi arvioidaan painosi mukaan. Ylimääräiset kilot eivät vaikuta nesteen määrään, joten syötä oma arviosi ihannepainostasi."
         override val genderLabel = "Sukupuolesi"
         override val genderDescription =
             "Sukupuolesi vaikuttaa nesteen määrään elimistössäsi. Valitse se sukupuoli joka on lähinnä ruumiinrakennettasi."
+
+        override fun burnoffDescription(volume: Double, rate: Double) =
+            "Antamiesi tietojen mukaan ruumiissasi on ${dec1F(volume)} litraa vettä, ja elimistösi polttaa alkoholia ${
+                dec1F(rate)
+            } g/h."
+
         override val startOfDay = "Uusi päivä alkaa"
         override val startOfDayDescription =
             "Milloin uusi päivä alkaa. Tätä ennen juodut juomat merkataan edellisen päivän kirjanpitoon."
@@ -222,9 +228,18 @@ object FiStrings : Strings {
             "Kuinka monta grammaa alkoholia on yhdessä annoksessa? Voit myös valita maan mukaan alla olevasta valintalaatikosta."
         override val alcoholGramsByCountry = "Annokset maiden mukaan"
         override val drivingLimitBacLabel = "Autoiluraja"
-        override val drivingLimitBacUnit = "‰"
+        override val unitPermille = "‰"
         override val drivingLimitBacDescription =
             "Autoilun promilleraja maassasi. Suomessa tämä on 0,5 ‰."
+
+        override val maxBacLabel = "Promilleraja"
+        override val maxBacDescription =
+            "Tämä määrittelee mikä promillemäärä on sovelluksen mittareiden maksimi."
+        override val maxDailyUnitsLabel = "Päivittäinen annosraja"
+        override val maxDailyUnitsDescription =
+            "Tämä määrittelee kuinka monta annosta alkoholia on sovelluksen mittareiden maksimi."
+        override val unitStandardDrinks = "annosta"
+
 
         override fun alcoholGramsByCountryOption(countryCode: String) =
             "${countryName(countryCode)}: ${SingleUnitWeights[countryCode]} g/annos"

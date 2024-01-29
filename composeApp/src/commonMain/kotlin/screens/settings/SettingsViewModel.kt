@@ -32,6 +32,11 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
     var startOfDay by mutableStateOf(prefs.prefs.startOfDay)
     var gramsInUnit by mutableStateOf(prefs.prefs.alchoholGramsInUnit)
     var drivingLimitBac by mutableStateOf(prefs.prefs.drivingLimitBac)
+    var maxBAC by mutableStateOf(prefs.prefs.maxBAC)
+    var maxDailyUnits by mutableStateOf(prefs.prefs.maxDailyUnits)
+
+    fun volumeOfDistribution() = prefs.prefs.volumeOfDistribution
+    fun alcoholBurnOffRate() = prefs.prefs.alcoholBurnOffRate
 
     fun saveWeight() = launch { store.setWeight(weightKg) }
     fun saveGender() = launch { store.setGender(gender) }
@@ -39,6 +44,8 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
     fun saveGramsInUnitText() = launch { store.setAlcoholGramsInUnit(gramsInUnit) }
     fun saveLocale() = launch { store.setLocale(locale) }
     fun saveDrivingLimitBac() = launch { store.setDrivingLimitBac(drivingLimitBac) }
+    fun saveMaxBAC() = launch { store.setMAXBac(maxBAC) }
+    fun saveMaxDailyUnits() = launch { store.setMaxDailyUnits(maxDailyUnits) }
 
     @Composable
     fun trackChanges() {
@@ -48,6 +55,8 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
         LaunchedEffect(startOfDay) { saveStartOfDay() }
         LaunchedEffect(gramsInUnit) { saveGramsInUnitText() }
         LaunchedEffect(drivingLimitBac) { saveDrivingLimitBac() }
+        LaunchedEffect(maxBAC) { saveMaxBAC() }
+        LaunchedEffect(maxDailyUnits) { saveMaxDailyUnits() }
     }
 
     val canImportExportDb by lazy { isDataImportExportSupported() }
