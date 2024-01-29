@@ -204,6 +204,7 @@ interface Strings {
         val importJAlcoMeterTitle: String
         val importJAlcoMeterDescriptions: List<String>
         val importJAlcoMeterData: String
+        val importJAlcoMeterMsgInitial: String
         val importJAlcoMeterMsgStarting: String
         val importJAlcoMeterMsgImportingLibrary: String
         fun importJAlcoMeterMsgImportingDrink(cur: Long, max: Long): String

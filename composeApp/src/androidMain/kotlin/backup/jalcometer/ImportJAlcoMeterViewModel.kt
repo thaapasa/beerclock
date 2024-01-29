@@ -2,11 +2,14 @@ package fi.tuska.beerclock.backup.jalcometer
 
 import android.content.Context
 import android.net.Uri
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.backup.processLocally
 import fi.tuska.beerclock.database.processSQLiteDatabase
 import fi.tuska.beerclock.drinks.DrinkService
@@ -57,9 +60,10 @@ class ImportJAlkaMetriViewModel(
 
     @Composable
     fun Status() {
-        status?.let {
-            StatusDisplay(it)
-        }
+        StatusDisplay(
+            status ?: ImportStatus(Strings.get().settings.importJAlcoMeterMsgInitial, 0f),
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
     }
 
     private fun importJAlcoMeterBackupData(context: Context, file: Uri) {

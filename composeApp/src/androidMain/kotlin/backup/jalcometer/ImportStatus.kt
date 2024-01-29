@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 data class ImportStatus(val message: String, val percentage: Float? = null)
 
 @Composable
-fun StatusDisplay(status: ImportStatus) {
-    Column(modifier = Modifier.fillMaxSize()) {
+fun StatusDisplay(status: ImportStatus, modifier: Modifier = Modifier) {
+    Column(modifier = modifier.fillMaxSize()) {
         Text(
             status.message,
             style = MaterialTheme.typography.bodyMedium,

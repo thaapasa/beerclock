@@ -255,7 +255,7 @@ object FiStrings : Strings {
             "Kun olet siirtänyt tiedoston, valitse 'Tuo tiedot' tältä sivulta ja etsi varmuuskopiotiedosto esiin tulevalla tiedostoselaimella.",
         )
         override val importJAlcoMeterData = "Tuo tiedot"
-
+        override val importJAlcoMeterMsgInitial = "Klikkaa alta aloittaaksesi tietojen latauksen"
         override val importJAlcoMeterMsgStarting = "Tuodaan tietoja jAlkaMetristä..."
         override val importJAlcoMeterMsgImportingLibrary = "Tuodaan juomakirjastoa..."
         override fun importJAlcoMeterMsgImportingDrink(cur: Long, max: Long) =

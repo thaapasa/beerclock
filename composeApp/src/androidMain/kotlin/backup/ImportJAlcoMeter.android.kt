@@ -22,6 +22,7 @@ actual fun ImportJAlkaMetriDataButton(
 ) {
     val context = LocalContext.current
     val vm = rememberWithDispose { ImportJAlkaMetriViewModel(context, snackbar) }
+    vm.Status()
     FilePicker(
         onFilePicked = { file -> file?.let(vm::import) },
     ) { onClick ->
@@ -29,5 +30,4 @@ actual fun ImportJAlkaMetriDataButton(
             Text(title)
         }
     }
-    vm.Status()
 }
