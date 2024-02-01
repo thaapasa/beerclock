@@ -13,11 +13,13 @@ import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.library.CategoryHeaderInfo
 import fi.tuska.beerclock.screens.library.CategoryHeaderItem
 import fi.tuska.beerclock.ui.components.UnitAvatar
+import fi.tuska.beerclock.ui.composables.pressable
 
 @Composable
 fun BasicDrinkItem(
     drink: BasicDrinkInfo,
     onClick: (drinkInfo: BasicDrinkInfo?) -> Unit = {},
+    onLongClick: (drinkInfo: BasicDrinkInfo?) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     if (drink is TextDrinkInfo) {
@@ -39,7 +41,10 @@ fun BasicDrinkItem(
                 )
             )
         },
-        modifier = modifier.clickable { onClick(drink) },
+        modifier = modifier.pressable(
+            onPress = { onClick(drink) },
+            onLongPress = { onLongClick(drink) }
+        ),
         leadingContent = { drink.image.smallImage() },
         trailingContent = {
             UnitAvatar(units = drink.units())

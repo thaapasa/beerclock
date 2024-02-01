@@ -10,6 +10,8 @@ import fi.tuska.beerclock.drinks.DrinkDef
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.logging.getLogger
+import fi.tuska.beerclock.screens.today.HomeScreen
 import fi.tuska.beerclock.ui.composables.ViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -23,9 +25,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
+import fi.tuska.beerclock.screens.drinks.create.NewDrinkViewModel as CreateNewDrinkViewModel
+
+private val logger = getLogger("NewDrinkViewModel")
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-class NewDrinkViewModel(val navigator: Navigator) : ViewModel(), KoinComponent {
+class NewDrinkViewModel(private val navigator: Navigator) : ViewModel(), KoinComponent {
     private val drinks = DrinkService()
 
     var searchQuery by mutableStateOf("")
@@ -59,16 +64,41 @@ class NewDrinkViewModel(val navigator: Navigator) : ViewModel(), KoinComponent {
         private set
     var proto: BasicDrinkInfo? = null
 
-    fun selectDrink(latest: BasicDrinkInfo?) {
-        if (dialogOpen) {
+    private inline fun isBusy() = dialogOpen
+
+    fun selectDrink(drink: BasicDrinkInfo?) {
+        if (isBusy()) return
+        if (drink == null) {
+            editDrink(null)
             return
+        } else {
+            drinkDrink(drink)
         }
-        proto = latest
+    }
+
+    fun editDrink(drink: BasicDrinkInfo?) {
+        if (isBusy()) return
+        logger.info("Opening for editing: $drink")
+        proto = drink
         dialogOpen = true
     }
 
     fun closeDialog() {
         dialogOpen = false
+    }
+
+    fun returnToHome() {
+        navigator.replaceAll(HomeScreen)
+    }
+
+    private fun drinkDrink(drink: BasicDrinkInfo) {
+        launch {
+            logger.info("Drinking: $drink")
+            val dvm = CreateNewDrinkViewModel(drink)
+            dvm.addDrink {
+                returnToHome()
+            }
+        }
     }
 
     private fun flowMatchingDrinks(drinkName: String): Flow<List<BasicDrinkInfo>> =

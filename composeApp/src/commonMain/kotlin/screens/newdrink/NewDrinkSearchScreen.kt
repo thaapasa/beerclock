@@ -18,7 +18,6 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.drinks.create.AddDrinkDialog
-import fi.tuska.beerclock.screens.today.HomeScreen
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
 
@@ -53,7 +52,11 @@ object NewDrinkSearchScreen : Screen {
                             key = { index -> searchResults[index].key },
                             itemContent = { index ->
                                 val drink = searchResults[index]
-                                BasicDrinkItem(drink = drink, onClick = vm::selectDrink)
+                                BasicDrinkItem(
+                                    drink = drink,
+                                    onClick = vm::selectDrink,
+                                    onLongClick = vm::editDrink
+                                )
                             }
                         )
                     }
@@ -62,7 +65,7 @@ object NewDrinkSearchScreen : Screen {
             if (vm.dialogOpen) {
                 AddDrinkDialog(
                     proto = vm.proto,
-                    onDrinksUpdated = { navigator.replaceAll(HomeScreen) },
+                    onDrinksUpdated = vm::returnToHome,
                     onClose = vm::closeDialog
                 )
             }
