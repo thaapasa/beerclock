@@ -42,11 +42,11 @@ interface Strings {
 
     fun weekday(day: DayOfWeek): String
     fun weekdayShort(day: DayOfWeek): String
-    fun month(month: Month): String
+    fun month(day: Month): String
     fun date(day: LocalDate): String
     fun date(day: LocalDateTime): String = date(day.date)
-    fun dateShort(day: LocalDate): String
-    fun dateShort(day: LocalDateTime): String = dateShort(day.date)
+    fun dateShort(date: LocalDate): String
+    fun dateShort(date: LocalDateTime): String = dateShort(date.date)
     fun time(time: LocalTime): String
     fun time(time: LocalDateTime): String = time(time.time)
     fun dateTime(local: LocalDateTime): String

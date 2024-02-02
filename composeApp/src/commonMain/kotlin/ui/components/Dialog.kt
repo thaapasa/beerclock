@@ -22,7 +22,7 @@ val FullScreenDialogProperties =
 fun FullScreenDialog(
     onDismissRequest: () -> Unit,
     dialogProperties: DialogProperties = FullScreenDialogProperties,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -45,7 +45,7 @@ fun DialogHeader(
 ) {
     Row(modifier = Modifier.fillMaxWidth().height(56.dp)) {
         leadingIcon?.invoke(
-            modifier = Modifier.align(Alignment.CenterVertically)
+            Modifier.align(Alignment.CenterVertically)
         )
         Text(
             titleText,
@@ -54,7 +54,7 @@ fun DialogHeader(
             style = MaterialTheme.typography.titleLarge
         )
         textButton?.invoke(
-            modifier = Modifier.align(Alignment.CenterVertically).padding(end = 8.dp)
+            Modifier.align(Alignment.CenterVertically).padding(end = 8.dp)
         )
     }
 }

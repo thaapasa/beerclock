@@ -15,7 +15,7 @@ import kotlin.time.Duration.Companion.hours
 data class AbsorptionSchedule(
     val gramsPerHour: Double,
     val startTime: Instant,
-    val endTime: Instant
+    val endTime: Instant,
 )
 
 /**
@@ -44,14 +44,14 @@ object BacFormulas {
      * (from user preferences):
      * @return the number of units there are in this drink
      */
-    inline fun getUnitsFromAlcoholWeight(alcoholGrams: Double, prefs: UserPreferences): Double {
+    fun getUnitsFromAlcoholWeight(alcoholGrams: Double, prefs: UserPreferences): Double {
         return alcoholGrams / prefs.alchoholGramsInUnit
     }
 
-    inline fun getUnitsFromDisplayQuantityAbv(
+    fun getUnitsFromDisplayQuantityAbv(
         quantityCl: Double,
         abvPercentage: Double,
-        prefs: UserPreferences
+        prefs: UserPreferences,
     ): Double {
         val alcoholLiters: Double = quantityCl * abvPercentage / 10000
         val alcoholGrams: Double = alcoholLiters * alcoholDensity
@@ -62,7 +62,7 @@ object BacFormulas {
      * @return the amount of alcohol in your blood, for the given amount of alcohol consumed.
      * The result is the amount by volume, expressed per mille ("promillet" in Finnish).
      */
-    inline fun bloodAlcoholConcentration(alcoholGrams: Double, prefs: UserPreferences): Double =
+    fun bloodAlcoholConcentration(alcoholGrams: Double, prefs: UserPreferences): Double =
         alcoholGrams / prefs.volumeOfDistribution
 
     /**
@@ -102,7 +102,7 @@ object BacFormulas {
     inline fun burnOffAlcohol(
         fromAlcoholGrams: Double,
         time: Duration,
-        alcoholBurnOffRate: Double
+        alcoholBurnOffRate: Double,
     ): Double =
         max(fromAlcoholGrams - alcoholBurnedDuring(time, alcoholBurnOffRate), 0.0)
 
