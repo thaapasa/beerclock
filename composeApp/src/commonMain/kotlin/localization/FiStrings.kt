@@ -162,7 +162,7 @@ object FiStrings : Strings {
         override val deviceModel = "Laite"
         override val osVersion = "Järjestelmän versio"
         override val sqliteVersion = "SQLiten versio"
-        override val dbVersion = "Tietokannan version"
+        override val dbVersion = "Tietokannan versio"
     }
 
 
