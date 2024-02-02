@@ -42,7 +42,7 @@ fun BasicDrinkItem(
             )
         },
         modifier = modifier.pressable(
-            onPress = { onClick(drink) },
+            onTap = { onClick(drink) },
             onLongPress = { onLongClick(drink) }
         ),
         leadingContent = { drink.image.smallImage() },
