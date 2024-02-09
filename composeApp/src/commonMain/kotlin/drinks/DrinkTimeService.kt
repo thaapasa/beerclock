@@ -4,8 +4,10 @@ import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.MinutesInDay
 import fi.tuska.beerclock.util.TimeInterval
 import fi.tuska.beerclock.util.fromMinutesOfDay
+import fi.tuska.beerclock.util.getFirstDayOfWeek
 import fi.tuska.beerclock.util.toMinutesOfDay
 import kotlinx.datetime.Clock
+import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -35,6 +37,21 @@ class DrinkTimeService : KoinComponent {
     inline fun toInstant(time: LocalDateTime): Instant = time.toInstant(zone)
     inline fun toLocalDateTime(instant: Instant = now()): LocalDateTime =
         instant.toLocalDateTime(zone)
+
+    fun firstDayOfCurrentWeek(now: LocalDate = currentDrinkDay()): LocalDate {
+        val weekStart = getFirstDayOfWeek()
+        var date = now
+        while (date.dayOfWeek != weekStart) {
+            date -= DatePeriod(days = 1)
+        }
+        return date
+    }
+
+    fun currentWeekRange(date: LocalDate = currentDrinkDay()): TimeInterval {
+        val start = firstDayOfCurrentWeek(date)
+        val end = start + DatePeriod(days = 7)
+        return TimeInterval(start = dayStartTime(start), end = dayStartTime(end))
+    }
 
     /**
      * Return the date which the given time is considered to be part of, as per user preferences.

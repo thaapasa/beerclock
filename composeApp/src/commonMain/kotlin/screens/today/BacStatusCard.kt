@@ -32,6 +32,8 @@ fun BacStatusCard(vm: HomeViewModel) {
         val bac = animateFloatAsState(targetValue = vm.bac)
         val units = animateFloatAsState(targetValue = vm.units)
         val unitsPosition = animateFloatAsState(targetValue = vm.unitsPosition)
+        val weeklyUnits = animateFloatAsState(targetValue = vm.weeklyUnits)
+        val weeklyUnitsPosition = animateFloatAsState(targetValue = vm.weeklyUnitsPosition)
         Row {
             DateView(vm.drinkDay, modifier = Modifier.padding(16.dp))
             if (vm.isYesterday) {
@@ -54,6 +56,13 @@ fun BacStatusCard(vm: HomeViewModel) {
                     position = unitsPosition.value,
                     modifier = Modifier.size(64.dp),
                     iconPainter = AppIcon.DRINK.painter(),
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Gauge(
+                    value = strings.drink.units(weeklyUnits.value.toDouble()),
+                    position = weeklyUnitsPosition.value,
+                    modifier = Modifier.size(64.dp),
+                    iconPainter = AppIcon.CALENDAR_WEEK.painter(),
                 )
             }
         }

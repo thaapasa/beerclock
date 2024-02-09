@@ -51,6 +51,13 @@ data class UserPreferences(
      */
     val alcoholBurnOffRate = BacFormulas.alcoholBurnOffRate(volumeOfDistribution)
 
+    /**
+     * This is a multiplier `m` such that the formula `abv * quantityLiters * m`
+     * gives the number of standards units, for the given user preferences.
+     * To be used in SQL queries, units are the same that are used in DB.
+     */
+    val alcoholAbvLitersToUnitMultiplier =
+        BacFormulas.getUnitsFromDisplayQuantityAbv(1.0, 1.0, this) * 10_000
 }
 
 private val logger = getLogger("UserPreferences")

@@ -5,6 +5,7 @@ import fi.tuska.beerclock.database.BeerDatabase
 import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.logging.getLogger
+import fi.tuska.beerclock.settings.UserPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.channels.awaitClose
@@ -50,6 +51,20 @@ class DrinkService : KoinComponent {
         }
         logger.info("Found ${drinks.size} drinks for $yesterday - $today")
         return drinks.map(::DrinkRecordInfo)
+    }
+
+    suspend fun getUnitsForWeek(today: LocalDate, prefs: UserPreferences): Double {
+        val yesterday = today.minus(1, DateTimeUnit.DAY)
+        val range = times.currentWeekRange(today)
+        val units = withContext(Dispatchers.IO) {
+            db.drinkRecordQueries.countUnitsByTime(
+                multiplier = prefs.alcoholAbvLitersToUnitMultiplier,
+                startTime = range.start.toDbTime(),
+                endTime = range.end.toDbTime(),
+            ).executeAsOne()
+        }
+        logger.info("FOO $units");
+        return units.SUM ?: 0.0;
     }
 
     suspend fun getLatestDrinks(limit: Long): List<LatestDrinkInfo> {

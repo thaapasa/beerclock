@@ -16,6 +16,7 @@ enum class AppIcon(private val path: String) : Image {
     BEER("drawable/icons/sports_bar.xml"),
     BOLT("drawable/icons/bolt.xml"),
     CALENDAR("drawable/icons/calendar.xml"),
+    CALENDAR_WEEK("drawable/icons/date_range.xml"),
     CAR("drawable/icons/car.xml"),
     CHEVRON_LEFT("drawable/icons/chevron_left.xml"),
     CHEVRON_RIGHT("drawable/icons/chevron_right.xml"),

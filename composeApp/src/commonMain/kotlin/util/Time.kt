@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.util
 
 import fi.tuska.beerclock.logging.getLogger
+import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
@@ -63,3 +64,5 @@ fun Duration.inHours(): Double {
 data class WeekOfYear(val weekNumber: Int, val year: Int)
 
 expect fun LocalDate.toWeekOfYear(): WeekOfYear
+
+expect fun getFirstDayOfWeek(): DayOfWeek

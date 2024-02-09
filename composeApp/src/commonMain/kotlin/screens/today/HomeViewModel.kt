@@ -40,6 +40,9 @@ class HomeViewModel : ViewModel(), KoinComponent {
     var units by mutableStateOf(0.0f)
     var unitsPosition by mutableStateOf(0.0f)
 
+    var weeklyUnits by mutableStateOf(0.0f)
+    var weeklyUnitsPosition by mutableStateOf(0.0f)
+
     var bac by mutableStateOf(0.0f)
     var bacPosition by mutableStateOf(0.0f)
 
@@ -63,6 +66,9 @@ class HomeViewModel : ViewModel(), KoinComponent {
             logger.info("Loading today's drinks for $drinkDay")
             val newDrinks = drinkService.getDrinksForHomeScreen(drinkDay)
             setDrinks(newDrinks)
+            val weekStatus = drinkService.getUnitsForWeek(drinkDay, prefs.prefs)
+            weeklyUnits = weekStatus.toFloat()
+            weeklyUnitsPosition = min(weeklyUnits / 14.0f, 1.0f)
         }
     }
 

@@ -17,6 +17,11 @@ FROM drinkRecord
 WHERE time >= :startTime AND time < :endTime
 ORDER BY time ASC;
 
+countUnitsByTime:
+SELECT SUM(quantity_liters * abv * :multiplier)
+FROM drinkRecord
+WHERE time >= :startTime AND time < :endTime;
+
 insert:
 INSERT INTO drinkRecord(time, name, category, quantity_liters, abv, image)
 VALUES (:time, :name, :category, :quantityLiters, :abv, :image);
