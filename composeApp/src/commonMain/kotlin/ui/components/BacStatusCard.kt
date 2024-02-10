@@ -27,9 +27,9 @@ interface BacStatusViewModel {
 
 
 @Composable
-fun BacStatusCard(vm: BacStatusViewModel) {
+fun BacStatusCard(vm: BacStatusViewModel, modifier: Modifier = Modifier) {
     return Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Row {

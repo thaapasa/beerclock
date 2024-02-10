@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.ui.components.BacStatusCard
 import fi.tuska.beerclock.ui.components.DatePickerIcon
 import fi.tuska.beerclock.ui.components.SegmentDivider
 import fi.tuska.beerclock.ui.components.SegmentedButton
@@ -57,6 +58,7 @@ object HistoryScreen : Screen {
                         modifier = Modifier.padding(start = 4.dp, end = 8.dp)
                     ) { vm.nextDay() }
                 }
+                BacStatusCard(vm, modifier = Modifier.padding(top = 16.dp))
                 DrinkList(
                     vm.drinks,
                     modifier = Modifier.padding(top = 16.dp)
