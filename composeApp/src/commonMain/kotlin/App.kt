@@ -6,7 +6,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import fi.tuska.beerclock.database.DatabaseInfo
 import fi.tuska.beerclock.graphs.GraphTheme
 import fi.tuska.beerclock.logging.getLogger
-import fi.tuska.beerclock.screens.history.HistoryScreen
+import fi.tuska.beerclock.screens.today.HomeScreen
 import fi.tuska.beerclock.ui.theme.AppTheme
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -19,7 +19,7 @@ fun App() {
     AppTheme {
         GraphTheme {
             Navigator(
-                screen = HistoryScreen
+                screen = HomeScreen
             )
         }
     }

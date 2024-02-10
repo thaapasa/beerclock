@@ -11,6 +11,7 @@ import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
+import fi.tuska.beerclock.screens.history.HistoryScreen
 import fi.tuska.beerclock.screens.today.HomeScreen
 import fi.tuska.beerclock.ui.composables.ViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,13 +25,15 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDate
 import org.koin.core.component.KoinComponent
 import fi.tuska.beerclock.screens.drinks.create.NewDrinkViewModel as CreateNewDrinkViewModel
 
 private val logger = getLogger("NewDrinkViewModel")
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-class NewDrinkViewModel(private val navigator: Navigator) : ViewModel(), KoinComponent {
+class NewDrinkViewModel(private val navigator: Navigator, private val date: LocalDate?) :
+    ViewModel(), KoinComponent {
     private val drinks = DrinkService()
 
     var searchQuery by mutableStateOf("")
@@ -88,13 +91,19 @@ class NewDrinkViewModel(private val navigator: Navigator) : ViewModel(), KoinCom
     }
 
     fun returnToHome() {
-        navigator.replaceAll(HomeScreen)
+        if (date == null) {
+            // Go back to home screen
+            navigator.replaceAll(HomeScreen)
+        } else {
+            // Go back to history screen for the given date
+            navigator.replaceAll(HistoryScreen(date))
+        }
     }
 
     private fun drinkDrink(drink: BasicDrinkInfo) {
         launch {
             logger.info("Drinking: $drink")
-            val dvm = CreateNewDrinkViewModel(drink)
+            val dvm = CreateNewDrinkViewModel(drink, date)
             dvm.addDrink {
                 returnToHome()
             }

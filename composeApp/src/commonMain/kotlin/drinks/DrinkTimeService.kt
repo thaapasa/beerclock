@@ -53,6 +53,13 @@ class DrinkTimeService : KoinComponent {
         return TimeInterval(start = dayStartTime(start), end = dayStartTime(end))
     }
 
+    fun defaultDrinkTime(date: LocalDate): Instant {
+        if (date == currentDrinkDay()) {
+            return Clock.System.now()
+        }
+        return toInstant(LocalDateTime(date, LocalTime(18, 0, 0)))
+    }
+
     /**
      * Return the date which the given time is considered to be part of, as per user preferences.
      * This allows early morning hours to be considered part of yesterday.

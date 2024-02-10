@@ -54,7 +54,6 @@ class DrinkService : KoinComponent {
     }
 
     suspend fun getUnitsForWeek(today: LocalDate, prefs: UserPreferences): Double {
-        val yesterday = today.minus(1, DateTimeUnit.DAY)
         val range = times.currentWeekRange(today)
         val units = withContext(Dispatchers.IO) {
             db.drinkRecordQueries.countUnitsByTime(
@@ -63,7 +62,6 @@ class DrinkService : KoinComponent {
                 endTime = range.end.toDbTime(),
             ).executeAsOne()
         }
-        logger.info("FOO $units");
         return units.SUM ?: 0.0;
     }
 

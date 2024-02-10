@@ -26,13 +26,13 @@ import kotlinx.datetime.plus
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
-class HistoryViewModel : ViewModel(), BacStatusViewModel, KoinComponent {
+class HistoryViewModel(startDate: LocalDate?) : ViewModel(), BacStatusViewModel, KoinComponent {
     private val times = DrinkTimeService()
     private val drinkService = DrinkService()
     val drinks = mutableStateListOf<DrinkRecordInfo>()
     private val prefs: GlobalUserPreferences = get()
 
-    var date by mutableStateOf(times.currentDrinkDay())
+    var date by mutableStateOf(startDate ?: times.currentDrinkDay())
         private set
 
     private val dailyUnitsGauge =
@@ -53,11 +53,15 @@ class HistoryViewModel : ViewModel(), BacStatusViewModel, KoinComponent {
         launch {
             drinks.clear()
             val newDrinks = drinkService.getDrinksForDay(date).reversed()
-            val weekUnits = drinkService.getUnitsForWeek(date, prefs.prefs)
             drinks.addAll(newDrinks)
-            dailyUnitsGauge.setValue(drinks.sumOf { it.units() }, prefs.prefs.maxDailyUnits)
-            weeklyUnitsGauge.setValue(weekUnits, prefs.prefs.maxWeeklyUnits)
+            updateStatus()
         }
+    }
+
+    private suspend fun updateStatus() {
+        val weekUnits = drinkService.getUnitsForWeek(date, prefs.prefs)
+        dailyUnitsGauge.setValue(drinks.sumOf { it.units() }, prefs.prefs.maxDailyUnits)
+        weeklyUnitsGauge.setValue(weekUnits, prefs.prefs.maxWeeklyUnits)
     }
 
     fun selectDay(day: LocalDate) {
@@ -72,6 +76,7 @@ class HistoryViewModel : ViewModel(), BacStatusViewModel, KoinComponent {
         launch {
             drinkService.deleteDrinkById(drink.id)
             drinks.remove(drink)
+            updateStatus()
         }
     }
 

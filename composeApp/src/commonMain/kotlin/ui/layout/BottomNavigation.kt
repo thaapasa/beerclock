@@ -29,7 +29,7 @@ fun bottomNavigationItems(): List<BottomNavigationItem> {
         BottomNavigationItem(
             label = strings.menu.history,
             icon = AppIcon.HISTORY,
-            screen = HistoryScreen
+            screen = HistoryScreen()
         ),
         BottomNavigationItem(
             label = strings.menu.statistics,

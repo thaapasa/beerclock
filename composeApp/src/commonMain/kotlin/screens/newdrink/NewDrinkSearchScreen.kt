@@ -20,16 +20,17 @@ import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.drinks.create.AddDrinkDialog
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
+import kotlinx.datetime.LocalDate
 
 
-object NewDrinkSearchScreen : Screen {
+class NewDrinkSearchScreen(val date: LocalDate? = null) : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
         val strings = Strings.get()
         val navigator = LocalNavigator.currentOrThrow
-        val vm = rememberWithDispose { NewDrinkViewModel(navigator) }
+        val vm = rememberWithDispose { NewDrinkViewModel(navigator, date) }
         val searchResults by vm.searchResults.collectAsState()
 
         MainLayout(showTopBar = false) { innerPadding ->
@@ -64,6 +65,7 @@ object NewDrinkSearchScreen : Screen {
             }
             if (vm.dialogOpen) {
                 AddDrinkDialog(
+                    date,
                     proto = vm.proto,
                     onDrinksUpdated = vm::returnToHome,
                     onClose = vm::closeDialog

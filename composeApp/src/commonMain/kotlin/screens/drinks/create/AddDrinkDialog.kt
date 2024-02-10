@@ -13,14 +13,16 @@ import fi.tuska.beerclock.screens.drinks.editor.DrinkEditor
 import fi.tuska.beerclock.ui.components.DialogHeader
 import fi.tuska.beerclock.ui.components.FullScreenDialog
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
+import kotlinx.datetime.LocalDate
 
 @Composable
 fun AddDrinkDialog(
+    date: LocalDate? = null,
     proto: BasicDrinkInfo? = null,
     onDrinksUpdated: (() -> Unit)? = null,
     onClose: () -> Unit,
 ) {
-    val vm = rememberWithDispose { NewDrinkViewModel(proto) }
+    val vm = rememberWithDispose { NewDrinkViewModel(proto, date) }
     val strings = Strings.get()
 
     FullScreenDialog(onDismissRequest = onClose) {
