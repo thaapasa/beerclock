@@ -19,12 +19,14 @@ SELECT TRUE AS "hasDrinks"
 
 selectAll:
 SELECT *
-FROM drinkLibrary;
+FROM drinkLibrary
+ORDER BY name;
 
 selectAllByCategory:
 SELECT *
 FROM drinkLibrary
-WHERE category IN :categories OR category IS NULL;
+WHERE category IN :categories OR category IS NULL
+ORDER BY name;
 
 insert:
 INSERT INTO drinkLibrary(name, category, quantity_liters, abv, image, created, updated)
@@ -60,7 +62,6 @@ SET drink_count = drink_count + 1,
   updated = strftime('%s', 'now')
 WHERE name=:name;
 
-
 deleteById:
 DELETE FROM drinkLibrary
 WHERE id = :id;
@@ -69,4 +70,5 @@ findMatchingByName:
 SELECT *
 FROM drinkLibrary
 WHERE name LIKE '%' || :name || '%'
+ORDER BY name
 LIMIT :limit;
