@@ -78,7 +78,15 @@ internal class UserStore : KoinComponent {
         setState { copy(maxDailyUnits = units) }
         setStateValue(PreferenceKeys.maxDailyUnits, units.toString())
     }
-    
+
+    suspend fun setMaxWeeklyUnits(units: Double) {
+        if (prefs.prefs.maxWeeklyUnits == units) {
+            return
+        }
+        setState { copy(maxWeeklyUnits = units) }
+        setStateValue(PreferenceKeys.maxWeeklyUnits, units.toString())
+    }
+
     private suspend fun setStateValue(stateKey: String, stringified: String) {
         withContext(Dispatchers.IO) {
             store.setString(stateKey, stringified)
@@ -98,6 +106,7 @@ internal class UserStore : KoinComponent {
         const val drivingLimitBac = "prefs.user.drivingLimitBac"
         const val maxBAC = "prefs.user.maxBAC"
         const val maxDailyUnits = "prefs.user.maxDailyUnits"
+        const val maxWeeklyUnits = "prefs.user.maxWeeklyUnits"
     }
 
     companion object {

@@ -82,5 +82,19 @@ internal fun ColumnScope.DrinkSettings(vm: SettingsViewModel) {
                 )
             }
         )
+        Spacer(Modifier.height(16.dp))
+        DecimalField(
+            value = vm.maxWeeklyUnits,
+            onValueChange = { vm.maxWeeklyUnits = it },
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(strings.settings.maxWeeklyUnitsLabel) },
+            supportingText = { Text(strings.settings.maxWeeklyUnitsDescription) },
+            trailingIcon = {
+                Text(
+                    strings.settings.unitStandardDrinks,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        )
     }
 }

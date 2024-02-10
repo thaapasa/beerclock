@@ -36,6 +36,10 @@ data class UserPreferences(
      */
     val maxDailyUnits: Double = 7.0,
     /**
+     * What is the maximum number of units the app gauges show on the weekly status view?
+     */
+    val maxWeeklyUnits: Double = 14.0,
+    /**
      * What is the maximum BAC per mille value the app gauges show on the daily status view?
      */
     val maxBAC: Double = 1.0,

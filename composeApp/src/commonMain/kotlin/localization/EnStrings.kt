@@ -226,6 +226,9 @@ object EnStrings : Strings {
         override val maxDailyUnitsLabel = "Maximum daily units"
         override val maxDailyUnitsDescription =
             "This determines what is the maximum value for daily standard drink units the app gauges show."
+        override val maxWeeklyUnitsLabel = "Maximum weekly units"
+        override val maxWeeklyUnitsDescription =
+            "This determines what is the maximum value for weekly standard drink units the app gauges show."
         override val unitStandardDrinks = "units"
 
         override fun alcoholGramsByCountryOption(countryCode: String) =

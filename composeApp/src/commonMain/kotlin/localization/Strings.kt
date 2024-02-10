@@ -196,6 +196,8 @@ interface Strings {
         val maxBacDescription: String
         val maxDailyUnitsLabel: String
         val maxDailyUnitsDescription: String
+        val maxWeeklyUnitsLabel: String
+        val maxWeeklyUnitsDescription: String
         val unitStandardDrinks: String
         fun alcoholGramsByCountryOption(countryCode: String): String
         val pickCountry: String

@@ -65,25 +65,26 @@ class HomeViewModel : ViewModel(), KoinComponent {
             drinkDay = times.currentDrinkDay()
             logger.info("Loading today's drinks for $drinkDay")
             val newDrinks = drinkService.getDrinksForHomeScreen(drinkDay)
-            setDrinks(newDrinks)
-            val weekStatus = drinkService.getUnitsForWeek(drinkDay, prefs.prefs)
-            weeklyUnits = weekStatus.toFloat()
-            weeklyUnitsPosition = min(weeklyUnits / 14.0f, 1.0f)
+            val weekUnits = drinkService.getUnitsForWeek(drinkDay, prefs.prefs)
+            setDrinks(newDrinks, weekUnits)
         }
     }
 
 
     fun maxBACValue(): Double = max(prefs.prefs.maxBAC, 0.1)
     fun maxDailyUnitsValue(): Double = max(prefs.prefs.maxDailyUnits, 0.1)
+    fun maxWeeklyUnitsValue(): Double = max(prefs.prefs.maxWeeklyUnits, 0.1)
 
 
-    private fun setDrinks(newDrinks: List<DrinkRecordInfo>) {
+    private fun setDrinks(newDrinks: List<DrinkRecordInfo>, weekUnits: Double) {
         drinks.clear()
         val dayStart = times.dayStartTime(drinkDay)
         drinks.addAll(newDrinks.filter { it.time >= dayStart })
         bacStatus = BacStatus(newDrinks, drinkDay)
         units = drinks.sumOf { it.units() }.toFloat()
         unitsPosition = min(units / maxDailyUnitsValue(), 1.0).toFloat()
+        weeklyUnits = weekUnits.toFloat()
+        weeklyUnitsPosition = min(weekUnits / maxWeeklyUnitsValue(), 1.0).toFloat()
         updateBacStatus()
     }
 

@@ -237,7 +237,10 @@ object FiStrings : Strings {
             "Tämä määrittelee mikä promillemäärä on sovelluksen mittareiden maksimi."
         override val maxDailyUnitsLabel = "Päivittäinen annosraja"
         override val maxDailyUnitsDescription =
-            "Tämä määrittelee kuinka monta annosta alkoholia on sovelluksen mittareiden maksimi."
+            "Tämä määrittelee kuinka monta annosta alkoholia on sovelluksen päivittäisten annosten mittareiden maksimi."
+        override val maxWeeklyUnitsLabel = "Viikoittainen annosraja"
+        override val maxWeeklyUnitsDescription =
+            "Tämä määrittelee kuinka monta annosta alkoholia on sovelluksen viikoittaisten annosten mittareiden maksimi."
         override val unitStandardDrinks = "annosta"
 
 
