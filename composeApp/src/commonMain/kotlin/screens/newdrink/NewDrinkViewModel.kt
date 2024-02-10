@@ -116,7 +116,7 @@ class NewDrinkViewModel(private val navigator: Navigator, private val date: Loca
                 "add-new-title",
                 strings.newdrink.addNewDrink(drinkName),
                 icon = AppIcon.ADD_CIRCLE,
-                onClick = { selectDrink(DrinkDef(name = drinkName)) }
+                onClick = { editDrink(DrinkDef(name = drinkName)) }
             ))
             if (matching.isEmpty()) {
                 if (!drinks.libraryHasDrinks()) {
