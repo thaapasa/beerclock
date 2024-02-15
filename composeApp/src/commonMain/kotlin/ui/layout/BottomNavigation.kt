@@ -42,9 +42,9 @@ fun bottomNavigationItems(): List<BottomNavigationItem> {
 @Composable
 fun BottomNavigationBar(current: Screen, onNavigate: (screen: Screen) -> Unit) {
     return NavigationBar {
-        bottomNavigationItems().forEachIndexed { index, item ->
+        bottomNavigationItems().forEachIndexed { _, item ->
             NavigationBarItem(
-                selected = item.screen == current,
+                selected = item.screen.key == current.key,
                 label = { Text(item.label) },
                 icon = {
                     Icon(
