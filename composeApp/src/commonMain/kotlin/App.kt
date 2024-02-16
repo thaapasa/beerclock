@@ -19,7 +19,7 @@ fun App() {
     AppTheme {
         GraphTheme {
             Navigator(
-                screen = HomeScreen
+                screen = HomeScreen()
             )
         }
     }

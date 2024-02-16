@@ -12,6 +12,7 @@ import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.images.DrinkImage
+import fi.tuska.beerclock.images.toDrinkImage
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.composables.ViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -54,7 +55,7 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
         name = drink.name
         quantityCl = drink.quantityCl
         abv = drink.abvPercentage
-        image = if (drink.image is DrinkImage) drink.image else DrinkImage.GENERIC_DRINK
+        image = drink.image.toDrinkImage()
         category = drink.category
         val drinkTime = times.instantToDrinkTime(realTime)
         date = drinkTime.first

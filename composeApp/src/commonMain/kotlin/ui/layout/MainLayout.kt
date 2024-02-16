@@ -14,7 +14,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -26,12 +25,12 @@ import kotlinx.coroutines.launch
 fun MainLayout(
     actionButton: @Composable () -> Unit = {},
     showTopBar: Boolean = true,
+    snackbarHostState: SnackbarHostState? = null,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val strings = Strings.get()
     val coroutineScope = rememberCoroutineScope()
     val navigator = LocalNavigator.currentOrThrow
-    val snackbarHostState = remember { SnackbarHostState() }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
 
     ModalNavigationDrawer(
@@ -51,7 +50,7 @@ fun MainLayout(
         gesturesEnabled = true,
         content = {
             Scaffold(
-                snackbarHost = { SnackbarHost(snackbarHostState) },
+                snackbarHost = { snackbarHostState?.let { SnackbarHost(it) } },
                 topBar = {
                     if (showTopBar) {
                         TopAppBar(colors = TopAppBarDefaults.topAppBarColors(

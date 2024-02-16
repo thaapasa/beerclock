@@ -1,21 +1,16 @@
 package fi.tuska.beerclock.drinks
 
-import app.cash.sqldelight.Query
 import fi.tuska.beerclock.database.BeerDatabase
 import fi.tuska.beerclock.database.toDbTime
-import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.settings.UserPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.minus
 import org.koin.core.component.KoinComponent
@@ -107,9 +102,9 @@ class DrinkService : KoinComponent {
         logger.info("Deleted drink $id")
     }
 
-    suspend fun insertDrink(drink: DrinkDetailsFromEditor) {
-        withContext(Dispatchers.IO) {
-            db.transaction {
+    suspend fun insertDrink(drink: DrinkDetailsFromEditor): DrinkRecordInfo {
+        return withContext(Dispatchers.IO) {
+            db.transactionWithResult {
                 operations.insertDrink(drink)
             }
         }
@@ -165,75 +160,4 @@ class DrinkService : KoinComponent {
     }
 
     val operations = DrinkOperations(db)
-}
-
-class DrinkOperations(private val db: BeerDatabase) {
-    fun insertDrink(drink: DrinkDetailsFromEditor) {
-        db.drinkRecordQueries.insert(
-            time = drink.time.toDbTime(),
-            name = drink.name,
-            category = drink.category?.name,
-            quantityLiters = drink.quantityLiters,
-            abv = drink.abv,
-            image = drink.image.name,
-        )
-        db.drinkLibraryQueries.recordDrunk(
-            name = drink.name,
-            category = drink.category?.name,
-            quantityLiters = drink.quantityLiters,
-            abv = drink.abv,
-            image = drink.image.name,
-        )
-    }
-
-    fun importDrink(importId: Long, drink: DrinkDetailsFromEditor) {
-        db.drinkRecordQueries.import(
-            importId = importId,
-            time = drink.time.toDbTime(),
-            name = drink.name,
-            category = drink.category?.name,
-            quantityLiters = drink.quantityLiters,
-            abv = drink.abv,
-            image = drink.image.name,
-        )
-        db.drinkLibraryQueries.importDrunk(
-            name = drink.name,
-        )
-    }
-
-    fun insertDrinkInfo(drink: DrinkDetailsFromEditor) {
-        db.drinkLibraryQueries.insert(
-            name = drink.name,
-            category = drink.category?.name,
-            quantityLiters = drink.quantityLiters,
-            abv = drink.abv,
-            image = drink.image.name,
-        )
-    }
-
-    fun getDrinkLibrary(): List<DrinkInfo> {
-        return db.drinkLibraryQueries.selectAll().executeAsList().map(::DrinkInfo)
-    }
-}
-
-data class DrinkDetailsFromEditor(
-    val name: String,
-    val category: Category?,
-    val abv: Double,
-    val quantityLiters: Double,
-    val time: Instant,
-    val image: DrinkImage,
-)
-
-fun <T : Any> Query<T>.asFlow(): Flow<List<T>> = callbackFlow {
-    val listener = Query.Listener {
-        val items = executeAsList()
-        trySend(items)
-    }
-    addListener(listener)
-    val items = executeAsList()
-    trySend(items)
-    awaitClose {
-        removeListener(listener)
-    }
 }

@@ -9,7 +9,6 @@ import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import kotlinx.datetime.Clock
 
-
 private val logger = getLogger("HistoryImporter")
 
 fun importDrinkLibrary(

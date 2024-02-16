@@ -21,3 +21,17 @@ inline fun <T : Disposable> rememberWithDispose(
 
     return instance
 }
+
+@Composable
+inline fun <T : Disposable> rememberWithDispose(
+    key: Any?,
+    crossinline instanceCreator: @DisallowComposableCalls () -> T,
+): T {
+    val instance = remember(key) { instanceCreator() }
+
+    DisposableEffect(instance) {
+        onDispose { instance.onDispose() }
+    }
+
+    return instance
+}

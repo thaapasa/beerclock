@@ -112,3 +112,7 @@ enum class DrinkImage(val path: String) : Image {
         }
     }
 }
+
+fun Image.toDrinkImage(): DrinkImage {
+    return if (this is DrinkImage) this else DrinkImage.GENERIC_DRINK
+}

@@ -24,7 +24,7 @@ fun bottomNavigationItems(): List<BottomNavigationItem> {
         BottomNavigationItem(
             label = strings.menu.today,
             icon = AppIcon.DRINK,
-            screen = HomeScreen
+            screen = HomeScreen()
         ),
         BottomNavigationItem(
             label = strings.menu.history,

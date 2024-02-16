@@ -2,6 +2,7 @@ package fi.tuska.beerclock.screens.today
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,7 +22,8 @@ import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.components.BacStatusViewModel
 import fi.tuska.beerclock.ui.components.DateView
 import fi.tuska.beerclock.ui.components.GaugeValue
-import fi.tuska.beerclock.ui.composables.ViewModel
+import fi.tuska.beerclock.ui.composables.SnackbarViewModel
+import fi.tuska.beerclock.util.Action
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -33,10 +35,17 @@ private val logger = getLogger("HomeViewModel")
 
 val pauseBetweenUpdates = 30.seconds
 
-class HomeViewModel : ViewModel(), BacStatusViewModel, KoinComponent {
+class HomeViewModel(action: Action<HomeViewModel>? = null) : SnackbarViewModel(
+    SnackbarHostState()
+),
+    BacStatusViewModel, KoinComponent {
     private val drinkService = DrinkService()
     private val times = DrinkTimeService()
     private val prefs: GlobalUserPreferences = get()
+
+    init {
+        action?.invoke(this)
+    }
 
     private val bacGauge =
         GaugeValue(
@@ -69,11 +78,11 @@ class HomeViewModel : ViewModel(), BacStatusViewModel, KoinComponent {
             )
         }
     }
-    
+
     private fun updateBacContinuously() {
         launch {
             while (isActive) {
-                delay(pauseBetweenUpdates.inWholeMilliseconds)
+                delay(timeMillis = pauseBetweenUpdates.inWholeMilliseconds)
                 logger.info("Recalculating BAC")
                 updateBacStatus()
             }
@@ -90,7 +99,6 @@ class HomeViewModel : ViewModel(), BacStatusViewModel, KoinComponent {
         }
     }
 
-
     private fun setDrinks(newDrinks: List<DrinkRecordInfo>, weekUnits: Double) {
         drinks.clear()
         val dayStart = times.dayStartTime(drinkDay)
@@ -101,7 +109,7 @@ class HomeViewModel : ViewModel(), BacStatusViewModel, KoinComponent {
         updateBacStatus()
     }
 
-    fun updateBacStatus() {
+    private fun updateBacStatus() {
         now = Clock.System.now()
         isYesterday = times.toLocalDateTime(now).time < prefs.prefs.startOfDay
         bacGauge.setValue(

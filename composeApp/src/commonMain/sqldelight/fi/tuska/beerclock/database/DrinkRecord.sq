@@ -11,6 +11,11 @@ CREATE TABLE drinkRecord (
 
 CREATE INDEX drinkRecord_time ON drinkRecord(time);
 
+selectById:
+SELECT *
+FROM drinkRecord
+WHERE id = :id;
+
 selectByTime:
 SELECT *
 FROM drinkRecord
@@ -25,6 +30,9 @@ WHERE time >= :startTime AND time < :endTime;
 insert:
 INSERT INTO drinkRecord(time, name, category, quantity_liters, abv, image)
 VALUES (:time, :name, :category, :quantityLiters, :abv, :image);
+
+lastInsertedId:
+SELECT last_insert_rowid();
 
 import:
 INSERT INTO drinkRecord(import_id, time, name, category, quantity_liters, abv, image)

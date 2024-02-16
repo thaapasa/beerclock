@@ -14,6 +14,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import fi.tuska.beerclock.drinks.drinkAndThen
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.drinks.create.AddDrinkToDateButton
@@ -25,22 +28,28 @@ import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
 import kotlinx.datetime.LocalDate
 
-
 class HistoryScreen(private val startDate: LocalDate? = null) : Screen {
 
     @Composable
     override fun Content() {
         val strings = Strings.get()
-        val vm = rememberWithDispose {
-            HistoryViewModel(startDate)
+        val navigator = LocalNavigator.currentOrThrow
+
+        val vm = rememberWithDispose(startDate) {
+            HistoryViewModel(startDate, navigator)
         }
 
-        LaunchedEffect(Unit) {
+        LaunchedEffect(vm) {
             vm.loadDrinks()
         }
 
         MainLayout(showTopBar = false,
-            actionButton = { AddDrinkToDateButton(date = vm.date) })
+            snackbarHostState = vm.snackbar,
+            actionButton = {
+                AddDrinkToDateButton(
+                    date = vm.date,
+                    onSelectDrink = drinkAndThen { navigator.pop() })
+            })
         { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
                 SegmentedButton {

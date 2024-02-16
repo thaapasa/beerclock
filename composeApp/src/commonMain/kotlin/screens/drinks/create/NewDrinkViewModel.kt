@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.screens.drinks.create
 
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
+import fi.tuska.beerclock.drinks.DrinkAction
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.logging.getLogger
@@ -9,7 +10,11 @@ import kotlinx.datetime.LocalDate
 
 private val logger = getLogger("NewDrinkScreen")
 
-class NewDrinkViewModel(proto: BasicDrinkInfo?, date: LocalDate?) : DrinkEditorViewModel() {
+class NewDrinkViewModel(
+    proto: BasicDrinkInfo?,
+    date: LocalDate?,
+    private val onSelectDrink: DrinkAction
+) : DrinkEditorViewModel() {
 
     val times = DrinkTimeService()
 
@@ -17,12 +22,11 @@ class NewDrinkViewModel(proto: BasicDrinkInfo?, date: LocalDate?) : DrinkEditorV
         setValues(proto ?: NewDrinkProto, times.defaultDrinkTime(date ?: times.currentDrinkDay()))
     }
 
-    fun addDrink(afterChanged: (() -> Unit)? = null) {
+    fun addDrink() {
         savingAction {
             val newDrink = toSaveDetails()
             logger.info("Adding drink to database: $newDrink")
-            drinkService.insertDrink(newDrink)
-            afterChanged?.invoke()
+            onSelectDrink(newDrink)
         }
     }
 }

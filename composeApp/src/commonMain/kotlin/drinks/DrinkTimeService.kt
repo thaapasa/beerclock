@@ -53,8 +53,8 @@ class DrinkTimeService : KoinComponent {
         return TimeInterval(start = dayStartTime(start), end = dayStartTime(end))
     }
 
-    fun defaultDrinkTime(date: LocalDate): Instant {
-        if (date == currentDrinkDay()) {
+    fun defaultDrinkTime(date: LocalDate?): Instant {
+        if (date == null || date == currentDrinkDay()) {
             return Clock.System.now()
         }
         return toInstant(LocalDateTime(date, LocalTime(18, 0, 0)))

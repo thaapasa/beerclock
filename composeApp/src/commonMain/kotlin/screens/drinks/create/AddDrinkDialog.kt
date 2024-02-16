@@ -7,6 +7,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
+import fi.tuska.beerclock.drinks.DrinkAction
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.drinks.editor.DrinkEditor
@@ -19,10 +20,10 @@ import kotlinx.datetime.LocalDate
 fun AddDrinkDialog(
     date: LocalDate? = null,
     proto: BasicDrinkInfo? = null,
-    onDrinksUpdated: (() -> Unit)? = null,
+    onSelectDrink: DrinkAction,
     onClose: () -> Unit,
 ) {
-    val vm = rememberWithDispose { NewDrinkViewModel(proto, date) }
+    val vm = rememberWithDispose { NewDrinkViewModel(proto, date, onSelectDrink) }
     val strings = Strings.get()
 
     FullScreenDialog(onDismissRequest = onClose) {
@@ -39,12 +40,7 @@ fun AddDrinkDialog(
                 textButton = { modifier ->
                     TextButton(
                         enabled = !vm.isSaving && vm.isValid(),
-                        onClick = {
-                            vm.addDrink {
-                                onDrinksUpdated?.invoke()
-                                onClose()
-                            }
-                        },
+                        onClick = vm::addDrink,
                         modifier = modifier
                     ) { Text(strings.drinkDialog.submit) }
                 }
