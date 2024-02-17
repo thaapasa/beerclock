@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.localization
 
 import fi.tuska.beerclock.drinks.Category
+import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.SingleUnitWeights
 import fi.tuska.beerclock.util.toWeekOfYear
 import fi.tuska.beerclock.util.zeroPad
@@ -92,6 +93,8 @@ object FiStrings : Strings {
     override val dialogClose = "Sulje"
     override val dialogEdit = "Muokkaa"
     override val dialogDelete = "Poista"
+    override val remove = "Poista"
+    override val cancel = "Peruuta"
 
     override fun countryName(countryCode: String) =
         Country.forIsoCode(countryCode)?.nameFi ?: countryCode
@@ -150,6 +153,7 @@ object FiStrings : Strings {
     object Home : Strings.HomeStrings {
         override val bacPermilles = "Promillet ‰"
         override val bacTime = "Aika"
+        override fun drinkAdded(drink: DrinkRecordInfo) = "Lisätty ${drink.name}"
     }
 
 
@@ -316,6 +320,8 @@ object FiStrings : Strings {
         override val prevDay = "Edellinen päivä"
         override val selectDay = "Valitse päivä"
         override val nextDay = "Seuraava päivä"
+        override fun drinkAdded(drink: DrinkRecordInfo) = "Lisätty ${drink.name}"
+        override fun drinkDeleted(drink: DrinkRecordInfo) = "Poistettu ${drink.name}"
     }
 
 

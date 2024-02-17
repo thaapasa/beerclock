@@ -26,9 +26,13 @@ import fi.tuska.beerclock.ui.components.SegmentDivider
 import fi.tuska.beerclock.ui.components.SegmentedButton
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
+import fi.tuska.beerclock.util.SuspendAction
 import kotlinx.datetime.LocalDate
 
-class HistoryScreen(private val startDate: LocalDate? = null) : Screen {
+class HistoryScreen(
+    private val startDate: LocalDate? = null,
+    private val initAction: SuspendAction<HistoryViewModel>? = null
+) : Screen {
 
     @Composable
     override fun Content() {
@@ -36,7 +40,7 @@ class HistoryScreen(private val startDate: LocalDate? = null) : Screen {
         val navigator = LocalNavigator.currentOrThrow
 
         val vm = rememberWithDispose(startDate) {
-            HistoryViewModel(startDate, navigator)
+            HistoryViewModel(startDate, initAction, navigator)
         }
 
         LaunchedEffect(vm) {
@@ -48,7 +52,9 @@ class HistoryScreen(private val startDate: LocalDate? = null) : Screen {
             actionButton = {
                 AddDrinkToDateButton(
                     date = vm.date,
-                    onSelectDrink = drinkAndThen { navigator.pop() })
+                    onSelectDrink = drinkAndThen { drink ->
+                        navigator.replace(HistoryScreen(vm.date) { it.showDrinkAdded(drink) })
+                    })
             })
         { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {

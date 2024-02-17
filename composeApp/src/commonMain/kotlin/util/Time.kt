@@ -16,7 +16,7 @@ import kotlin.time.DurationUnit
 private val logger = getLogger("TimeUtils")
 
 val ZeroHour = LocalTime(0, 0, 0)
-val MinutesInDay = 60 * 24
+const val MinutesInDay = 60 * 24
 
 fun LocalDate.toUTCInstant(): Instant {
     val l = LocalDateTime(date = this, time = ZeroHour)

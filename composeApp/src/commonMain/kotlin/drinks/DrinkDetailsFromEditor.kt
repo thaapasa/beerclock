@@ -30,5 +30,9 @@ data class DrinkDetailsFromEditor(
             val time = DrinkTimeService().defaultDrinkTime(date)
             return fromBasicInfo(basic, time)
         }
+
+        fun fromRecord(drink: DrinkRecordInfo): DrinkDetailsFromEditor {
+            return fromBasicInfo(drink, drink.time)
+        }
     }
 }

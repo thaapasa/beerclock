@@ -2,7 +2,9 @@ package fi.tuska.beerclock.screens.today
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,15 +19,19 @@ import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.images.AppIcon
+import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.components.BacStatusViewModel
 import fi.tuska.beerclock.ui.components.DateView
 import fi.tuska.beerclock.ui.components.GaugeValue
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
-import fi.tuska.beerclock.util.Action
+import fi.tuska.beerclock.util.SuspendAction
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -35,7 +41,7 @@ private val logger = getLogger("HomeViewModel")
 
 val pauseBetweenUpdates = 30.seconds
 
-class HomeViewModel(action: Action<HomeViewModel>? = null) : SnackbarViewModel(
+class HomeViewModel(initAction: SuspendAction<HomeViewModel>? = null) : SnackbarViewModel(
     SnackbarHostState()
 ),
     BacStatusViewModel, KoinComponent {
@@ -44,7 +50,7 @@ class HomeViewModel(action: Action<HomeViewModel>? = null) : SnackbarViewModel(
     private val prefs: GlobalUserPreferences = get()
 
     init {
-        action?.invoke(this)
+        initAction?.let { launch { it(this@HomeViewModel) } }
     }
 
     private val bacGauge =
@@ -76,6 +82,25 @@ class HomeViewModel(action: Action<HomeViewModel>? = null) : SnackbarViewModel(
             AppIcon.MOON.icon(
                 modifier = Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp)
             )
+        }
+    }
+
+    suspend fun showDrinkAdded(drink: DrinkRecordInfo) {
+        val strings = Strings.get()
+        withContext(Dispatchers.Main) {
+            val result =
+                snackbar.showSnackbar(
+                    strings.home.drinkAdded(drink),
+                    actionLabel = strings.remove,
+                    duration = SnackbarDuration.Short
+                )
+            if (result == SnackbarResult.ActionPerformed) {
+                // Remove added drink
+                withContext(Dispatchers.IO) {
+                    drinkService.deleteDrinkById(drink.id)
+                    loadTodaysDrinks()
+                }
+            }
         }
     }
 

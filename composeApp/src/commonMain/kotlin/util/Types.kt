@@ -1,3 +1,3 @@
 package fi.tuska.beerclock.util
 
-typealias Action<T> = (vm: T) -> Unit
+typealias SuspendAction<T> = suspend (vm: T) -> Unit

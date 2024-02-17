@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.localization
 
 import fi.tuska.beerclock.drinks.Category
+import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.SingleUnitWeights
 import fi.tuska.beerclock.util.toWeekOfYear
 import fi.tuska.beerclock.util.zeroPad
@@ -81,6 +82,8 @@ object EnStrings : Strings {
     override val dialogClose = "Close"
     override val dialogEdit = "Modify"
     override val dialogDelete = "Delete"
+    override val remove = "Remove"
+    override val cancel = "Cancel"
 
     override fun countryName(countryCode: String) =
         Country.forIsoCode(countryCode)?.nameEn ?: countryCode
@@ -140,6 +143,7 @@ object EnStrings : Strings {
     object Home : Strings.HomeStrings {
         override val bacPermilles = "BAC ‰"
         override val bacTime = "Time"
+        override fun drinkAdded(drink: DrinkRecordInfo) = "Added ${drink.name}"
     }
 
 
@@ -307,6 +311,8 @@ object EnStrings : Strings {
         override val prevDay = "Previous day"
         override val selectDay = "Pick a day"
         override val nextDay = "Next day"
+        override fun drinkAdded(drink: DrinkRecordInfo) = "Added ${drink.name}"
+        override fun drinkDeleted(drink: DrinkRecordInfo) = "Deleted ${drink.name}"
     }
 
 

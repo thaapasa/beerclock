@@ -16,13 +16,13 @@ import fi.tuska.beerclock.screens.drinks.create.NewDrinkButton
 import fi.tuska.beerclock.ui.components.BacStatusCard
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
-import fi.tuska.beerclock.util.Action
+import fi.tuska.beerclock.util.SuspendAction
 
-class HomeScreen(private val action: Action<HomeViewModel>? = null) : Screen {
+class HomeScreen(private val initAction: SuspendAction<HomeViewModel>? = null) : Screen {
 
     @Composable
     override fun Content() {
-        val vm = rememberWithDispose { HomeViewModel(action) }
+        val vm = rememberWithDispose { HomeViewModel(initAction) }
         val navigator = LocalNavigator.currentOrThrow
 
         LaunchedEffect(Unit) {
@@ -32,7 +32,7 @@ class HomeScreen(private val action: Action<HomeViewModel>? = null) : Screen {
         MainLayout(
             actionButton = {
                 NewDrinkButton(drinkAndThen { drink ->
-                    navigator.replaceAll(HomeScreen { it.showMessage(drink.name) })
+                    navigator.replaceAll(HomeScreen { it.showDrinkAdded(drink) })
                 })
             },
             snackbarHostState = vm.snackbar,

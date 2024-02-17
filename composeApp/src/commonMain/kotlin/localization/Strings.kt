@@ -2,6 +2,7 @@ package fi.tuska.beerclock.localization
 
 import androidx.compose.ui.text.intl.Locale
 import fi.tuska.beerclock.drinks.Category
+import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.settings.Gender
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import kotlinx.datetime.DayOfWeek
@@ -57,6 +58,8 @@ interface Strings {
     val dialogClose: String
     val dialogEdit: String
     val dialogDelete: String
+    val remove: String
+    val cancel: String
 
     fun countryName(countryCode: String): String
     fun languageName(locale: AppLocale): String
@@ -125,6 +128,7 @@ interface Strings {
     interface HomeStrings {
         val bacPermilles: String
         val bacTime: String
+        fun drinkAdded(drink: DrinkRecordInfo): String
     }
 
 
@@ -249,6 +253,8 @@ interface Strings {
         val prevDay: String
         val selectDay: String
         val nextDay: String
+        fun drinkAdded(drink: DrinkRecordInfo): String
+        fun drinkDeleted(drink: DrinkRecordInfo): String
     }
 
 
