@@ -28,6 +28,7 @@ import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.images.largeImage
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.drinks.DrinkInfoTable
 
 // Lifted higher to show on top of the drink list
 val elevation = 24.dp
@@ -70,6 +71,12 @@ fun DrinkItemInfoDialog(
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+                Divider(
+                    thickness = 1.dp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                DrinkInfoTable(drink)
 
                 DrinkInfoDialogButtons(
                     drink,

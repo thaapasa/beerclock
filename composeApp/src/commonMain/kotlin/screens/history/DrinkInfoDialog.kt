@@ -28,6 +28,7 @@ import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.images.largeImage
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.drinks.DrinkInfoTable
 
 // Lifted higher to show on top of the drink list
 val elevation = 24.dp
@@ -75,7 +76,7 @@ fun DrinkInfoDialog(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                DrinkInfoTable(drink)
+                DrinkInfoTable(drink, time = drink.time)
                 DrinkInfoDialogButtons(
                     drink,
                     onModify = { onModify?.invoke(it).also { onClose() } },
@@ -129,25 +130,6 @@ fun DrinkInfoDialogButtons(
             }
         }
     }
-}
-
-@Composable
-fun DrinkInfoTable(drink: DrinkRecordInfo) {
-    val strings = Strings.get()
-    DrinkInfoRow(strings.drink.timeInfoLabel, strings.drink.drinkTime(drink.time))
-    DrinkInfoRow(
-        strings.drink.sizeInfoLabel,
-        strings.drink.sizeInfo(drink.quantityCl, abvPercentage = drink.abvPercentage)
-    )
-    DrinkInfoRow(strings.drink.unitsInfoLabel, strings.drink.unitsInfo(drink.units()))
-    DrinkInfoRow(
-        strings.drink.alcoholGramsInfoLabel,
-        strings.drink.alcoholAmountInfo(grams = drink.alcoholGrams, liters = drink.alcoholLiters)
-    )
-    DrinkInfoRow(
-        strings.drink.burnOffTimeInfoLabel,
-        strings.drink.burnOffTimeInfo(drink.burnOffTime())
-    )
 }
 
 @Composable
