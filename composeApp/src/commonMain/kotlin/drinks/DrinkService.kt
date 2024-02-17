@@ -1,16 +1,19 @@
 package fi.tuska.beerclock.drinks
 
 import fi.tuska.beerclock.database.BeerDatabase
+import fi.tuska.beerclock.database.fromDbTime
 import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.settings.UserPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.minus
 import org.koin.core.component.KoinComponent
@@ -81,6 +84,20 @@ class DrinkService : KoinComponent {
         return flow.map { it.map(::DrinkInfo) }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun flowDrinkDetails(drink: BasicDrinkInfo?): Flow<DrinkDetails?> {
+        if (drink == null) {
+            return flow { emit(null) }
+        }
+        return db.drinkRecordQueries.queryDetails(drink.name).asRowFlow().map {
+            DrinkDetails(
+                timesDrunk = it.count,
+                quantityLiters = it.quantityLiters ?: 0.0,
+                firstTimeDrunk = it.minTime?.let(Instant::fromDbTime),
+                lastTimeDrunk = it.maxTime?.let(Instant::fromDbTime),
+            )
+        }
+    }
+
     suspend fun libraryHasDrinks(): Boolean {
         val result = withContext(Dispatchers.IO) {
             db.drinkLibraryQueries.hasDrinks().executeAsList()
@@ -109,7 +126,7 @@ class DrinkService : KoinComponent {
             }
         }
     }
-    
+
 
     suspend fun insertDrinkInfo(drink: DrinkDetailsFromEditor) {
         withContext(Dispatchers.IO) {

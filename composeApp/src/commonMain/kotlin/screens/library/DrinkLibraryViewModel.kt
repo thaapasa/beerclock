@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.screens.library
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,6 +10,7 @@ import fi.tuska.beerclock.database.DrinkLibrary
 import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.Category
+import fi.tuska.beerclock.drinks.DrinkDetails
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.images.DrinkImage
@@ -17,6 +19,7 @@ import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.screens.library.create.CreateDrinkInfoDialog
 import fi.tuska.beerclock.screens.library.modify.EditDrinkInfoDialog
 import fi.tuska.beerclock.ui.composables.ViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -45,6 +48,7 @@ private val NewDrink =
         )
     )
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class DrinkLibraryViewModel : ViewModel(), KoinComponent {
     private val drinks = DrinkService()
 
@@ -66,6 +70,13 @@ class DrinkLibraryViewModel : ViewModel(), KoinComponent {
                 started = SharingStarted.WhileSubscribed(5_000)
             )
 
+    val drinkDetails: StateFlow<DrinkDetails?> =
+        snapshotFlow { viewingDrink }.flatMapLatest { drinks.flowDrinkDetails(it) }.stateIn(
+            scope = this,
+            initialValue = null,
+            started = SharingStarted.WhileSubscribed(5_000)
+        )
+
     inline fun selectedCategories(): Set<Category> = selections.keys
     fun toggleCategory(category: Category) {
         logger.info("Toggling category $category")
@@ -81,7 +92,7 @@ class DrinkLibraryViewModel : ViewModel(), KoinComponent {
             drinks.addExampleDrinks()
         }
     }
-    
+
     fun addNewDrink() {
         this.viewingDrink = null
         this.editingDrink = NewDrink
@@ -115,9 +126,11 @@ class DrinkLibraryViewModel : ViewModel(), KoinComponent {
     @Composable
     fun EditorDialog() {
         val viewDrink = viewingDrink
+        val details by drinkDetails.collectAsState()
         if (viewDrink != null) {
             DrinkItemInfoDialog(
                 viewDrink,
+                details,
                 onClose = this::closeView,
                 onModify = this::editDrink,
                 onDelete = this::deleteDrink

@@ -136,6 +136,10 @@ object FiStrings : Strings {
         override val unitsInfoLabel = "Annoksia"
         override val alcoholGramsInfoLabel = "Puhdasta alkoholia"
         override val burnOffTimeInfoLabel = "Alkoholin palamisaika"
+        override val totalTimesLabel = "Juontikertoja"
+        override val totalQuantityLabel = "Juotu yhteensä"
+        override val firstTimeLabel = "Aikaisin kirjaus"
+        override val lastTimeLabel = "Viimeisin kirjaus"
     }
 
 

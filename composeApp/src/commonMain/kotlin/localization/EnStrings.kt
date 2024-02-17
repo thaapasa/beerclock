@@ -126,6 +126,10 @@ object EnStrings : Strings {
         override val unitsInfoLabel = "Standard units"
         override val alcoholGramsInfoLabel = "Pure alcohol content"
         override val burnOffTimeInfoLabel = "Burn-off time"
+        override val totalTimesLabel = "Times drunk"
+        override val totalQuantityLabel = "Total quantity"
+        override val firstTimeLabel = "Earliest record"
+        override val lastTimeLabel = "Latest record"
     }
 
 

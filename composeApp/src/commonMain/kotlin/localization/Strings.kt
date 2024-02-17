@@ -41,6 +41,9 @@ interface Strings {
     val dec1F: (value: Double) -> String
     val dec2F: (value: Double) -> String
 
+    fun dec1FU(value: Double, unit: String) = "${dec1F(value)} $unit"
+    fun dec2FU(value: Double, unit: String) = "${dec2F(value)} $unit"
+
     fun weekday(day: DayOfWeek): String
     fun weekdayShort(day: DayOfWeek): String
     fun month(day: Month): String
@@ -87,8 +90,8 @@ interface Strings {
         val image: String
         fun unitLabel(units: Double): String
         fun units(units: Double) = get().dec2F(units)
-        fun abv(abvPercentage: Double) = "${get().dec1F(abvPercentage)} %"
-        fun quantity(quantityCl: Double) = "${get().dec1F(quantityCl)} cl"
+        fun abv(abvPercentage: Double) = get().dec1FU(abvPercentage, "%")
+        fun quantity(quantityCl: Double) = get().dec1FU(quantityCl, "cl")
 
         fun drinkSize(quantityCl: Double, abvPercentage: Double): String =
             "${quantity(quantityCl)} ${abv(abvPercentage)}"
@@ -103,6 +106,16 @@ interface Strings {
         val unitsInfoLabel: String
         val alcoholGramsInfoLabel: String
         val burnOffTimeInfoLabel: String
+        val totalTimesLabel: String
+        val totalQuantityLabel: String
+        val firstTimeLabel: String
+        val lastTimeLabel: String
+        fun totalQuantity(quantityLiters: Double): String {
+            val s = get()
+            return if (quantityLiters < 1.0) s.dec1FU(quantityLiters * 100.0, "cl")
+            else s.dec1FU(quantityLiters, "l")
+        }
+
         fun unitsInfo(units: Double) = units(units)
         fun sizeInfo(quantityCl: Double, abvPercentage: Double) =
             drinkSize(quantityCl, abvPercentage)
@@ -271,6 +284,5 @@ interface Strings {
             Gender.MALE -> gender.male
             Gender.FEMALE -> gender.female
         }
-
 
 }

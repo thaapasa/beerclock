@@ -70,3 +70,16 @@ fun <T : Any> Query<T>.asFlow(): Flow<List<T>> = callbackFlow {
         removeListener(listener)
     }
 }
+
+fun <T : Any> Query<T>.asRowFlow(): Flow<T> = callbackFlow {
+    val listener = Query.Listener {
+        val row = executeAsOne()
+        trySend(row)
+    }
+    addListener(listener)
+    val row = executeAsOne()
+    trySend(row)
+    awaitClose {
+        removeListener(listener)
+    }
+}

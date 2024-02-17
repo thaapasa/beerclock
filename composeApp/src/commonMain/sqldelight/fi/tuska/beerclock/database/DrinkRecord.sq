@@ -22,6 +22,14 @@ FROM drinkRecord
 WHERE time >= :startTime AND time < :endTime
 ORDER BY time ASC;
 
+queryDetails:
+SELECT COUNT(*) AS count,
+  MIN(time) AS minTime,
+  MAX(time) AS maxTime,
+  SUM(quantity_liters) AS quantityLiters
+FROM drinkRecord
+WHERE name = :name;
+
 countUnitsByTime:
 SELECT SUM(quantity_liters * abv * :multiplier)
 FROM drinkRecord

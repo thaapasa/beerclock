@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import fi.tuska.beerclock.drinks.DrinkDetails
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.images.largeImage
@@ -36,6 +37,7 @@ val elevation = 24.dp
 @Composable
 fun DrinkItemInfoDialog(
     drink: DrinkInfo,
+    drinkDetails: DrinkDetails?,
     onClose: () -> Unit,
     onModify: ((drink: DrinkInfo) -> Unit)? = null,
     onDelete: ((drink: DrinkInfo) -> Unit)? = null,
@@ -76,7 +78,7 @@ fun DrinkItemInfoDialog(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                DrinkInfoTable(drink)
+                DrinkInfoTable(drink, drinkDetails = drinkDetails)
 
                 DrinkInfoDialogButtons(
                     drink,
