@@ -264,6 +264,10 @@ object FiStrings : Strings {
             "Luotu varmuuskopio${if (filename != null) "tiedostoon $filename" else ""}: $records kirjausta, $libraryDrinks juomaa juomakirjastossa"
 
         override val exportDataMsgError = "Varmuuskopion luominen epäonnistui, yritä uudelleen"
+        override fun importDataMsgComplete(filename: String?, libraryDrinks: Long, records: Long) =
+            "Ladattu varmuuskopio${if (filename != null) "tiedostosta $filename" else ""}: $records kirjausta, $libraryDrinks juomaa juomakirjastossa"
+
+        override val importDataMsgError = "Varmuuskopion lataaminen epäonnistui, yritä uudelleen"
 
         override val importJAlcoMeterTitle = "Tuo tiedot jAlkaMetristä"
         override val importJAlcoMeterDescriptions = listOf(

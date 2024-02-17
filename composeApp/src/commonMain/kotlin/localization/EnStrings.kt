@@ -252,6 +252,11 @@ object EnStrings : Strings {
 
         override val exportDataMsgError = "There was an error exporting the data, please try again"
 
+        override fun importDataMsgComplete(filename: String?, libraryDrinks: Long, records: Long) =
+            "Imported $records drink records and $libraryDrinks drinks from backup file ${if (filename != null) "$filename" else "succesfully"}"
+
+        override val importDataMsgError = "There was an error importing the data, please try again"
+
         override val importJAlcoMeterTitle = "Import data from jAlcoMeter"
         override val importJAlcoMeterDescriptions = listOf(
             "You can import data from jAlcoMeter into BeerClock. For this you need to first select 'Create backup' from jAlcometer settings, and then locate the created backup file.",

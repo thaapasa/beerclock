@@ -208,6 +208,8 @@ interface Strings {
         val importDb: String
         fun exportDataMsgComplete(filename: String?, libraryDrinks: Long, records: Long): String
         val exportDataMsgError: String
+        fun importDataMsgComplete(filename: String?, libraryDrinks: Long, records: Long): String
+        val importDataMsgError: String
 
         val importJAlcoMeterTitle: String
         val importJAlcoMeterDescriptions: List<String>
