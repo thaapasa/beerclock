@@ -23,9 +23,9 @@ import fi.tuska.beerclock.localization.Strings
 @Composable
 fun SubLayout(
     title: String,
+    snackbarHostState: SnackbarHostState? = null,
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
-    snackbarHostState: SnackbarHostState? = null,
 ) {
     val strings = Strings.get()
     val navigator = LocalNavigator.currentOrThrow

@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.screens.library
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,7 +19,7 @@ import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.screens.library.create.CreateDrinkInfoDialog
 import fi.tuska.beerclock.screens.library.modify.EditDrinkInfoDialog
-import fi.tuska.beerclock.ui.composables.ViewModel
+import fi.tuska.beerclock.ui.composables.SnackbarViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -49,9 +50,8 @@ private val NewDrink =
     )
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class DrinkLibraryViewModel : ViewModel(), KoinComponent {
+class DrinkLibraryViewModel : SnackbarViewModel(SnackbarHostState()), KoinComponent {
     private val drinks = DrinkService()
-
     var selections by mutableStateOf<Map<Category, Boolean>>(mapOf())
         private set
 

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,7 +38,8 @@ object DrinkLibraryScreen : Screen {
                     AppIcon.ADD_CIRCLE.icon(tint = MaterialTheme.colorScheme.primary)
                 }
             },
-            content = { innerPadding -> DrinkLibraryPage(innerPadding, vm) })
+            snackbarHostState = vm.snackbar
+        ) { innerPadding -> DrinkLibraryPage(innerPadding, vm) }
     }
 }
 
@@ -55,18 +57,13 @@ fun DrinkLibraryPage(innerPadding: PaddingValues, vm: DrinkLibraryViewModel) {
             modifier = Modifier.fillMaxWidth().weight(1f)
                 .clip(RoundedCornerShape(12.dp))
         ) {
-            items(
-                count = searchResults.size,
-                key = { index -> searchResults[index].key },
-                itemContent = { index ->
-                    val drink = searchResults[index]
-                    BasicDrinkItem(drink = drink, onClick = {
-                        if (drink is DrinkInfo) {
-                            vm.viewDrink(drink)
-                        }
-                    })
-                }
-            )
+            items(searchResults, key = { it.key }) { drink ->
+                BasicDrinkItem(drink = drink, onClick = {
+                    if (drink is DrinkInfo) {
+                        vm.viewDrink(drink)
+                    }
+                })
+            }
         }
         vm.EditorDialog()
     }

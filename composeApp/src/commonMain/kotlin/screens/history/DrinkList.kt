@@ -14,7 +14,7 @@ fun DrinkList(
     modifier: Modifier = Modifier
 ) {
     return LazyColumn(modifier = modifier) {
-        items(drinkList) {
+        items(drinkList, key = { it.id }) {
             DrinkListItem(it, onModify = onModify, onDelete = onDelete)
         }
     }

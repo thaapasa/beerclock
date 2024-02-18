@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
@@ -47,21 +48,14 @@ class NewDrinkSearchScreen(
                     leadingIcon = { AppIcon.SEARCH.icon() },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        items(
-                            count = searchResults.size,
-                            key = { index -> searchResults[index].key },
-                            itemContent = { index ->
-                                val drink = searchResults[index]
-                                BasicDrinkItem(
-                                    drink = drink,
-                                    onClick = vm::selectDrink,
-                                    onLongClick = vm::editDrink
-                                )
-                            }
-                        )
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        items(searchResults, key = { it.key }) {
+                            BasicDrinkItem(
+                                drink = it,
+                                onClick = vm::selectDrink,
+                                onLongClick = vm::editDrink
+                            )
+                        }
                     }
                 }
             }
