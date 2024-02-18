@@ -172,6 +172,8 @@ object EnStrings : Strings {
         override val newDrinkTitle = "Add new drink"
         override val editDrinkTitle = "Modify drink"
         override val saveDrinkTitle = "Save"
+        override val addDefaultDrinks = "Add default drinks"
+        override val defaultDrinksAdded = "Default drinks added to library!"
     }
 
 

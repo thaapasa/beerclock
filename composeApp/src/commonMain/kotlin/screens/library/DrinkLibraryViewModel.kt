@@ -14,11 +14,13 @@ import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkDetails
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkService
+import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.screens.library.create.CreateDrinkInfoDialog
 import fi.tuska.beerclock.screens.library.modify.EditDrinkInfoDialog
+import fi.tuska.beerclock.screens.newdrink.TextDrinkInfo
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
@@ -58,15 +60,22 @@ class DrinkLibraryViewModel : SnackbarViewModel(SnackbarHostState()), KoinCompon
     private var viewingDrink by mutableStateOf<DrinkInfo?>(null)
     private var editingDrink by mutableStateOf<DrinkInfo?>(null)
 
+    private val exampleDrinksItem = TextDrinkInfo(
+        key = "default-drinks",
+        name = Strings.get().library.addDefaultDrinks,
+        icon = AppIcon.DRINK,
+        onClick = this::addExampleDrinks
+    )
+
     val libraryResults: StateFlow<List<BasicDrinkInfo>> =
         snapshotFlow { selections }
             .flatMapLatest {
                 drinks.flowDrinksForCategories(it.keys)
             }.map {
-                it.partitionByCategory().toListWithHeaders()
+                it.partitionByCategory().toListWithHeaders() + listOf(exampleDrinksItem)
             }.stateIn(
                 scope = this,
-                initialValue = listOf(),
+                initialValue = listOf(exampleDrinksItem),
                 started = SharingStarted.WhileSubscribed(5_000)
             )
 
@@ -90,6 +99,7 @@ class DrinkLibraryViewModel : SnackbarViewModel(SnackbarHostState()), KoinCompon
     fun addExampleDrinks() {
         launch {
             drinks.addExampleDrinks()
+            showMessage(Strings.get().library.defaultDrinksAdded)
         }
     }
 

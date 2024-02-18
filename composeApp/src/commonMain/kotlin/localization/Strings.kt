@@ -166,6 +166,8 @@ interface Strings {
         val newDrinkTitle: String
         val editDrinkTitle: String
         val saveDrinkTitle: String
+        val addDefaultDrinks: String
+        val defaultDrinksAdded: String
     }
 
 

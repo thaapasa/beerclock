@@ -182,6 +182,8 @@ object FiStrings : Strings {
         override val newDrinkTitle = "Lisää juoma"
         override val editDrinkTitle = "Muokkaa juomaa"
         override val saveDrinkTitle = "Tallenna"
+        override val addDefaultDrinks = "Lisää esimerkkijuomat"
+        override val defaultDrinksAdded = "Esimerkkijuomat lisätty kirjastoon!"
     }
 
 
