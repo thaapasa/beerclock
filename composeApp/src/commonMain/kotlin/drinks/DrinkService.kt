@@ -35,7 +35,7 @@ class DrinkService : KoinComponent {
             ).executeAsList()
         }
         logger.info("Found ${drinks.size} drinks for $date")
-        return drinks.map(::DrinkRecordInfo)
+        return drinks.map(::DrinkRecordInfo).reversed()
     }
 
     fun flowDrinksForDay(date: LocalDate): Flow<List<DrinkRecordInfo>> {
@@ -43,7 +43,7 @@ class DrinkService : KoinComponent {
         return db.drinkRecordQueries.selectByTime(
             startTime = range.start.toDbTime(),
             endTime = range.end.toDbTime(),
-        ).asFlow().map { it.map(::DrinkRecordInfo) }.flowOn(Dispatchers.IO)
+        ).asFlow().map { it.map(::DrinkRecordInfo).reversed() }.flowOn(Dispatchers.IO)
     }
 
     suspend fun getDrinksForHomeScreen(today: LocalDate): List<DrinkRecordInfo> {

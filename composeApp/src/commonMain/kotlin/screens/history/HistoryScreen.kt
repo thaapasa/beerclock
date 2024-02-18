@@ -32,7 +32,9 @@ import kotlinx.datetime.LocalDate
 
 class HistoryScreen(
     private val startDate: LocalDate? = null,
-    private val initAction: SuspendAction<HistoryViewModel>? = null
+    private val initialDailyGaugeValue: Double = 0.0,
+    private val initialWeeklyGaugeValue: Double = 0.0,
+    private val initAction: SuspendAction<HistoryViewModel>? = null,
 ) : Screen {
 
     @Composable
@@ -41,7 +43,13 @@ class HistoryScreen(
         val navigator = LocalNavigator.currentOrThrow
 
         val vm = rememberWithDispose(startDate) {
-            HistoryViewModel(startDate, initAction, navigator)
+            HistoryViewModel(
+                startDate,
+                initAction,
+                initialDailyGaugeValue = initialDailyGaugeValue,
+                initialWeeklyGaugeValue = initialWeeklyGaugeValue,
+                navigator = navigator
+            )
         }
 
         MainLayout(showTopBar = false,
@@ -78,7 +86,7 @@ class HistoryScreen(
                 BacStatusCard(vm, modifier = Modifier.padding(top = 16.dp))
                 val drinks by vm.drinks.collectAsState()
                 DrinkList(
-                    drinks,
+                    drinks.valueOrNull() ?: listOf(),
                     modifier = Modifier.padding(top = 16.dp)
                         .clip(RoundedCornerShape(16.dp)),
                     onModify = vm::modifyDrink,

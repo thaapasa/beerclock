@@ -31,11 +31,12 @@ import kotlin.math.min
 const val gapDegrees = 60.0f
 
 class GaugeValue(
+    initialValue: Double = 0.0,
     val icon: @Composable (() -> Unit)? = null,
     val appIcon: AppIcon? = null,
     maxValue: Double = 1.0,
 ) {
-    var value by mutableStateOf(0.0)
+    var value by mutableStateOf(initialValue)
         private set
     private var maxValue by mutableStateOf(max(maxValue, 0.1))
 

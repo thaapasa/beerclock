@@ -24,13 +24,13 @@ import fi.tuska.beerclock.ui.components.BacStatusViewModel
 import fi.tuska.beerclock.ui.components.DateView
 import fi.tuska.beerclock.ui.components.GaugeValue
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
+import fi.tuska.beerclock.util.DataState
 import fi.tuska.beerclock.util.SuspendAction
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -43,10 +43,11 @@ import org.koin.core.component.get
 
 private val logger = getLogger("HistoryViewModel")
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class HistoryViewModel(
     atDate: LocalDate?,
     initAction: SuspendAction<HistoryViewModel>? = null,
+    initialDailyGaugeValue: Double = 0.0,
+    initialWeeklyGaugeValue: Double = 0.0,
     private val navigator: Navigator
 ) :
     SnackbarViewModel(SnackbarHostState()),
@@ -58,25 +59,32 @@ class HistoryViewModel(
     private val prefs: GlobalUserPreferences = get()
 
     val date = atDate ?: times.currentDrinkDay()
-    val drinks: StateFlow<List<DrinkRecordInfo>> =
-        drinkService.flowDrinksForDay(date)
-            .mapLatest { it.reversed() }
+    val drinks: StateFlow<DataState<List<DrinkRecordInfo>>> =
+        drinkService.flowDrinksForDay(date).map { DataState.Success(it) }
             .stateIn(
                 scope = this,
-                initialValue = listOf(),
+                initialValue = DataState.Initial,
                 started = SharingStarted.WhileSubscribed(5_000)
             )
 
     val weeklyUnits: StateFlow<Double> = drinkService.flowUnitsForWeek(date, prefs.prefs).stateIn(
         scope = this,
-        initialValue = 0.0,
+        initialValue = initialWeeklyGaugeValue,
         started = SharingStarted.WhileSubscribed(5_000)
     )
 
     private val dailyUnitsGauge =
-        GaugeValue(appIcon = AppIcon.DRINK, maxValue = prefs.prefs.maxDailyUnits)
+        GaugeValue(
+            initialDailyGaugeValue,
+            appIcon = AppIcon.DRINK,
+            maxValue = prefs.prefs.maxDailyUnits
+        )
     private val weeklyUnitsGauge =
-        GaugeValue(appIcon = AppIcon.CALENDAR_WEEK, maxValue = prefs.prefs.maxWeeklyUnits)
+        GaugeValue(
+            initialWeeklyGaugeValue,
+            appIcon = AppIcon.CALENDAR_WEEK,
+            maxValue = prefs.prefs.maxWeeklyUnits
+        )
 
     override val gauges = listOf(dailyUnitsGauge, weeklyUnitsGauge)
 
@@ -89,7 +97,10 @@ class HistoryViewModel(
         }
         launch {
             drinks.collect { drinks ->
-                dailyUnitsGauge.setValue(drinks.sumOf { it.units() }, prefs.prefs.maxDailyUnits)
+                dailyUnitsGauge.setValue(
+                    drinks.mapOr({ it.sumOf { it.units() } }, initialDailyGaugeValue),
+                    prefs.prefs.maxDailyUnits
+                )
             }
         }
     }
@@ -139,7 +150,13 @@ class HistoryViewModel(
 
     private var editingDrink by mutableStateOf<DrinkRecordInfo?>(null)
 
-    fun selectDay(date: LocalDate) = navigator.replace(HistoryScreen(date))
+    fun selectDay(date: LocalDate) = navigator.replace(
+        HistoryScreen(
+            date,
+            initialDailyGaugeValue = dailyUnitsGauge.value,
+            initialWeeklyGaugeValue = weeklyUnitsGauge.value
+        )
+    )
 
     fun nextDay() = selectDay(date.plus(1, DateTimeUnit.DAY))
     fun prevDay() = selectDay(date.minus(1, DateTimeUnit.DAY))
