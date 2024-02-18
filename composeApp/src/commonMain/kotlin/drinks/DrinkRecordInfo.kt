@@ -3,6 +3,7 @@ package fi.tuska.beerclock.drinks
 import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.database.fromDbTime
 import fi.tuska.beerclock.images.DrinkImage
+import io.github.koalaplot.core.util.toString
 import kotlinx.datetime.Instant
 
 /**
@@ -20,4 +21,7 @@ class DrinkRecordInfo(record: DrinkRecord) : BasicDrinkInfo(
 
     /** When was this drink consumed */
     val time = Instant.fromDbTime(record.time)
+
+    override fun toString() =
+        "$id: $name (${quantityCl.toString(1)} cl ${abvPercentage.toString(1)} %) at $time"
 }

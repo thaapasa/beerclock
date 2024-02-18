@@ -109,14 +109,14 @@ class DrinkService : KoinComponent {
         withContext(Dispatchers.IO) {
             db.drinkRecordQueries.deleteById(id = id)
         }
-        logger.info("Deleted drink $id")
+        logger.info("Deleted drink record $id")
     }
 
     suspend fun deleteDrinkInfoById(id: Long): Unit {
         withContext(Dispatchers.IO) {
             db.drinkLibraryQueries.deleteById(id = id)
         }
-        logger.info("Deleted drink $id")
+        logger.info("Deleted drink library entry $id")
     }
 
     suspend fun insertDrink(drink: DrinkDetailsFromEditor): DrinkRecordInfo {

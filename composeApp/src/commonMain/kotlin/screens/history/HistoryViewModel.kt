@@ -18,6 +18,7 @@ import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.screens.drinks.modify.EditDrinkDialog
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.components.BacStatusViewModel
@@ -35,6 +36,8 @@ import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+
+private val logger = getLogger("HistoryViewModel")
 
 class HistoryViewModel(
     atDate: LocalDate?,
@@ -67,7 +70,6 @@ class HistoryViewModel(
         DateView(date, modifier = Modifier.padding(16.dp))
     }
 
-
     suspend fun showDrinkAdded(drink: DrinkRecordInfo) {
         val strings = Strings.get()
         withContext(Dispatchers.Main) {
@@ -99,7 +101,9 @@ class HistoryViewModel(
             if (result == SnackbarResult.ActionPerformed) {
                 // Remove added drink
                 withContext(Dispatchers.IO) {
-                    drinkService.insertDrink(DrinkDetailsFromEditor.fromRecord(drink))
+                    val restored =
+                        drinkService.insertDrink(DrinkDetailsFromEditor.fromRecord(drink))
+                    logger.info("Restored $restored to db")
                     loadDrinks()
                 }
             }
@@ -110,8 +114,8 @@ class HistoryViewModel(
 
     fun loadDrinks() {
         launch {
-            drinks.clear()
             val newDrinks = drinkService.getDrinksForDay(date).reversed()
+            drinks.clear()
             drinks.addAll(newDrinks)
             updateStatus()
         }
@@ -130,8 +134,8 @@ class HistoryViewModel(
 
     fun deleteDrink(drink: DrinkRecordInfo) {
         launch {
-            drinkService.deleteDrinkById(drink.id)
             drinks.remove(drink)
+            drinkService.deleteDrinkById(drink.id)
             updateStatus()
             showDrinkDeleted(drink)
         }

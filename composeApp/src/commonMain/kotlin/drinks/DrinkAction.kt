@@ -8,8 +8,9 @@ private val logger = getLogger("DrinkAction")
 
 /** Default implementation for DrinkAction: Just drink it */
 val drinkTheDrink: DrinkAction = { drink ->
-    logger.info("Marking new drink: $drink")
-    DrinkService().insertDrink(drink)
+    val inserted = DrinkService().insertDrink(drink)
+    logger.info("Marking new drink: $drink with id ${inserted.id}")
+    inserted
 }
 
 fun drinkAndThen(andThen: (drink: DrinkRecordInfo) -> Unit): DrinkAction {

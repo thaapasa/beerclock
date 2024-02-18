@@ -14,6 +14,7 @@ import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.images.smallImage
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.components.UnitAvatar
+import fi.tuska.beerclock.ui.composables.SwipeControl
 
 @Composable
 fun DrinkListItem(
@@ -23,23 +24,29 @@ fun DrinkListItem(
 ) {
     val strings = Strings.get()
     var selected by remember { mutableStateOf(false) }
-    ListItem(
-        overlineContent = { Text(strings.drink.drinkTime(drink.time)) },
-        headlineContent = { Text(drink.name) },
-        supportingContent = {
-            Text(
-                strings.drink.drinkSize(
-                    quantityCl = drink.quantityCl,
-                    abvPercentage = drink.abvPercentage
+    SwipeControl(
+        onModify = { onModify?.invoke(drink) },
+        onDelete = { onDelete?.invoke(drink) },
+    ) {
+        ListItem(
+            overlineContent = { Text(strings.drink.drinkTime(drink.time)) },
+            headlineContent = { Text(drink.name) },
+            supportingContent = {
+                Text(
+                    strings.drink.drinkSize(
+                        quantityCl = drink.quantityCl,
+                        abvPercentage = drink.abvPercentage
+                    )
                 )
-            )
-        },
-        leadingContent = { drink.image.smallImage() },
-        trailingContent = { UnitAvatar(units = drink.units()) },
-        modifier = Modifier.clickable { selected = !selected },
-        tonalElevation = 8.dp,
-        shadowElevation = 16.dp
-    )
+            },
+            leadingContent = { drink.image.smallImage() },
+            trailingContent = { UnitAvatar(units = drink.units()) },
+            modifier = Modifier.clickable { selected = !selected },
+            tonalElevation = 8.dp,
+            shadowElevation = 16.dp
+        )
+    }
+
     if (selected) {
         DrinkInfoDialog(
             drink,
