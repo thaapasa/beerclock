@@ -6,7 +6,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -27,7 +26,12 @@ import fi.tuska.beerclock.ui.components.GaugeValue
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
 import fi.tuska.beerclock.util.SuspendAction
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.DateTimeUnit
@@ -39,6 +43,7 @@ import org.koin.core.component.get
 
 private val logger = getLogger("HistoryViewModel")
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class HistoryViewModel(
     atDate: LocalDate?,
     initAction: SuspendAction<HistoryViewModel>? = null,
@@ -49,10 +54,24 @@ class HistoryViewModel(
     KoinComponent {
     private val times = DrinkTimeService()
     private val drinkService = DrinkService()
-    val drinks = mutableStateListOf<DrinkRecordInfo>()
+
     private val prefs: GlobalUserPreferences = get()
 
     val date = atDate ?: times.currentDrinkDay()
+    val drinks: StateFlow<List<DrinkRecordInfo>> =
+        drinkService.flowDrinksForDay(date)
+            .mapLatest { it.reversed() }
+            .stateIn(
+                scope = this,
+                initialValue = listOf(),
+                started = SharingStarted.WhileSubscribed(5_000)
+            )
+
+    val weeklyUnits: StateFlow<Double> = drinkService.flowUnitsForWeek(date, prefs.prefs).stateIn(
+        scope = this,
+        initialValue = 0.0,
+        started = SharingStarted.WhileSubscribed(5_000)
+    )
 
     private val dailyUnitsGauge =
         GaugeValue(appIcon = AppIcon.DRINK, maxValue = prefs.prefs.maxDailyUnits)
@@ -63,6 +82,16 @@ class HistoryViewModel(
 
     init {
         initAction?.let { launch { it(this@HistoryViewModel) } }
+        launch {
+            weeklyUnits.collect {
+                weeklyUnitsGauge.setValue(it, prefs.prefs.maxWeeklyUnits)
+            }
+        }
+        launch {
+            drinks.collect { drinks ->
+                dailyUnitsGauge.setValue(drinks.sumOf { it.units() }, prefs.prefs.maxDailyUnits)
+            }
+        }
     }
 
     @Composable
@@ -83,7 +112,6 @@ class HistoryViewModel(
                 // Remove added drink
                 withContext(Dispatchers.IO) {
                     drinkService.deleteDrinkById(drink.id)
-                    loadDrinks()
                 }
             }
         }
@@ -104,28 +132,12 @@ class HistoryViewModel(
                     val restored =
                         drinkService.insertDrink(DrinkDetailsFromEditor.fromRecord(drink))
                     logger.info("Restored $restored to db")
-                    loadDrinks()
                 }
             }
         }
     }
 
     private var editingDrink by mutableStateOf<DrinkRecordInfo?>(null)
-
-    fun loadDrinks() {
-        launch {
-            val newDrinks = drinkService.getDrinksForDay(date).reversed()
-            drinks.clear()
-            drinks.addAll(newDrinks)
-            updateStatus()
-        }
-    }
-
-    private suspend fun updateStatus() {
-        val weekUnits = drinkService.getUnitsForWeek(date, prefs.prefs)
-        dailyUnitsGauge.setValue(drinks.sumOf { it.units() }, prefs.prefs.maxDailyUnits)
-        weeklyUnitsGauge.setValue(weekUnits, prefs.prefs.maxWeeklyUnits)
-    }
 
     fun selectDay(date: LocalDate) = navigator.replace(HistoryScreen(date))
 
@@ -134,9 +146,7 @@ class HistoryViewModel(
 
     fun deleteDrink(drink: DrinkRecordInfo) {
         launch {
-            drinks.remove(drink)
             drinkService.deleteDrinkById(drink.id)
-            updateStatus()
             showDrinkDeleted(drink)
         }
     }
@@ -151,7 +161,6 @@ class HistoryViewModel(
         if (drink != null) {
             EditDrinkDialog(drink, onClose = {
                 editingDrink = null
-                loadDrinks()
             })
         }
     }

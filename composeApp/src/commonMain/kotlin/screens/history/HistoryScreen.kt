@@ -7,7 +7,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,10 +44,6 @@ class HistoryScreen(
             HistoryViewModel(startDate, initAction, navigator)
         }
 
-        LaunchedEffect(vm) {
-            vm.loadDrinks()
-        }
-
         MainLayout(showTopBar = false,
             snackbarHostState = vm.snackbar,
             actionButton = {
@@ -79,8 +76,9 @@ class HistoryScreen(
                     ) { vm.nextDay() }
                 }
                 BacStatusCard(vm, modifier = Modifier.padding(top = 16.dp))
+                val drinks by vm.drinks.collectAsState()
                 DrinkList(
-                    vm.drinks,
+                    drinks,
                     modifier = Modifier.padding(top = 16.dp)
                         .clip(RoundedCornerShape(16.dp)),
                     onModify = vm::modifyDrink,

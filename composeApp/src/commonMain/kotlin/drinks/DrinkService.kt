@@ -38,6 +38,14 @@ class DrinkService : KoinComponent {
         return drinks.map(::DrinkRecordInfo)
     }
 
+    fun flowDrinksForDay(date: LocalDate): Flow<List<DrinkRecordInfo>> {
+        val range = times.dayTimeRange(date)
+        return db.drinkRecordQueries.selectByTime(
+            startTime = range.start.toDbTime(),
+            endTime = range.end.toDbTime(),
+        ).asFlow().map { it.map(::DrinkRecordInfo) }.flowOn(Dispatchers.IO)
+    }
+
     suspend fun getDrinksForHomeScreen(today: LocalDate): List<DrinkRecordInfo> {
         val yesterday = today.minus(1, DateTimeUnit.DAY)
         val range = times.dayTimeRange(yesterday, today)
@@ -61,6 +69,15 @@ class DrinkService : KoinComponent {
             ).executeAsOne()
         }
         return units.SUM ?: 0.0;
+    }
+
+    fun flowUnitsForWeek(today: LocalDate, prefs: UserPreferences): Flow<Double> {
+        val range = times.currentWeekRange(today)
+        return db.drinkRecordQueries.countUnitsByTime(
+            multiplier = prefs.alcoholAbvLitersToUnitMultiplier,
+            startTime = range.start.toDbTime(),
+            endTime = range.end.toDbTime(),
+        ).asRowFlow().map { it.SUM ?: 0.0 }
     }
 
     suspend fun getLatestDrinks(limit: Long): List<LatestDrinkInfo> {
