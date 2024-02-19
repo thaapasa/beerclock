@@ -331,6 +331,16 @@ object FiStrings : Strings {
     }
 
 
+    /* Drink statistics screen */
+    override val statistics = Statistics
+
+    object Statistics : Strings.StatisticsStrings {
+        override val yearTitle = "Vuosi"
+        override val monthTitle = "Kuukausi"
+        override val weekTitle = "Viikko"
+    }
+
+
     /* Gender options */
     override val gender = Gender
 

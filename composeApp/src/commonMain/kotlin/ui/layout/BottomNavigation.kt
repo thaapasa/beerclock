@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
-import fi.tuska.beerclock.screens.StatisticsScreen
 import fi.tuska.beerclock.screens.history.HistoryScreen
+import fi.tuska.beerclock.screens.statistics.StatisticsScreen
 import fi.tuska.beerclock.screens.today.HomeScreen
 
 data class BottomNavigationItem(
@@ -34,7 +34,7 @@ fun bottomNavigationItems(): List<BottomNavigationItem> {
         BottomNavigationItem(
             label = strings.menu.statistics,
             icon = AppIcon.GRAPH,
-            screen = StatisticsScreen
+            screen = StatisticsScreen()
         ),
     )
 }

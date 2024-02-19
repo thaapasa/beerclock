@@ -115,6 +115,5 @@ fun RowScope.DateTitle(date: LocalDate) {
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodySmall
         )
-
     }
 }

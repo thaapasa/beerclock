@@ -1,12 +1,15 @@
 package fi.tuska.beerclock.util
 
 import fi.tuska.beerclock.logging.getLogger
+import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.minus
+import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Duration
@@ -66,3 +69,15 @@ data class WeekOfYear(val weekNumber: Int, val year: Int)
 expect fun LocalDate.toWeekOfYear(): WeekOfYear
 
 expect fun getFirstDayOfWeek(): DayOfWeek
+
+fun firstDayOfWeek(weekOfYear: WeekOfYear): LocalDate {
+    val someDayOfYear = LocalDate(weekOfYear.year, 1, 10)
+    val dayFirst = getFirstDayOfWeek()
+    var someFirstWeekDay = someDayOfYear
+    while (someFirstWeekDay.dayOfWeek != dayFirst)
+        someFirstWeekDay = someFirstWeekDay.minus(DatePeriod(days = 1))
+
+    val someWeek = someFirstWeekDay.toWeekOfYear()
+    val weekDiff = weekOfYear.weekNumber - someWeek.weekNumber
+    return someFirstWeekDay.plus(DatePeriod(days = (weekDiff * 7)))
+}

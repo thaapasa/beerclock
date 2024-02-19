@@ -322,6 +322,16 @@ object EnStrings : Strings {
     }
 
 
+    /* Drink statistics screen */
+    override val statistics = Statistics
+
+    object Statistics : Strings.StatisticsStrings {
+        override val yearTitle = "Year"
+        override val monthTitle = "Month"
+        override val weekTitle = "Week"
+    }
+
+
     /* Gender options */
     override val gender = Gender
 

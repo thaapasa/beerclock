@@ -273,6 +273,20 @@ interface Strings {
     }
 
 
+    /* Drink statistics screen */
+    val statistics: StatisticsStrings
+
+    interface StatisticsStrings {
+        val yearTitle: String
+        val monthTitle: String
+        fun monthValue(year: Int, month: Month) =
+            get().month(month).replaceFirstChar { it.uppercase() }
+
+        val weekTitle: String
+        fun weekValue(year: Int, weekNumber: Int) = weekNumber.toString()
+    }
+
+
     /* Gender options */
     val gender: GenderStrings
 
