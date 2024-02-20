@@ -3,6 +3,10 @@ package fi.tuska.beerclock.localization
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.SingleUnitWeights
+import fi.tuska.beerclock.screens.statistics.StatisticsMonth
+import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
+import fi.tuska.beerclock.screens.statistics.StatisticsWeek
+import fi.tuska.beerclock.screens.statistics.StatisticsYear
 import fi.tuska.beerclock.util.toWeekOfYear
 import fi.tuska.beerclock.util.zeroPad
 import kotlinx.datetime.DayOfWeek
@@ -123,6 +127,9 @@ object FiStrings : Strings {
         override val image = "Kuva juomasta"
         override fun unitLabel(units: Double) =
             if (Strings.get().dec2F(units) == "1") "annos" else "annosta"
+
+        override fun totalDrinkCount(drinks: Long) =
+            "$drinks juoma${if (drinks != 1L) "a" else ""}"
 
         override fun drinkTime(time: Instant): String =
             time.toLocalDateTime(TimeZone.currentSystemDefault())
@@ -338,6 +345,12 @@ object FiStrings : Strings {
         override val yearTitle = "Vuosi"
         override val monthTitle = "Kuukausi"
         override val weekTitle = "Viikko"
+        override fun periodTitle(period: StatisticsPeriod) = when (period) {
+            is StatisticsYear -> "Vuosi ${period.year}"
+            is StatisticsMonth -> "${month(period.month).replaceFirstChar { it.uppercase() }} ${period.year}"
+            is StatisticsWeek -> "Viikko ${period.weekOfYear.weekNumber}/${period.weekOfYear.year}"
+            else -> "???"
+        }
     }
 
 

@@ -18,6 +18,11 @@ import fi.tuska.beerclock.localization.Strings
 @Composable
 fun UnitAvatar(units: Double, modifier: Modifier = Modifier) {
     val strings = Strings.get()
+    val valueTextSize = when {
+        units > 100 -> MaterialTheme.typography.bodySmall
+        units > 10 -> MaterialTheme.typography.bodyMedium
+        else -> MaterialTheme.typography.bodyLarge
+    }
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier.size(60.dp)
@@ -36,7 +41,7 @@ fun UnitAvatar(units: Double, modifier: Modifier = Modifier) {
             ) {
                 Text(
                     text = strings.drink.units(units),
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = valueTextSize,
                     color = MaterialTheme.colorScheme.onSecondaryContainer
                 )
                 Text(

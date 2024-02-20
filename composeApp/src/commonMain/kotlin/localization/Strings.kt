@@ -3,6 +3,7 @@ package fi.tuska.beerclock.localization
 import androidx.compose.ui.text.intl.Locale
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
+import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.settings.Gender
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import kotlinx.datetime.DayOfWeek
@@ -90,11 +91,18 @@ interface Strings {
         val image: String
         fun unitLabel(units: Double): String
         fun units(units: Double) = get().dec2F(units)
+        fun unitsLabeled(units: Double): String {
+            val s = get()
+            return s.dec2FU(units, s.drink.unitLabel(units))
+        }
+
         fun abv(abvPercentage: Double) = get().dec1FU(abvPercentage, "%")
         fun quantity(quantityCl: Double) = get().dec1FU(quantityCl, "cl")
 
         fun drinkSize(quantityCl: Double, abvPercentage: Double): String =
             "${quantity(quantityCl)} ${abv(abvPercentage)}"
+
+        fun totalDrinkCount(drinks: Long): String
 
         fun drinkTime(time: Instant): String
 
@@ -284,6 +292,7 @@ interface Strings {
 
         val weekTitle: String
         fun weekValue(year: Int, weekNumber: Int) = weekNumber.toString()
+        fun periodTitle(period: StatisticsPeriod): String
     }
 
 

@@ -5,6 +5,7 @@ import fi.tuska.beerclock.database.fromDbTime
 import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.settings.UserPreferences
+import fi.tuska.beerclock.util.TimeInterval
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
@@ -190,6 +191,22 @@ class DrinkService : KoinComponent {
                         image = it.image.name,
                     )
                 }
+            }
+        }
+    }
+
+    suspend fun getStatisticsByCategory(
+        range: TimeInterval,
+        prefs: UserPreferences
+    ): List<CategoryStatistics> {
+        return withContext(Dispatchers.IO) {
+            db.transactionWithResult {
+                db.statisticsQueries.getStatisticsByCategory(
+                    multiplier = prefs.alcoholAbvLitersToUnitMultiplier,
+                    startTime = range.start.toDbTime(),
+                    endTime = range.end.toDbTime()
+                ).executeAsList().map(CategoryStatistics::fromDb)
+                    .sortedBy { it.category?.ordinal ?: Int.MAX_VALUE }
             }
         }
     }

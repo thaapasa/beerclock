@@ -1,0 +1,8 @@
+getStatisticsByCategory:
+SELECT category,
+    SUM(quantity_liters * abv * :multiplier) AS totalUnits,
+    SUM(quantity_liters) AS totalQuantityLiters,
+    COUNT(*) AS drinkCount
+  FROM drinkRecord
+  WHERE time >= :startTime AND time < :endTime
+  GROUP BY category;
