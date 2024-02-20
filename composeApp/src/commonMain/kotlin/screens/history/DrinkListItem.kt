@@ -1,18 +1,16 @@
 package fi.tuska.beerclock.screens.history
 
 import androidx.compose.foundation.clickable
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.images.smallImage
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.ui.components.AppListItem
 import fi.tuska.beerclock.ui.components.UnitAvatar
 import fi.tuska.beerclock.ui.composables.SwipeControl
 
@@ -28,22 +26,16 @@ fun DrinkListItem(
         onModify = { onModify?.invoke(drink) },
         onDelete = { onDelete?.invoke(drink) },
     ) {
-        ListItem(
-            overlineContent = { Text(strings.drink.drinkTime(drink.time)) },
-            headlineContent = { Text(drink.name) },
-            supportingContent = {
-                Text(
-                    strings.drink.drinkSize(
-                        quantityCl = drink.quantityCl,
-                        abvPercentage = drink.abvPercentage
-                    )
-                )
-            },
-            leadingContent = { drink.image.smallImage() },
+        AppListItem(
+            overline = strings.drink.drinkTime(drink.time),
+            headline = drink.name,
+            supporting = strings.drink.drinkSize(
+                quantityCl = drink.quantityCl,
+                abvPercentage = drink.abvPercentage
+            ),
+            icon = { drink.image.smallImage() },
             trailingContent = { UnitAvatar(units = drink.units()) },
             modifier = Modifier.clickable { selected = !selected },
-            tonalElevation = 8.dp,
-            shadowElevation = 16.dp
         )
     }
 
