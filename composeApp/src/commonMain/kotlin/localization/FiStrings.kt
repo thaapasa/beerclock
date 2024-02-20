@@ -351,6 +351,8 @@ object FiStrings : Strings {
             is StatisticsWeek -> "Viikko ${period.weekOfYear.weekNumber}/${period.weekOfYear.year}"
             else -> "???"
         }
+
+        override val totalsTitle = "Kaikki juomat"
     }
 
 

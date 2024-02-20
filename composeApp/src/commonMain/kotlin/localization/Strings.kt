@@ -293,6 +293,7 @@ interface Strings {
         val weekTitle: String
         fun weekValue(year: Int, weekNumber: Int) = weekNumber.toString()
         fun periodTitle(period: StatisticsPeriod): String
+        val totalsTitle: String
     }
 
 

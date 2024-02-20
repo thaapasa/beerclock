@@ -200,14 +200,14 @@ class DrinkService : KoinComponent {
         prefs: UserPreferences
     ): List<CategoryStatistics> {
         return withContext(Dispatchers.IO) {
-            db.transactionWithResult {
+            val list = db.transactionWithResult {
                 db.statisticsQueries.getStatisticsByCategory(
                     multiplier = prefs.alcoholAbvLitersToUnitMultiplier,
                     startTime = range.start.toDbTime(),
                     endTime = range.end.toDbTime()
                 ).executeAsList().map(CategoryStatistics::fromDb)
-                    .sortedBy { it.category?.ordinal ?: Int.MAX_VALUE }
             }
+            (list + list.calculateTotals()).sortedBy { it.order }
         }
     }
 

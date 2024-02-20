@@ -342,6 +342,8 @@ object EnStrings : Strings {
             is StatisticsWeek -> "Week ${period.weekOfYear.weekNumber}/${period.weekOfYear.year}"
             else -> "???"
         }
+
+        override val totalsTitle = "All drinks"
     }
 
 

@@ -97,6 +97,8 @@ enum class DrinkImage(val path: String) : Image {
     SAKE_BOTTLE_1("drawable/drinks/sake_bottle_1.webp"),
     CAT_LOW_ALCOHOL("drawable/categories/cat_low_alcohol.webp"),
     WATER_GLASS_1("drawable/drinks/water_glass_1.webp"),
+    CAT_UNCATEGORIZED("drawable/categories/cat_uncategorized.webp"),
+    CAT_ALL("drawable/categories/cat_all.webp"),
     ;
 
     @OptIn(ExperimentalResourceApi::class)
