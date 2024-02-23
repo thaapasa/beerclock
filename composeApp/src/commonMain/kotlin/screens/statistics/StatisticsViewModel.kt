@@ -4,9 +4,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.navigator.Navigator
-import fi.tuska.beerclock.drinks.CategoryStatistics
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
+import fi.tuska.beerclock.drinks.StatisticsByCategory
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.composables.ViewModel
@@ -28,11 +28,11 @@ class StatisticsViewModel(requestedPeriod: StatisticsPeriod?, private val naviga
         logger.info("Loading statistics for $period: reference: ${period.date}, interval ${period.range}")
     }
 
-    var statistics: DataState<List<CategoryStatistics>> by mutableStateOf(DataState.Loading)
+    var statistics: DataState<StatisticsByCategory> by mutableStateOf(DataState.Loading)
 
     init {
         launch {
-            val stats = drinkService.getStatisticsByCategory(period.range, prefs.prefs)
+            val stats = drinkService.getStatisticsByCategory(period, prefs.prefs)
             statistics = DataState.Success(stats)
         }
     }

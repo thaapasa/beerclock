@@ -5,6 +5,7 @@ import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
+import kotlinx.datetime.daysUntil
 import kotlinx.datetime.plus
 import kotlin.time.Duration
 
@@ -25,6 +26,20 @@ data class TimeInterval(val start: Instant, val end: Instant) {
 
     fun iterable(resolution: Duration): Iterable<Instant> {
         return Iterable { TimeIntervalIterator(start, end, resolution) }
+    }
+
+    fun lengthInDays(historicalDates: Boolean): Int {
+        val times = DrinkTimeService()
+        val rangeStart = times.currentDrinkDay(start)
+        val rangeEnd = times.currentDrinkDay(end)
+        if (!historicalDates) return rangeStart.daysUntil(rangeEnd)
+
+        val today = times.currentDrinkDay()
+        return when {
+            rangeStart > today -> 0
+            rangeEnd > today -> rangeStart.daysUntil(today)
+            else -> rangeStart.daysUntil(rangeEnd)
+        }
     }
 
     companion object {
