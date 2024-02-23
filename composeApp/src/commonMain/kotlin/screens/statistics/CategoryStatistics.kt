@@ -1,8 +1,11 @@
 package fi.tuska.beerclock.screens.statistics
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -34,18 +37,27 @@ fun CategoryStatisticsView(stats: StatisticsByCategory) {
                 )
             }",
             trailingContent = { Gauge(stats.weeklyGaugeValue, modifier = Modifier.size(64.dp)) })
-        stats.list.map { CategoryRow(it) }
+        CategoryRow(stats.totalStats)
+        stats.list.map { CategoryRow(it, compact = true) }
     }
 }
 
 @Composable
-private fun CategoryRow(stats: CategoryStatistics) {
+private fun CategoryRow(stats: CategoryStatistics, compact: Boolean = false) {
     val strings = Strings.get()
+    val drinks = strings.drink.totalDrinkCount(stats.drinkCount)
+    val quantity = strings.drink.totalQuantity(stats.totalQuantityLiters)
     AppListItem(
-        icon = { stats.categoryImage.smallImage() },
+        icon = {
+            Row(
+                modifier = Modifier.width(64.dp),
+                horizontalArrangement = Arrangement.Center
+            ) { stats.categoryImage.smallImage(size = if (compact) 56.dp else 64.dp) }
+        },
         overline = stats.title,
-        headline = strings.drink.totalDrinkCount(stats.drinkCount),
-        supporting = strings.drink.totalQuantity(stats.totalQuantityLiters),
+        headline = if (compact) "$drinks ($quantity)" else drinks,
+        supporting = if (compact) null else quantity,
         trailingContent = { UnitAvatar(units = stats.totalUnits) },
+        tonalElevation = if (compact) 4.dp else 24.dp
     )
 }

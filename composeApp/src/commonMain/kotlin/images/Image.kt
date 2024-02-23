@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.localization.Strings
 
@@ -18,11 +19,11 @@ interface Image {
 }
 
 @Composable
-fun Image.smallImage(modifier: Modifier = Modifier) {
+fun Image.smallImage(modifier: Modifier = Modifier, size: Dp = 64.dp) {
     Image(
         painter = painter(),
         contentDescription = Strings.get().drink.image,
-        modifier = modifier.size(64.dp).clip(RoundedCornerShape(12.dp)),
+        modifier = modifier.size(size).clip(RoundedCornerShape(12.dp)),
     )
 }
 

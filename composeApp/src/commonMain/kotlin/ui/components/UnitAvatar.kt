@@ -12,11 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.localization.Strings
 
 @Composable
-fun UnitAvatar(units: Double, modifier: Modifier = Modifier) {
+fun UnitAvatar(units: Double, modifier: Modifier = Modifier, size: Dp = 60.dp) {
     val strings = Strings.get()
     val valueTextSize = when {
         units > 100 -> MaterialTheme.typography.bodySmall
@@ -25,7 +26,7 @@ fun UnitAvatar(units: Double, modifier: Modifier = Modifier) {
     }
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier.size(60.dp)
+        modifier = modifier.size(size)
     ) {
         Box(
             contentAlignment = Alignment.Center,

@@ -50,9 +50,9 @@ class StatisticsByCategory(
     val times = DrinkTimeService()
     val range = period.range
     val totalStats = byCategories.calculateTotals()
-    val list = (listOf(totalStats) + byCategories).sortedBy { it.order }
+    val list = byCategories.sortedBy { it.order }
     val daysGone = range.lengthInDays(historicalDates = true)
-    
+
     val weeksGone = daysGone.toDouble() / 7.0
     val weeklyUnits = if (weeksGone > 0.0) totalStats.totalUnits / weeksGone else 0.0
     val weeklyGaugeValue = GaugeValue(
