@@ -7,7 +7,6 @@ import cafe.adriel.voyager.navigator.Navigator
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.drinks.DrinkUnitInfo
-import fi.tuska.beerclock.drinks.StatisticsByCategory
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.composables.ViewModel
@@ -32,15 +31,15 @@ class StatisticsViewModel(requestedPeriod: StatisticsPeriod?, private val naviga
         logger.info("Loading statistics for $period: reference: ${period.date}, interval ${period.range}")
     }
 
-    var statistics: DataState<StatisticsByCategory> by mutableStateOf(DataState.Loading)
+    var statistics: DataState<StatisticsData> by mutableStateOf(DataState.Loading)
 
     init {
         launch {
             val stats = drinkService.getStatisticsByCategory(period, prefs.prefs)
             val drinks = drinkService.getDrinkUnitsForPeriod(period, prefs.prefs)
             val byDates = drinks.byDates(period.range)
-            // TODO: Render daily graph based on byDates
-            statistics = DataState.Success(stats)
+            val data = StatisticsData(period, stats, byDates)
+            statistics = DataState.Success(data)
         }
     }
 
