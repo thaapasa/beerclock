@@ -79,6 +79,11 @@ class DrinkTimeService : KoinComponent {
     fun dayStartTime(date: LocalDate = currentDrinkDay()): Instant =
         toInstant(LocalDateTime(date = date, time = prefs.prefs.startOfDay))
 
+    /**
+     * @return the Instant when the given date ends. Note: since the queries used in
+     * BeerClock are always of the form closed-open (start time is included, end time is not),
+     * the day end time is the same instant as the day start time for the next date.
+     */
     fun dayEndTime(date: LocalDate): Instant =
         toInstant(
             LocalDateTime(

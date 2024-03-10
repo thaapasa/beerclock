@@ -212,5 +212,21 @@ class DrinkService : KoinComponent {
         }
     }
 
+    suspend fun getDrinkUnitsForPeriod(
+        period: StatisticsPeriod,
+        prefs: UserPreferences
+    ): List<DrinkUnitInfo> {
+        val range = period.range
+        return withContext(Dispatchers.IO) {
+            return@withContext db.transactionWithResult {
+                db.statisticsQueries.getDrinkUnitInfoForPeriod(
+                    multiplier = prefs.alcoholAbvLitersToUnitMultiplier,
+                    startTime = range.start.toDbTime(),
+                    endTime = range.end.toDbTime()
+                ).executeAsList().map(DrinkUnitInfo::fromDb)
+            }
+        }
+    }
+
     val operations = DrinkOperations(db)
 }

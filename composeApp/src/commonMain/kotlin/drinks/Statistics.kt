@@ -1,12 +1,16 @@
 package fi.tuska.beerclock.drinks
 
+import fi.tuska.beerclock.database.GetDrinkUnitInfoForPeriod
 import fi.tuska.beerclock.database.GetStatisticsByCategory
+import fi.tuska.beerclock.database.fromDbTime
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
+import fi.tuska.beerclock.screens.statistics.StatisticsPeriodType
 import fi.tuska.beerclock.settings.UserPreferences
 import fi.tuska.beerclock.ui.components.GaugeValue
+import kotlinx.datetime.Instant
 
 data class CategoryStatistics(
     val title: String,
@@ -14,7 +18,7 @@ data class CategoryStatistics(
     val totalUnits: Double,
     val totalQuantityLiters: Double,
     val drinkCount: Long,
-    val order: Int
+    val order: Int,
 ) {
     companion object {
         fun fromDb(row: GetStatisticsByCategory): CategoryStatistics {
@@ -45,7 +49,7 @@ fun List<CategoryStatistics>.calculateTotals(): CategoryStatistics {
 class StatisticsByCategory(
     byCategories: List<CategoryStatistics>,
     val period: StatisticsPeriod,
-    prefs: UserPreferences
+    prefs: UserPreferences,
 ) {
     val times = DrinkTimeService()
     val range = period.range
@@ -54,10 +58,24 @@ class StatisticsByCategory(
     val daysGone = range.lengthInDays(historicalDates = true)
 
     val weeksGone = daysGone.toDouble() / 7.0
-    val weeklyUnits = if (weeksGone > 0.0) totalStats.totalUnits / weeksGone else 0.0
+    val weeklyUnits =
+        if (period.period == StatisticsPeriodType.WEEK) totalStats.totalUnits
+        else if (weeksGone > 0.0) totalStats.totalUnits / weeksGone else 0.0
     val weeklyGaugeValue = GaugeValue(
         initialValue = weeklyUnits,
         maxValue = prefs.maxWeeklyUnits,
         appIcon = AppIcon.CALENDAR_WEEK
     )
+}
+
+
+data class DrinkUnitInfo(
+    val time: Instant,
+    val units: Double,
+) {
+    companion object {
+        fun fromDb(row: GetDrinkUnitInfoForPeriod): DrinkUnitInfo {
+            return DrinkUnitInfo(time = Instant.fromDbTime(row.time), units = row.units)
+        }
+    }
 }

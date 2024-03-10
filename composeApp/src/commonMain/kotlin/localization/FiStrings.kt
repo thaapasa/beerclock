@@ -278,11 +278,11 @@ object FiStrings : Strings {
         override val importDb = "Lataa"
 
         override fun exportDataMsgComplete(filename: String?, libraryDrinks: Long, records: Long) =
-            "Luotu varmuuskopio${if (filename != null) "tiedostoon $filename" else ""}: $records kirjausta, $libraryDrinks juomaa juomakirjastossa"
+            "Luotu varmuuskopio${if (filename != null) " tiedostoon $filename" else ""}: $records kirjausta, $libraryDrinks juomaa juomakirjastossa"
 
         override val exportDataMsgError = "Varmuuskopion luominen epäonnistui, yritä uudelleen"
         override fun importDataMsgComplete(filename: String?, libraryDrinks: Long, records: Long) =
-            "Ladattu varmuuskopio${if (filename != null) "tiedostosta $filename" else ""}: $records kirjausta, $libraryDrinks juomaa juomakirjastossa"
+            "Ladattu varmuuskopio${if (filename != null) " tiedostosta $filename" else ""}: $records kirjausta, $libraryDrinks juomaa juomakirjastossa"
 
         override val importDataMsgError = "Varmuuskopion lataaminen epäonnistui, yritä uudelleen"
 

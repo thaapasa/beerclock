@@ -81,3 +81,16 @@ fun firstDayOfWeek(weekOfYear: WeekOfYear): LocalDate {
     val weekDiff = weekOfYear.weekNumber - someWeek.weekNumber
     return someFirstWeekDay.plus(DatePeriod(days = (weekDiff * 7)))
 }
+
+fun OpenEndRange<LocalDate>.toList(): List<LocalDate> {
+    if (this.start >= this.endExclusive) {
+        return listOf()
+    }
+    val list = mutableListOf<LocalDate>()
+    var cur = this.start
+    while (cur < this.endExclusive) {
+        list.add(cur)
+        cur += DatePeriod(days = 1)
+    }
+    return list.toList()
+}

@@ -6,3 +6,10 @@ SELECT category,
   FROM drinkRecord
   WHERE time >= :startTime AND time < :endTime
   GROUP BY category;
+
+getDrinkUnitInfoForPeriod:
+SELECT quantity_liters * abv * :multiplier AS units,
+    time
+  FROM drinkRecord
+  WHERE time >= :startTime AND time < :endTime
+  ORDER BY time;
