@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import fi.tuska.beerclock.bac.BacFormulas
 import fi.tuska.beerclock.localization.AppLocale
 import fi.tuska.beerclock.logging.getLogger
+import fi.tuska.beerclock.ui.theme.ThemeSelection
 import kotlinx.datetime.LocalTime
 
 data class UserPreferences(
@@ -13,6 +14,15 @@ data class UserPreferences(
      * App locale, if selected from settings (null means follow system locale).
      */
     val locale: AppLocale? = null,
+    /**
+     * App theme selection
+     */
+    val theme: ThemeSelection = ThemeSelection.SYSTEM,
+    /**
+     * Use dynamic color palette (if available). The dynamic palette works on Android,
+     * and it's generated based on the user's background image colors.
+     */
+    val dynamicPalette: Boolean = true,
     /** User gender. Affects BAC calculation formula. */
     val gender: Gender = Gender.MALE,
     /** User weight, in kilograms. Affects BAC calculation formula. */

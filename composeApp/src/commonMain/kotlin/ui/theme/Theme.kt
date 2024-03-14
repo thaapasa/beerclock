@@ -6,6 +6,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import fi.tuska.beerclock.settings.GlobalUserPreferences
+import fi.tuska.beerclock.ui.composables.ViewModel
+import fi.tuska.beerclock.ui.composables.rememberWithDispose
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 
 private val lightColors = lightColorScheme(
@@ -76,16 +81,47 @@ private val darkColors = darkColorScheme(
 @Composable
 expect fun getDynamicTheme(useDarkTheme: Boolean, fallback: ColorScheme): ColorScheme
 
+expect fun supportsDynamicTheme(): Boolean
+
 @Composable
 fun AppTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit,
 ) {
-    val fallbackTheme = if (useDarkTheme) darkColors else lightColors
-    val colors: ColorScheme = getDynamicTheme(useDarkTheme, fallbackTheme)
+    val vm = rememberWithDispose(useDarkTheme) { ThemeViewModel(useDarkTheme) }
+    vm.Render(content)
+}
 
-    MaterialTheme(
-        colorScheme = colors,
-        content = content
-    )
+class ThemeViewModel(private val useDarkTheme: Boolean) : ViewModel(), KoinComponent {
+    private val prefs: GlobalUserPreferences = get()
+
+    @Composable
+    fun Render(content: @Composable () -> Unit) {
+        val useDarkColors = when (prefs.prefs.theme) {
+            ThemeSelection.DARK -> true
+            ThemeSelection.LIGHT -> false
+            ThemeSelection.SYSTEM -> useDarkTheme
+        }
+        val defaultColors = if (useDarkColors) darkColors else lightColors
+        val colorScheme = if (prefs.prefs.dynamicPalette) getDynamicTheme(
+            useDarkColors,
+            defaultColors
+        ) else defaultColors
+        MaterialTheme(
+            colorScheme = colorScheme,
+            content = content
+        )
+    }
+}
+
+enum class ThemeSelection {
+    SYSTEM, DARK, LIGHT;
+
+    companion object {
+        fun forName(name: String): ThemeSelection = try {
+            ThemeSelection.valueOf(name)
+        } catch (e: IllegalArgumentException) {
+            SYSTEM
+        }
+    }
 }

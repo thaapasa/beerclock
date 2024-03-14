@@ -11,7 +11,7 @@ import fi.tuska.beerclock.ui.theme.AppTheme
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
-val logger = getLogger("App")
+private val logger = getLogger("App")
 
 @Composable
 fun App() {

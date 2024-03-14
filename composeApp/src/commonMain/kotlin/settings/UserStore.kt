@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.settings
 
 import fi.tuska.beerclock.localization.AppLocale
+import fi.tuska.beerclock.ui.theme.ThemeSelection
 import fi.tuska.beerclock.util.fromPrefsString
 import fi.tuska.beerclock.util.safeToDouble
 import fi.tuska.beerclock.util.toPrefsString
@@ -21,6 +22,22 @@ internal class UserStore : KoinComponent {
         }
         setState { copy(locale = locale) }
         setStateValue(PreferenceKeys.locale, locale?.name ?: "")
+    }
+
+    suspend fun setTheme(theme: ThemeSelection) {
+        if (prefs.prefs.theme == theme) {
+            return
+        }
+        setState { copy(theme = theme) }
+        setStateValue(PreferenceKeys.theme, theme.name)
+    }
+
+    suspend fun setDynamicPalette(dynamicPalette: Boolean) {
+        if (prefs.prefs.dynamicPalette == dynamicPalette) {
+            return
+        }
+        setState { copy(dynamicPalette = dynamicPalette) }
+        setStateValue(PreferenceKeys.dynamicPalette, dynamicPalette.toString())
     }
 
     suspend fun setGender(gender: Gender) {
@@ -99,6 +116,8 @@ internal class UserStore : KoinComponent {
 
     object PreferenceKeys {
         const val locale = "prefs.user.locale"
+        const val theme = "prefs.user.theme"
+        const val dynamicPalette = "prefs.user.dynamicPalette"
         const val weight = "prefs.user.weight"
         const val gender = "prefs.user.gender"
         const val startOfDay = "prefs.user.startOfDay"
@@ -131,6 +150,9 @@ internal class UserStore : KoinComponent {
                     defaults.alchoholGramsInUnit.toString()
                 )
             val localeStr = store.getString(PreferenceKeys.locale, defaults.locale?.name ?: "")
+            val themeStr = store.getString(PreferenceKeys.theme, defaults.theme.name)
+            val dynamicPaletteStr =
+                store.getString(PreferenceKeys.dynamicPalette, defaults.dynamicPalette.toString())
 
             return UserPreferences(
                 weightKg = safeToDouble(weightStr) ?: defaults.weightKg,
@@ -138,7 +160,9 @@ internal class UserStore : KoinComponent {
                 startOfDay = LocalTime.fromPrefsString(startOfDayStr) ?: defaults.startOfDay,
                 alchoholGramsInUnit = safeToDouble(alcoholGramsInUnitStr)
                     ?: defaults.alchoholGramsInUnit,
-                locale = AppLocale.forName(localeStr)
+                locale = AppLocale.forName(localeStr),
+                theme = ThemeSelection.forName(themeStr),
+                dynamicPalette = dynamicPaletteStr.lowercase() == "true"
             )
         }
     }

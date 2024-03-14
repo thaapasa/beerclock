@@ -10,10 +10,14 @@ import androidx.compose.ui.platform.LocalContext
 @Composable
 @Suppress("UNUSED")
 actual fun getDynamicTheme(useDarkTheme: Boolean, fallback: ColorScheme): ColorScheme {
-    val dynamicSupport = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    val dynamicSupport = supportsDynamicTheme()
     return when {
         !dynamicSupport -> fallback
         useDarkTheme -> dynamicDarkColorScheme(LocalContext.current)
         else -> dynamicLightColorScheme(LocalContext.current)
     }
+}
+
+actual fun supportsDynamicTheme(): Boolean {
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 }

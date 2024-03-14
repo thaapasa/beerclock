@@ -7,6 +7,7 @@ import fi.tuska.beerclock.screens.statistics.StatisticsMonth
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.screens.statistics.StatisticsWeek
 import fi.tuska.beerclock.screens.statistics.StatisticsYear
+import fi.tuska.beerclock.ui.theme.ThemeSelection
 import fi.tuska.beerclock.util.toWeekOfYear
 import fi.tuska.beerclock.util.zeroPad
 import kotlinx.datetime.DayOfWeek
@@ -104,6 +105,13 @@ object FiStrings : Strings {
         Country.forIsoCode(countryCode)?.nameFi ?: countryCode
 
     override fun languageName(locale: AppLocale) = locale.nameFi
+
+    override fun themeName(themeSelection: ThemeSelection) = when (themeSelection) {
+        ThemeSelection.SYSTEM -> "Järjestelmän tilan mukaan"
+        ThemeSelection.DARK -> "Tumma tila"
+        ThemeSelection.LIGHT -> "Vaalea tila"
+    }
+
 
     /* Main menu */
     override val menu = Menu
@@ -223,6 +231,12 @@ object FiStrings : Strings {
         override val localeLabel = "Kieli"
         override val phoneLocale = "Puhelimen kielen mukaan"
         override val localeDescription = "Valitse millä kielellä haluat käyttää Kaljakelloa."
+        override val themeLabel = "Väriteema"
+        override val themeDescription =
+            "Voit vaihtaa Kaljakellon väriteeman tästä. Oletuksena Kaljakellon väriteema vaihtuu järjestelmän asetusten mukaan."
+        override val dynamicPaletteLabel = "Dynaamiset värit"
+        override val dynamicPaletteDescription =
+            "Tämä valinta luo puhelimesi nykyiseen taustakuvaan sopivan väriteeman automaattisesti."
         override val weightLabel = "Painosi"
         override val unitKilogram = "kg"
         override val weightDescription =

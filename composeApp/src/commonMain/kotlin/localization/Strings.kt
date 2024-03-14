@@ -6,6 +6,7 @@ import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.settings.Gender
 import fi.tuska.beerclock.settings.GlobalUserPreferences
+import fi.tuska.beerclock.ui.theme.ThemeSelection
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -67,6 +68,7 @@ interface Strings {
 
     fun countryName(countryCode: String): String
     fun languageName(locale: AppLocale): String
+    fun themeName(themeSelection: ThemeSelection): String
 
 
     /* Main menu */
@@ -204,6 +206,10 @@ interface Strings {
         val localeLabel: String
         val phoneLocale: String
         val localeDescription: String
+        val themeLabel: String
+        val themeDescription: String
+        val dynamicPaletteLabel: String
+        val dynamicPaletteDescription: String
         val weightLabel: String
         val unitKilogram: String
         val weightDescription: String

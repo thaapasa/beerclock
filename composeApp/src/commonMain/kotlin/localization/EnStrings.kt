@@ -7,6 +7,7 @@ import fi.tuska.beerclock.screens.statistics.StatisticsMonth
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.screens.statistics.StatisticsWeek
 import fi.tuska.beerclock.screens.statistics.StatisticsYear
+import fi.tuska.beerclock.ui.theme.ThemeSelection
 import fi.tuska.beerclock.util.toWeekOfYear
 import fi.tuska.beerclock.util.zeroPad
 import kotlinx.datetime.DayOfWeek
@@ -93,6 +94,12 @@ object EnStrings : Strings {
         Country.forIsoCode(countryCode)?.nameEn ?: countryCode
 
     override fun languageName(locale: AppLocale) = locale.nameEn
+
+    override fun themeName(themeSelection: ThemeSelection) = when (themeSelection) {
+        ThemeSelection.SYSTEM -> "Follow system mode"
+        ThemeSelection.DARK -> "Dark mode"
+        ThemeSelection.LIGHT -> "Light mode"
+    }
 
     /* Main menu */
     override val menu = Menu
@@ -211,6 +218,12 @@ object EnStrings : Strings {
         override val localeLabel = "Language"
         override val phoneLocale = "Use system locale"
         override val localeDescription = "Select the language for BeerClock."
+        override val themeLabel = "Color scheme"
+        override val themeDescription =
+            "You can change BeerClock's color scheme here. By default BeerClock will follow your current system mode."
+        override val dynamicPaletteLabel = "Dynamic color palette"
+        override val dynamicPaletteDescription =
+            "Dynamic color palette is automatically generated based on your current background image."
         override val weightLabel = "Your weight"
         override val unitKilogram = "kg"
         override val weightDescription =

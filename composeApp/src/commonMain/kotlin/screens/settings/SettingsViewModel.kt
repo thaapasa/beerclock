@@ -11,6 +11,7 @@ import fi.tuska.beerclock.backup.isJAlcoMeterImportSupported
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.settings.UserStore
 import fi.tuska.beerclock.ui.composables.ViewModel
+import fi.tuska.beerclock.ui.theme.supportsDynamicTheme
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -24,9 +25,13 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
     // reflected in the global user prefs state as well.
     private val store = UserStore()
 
+    val dynamicThemeSupported = supportsDynamicTheme()
+
     var settingsTab by mutableStateOf(SettingsTabs.USER)
 
     var locale by mutableStateOf(prefs.prefs.locale)
+    var theme by mutableStateOf(prefs.prefs.theme)
+    var dynamicPalette by mutableStateOf(prefs.prefs.dynamicPalette)
     var weightKg by mutableStateOf(prefs.prefs.weightKg)
     var gender by mutableStateOf(prefs.prefs.gender)
     var startOfDay by mutableStateOf(prefs.prefs.startOfDay)
@@ -44,6 +49,8 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
     fun saveStartOfDay() = launch { store.setStartOfDay(startOfDay) }
     fun saveGramsInUnitText() = launch { store.setAlcoholGramsInUnit(gramsInUnit) }
     fun saveLocale() = launch { store.setLocale(locale) }
+    fun saveTheme() = launch { store.setTheme(theme) }
+    fun saveDynamicPalette() = launch { store.setDynamicPalette(dynamicPalette) }
     fun saveDrivingLimitBac() = launch { store.setDrivingLimitBac(drivingLimitBac) }
     fun saveMaxBAC() = launch { store.setMAXBac(maxBAC) }
     fun saveMaxDailyUnits() = launch { store.setMaxDailyUnits(maxDailyUnits) }
@@ -52,6 +59,8 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
     @Composable
     fun trackChanges() {
         LaunchedEffect(locale) { saveLocale() }
+        LaunchedEffect(theme) { saveTheme() }
+        LaunchedEffect(dynamicPalette) { saveDynamicPalette() }
         LaunchedEffect(weightKg) { saveWeight() }
         LaunchedEffect(gender) { saveGender() }
         LaunchedEffect(startOfDay) { saveStartOfDay() }
