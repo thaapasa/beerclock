@@ -15,10 +15,10 @@ import fi.tuska.beerclock.bac.BacStatus
 import fi.tuska.beerclock.graphs.XYGraph
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.util.ZeroHour
-import io.github.koalaplot.core.line.LineChart
-import io.github.koalaplot.core.line.Point
-import io.github.koalaplot.core.xychart.LineStyle
-import io.github.koalaplot.core.xychart.XYChartScope
+import io.github.koalaplot.core.line.LinePlot
+import io.github.koalaplot.core.style.LineStyle
+import io.github.koalaplot.core.xygraph.Point
+import io.github.koalaplot.core.xygraph.XYGraphScope
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
@@ -42,8 +42,8 @@ fun DailyBacGraph(
 
 
 @Composable
-fun DaySeparator(scope: XYChartScope<Float, Float>, x: Float, maxY: Float) {
-    scope.LineChart(
+fun DaySeparator(scope: XYGraphScope<Float, Float>, x: Float, maxY: Float) {
+    scope.LinePlot(
         data = listOf(Point(x, 0.0f), Point(x, maxY * 0.9f)),
         lineStyle = LineStyle(
             brush = SolidColor(MaterialTheme.colorScheme.onSurfaceVariant),
@@ -51,7 +51,7 @@ fun DaySeparator(scope: XYChartScope<Float, Float>, x: Float, maxY: Float) {
             alpha = 0.5f
         ),
     )
-    scope.LineChart(
+    scope.LinePlot(
         data = listOf(Point(x, maxY * 0.95f)),
         symbol = {
             AppIcon.MOON.icon(
@@ -63,9 +63,9 @@ fun DaySeparator(scope: XYChartScope<Float, Float>, x: Float, maxY: Float) {
 }
 
 @Composable
-fun DrivingLimit(scope: XYChartScope<Float, Float>, yPos: Float, maxX: Float, maxY: Float) {
+fun DrivingLimit(scope: XYGraphScope<Float, Float>, yPos: Float, maxX: Float, maxY: Float) {
     val yOffs = maxY * 0.025f / yPos
-    scope.LineChart(
+    scope.LinePlot(
         data = listOf(Point(0f, yPos), Point(maxX, yPos)),
         lineStyle = LineStyle(
             brush = SolidColor(MaterialTheme.colorScheme.tertiary),
@@ -73,7 +73,7 @@ fun DrivingLimit(scope: XYChartScope<Float, Float>, yPos: Float, maxX: Float, ma
             alpha = 0.8f
         ),
     )
-    scope.LineChart(
+    scope.LinePlot(
         data = listOf(Point(maxX - 0.7f, yPos + yOffs)),
         symbol = {
             AppIcon.CAR.icon(

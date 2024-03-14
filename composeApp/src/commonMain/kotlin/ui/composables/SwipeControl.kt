@@ -7,12 +7,11 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.DismissDirection
-import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SwipeToDismiss
-import androidx.compose.material3.rememberDismissState
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,14 +27,14 @@ import fi.tuska.beerclock.images.AppIcon
 fun SwipeControl(
     onDelete: () -> Unit,
     onModify: () -> Unit,
-    content: @Composable RowScope.() -> Unit
+    content: @Composable RowScope.() -> Unit,
 ) {
     var clicks by mutableStateOf(0)
-    val dismissState = rememberDismissState(confirmValueChange = {
+    val dismissState = rememberSwipeToDismissBoxState(confirmValueChange = {
         when (it) {
-            DismissValue.DismissedToEnd -> onModify()
-            DismissValue.DismissedToStart -> onDelete()
-            else -> return@rememberDismissState false
+            SwipeToDismissBoxValue.StartToEnd -> onModify()
+            SwipeToDismissBoxValue.EndToStart -> onDelete()
+            else -> return@rememberSwipeToDismissBoxState false
         }
         clicks++
         false
@@ -43,30 +42,31 @@ fun SwipeControl(
     LaunchedEffect(clicks) {
         dismissState.reset()
     }
-    SwipeToDismiss(
+    SwipeToDismissBox(
         state = dismissState,
-        directions = setOf(DismissDirection.StartToEnd, DismissDirection.EndToStart),
-        background = {
-            val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
+        enableDismissFromEndToStart = true,
+        enableDismissFromStartToEnd = true,
+        backgroundContent = {
+            val direction = dismissState.dismissDirection
 
             val bgColor by animateColorAsState(
                 targetValue = when (dismissState.targetValue) {
-                    DismissValue.Default -> MaterialTheme.colorScheme.surface
-                    DismissValue.DismissedToStart -> MaterialTheme.colorScheme.errorContainer
-                    DismissValue.DismissedToEnd -> MaterialTheme.colorScheme.primaryContainer
+                    SwipeToDismissBoxValue.Settled -> MaterialTheme.colorScheme.surface
+                    SwipeToDismissBoxValue.EndToStart -> MaterialTheme.colorScheme.errorContainer
+                    SwipeToDismissBoxValue.StartToEnd -> MaterialTheme.colorScheme.primaryContainer
                 }
             )
             val iconColor = when (direction) {
-                DismissDirection.StartToEnd -> MaterialTheme.colorScheme.onPrimaryContainer
-                DismissDirection.EndToStart -> MaterialTheme.colorScheme.error
+                SwipeToDismissBoxValue.EndToStart -> MaterialTheme.colorScheme.error
+                else -> MaterialTheme.colorScheme.onPrimaryContainer
             }
             val appIcon = when (direction) {
-                DismissDirection.StartToEnd -> AppIcon.EDIT
-                DismissDirection.EndToStart -> AppIcon.DELETE
+                SwipeToDismissBoxValue.EndToStart -> AppIcon.DELETE
+                else -> AppIcon.EDIT
             }
             val alignment = when (direction) {
-                DismissDirection.StartToEnd -> Alignment.CenterStart
-                DismissDirection.EndToStart -> Alignment.CenterEnd
+                SwipeToDismissBoxValue.EndToStart -> Alignment.CenterEnd
+                else -> Alignment.CenterStart
             }
             Box(
                 modifier = Modifier.fillMaxSize()
@@ -80,6 +80,6 @@ fun SwipeControl(
                 )
             }
         },
-        dismissContent = content
+        content = content
     )
 }

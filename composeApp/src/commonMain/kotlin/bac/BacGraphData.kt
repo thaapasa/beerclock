@@ -3,15 +3,19 @@ package fi.tuska.beerclock.bac
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import fi.tuska.beerclock.bac.AlcoholAtTime.Companion.interpolateFromList
 import fi.tuska.beerclock.drinks.DrinkTimeService
-import fi.tuska.beerclock.graphs.AreaChart
 import fi.tuska.beerclock.graphs.GraphDefinition
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.inHours
-import io.github.koalaplot.core.line.Point
-import io.github.koalaplot.core.xychart.XYChartScope
+import io.github.koalaplot.core.line.AreaBaseline
+import io.github.koalaplot.core.line.AreaPlot
+import io.github.koalaplot.core.style.AreaStyle
+import io.github.koalaplot.core.style.LineStyle
+import io.github.koalaplot.core.xygraph.Point
+import io.github.koalaplot.core.xygraph.XYGraphScope
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
@@ -74,12 +78,22 @@ class BacGraphData(private val events: List<AlcoholAtTime>) :
 
     @Composable
     fun drawAreas(
-        scope: XYChartScope<Float, Float>,
+        scope: XYGraphScope<Float, Float>,
         now: Instant,
-        color: Color = MaterialTheme.colorScheme.primary
+        color: Color = MaterialTheme.colorScheme.primary,
     ) {
-        scope.AreaChart(pastEvents(now), color = color, alpha = 0.8f)
-        scope.AreaChart(futureEvents(now), color = color, alpha = 0.3f)
+        scope.AreaPlot(
+            pastEvents(now),
+            lineStyle = LineStyle(brush = SolidColor(color)),
+            areaBaseline = AreaBaseline.ConstantLine(0f),
+            areaStyle = AreaStyle(brush = SolidColor(color), alpha = 0.8f)
+        )
+        scope.AreaPlot(
+            futureEvents(now),
+            lineStyle = LineStyle(brush = SolidColor(color)),
+            areaBaseline = AreaBaseline.ConstantLine(0f),
+            areaStyle = AreaStyle(brush = SolidColor(color), alpha = 0.3f)
+        )
     }
 
     companion object {

@@ -33,13 +33,13 @@ fun DateInputField(
     value: LocalDate,
     onValueChange: (date: LocalDate) -> Unit,
     modifier: Modifier = Modifier,
-    labelText: String? = null
+    labelText: String? = null,
 ) {
     val strings = Strings.get()
     var pickerShown by remember { mutableStateOf(false) }
     var state = rememberDatePickerState()
     LaunchedEffect(value) {
-        state.setSelection(value.toUTCEpochMillis())
+        state.selectedDateMillis = value.toUTCEpochMillis()
     }
     // Listen to internal state changes to auto-close dialog
     LaunchedEffect(state.selectedDateMillis) {

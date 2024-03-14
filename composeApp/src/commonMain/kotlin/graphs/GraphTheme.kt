@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
-import io.github.koalaplot.core.theme.KoalaPlotTheme
-import io.github.koalaplot.core.xychart.LineStyle
+import io.github.koalaplot.core.style.KoalaPlotTheme
+import io.github.koalaplot.core.style.LineStyle
 
 @Composable
 inline fun gridLineColor() = MaterialTheme.colorScheme.onSurfaceVariant

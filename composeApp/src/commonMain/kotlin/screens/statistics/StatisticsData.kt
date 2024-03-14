@@ -5,7 +5,7 @@ import fi.tuska.beerclock.graphs.GraphDefinition
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.settings.GlobalUserPreferences
-import io.github.koalaplot.core.line.Point
+import io.github.koalaplot.core.xygraph.Point
 import kotlinx.datetime.LocalDate
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get

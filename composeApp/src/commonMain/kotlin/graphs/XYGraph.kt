@@ -1,5 +1,7 @@
 package fi.tuska.beerclock.graphs
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -7,21 +9,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import io.github.koalaplot.core.theme.KoalaPlotTheme
+import io.github.koalaplot.core.style.KoalaPlotTheme
 import io.github.koalaplot.core.util.VerticalRotation
 import io.github.koalaplot.core.util.rotateVertically
-import io.github.koalaplot.core.xychart.LinearAxisModel
-import io.github.koalaplot.core.xychart.TickPosition
-import io.github.koalaplot.core.xychart.XYChart
-import io.github.koalaplot.core.xychart.XYChartScope
-import io.github.koalaplot.core.xychart.rememberAxisStyle
+import io.github.koalaplot.core.xygraph.LinearAxisModel
+import io.github.koalaplot.core.xygraph.TickPosition
+import io.github.koalaplot.core.xygraph.XYGraphScope
+import io.github.koalaplot.core.xygraph.rememberAxisStyle
+import io.github.koalaplot.core.xygraph.XYGraph as KoalaXYGraph
 
 @Composable
 fun XYGraph(
     graph: GraphDefinition,
     modifier: Modifier = Modifier,
-    content: @Composable XYChartScope<Float, Float>.() -> Unit
+    content: @Composable XYGraphScope<Float, Float>.() -> Unit,
 ) {
     val labelColor = graphLabelColor()
     val gridColor = gridLineColor()
@@ -39,7 +42,7 @@ fun XYGraph(
             minorTickCount = 4
         )
     }
-    XYChart(
+    KoalaXYGraph(
         xAxisModel,
         yAxisModel,
         modifier,
@@ -54,16 +57,18 @@ fun XYGraph(
                 graph.formatXLabel(it),
                 color = labelColor,
                 style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier.padding(end = 2.dp)
+                modifier = Modifier.padding(end = 2.dp),
             )
         },
         xAxisTitle = {
-            Text(
-                graph.xTitle,
-                color = labelColor,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = KoalaPlotTheme.sizes.gap)
-            )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                Text(
+                    graph.xTitle,
+                    color = labelColor,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = KoalaPlotTheme.sizes.gap),
+                )
+            }
         },
         yAxisStyle = rememberAxisStyle(
             color = gridColor,
@@ -83,7 +88,8 @@ fun XYGraph(
                 graph.yTitle,
                 color = labelColor,
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.fillMaxWidth()
+                textAlign = TextAlign.Center,
+                modifier = Modifier
                     .rotateVertically(VerticalRotation.COUNTER_CLOCKWISE),
             )
         },

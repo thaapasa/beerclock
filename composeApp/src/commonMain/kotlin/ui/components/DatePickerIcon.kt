@@ -29,12 +29,12 @@ fun DatePickerIcon(
     onValueChange: (date: LocalDate) -> Unit,
     modifier: Modifier = Modifier,
     icon: AppIcon = AppIcon.CALENDAR,
-    title: String = Strings.get().pickDate
+    title: String = Strings.get().pickDate,
 ) {
     var pickerShown by remember { mutableStateOf(false) }
     var state = rememberDatePickerState()
     LaunchedEffect(value) {
-        state.setSelection(value.toUTCEpochMillis())
+        state.selectedDateMillis = value.toUTCEpochMillis()
     }
     // Listen to internal state changes to auto-close dialog
     LaunchedEffect(state.selectedDateMillis) {
