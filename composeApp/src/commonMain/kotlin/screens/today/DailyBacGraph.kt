@@ -17,6 +17,7 @@ import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.util.ZeroHour
 import io.github.koalaplot.core.line.LinePlot
 import io.github.koalaplot.core.style.LineStyle
+import io.github.koalaplot.core.xygraph.HorizontalLineAnnotation
 import io.github.koalaplot.core.xygraph.Point
 import io.github.koalaplot.core.xygraph.XYGraphScope
 import kotlinx.datetime.Clock
@@ -65,8 +66,8 @@ fun DaySeparator(scope: XYGraphScope<Float, Float>, x: Float, maxY: Float) {
 @Composable
 fun DrivingLimit(scope: XYGraphScope<Float, Float>, yPos: Float, maxX: Float, maxY: Float) {
     val yOffs = maxY * 0.025f / yPos
-    scope.LinePlot(
-        data = listOf(Point(0f, yPos), Point(maxX, yPos)),
+    scope.HorizontalLineAnnotation(
+        location = yPos,
         lineStyle = LineStyle(
             brush = SolidColor(MaterialTheme.colorScheme.tertiary),
             strokeWidth = 2.dp,

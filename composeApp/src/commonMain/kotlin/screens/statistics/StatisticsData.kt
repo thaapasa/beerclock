@@ -27,7 +27,7 @@ data class StatisticsData(
     }
 
     fun graphDef() = GraphDefinition(
-        xRange = 0f..days.toFloat(),
+        xRange = -1f..days.toFloat() + 1f,
         yRange = 0f..maxUnits.toFloat(),
         xTitle = "Päivä",
         yTitle = "Annoksia",
