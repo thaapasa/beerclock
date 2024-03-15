@@ -1,7 +1,6 @@
 package fi.tuska.beerclock.screens.today
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -55,7 +54,7 @@ class HomeViewModel(initAction: SuspendAction<HomeViewModel>? = null) : Snackbar
 
     private val bacGauge =
         GaugeValue(
-            icon = { Text(text = "‰", color = MaterialTheme.colorScheme.primary) },
+            icon = { Text(text = "‰", color = it) },
             maxValue = prefs.prefs.maxBAC
         )
     private val dailyUnitsGauge =

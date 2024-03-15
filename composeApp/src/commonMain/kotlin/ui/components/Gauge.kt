@@ -32,7 +32,7 @@ const val gapDegrees = 60.0f
 
 class GaugeValue(
     initialValue: Double = 0.0,
-    val icon: @Composable (() -> Unit)? = null,
+    val icon: @Composable ((color: Color) -> Unit)? = null,
     val appIcon: AppIcon? = null,
     maxValue: Double = 1.0,
 ) {
@@ -42,6 +42,10 @@ class GaugeValue(
 
     fun position(): Double {
         return min(value / maxValue, 1.0)
+    }
+
+    fun isOverLimit(): Boolean {
+        return value > maxValue
     }
 
     fun setValue(value: Double, maxValue: Double?) {
@@ -63,7 +67,7 @@ fun Gauge(
         value = value.value.toFloat(),
         icon = value.icon,
         iconPainter = value.appIcon?.painter(),
-        color = color,
+        color = if (value.isOverLimit()) MaterialTheme.colorScheme.tertiary else color,
         modifier = modifier
     )
 }
@@ -73,7 +77,7 @@ fun Gauge(
     position: Float,
     value: Float,
     iconPainter: Painter? = null,
-    icon: @Composable (() -> Unit)? = null,
+    icon: @Composable ((color: Color) -> Unit)? = null,
     color: Color = MaterialTheme.colorScheme.primary,
     modifier: Modifier = Modifier,
 ) {
@@ -120,7 +124,7 @@ fun Gauge(
                         tint = color
                     )
                 }
-                icon?.invoke()
+                icon?.invoke(color = color)
             }
         }
     }
