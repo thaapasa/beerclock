@@ -7,17 +7,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.github.koalaplot.core.style.KoalaPlotTheme
 import io.github.koalaplot.core.util.VerticalRotation
 import io.github.koalaplot.core.util.rotateVertically
-import io.github.koalaplot.core.xygraph.LinearAxisModel
 import io.github.koalaplot.core.xygraph.TickPosition
 import io.github.koalaplot.core.xygraph.XYGraphScope
 import io.github.koalaplot.core.xygraph.rememberAxisStyle
+import io.github.koalaplot.core.xygraph.rememberLinearAxisModel
 import io.github.koalaplot.core.xygraph.XYGraph as KoalaXYGraph
 
 @Composable
@@ -28,20 +27,8 @@ fun XYGraph(
 ) {
     val labelColor = graphLabelColor()
     val gridColor = gridLineColor()
-    val xAxisModel = remember(graph) {
-        LinearAxisModel(
-            range = graph.xRange,
-            minimumMajorTickIncrement = 2f,
-            minimumMajorTickSpacing = 30.dp,
-            minorTickCount = 1
-        )
-    }
-    val yAxisModel = remember(graph) {
-        LinearAxisModel(
-            range = graph.yRange,
-            minorTickCount = 4
-        )
-    }
+    val xAxisModel = rememberLinearAxisModel(range = graph.xRange)
+    val yAxisModel = rememberLinearAxisModel(range = graph.yRange)
     KoalaXYGraph(
         xAxisModel,
         yAxisModel,

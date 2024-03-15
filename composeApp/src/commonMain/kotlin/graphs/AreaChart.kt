@@ -13,7 +13,7 @@ import io.github.koalaplot.core.xygraph.Point
 import io.github.koalaplot.core.xygraph.XYGraphScope
 
 @Composable
-fun XYGraphScope<Float, Float>.AreaChart(
+fun XYGraphScope<Float, Float>.AreaPlot(
     data: List<Point<Float, Float>>,
     color: Color = MaterialTheme.colorScheme.primary,
     alpha: Float = 1f,

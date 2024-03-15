@@ -36,7 +36,7 @@ fun DailyBacGraph(
         {
             DaySeparator(this, graph.toGraphX(ZeroHour) + 24f, graph.maxY)
             DrivingLimit(this, bac.drivingLimitBac().toFloat(), maxX = 24f, maxY = graph.maxY)
-            graph.drawAreas(this, now)
+            graph.BacAreaPlot(this, now)
         }
     }
 }
