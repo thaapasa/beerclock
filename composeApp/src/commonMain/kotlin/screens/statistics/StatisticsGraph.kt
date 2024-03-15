@@ -17,19 +17,16 @@ import io.github.koalaplot.core.bar.VerticalBarPlot
 
 @Composable
 fun StatisticsGraph(data: StatisticsData) {
-    val u = data.unitsByDays()
-    val days = u.map { it.x }
-    val vals = u.map { it.y }
     Row(
-        modifier = Modifier.fillMaxWidth().height(200.dp)
+        modifier = Modifier.fillMaxWidth().height(240.dp)
             .background(color = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp))
     ) {
         XYGraph(graph = data.graphDef(), modifier = Modifier.padding(4.dp).fillMaxWidth())
         {
             VerticalBarPlot(
-                xData = days,
-                yData = vals,
-                bar = { DefaultVerticalBar(SolidColor(MaterialTheme.colorScheme.primary)) })
+                xData = data.xValues,
+                yData = data.yValues,
+                bar = { DefaultVerticalBar(SolidColor(data.barColor(it))) })
         }
     }
 }

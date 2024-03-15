@@ -38,7 +38,7 @@ class StatisticsViewModel(requestedPeriod: StatisticsPeriod?, private val naviga
             val stats = drinkService.getStatisticsByCategory(period, prefs.prefs)
             val drinks = drinkService.getDrinkUnitsForPeriod(period, prefs.prefs)
             val byDates = drinks.byDates(period.range)
-            val data = StatisticsData(period, stats, byDates)
+            val data = toStatisticsData(period, stats, byDates.toList())
             statistics = DataState.Success(data)
         }
     }
@@ -54,7 +54,7 @@ class StatisticsViewModel(requestedPeriod: StatisticsPeriod?, private val naviga
     fun prev() = show(period.prev())
     fun next() = show(period.next())
 
-    fun List<DrinkUnitInfo>.byDates(range: TimeInterval): Map<LocalDate, Double> {
+    private fun List<DrinkUnitInfo>.byDates(range: TimeInterval): Map<LocalDate, Double> {
         val range = times.currentDrinkDay(range.start)..<times.currentDrinkDay(range.end)
         val days = range.toList()
         val res = mutableMapOf(*days.map { it to 0.0 }.toTypedArray())

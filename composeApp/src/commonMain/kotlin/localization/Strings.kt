@@ -48,7 +48,8 @@ interface Strings {
 
     fun weekday(day: DayOfWeek): String
     fun weekdayShort(day: DayOfWeek): String
-    fun month(day: Month): String
+    fun month(month: Month): String
+    fun monthShort(month: Month): String
     fun date(day: LocalDate): String
     fun date(day: LocalDateTime): String = date(day.date)
     fun dateShort(date: LocalDate): String
@@ -300,6 +301,8 @@ interface Strings {
         fun weekValue(year: Int, weekNumber: Int) = weekNumber.toString()
         fun periodTitle(period: StatisticsPeriod): String
         val totalsTitle: String
+        val unitsLabel: String
+        val dayLabel: String
     }
 
 

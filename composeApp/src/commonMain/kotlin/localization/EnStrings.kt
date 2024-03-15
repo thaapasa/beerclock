@@ -59,8 +59,12 @@ object EnStrings : Strings {
         }
     }
 
-    override fun month(day: Month): String {
-        return day.toString().lowercase().replaceFirstChar { it.titlecase() }
+    override fun month(month: Month): String {
+        return month.toString().lowercase().replaceFirstChar { it.titlecase() }
+    }
+
+    override fun monthShort(month: Month): String {
+        return month(month).substring(0, 3)
     }
 
     override fun date(date: LocalDate): String {
@@ -357,6 +361,8 @@ object EnStrings : Strings {
         }
 
         override val totalsTitle = "All drinks"
+        override val unitsLabel = "Units"
+        override val dayLabel = "Day"
     }
 
 

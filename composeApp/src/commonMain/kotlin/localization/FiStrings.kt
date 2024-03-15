@@ -58,8 +58,8 @@ object FiStrings : Strings {
         }
     }
 
-    override fun month(day: Month): String {
-        return when (day) {
+    override fun month(month: Month): String {
+        return when (month) {
             Month.JANUARY -> "tammikuu"
             Month.FEBRUARY -> "helmikuu"
             Month.MARCH -> "maaliskuu"
@@ -72,7 +72,25 @@ object FiStrings : Strings {
             Month.OCTOBER -> "lokakuu"
             Month.NOVEMBER -> "marraskuu"
             Month.DECEMBER -> "joulukuu"
-            else -> day.toString()
+            else -> month.toString()
+        }
+    }
+
+    override fun monthShort(month: Month): String {
+        return when (month) {
+            Month.JANUARY -> "tammi"
+            Month.FEBRUARY -> "helmi"
+            Month.MARCH -> "maalis"
+            Month.APRIL -> "huhti"
+            Month.MAY -> "touko"
+            Month.JUNE -> "kesä"
+            Month.JULY -> "heinä"
+            Month.AUGUST -> "elo"
+            Month.SEPTEMBER -> "syys"
+            Month.OCTOBER -> "loka"
+            Month.NOVEMBER -> "marras"
+            Month.DECEMBER -> "joulu"
+            else -> month.toString()
         }
     }
 
@@ -367,6 +385,8 @@ object FiStrings : Strings {
         }
 
         override val totalsTitle = "Kaikki juomat"
+        override val unitsLabel = "Annoksia"
+        override val dayLabel = "Päivä"
     }
 
 
@@ -377,6 +397,5 @@ object FiStrings : Strings {
         override val male = "Mies"
         override val female = "Nainen"
     }
-
 
 }
