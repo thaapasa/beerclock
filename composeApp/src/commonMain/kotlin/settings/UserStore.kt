@@ -40,6 +40,14 @@ internal class UserStore : KoinComponent {
         setStateValue(PreferenceKeys.dynamicPalette, dynamicPalette.toString())
     }
 
+    suspend fun setHasAgreedDisclosure(hasAgreed: Boolean) {
+        if (prefs.prefs.hasAgreedDisclosure == hasAgreed) {
+            return
+        }
+        setState { copy(hasAgreedDisclosure = hasAgreed) }
+        setStateValue(PreferenceKeys.hasAgreedDisclosure, hasAgreed.toString())
+    }
+
     suspend fun setGender(gender: Gender) {
         if (prefs.prefs.gender == gender) {
             return
@@ -117,6 +125,7 @@ internal class UserStore : KoinComponent {
     object PreferenceKeys {
         const val locale = "prefs.user.locale"
         const val theme = "prefs.user.theme"
+        const val hasAgreedDisclosure = "prefs.user.hasAgreedDisclosure"
         const val dynamicPalette = "prefs.user.dynamicPalette"
         const val weight = "prefs.user.weight"
         const val gender = "prefs.user.gender"
@@ -153,10 +162,16 @@ internal class UserStore : KoinComponent {
             val themeStr = store.getString(PreferenceKeys.theme, defaults.theme.name)
             val dynamicPaletteStr =
                 store.getString(PreferenceKeys.dynamicPalette, defaults.dynamicPalette.toString())
+            val hasAgreedDisclosureStr =
+                store.getString(
+                    PreferenceKeys.hasAgreedDisclosure,
+                    defaults.hasAgreedDisclosure.toString()
+                )
 
             return UserPreferences(
                 weightKg = safeToDouble(weightStr) ?: defaults.weightKg,
                 gender = Gender.safeValueOf(genderStr) ?: defaults.gender,
+                hasAgreedDisclosure = hasAgreedDisclosureStr.lowercase() == "true",
                 startOfDay = LocalTime.fromPrefsString(startOfDayStr) ?: defaults.startOfDay,
                 alchoholGramsInUnit = safeToDouble(alcoholGramsInUnitStr)
                     ?: defaults.alchoholGramsInUnit,

@@ -19,6 +19,10 @@ data class UserPreferences(
      */
     val theme: ThemeSelection = ThemeSelection.SYSTEM,
     /**
+     * Has user agreed to disclosure statement?
+     */
+    val hasAgreedDisclosure: Boolean = false,
+    /**
      * Use dynamic color palette (if available). The dynamic palette works on Android,
      * and it's generated based on the user's background image colors.
      */
