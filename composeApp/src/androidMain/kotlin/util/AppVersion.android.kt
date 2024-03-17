@@ -24,5 +24,5 @@ actual fun getOSVersion(): String {
 }
 
 actual fun getDeviceModel(): String {
-    return "${Build.MANUFACTURER} ${Build.DEVICE}"
+    return "${Build.MANUFACTURER} ${Build.MODEL}"
 }

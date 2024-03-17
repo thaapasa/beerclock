@@ -114,9 +114,9 @@ object EnStrings : Strings {
         override val menu = "Menu"
         override val today = "Today"
         override val settings = "Settings"
-        override val about = "About the App"
-        override val disclosure = "App Usage Disclosure"
-        override val drinkLibrary = "Drink Library"
+        override val about = "About the app"
+        override val disclosure = "App usage disclosure"
+        override val drinkLibrary = "Drink library"
         override val history = "History"
         override val statistics = "Statistics"
     }
