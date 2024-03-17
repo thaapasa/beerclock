@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.localization
 
 import fi.tuska.beerclock.drinks.Category
+import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.SingleUnitWeights
 import fi.tuska.beerclock.screens.statistics.StatisticsMonth
@@ -242,6 +243,7 @@ object FiStrings : Strings {
         override val saveDrinkTitle = "Tallenna"
         override val addDefaultDrinks = "Lisää esimerkkijuomat"
         override val defaultDrinksAdded = "Esimerkkijuomat lisätty kirjastoon!"
+        override fun drinkDeleted(drink: DrinkInfo) = "Poistettu ${drink.name}"
     }
 
 

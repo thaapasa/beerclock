@@ -22,6 +22,7 @@ import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.newdrink.BasicDrinkItem
+import fi.tuska.beerclock.ui.composables.SwipeControl
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
 
@@ -58,11 +59,17 @@ fun DrinkLibraryPage(innerPadding: PaddingValues, vm: DrinkLibraryViewModel) {
                 .clip(RoundedCornerShape(12.dp))
         ) {
             items(searchResults, key = { it.key }) { drink ->
-                BasicDrinkItem(drink = drink, onClick = {
-                    if (drink is DrinkInfo) {
-                        vm.viewDrink(drink)
+                when {
+                    drink is DrinkInfo -> SwipeControl(
+                        onModify = { vm.editDrink(drink) },
+                        onDelete = { vm.deleteDrink(drink) }) {
+                        BasicDrinkItem(
+                            drink = drink,
+                            onClick = { vm.viewDrink(drink) })
                     }
-                })
+
+                    else -> BasicDrinkItem(drink = drink)
+                }
             }
         }
         vm.EditorDialog()

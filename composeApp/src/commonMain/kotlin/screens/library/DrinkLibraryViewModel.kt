@@ -1,6 +1,8 @@
 package fi.tuska.beerclock.screens.library
 
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -12,6 +14,7 @@ import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkDetails
+import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.images.AppIcon
@@ -22,13 +25,16 @@ import fi.tuska.beerclock.screens.library.create.CreateDrinkInfoDialog
 import fi.tuska.beerclock.screens.library.modify.EditDrinkInfoDialog
 import fi.tuska.beerclock.screens.newdrink.TextDrinkInfo
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
 
@@ -113,16 +119,43 @@ class DrinkLibraryViewModel : SnackbarViewModel(SnackbarHostState()), KoinCompon
         this.editingDrink = null
     }
 
-    private fun editDrink(drink: DrinkInfo) {
+    fun editDrink(drink: DrinkInfo) {
         this.viewingDrink = null
         this.editingDrink = drink
     }
 
-    private fun deleteDrink(drink: DrinkInfo) {
+    fun deleteDrink(drink: DrinkInfo) {
         launch {
             drinks.deleteDrinkInfoById(drink.id)
+            showDrinkDeleted(drink)
         }
         closeEdit()
+    }
+
+
+    private suspend fun showDrinkDeleted(drink: DrinkInfo) {
+        val strings = Strings.get()
+        withContext(Dispatchers.Main) {
+            val result =
+                snackbar.showSnackbar(
+                    strings.library.drinkDeleted(drink),
+                    actionLabel = strings.cancel,
+                    duration = SnackbarDuration.Short
+                )
+            if (result == SnackbarResult.ActionPerformed) {
+                // Remove added drink
+                withContext(Dispatchers.IO) {
+                    val restored =
+                        drinks.insertDrinkInfo(
+                            DrinkDetailsFromEditor.fromBasicInfo(
+                                drink,
+                                Clock.System.now()
+                            )
+                        )
+                    logger.info("Restored $restored to db")
+                }
+            }
+        }
     }
 
     private fun closeEdit() {

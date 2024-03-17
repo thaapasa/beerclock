@@ -148,10 +148,5 @@ class HomeViewModel(initAction: SuspendAction<HomeViewModel>? = null) : Snackbar
             loadTodaysDrinks()
         }
     }
-
-    fun reload() {
-        logger.info("Reloading drinks")
-        loadTodaysDrinks()
-    }
 }
 

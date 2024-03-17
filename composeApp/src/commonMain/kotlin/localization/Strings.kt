@@ -2,6 +2,7 @@ package fi.tuska.beerclock.localization
 
 import androidx.compose.ui.text.intl.Locale
 import fi.tuska.beerclock.drinks.Category
+import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.settings.Gender
@@ -185,6 +186,7 @@ interface Strings {
         val saveDrinkTitle: String
         val addDefaultDrinks: String
         val defaultDrinksAdded: String
+        fun drinkDeleted(drink: DrinkInfo): String
     }
 
 
