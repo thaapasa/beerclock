@@ -113,8 +113,9 @@ object EnStrings : Strings {
         override val menu = "Menu"
         override val today = "Today"
         override val settings = "Settings"
-        override val about = "About the app"
-        override val drinkLibrary = "Drink library"
+        override val about = "About the App"
+        override val disclosure = "App Usage Disclosure"
+        override val drinkLibrary = "Drink Library"
         override val history = "History"
         override val statistics = "Statistics"
     }
@@ -193,6 +194,31 @@ object EnStrings : Strings {
         override val addDefaultDrinks = "Add default drinks"
         override val defaultDrinksAdded = "Default drinks added to library!"
     }
+
+
+    /* Disclosure */
+    override val disclosureTexts = arrayOf(
+        "BeerClock is an app for calculating current blood alcohol content (BAC) levels, " +
+                "and for monitoring your consumption habits over longer periods.",
+        "This application is designed exclusively for entertainment purposes, and I cannot " +
+                "guarantee that the alcohol quantities it displays correspond to reality. " +
+                "You use this app entirely at your own risk. Furthermore, the app should not " +
+                "be used competitively or to encourage friends to drink, especially if you " +
+                "have already consumed alcohol yourself.",
+        "I assume no responsibility for any potential intoxication of users, nor for any " +
+                "hangovers or any accidents or mishaps that may occur in connection with " +
+                "the use of this application. I am also not liable for the preservation of " +
+                "data recorded by the app, as software errors can occur.",
+        "This app does not transmit any collected data externally; all information visible " +
+                "in the app remains solely on your device (unless you yourself export it and " +
+                "transfer it to some other place).",
+        "Please understand that the blood alcohol concentration levels displayed by the " +
+                "application are based on computational estimates derived from the details " +
+                "you enter. Therefore, under no circumstances do I guarantee that you are in " +
+                "a condition to drive a vehicle, even if the app might suggest so."
+    )
+
+    override val dismissDisclosure = "Understood"
 
 
     /* New drink search screen */

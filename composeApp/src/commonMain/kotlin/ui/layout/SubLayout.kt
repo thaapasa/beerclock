@@ -23,6 +23,7 @@ import fi.tuska.beerclock.localization.Strings
 @Composable
 fun SubLayout(
     title: String,
+    showTopBar: Boolean = true,
     snackbarHostState: SnackbarHostState? = null,
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
@@ -31,21 +32,24 @@ fun SubLayout(
     val navigator = LocalNavigator.currentOrThrow
     Scaffold(
         snackbarHost = { snackbarHostState?.let { SnackbarHost(it) } },
-        topBar = {
-            TopAppBar(colors = topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.primary,
-            ),
-                actions = actions,
-                title = { Text(title) },
-                navigationIcon = {
-                    IconButton({ navigator.pop() }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = strings.menu.goBack,
-                        )
-                    }
-                })
+        topBar =
+        {
+            if (showTopBar) {
+                TopAppBar(colors = topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                    actions = actions,
+                    title = { Text(title) },
+                    navigationIcon = {
+                        IconButton({ navigator.pop() }) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = strings.menu.goBack,
+                            )
+                        }
+                    })
+            }
         }, content = content
     )
 }

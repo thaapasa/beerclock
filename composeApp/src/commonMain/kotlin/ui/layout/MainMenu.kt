@@ -25,6 +25,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.about.AboutScreen
+import fi.tuska.beerclock.screens.disclosure.DisclosureScreen
 import fi.tuska.beerclock.screens.library.DrinkLibraryScreen
 import fi.tuska.beerclock.screens.settings.SettingsScreen
 
@@ -42,6 +43,10 @@ fun MainMenuContent(onNavigate: (select: Screen) -> Unit) {
         DropdownMenuItem(
             onClick = { onNavigate(AboutScreen) },
             text = { Text(Strings.get().menu.about) }
+        )
+        DropdownMenuItem(
+            onClick = { onNavigate(DisclosureScreen) },
+            text = { Text(Strings.get().menu.disclosure) }
         )
     }
 }

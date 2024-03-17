@@ -81,6 +81,7 @@ interface Strings {
         val today: String
         val settings: String
         val about: String
+        val disclosure: String
         val drinkLibrary: String
         val history: String
         val statistics: String
@@ -167,6 +168,11 @@ interface Strings {
         val sqliteVersion: String
         val dbVersion: String
     }
+
+
+    /* Disclosure */
+    val disclosureTexts: Array<String>
+    val dismissDisclosure: String
 
 
     /* Drink library screen */

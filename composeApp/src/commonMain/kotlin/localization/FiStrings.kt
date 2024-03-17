@@ -140,6 +140,7 @@ object FiStrings : Strings {
         override val today = "Tänään"
         override val settings = "Asetukset"
         override val about = "Tietoja sovelluksesta"
+        override val disclosure = "Sovelluksen käyttöehdot"
         override val drinkLibrary = "Juomakirjasto"
         override val history = "Historia"
         override val statistics = "Tilastot"
@@ -205,6 +206,30 @@ object FiStrings : Strings {
         override val sqliteVersion = "SQLiten versio"
         override val dbVersion = "Tietokannan versio"
     }
+
+
+    /* Disclosure */
+    override val disclosureTexts = arrayOf(
+        "Kaljakello on sovellus, jolla voit seurata promillemäärääsi ja kulutustottumuksiasia " +
+                "syöttämällä nauttimasi alkoholijuomat sovellukseen.",
+        "Tämä sovellus on suunniteltu yksinomaan viihdekäyttöön, enkä takaa että sen näyttämät " +
+                "alkoholimäärät vastaavat todellisuutta. Käytät sovellusta täysin omalla " +
+                "vastuullasi. Sovellusta ei pidä käyttää kilpailullisesti tai rohkaista " +
+                "ystäviä juomaan, etenkin jos olet itse jo juonut.",
+        "En ota vastuuta käyttäjien mahdollisesta päihtymyksestä, krapulasta tai sovelluksen " +
+                "käytön yhteydessä mahdollisesti sattuvista tapaturmista tai sekaannuksista. " +
+                "En myöskään ole vastuussa sovelluksen tallentamien tietojen säilymisestä, sillä " +
+                "ohjelmistovirheet ovat mahdollisia.",
+        "Kaljakello ei lähetä kerättyjä tietoja minnekään; kaikki sovelluksessa näkyvät tiedot " +
+                "pysyvät ainoastaan laitteessasi (paitsi jos itse varmuuskopioit tiedot ja " +
+                "siirrät ne muualle).",
+        "Huomioithan, että sovelluksen näyttämät veren alkoholipitoisuudet perustuvat " +
+                "laskennallisiin arvioihin, jotka lasketaan syöttämiesi tietojen perusteella. " +
+                "Täten en missään nimessä voi taata, että olisit ajokuntoinen, vaikka sovellus " +
+                "niin näyttäisikin.",
+    )
+
+    override val dismissDisclosure = "Ymmärrän"
 
 
     /* Drink library screen */
