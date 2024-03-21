@@ -168,6 +168,7 @@ interface Strings {
         val osVersion: String
         val sqliteVersion: String
         val dbVersion: String
+        val aboutText: TextContent
     }
 
 

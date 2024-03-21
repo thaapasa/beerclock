@@ -206,6 +206,15 @@ object FiStrings : Strings {
         override val osVersion = "Järjestelmän versio"
         override val sqliteVersion = "SQLiten versio"
         override val dbVersion = "Tietokannan versio"
+        override val aboutText =
+            arrayOf(
+                PlainText("Kaljakello on ilmainen. Voit ladata sen lähdekoodin osoitteesta "),
+                LinkText(
+                    "https://github.com/thaapasa/beerclock",
+                    "https://github.com/thaapasa/beerclock"
+                ),
+                PlainText(".")
+            )
     }
 
 
