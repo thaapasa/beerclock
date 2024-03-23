@@ -13,7 +13,9 @@ struct ComposeView: UIViewControllerRepresentable {
 struct ContentView: View {
     var body: some View {
         ComposeView()
-                .ignoresSafeArea(.keyboard) // Compose has own keyboard handler
+                // Removing this for now so that iOS rescales window size smaller when the
+                // on-screen keyboard is shown:
+                //.ignoresSafeArea(.keyboard) // Compose has own keyboard handler
     }
 }
 
