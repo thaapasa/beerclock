@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.ui.components
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,8 +16,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
+expect fun getFullscreenDialogSafeAreaPadding(): PaddingValues
+
 val FullScreenDialogProperties =
-    DialogProperties(dismissOnBackPress = true, usePlatformDefaultWidth = false)
+    DialogProperties(
+        dismissOnBackPress = true,
+        usePlatformDefaultWidth = false,
+    )
 
 @Composable
 fun FullScreenDialog(
@@ -26,10 +32,10 @@ fun FullScreenDialog(
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
-        properties = dialogProperties
+        properties = dialogProperties,
     ) {
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.padding(getFullscreenDialogSafeAreaPadding()).fillMaxSize(),
             color = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.onSurface,
             content = content
