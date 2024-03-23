@@ -26,7 +26,7 @@ fun EditDrinkDialog(
     FullScreenDialog(onDismissRequest = onClose) {
         Column(modifier = Modifier.fillMaxWidth()) {
             DialogHeader(
-                titleText = strings.drinkDialog.createTitle,
+                titleText = strings.drinkDialog.modifyTitle,
                 leadingIcon = { modifier ->
                     AppIcon.CLOSE.iconButton(
                         onClick = onClose,
