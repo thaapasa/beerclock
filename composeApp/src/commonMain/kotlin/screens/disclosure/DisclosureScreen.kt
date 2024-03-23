@@ -102,7 +102,7 @@ class DisclosureViewModel(private val navigator: Navigator) : ViewModel(), KoinC
     fun agreeToDisclosure() {
         launch {
             store.setHasAgreedDisclosure(true)
+            navigator.replaceAll(HomeScreen())
         }
-        navigator.replaceAll(HomeScreen())
     }
 }

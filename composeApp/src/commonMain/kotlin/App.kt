@@ -39,7 +39,7 @@ class AppDataViewModel : ViewModel(), KoinComponent {
         logger.info("BeerClock starting with SQLite ${dbInfo.sqliteVersion}, DB version ${dbInfo.databaseVersion}")
         logger.info("User ${if (hasAgreedToDisclosure()) "has" else "has not"} agreed to disclosure")
     }
-    
+
     fun getHomeScreen(): Screen = when {
         hasAgreedToDisclosure() -> HomeScreen()
         else -> DisclosureScreen

@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.settings
 
 import fi.tuska.beerclock.localization.AppLocale
+import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.ui.theme.ThemeSelection
 import fi.tuska.beerclock.util.fromPrefsString
 import fi.tuska.beerclock.util.safeToDouble
@@ -149,36 +150,43 @@ internal class UserStore : KoinComponent {
          */
         fun load(store: PreferenceStore): UserPreferences {
             val defaults = UserPreferences()
-            val weightStr = store.getString(PreferenceKeys.weight, defaults.weightKg.toString())
+
             val genderStr = store.getString(PreferenceKeys.gender, defaults.gender.toString())
             val startOfDayStr =
                 store.getString(PreferenceKeys.startOfDay, defaults.startOfDay.toPrefsString())
-            val alcoholGramsInUnitStr =
-                store.getString(
-                    PreferenceKeys.alchoholGramsInUnit,
-                    defaults.alchoholGramsInUnit.toString()
-                )
             val localeStr = store.getString(PreferenceKeys.locale, defaults.locale?.name ?: "")
             val themeStr = store.getString(PreferenceKeys.theme, defaults.theme.name)
-            val dynamicPaletteStr =
-                store.getString(PreferenceKeys.dynamicPalette, defaults.dynamicPalette.toString())
-            val hasAgreedDisclosureStr =
-                store.getString(
-                    PreferenceKeys.hasAgreedDisclosure,
-                    defaults.hasAgreedDisclosure.toString()
-                )
 
             return UserPreferences(
-                weightKg = safeToDouble(weightStr) ?: defaults.weightKg,
+                weightKg = store.getDouble(PreferenceKeys.weight, defaults.weightKg),
                 gender = Gender.safeValueOf(genderStr) ?: defaults.gender,
-                hasAgreedDisclosure = hasAgreedDisclosureStr.lowercase() == "true",
+                hasAgreedDisclosure = store.getBoolean(
+                    PreferenceKeys.hasAgreedDisclosure,
+                    defaults.hasAgreedDisclosure
+                ),
                 startOfDay = LocalTime.fromPrefsString(startOfDayStr) ?: defaults.startOfDay,
-                alchoholGramsInUnit = safeToDouble(alcoholGramsInUnitStr)
-                    ?: defaults.alchoholGramsInUnit,
+                alchoholGramsInUnit = store.getDouble(
+                    PreferenceKeys.alchoholGramsInUnit,
+                    defaults.alchoholGramsInUnit
+                ),
                 locale = AppLocale.forName(localeStr),
                 theme = ThemeSelection.forName(themeStr),
-                dynamicPalette = dynamicPaletteStr.lowercase() == "true"
+                dynamicPalette = store.getBoolean(
+                    PreferenceKeys.dynamicPalette,
+                    defaults.dynamicPalette
+                ),
             )
         }
     }
+}
+
+fun PreferenceStore.getDouble(key: String, default: Double): Double {
+    val str = getString(key, default.toString())
+    return safeToDouble(str) ?: default
+}
+
+fun PreferenceStore.getBoolean(key: String, default: Boolean): Boolean {
+    val str = getString(key, default.toString())
+    getLogger("us").info("Loaded bool $key: $str")
+    return str.lowercase() == "true"
 }
