@@ -31,7 +31,7 @@ fun DailyBacGraph(
     modifier: Modifier = Modifier,
 ) {
     val graph = bac.graphData
-    Card(modifier = modifier.fillMaxWidth().height(240.dp)) {
+    Card(modifier = modifier.fillMaxWidth().height(280.dp)) {
         XYGraph(graph = graph.graphDef(), modifier = Modifier.padding(4.dp), showYGridLines = true)
         {
             DaySeparator(this, graph.toGraphX(ZeroHour) + 24f, graph.maxY)
