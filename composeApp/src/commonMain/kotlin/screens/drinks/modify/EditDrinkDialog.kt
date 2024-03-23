@@ -2,6 +2,8 @@ package fi.tuska.beerclock.screens.drinks.modify
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -22,9 +24,10 @@ fun EditDrinkDialog(
 ) {
     val vm = rememberWithDispose { EditDrinkViewModel(drink) }
     val strings = Strings.get()
+    val scrollState = rememberScrollState()
 
     FullScreenDialog(onDismissRequest = onClose) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.fillMaxWidth().verticalScroll(scrollState)) {
             DialogHeader(
                 titleText = strings.drinkDialog.modifyTitle,
                 leadingIcon = { modifier ->
