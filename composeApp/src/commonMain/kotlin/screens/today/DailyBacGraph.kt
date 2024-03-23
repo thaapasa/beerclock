@@ -32,7 +32,7 @@ fun DailyBacGraph(
 ) {
     val graph = bac.graphData
     Card(modifier = modifier.fillMaxWidth().height(240.dp)) {
-        XYGraph(graph = graph.graphDef(), modifier = Modifier.padding(4.dp))
+        XYGraph(graph = graph.graphDef(), modifier = Modifier.padding(4.dp), showYGridLines = true)
         {
             DaySeparator(this, graph.toGraphX(ZeroHour) + 24f, graph.maxY)
             DrivingLimit(this, bac.drivingLimitBac().toFloat(), maxX = 24f, maxY = graph.maxY)

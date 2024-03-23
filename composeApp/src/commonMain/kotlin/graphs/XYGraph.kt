@@ -16,22 +16,21 @@ import io.github.koalaplot.core.util.rotateVertically
 import io.github.koalaplot.core.xygraph.TickPosition
 import io.github.koalaplot.core.xygraph.XYGraphScope
 import io.github.koalaplot.core.xygraph.rememberAxisStyle
-import io.github.koalaplot.core.xygraph.rememberLinearAxisModel
 import io.github.koalaplot.core.xygraph.XYGraph as KoalaXYGraph
 
 @Composable
 fun XYGraph(
     graph: GraphDefinition,
     modifier: Modifier = Modifier,
+    panZoomEnabled: Boolean = false,
+    showYGridLines: Boolean = false,
     content: @Composable XYGraphScope<Float, Float>.() -> Unit,
 ) {
     val labelColor = graphLabelColor()
     val gridColor = gridLineColor()
-    val xAxisModel = rememberLinearAxisModel(range = graph.xRange)
-    val yAxisModel = rememberLinearAxisModel(range = graph.yRange)
     KoalaXYGraph(
-        xAxisModel,
-        yAxisModel,
+        graph.xAxisModel,
+        graph.yAxisModel,
         modifier,
         xAxisStyle = rememberAxisStyle(
             color = gridColor,
@@ -84,9 +83,9 @@ fun XYGraph(
         // that allows fine-tuning title rendering
         horizontalMajorGridLineStyle = KoalaPlotTheme.axis.majorGridlineStyle,
         horizontalMinorGridLineStyle = KoalaPlotTheme.axis.minorGridlineStyle,
-        verticalMajorGridLineStyle = NoLine,
-        verticalMinorGridLineStyle = NoLine,
-        panZoomEnabled = false,
+        verticalMajorGridLineStyle = if (showYGridLines) KoalaPlotTheme.axis.majorGridlineStyle else NoLine,
+        verticalMinorGridLineStyle = if (showYGridLines) KoalaPlotTheme.axis.minorGridlineStyle else NoLine,
+        panZoomEnabled = panZoomEnabled,
         content
     )
 }

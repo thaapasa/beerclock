@@ -3,6 +3,7 @@ package fi.tuska.beerclock.bac
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.bac.AlcoholAtTime.Companion.interpolateFromList
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.graphs.AreaPlot
@@ -10,6 +11,7 @@ import fi.tuska.beerclock.graphs.GraphDefinition
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.inHours
+import io.github.koalaplot.core.xygraph.LinearAxisModel
 import io.github.koalaplot.core.xygraph.Point
 import io.github.koalaplot.core.xygraph.XYGraphScope
 import kotlinx.datetime.Instant
@@ -45,8 +47,13 @@ class BacGraphData(private val events: List<AlcoholAtTime>) :
     val maxY = max(0.7, maxAlcoholConcentration + 0.1).toFloat()
 
     fun graphDef() = GraphDefinition(
-        xRange = 0f..24f,
-        yRange = 0f..maxY,
+        xAxisModel = LinearAxisModel(
+            range = 0f..24f,
+            minorTickCount = 1,
+            minimumMajorTickIncrement = 2f,
+            minimumMajorTickSpacing = 10.dp,
+        ),
+        yAxisModel = LinearAxisModel(range = 0f..maxY),
         xTitle = strings.home.bacTime,
         yTitle = strings.home.bacPermilles,
         formatXLabel = { strings.time(dailyHourLabel(it)) + " " }
