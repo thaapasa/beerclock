@@ -14,10 +14,10 @@ import org.jetbrains.compose.resources.painterResource
 fun FlagImage(
     country: Country,
     contentDescription: String = country.name,
-    modifier: Modifier = Modifier.width(20.dp)
+    modifier: Modifier = Modifier.width(20.dp),
 ) {
     Image(
-        painter = painterResource(country.flagPath),
+        painter = painterResource(country.drawable),
         contentDescription = contentDescription,
         modifier = modifier
     )
