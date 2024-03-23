@@ -183,7 +183,7 @@ object EnStrings : Strings {
         override val dbVersion = "Database version"
         override val aboutText =
             arrayOf(
-                PlainText("BeerClock is free software. You can download the source codes for it from the address"),
+                PlainText("BeerClock is free software. You can download the source codes for it from the address "),
                 LinkText(
                     "https://github.com/thaapasa/beerclock",
                     "https://github.com/thaapasa/beerclock"
