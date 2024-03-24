@@ -8,6 +8,7 @@ import fi.tuska.beerclock.screens.statistics.StatisticsMonth
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.screens.statistics.StatisticsWeek
 import fi.tuska.beerclock.screens.statistics.StatisticsYear
+import fi.tuska.beerclock.ui.components.HelpText
 import fi.tuska.beerclock.ui.theme.ThemeSelection
 import fi.tuska.beerclock.util.toWeekOfYear
 import fi.tuska.beerclock.util.zeroPad
@@ -241,6 +242,26 @@ object EnStrings : Strings {
     )
 
     override val dismissDisclosure = "Understood"
+
+
+    /* Help texts */
+    override val help = Help
+
+    object Help : Strings.HelpStrings {
+        override val bacStatusGauge = HelpText(
+            "BAC status",
+            "This gauge shows an estimation of your blood alcohol concentration at the moment, based on all the drinks you have consumed. The calculations assume that all the alcohol would be immediately absorbed into your body."
+        )
+        override val dailyUnitsGauge = HelpText(
+            "Daily units",
+            "This gauge shows how many units of alcohol you have consumed during this drinking day."
+        )
+        override val weeklyUnitsGauge =
+            HelpText(
+                "Weekly units",
+                "This gauge shows how many units of alcohol you have consumed during this week."
+            )
+    }
 
 
     /* New drink search screen */

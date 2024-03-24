@@ -7,6 +7,7 @@ import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.settings.Gender
 import fi.tuska.beerclock.settings.GlobalUserPreferences
+import fi.tuska.beerclock.ui.components.HelpText
 import fi.tuska.beerclock.ui.theme.ThemeSelection
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
@@ -178,6 +179,16 @@ interface Strings {
     /* Disclosure */
     val disclosureTexts: Array<String>
     val dismissDisclosure: String
+
+
+    /* Help texts */
+    val help: HelpStrings
+
+    interface HelpStrings {
+        val bacStatusGauge: HelpText
+        val dailyUnitsGauge: HelpText
+        val weeklyUnitsGauge: HelpText
+    }
 
 
     /* Drink library screen */

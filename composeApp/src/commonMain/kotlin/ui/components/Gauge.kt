@@ -30,7 +30,7 @@ import kotlin.math.min
 
 const val gapDegrees = 60.0f
 
-class GaugeValue(
+open class GaugeValue(
     initialValue: Double = 0.0,
     val icon: @Composable ((color: Color) -> Unit)? = null,
     val appIcon: AppIcon? = null,
@@ -55,6 +55,14 @@ class GaugeValue(
         }
     }
 }
+
+class GaugeValueWithHelp(
+    initialValue: Double = 0.0,
+    icon: @Composable ((color: Color) -> Unit)? = null,
+    appIcon: AppIcon? = null,
+    maxValue: Double = 1.0,
+    val helpText: HelpText,
+) : GaugeValue(initialValue, icon, appIcon, maxValue)
 
 @Composable
 fun Gauge(

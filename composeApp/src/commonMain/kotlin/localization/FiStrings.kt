@@ -8,6 +8,7 @@ import fi.tuska.beerclock.screens.statistics.StatisticsMonth
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.screens.statistics.StatisticsWeek
 import fi.tuska.beerclock.screens.statistics.StatisticsYear
+import fi.tuska.beerclock.ui.components.HelpText
 import fi.tuska.beerclock.ui.theme.ThemeSelection
 import fi.tuska.beerclock.util.toWeekOfYear
 import fi.tuska.beerclock.util.zeroPad
@@ -251,6 +252,26 @@ object FiStrings : Strings {
     )
 
     override val dismissDisclosure = "Ymmärrän"
+
+
+    /* Help texts */
+    override val help = Help
+
+    object Help : Strings.HelpStrings {
+        override val bacStatusGauge = HelpText(
+            "Promillet",
+            "Tämä mittari näyttää laskennallisen arvion siitä, kuinka monta promillea alkoholia on veressäsi. Laskuissa oletetaan että kaikki juomasi alkoholi olisi imeytynyt heti elimistöösi."
+        )
+        override val dailyUnitsGauge = HelpText(
+            "Päivittäiset annokset",
+            "Tämä mittari näyttää kuinka monta annosta alkoholia olet nauttinut tämän juomapäivän aikana."
+        )
+        override val weeklyUnitsGauge =
+            HelpText(
+                "Viikoittaiset annokset",
+                "Tämä mittari näyttää kuinka monta annosta alkoholia olet nauttinut tämän viikon aikana."
+            )
+    }
 
 
     /* Drink library screen */

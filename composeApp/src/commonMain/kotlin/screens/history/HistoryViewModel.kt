@@ -22,7 +22,7 @@ import fi.tuska.beerclock.screens.drinks.modify.EditDrinkDialog
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.components.BacStatusViewModel
 import fi.tuska.beerclock.ui.components.DateView
-import fi.tuska.beerclock.ui.components.GaugeValue
+import fi.tuska.beerclock.ui.components.GaugeValueWithHelp
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
 import fi.tuska.beerclock.util.DataState
 import fi.tuska.beerclock.util.SuspendAction
@@ -48,7 +48,7 @@ class HistoryViewModel(
     initAction: SuspendAction<HistoryViewModel>? = null,
     initialDailyGaugeValue: Double = 0.0,
     initialWeeklyGaugeValue: Double = 0.0,
-    private val navigator: Navigator
+    private val navigator: Navigator,
 ) :
     SnackbarViewModel(SnackbarHostState()),
     BacStatusViewModel,
@@ -57,6 +57,7 @@ class HistoryViewModel(
     private val drinkService = DrinkService()
 
     private val prefs: GlobalUserPreferences = get()
+    private val strings = Strings.get()
 
     val date = atDate ?: times.currentDrinkDay()
     val drinks: StateFlow<DataState<List<DrinkRecordInfo>>> =
@@ -74,16 +75,18 @@ class HistoryViewModel(
     )
 
     private val dailyUnitsGauge =
-        GaugeValue(
+        GaugeValueWithHelp(
             initialDailyGaugeValue,
             appIcon = AppIcon.DRINK,
-            maxValue = prefs.prefs.maxDailyUnits
+            maxValue = prefs.prefs.maxDailyUnits,
+            helpText = strings.help.dailyUnitsGauge,
         )
     private val weeklyUnitsGauge =
-        GaugeValue(
+        GaugeValueWithHelp(
             initialWeeklyGaugeValue,
             appIcon = AppIcon.CALENDAR_WEEK,
-            maxValue = prefs.prefs.maxWeeklyUnits
+            maxValue = prefs.prefs.maxWeeklyUnits,
+            helpText = strings.help.weeklyUnitsGauge,
         )
 
     override val gauges = listOf(dailyUnitsGauge, weeklyUnitsGauge)
@@ -111,7 +114,6 @@ class HistoryViewModel(
     }
 
     suspend fun showDrinkAdded(drink: DrinkRecordInfo) {
-        val strings = Strings.get()
         withContext(Dispatchers.Main) {
             val result =
                 snackbar.showSnackbar(
@@ -129,7 +131,6 @@ class HistoryViewModel(
     }
 
     suspend fun showDrinkDeleted(drink: DrinkRecordInfo) {
-        val strings = Strings.get()
         withContext(Dispatchers.Main) {
             val result =
                 snackbar.showSnackbar(

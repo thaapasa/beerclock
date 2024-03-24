@@ -12,6 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -46,10 +48,12 @@ fun FullScreenDialog(
 @Composable
 fun DialogHeader(
     titleText: String,
+    height: Dp = 56.dp,
     leadingIcon: (@Composable (modifier: Modifier) -> Unit)? = null,
-    textButton: (@Composable (modifier: Modifier) -> Unit)? = null,
+    trailingIcon: (@Composable (modifier: Modifier) -> Unit)? = null,
+    textStyle: TextStyle = MaterialTheme.typography.titleLarge,
 ) {
-    Row(modifier = Modifier.fillMaxWidth().height(56.dp)) {
+    Row(modifier = Modifier.fillMaxWidth().height(height)) {
         leadingIcon?.invoke(
             Modifier.align(Alignment.CenterVertically)
         )
@@ -57,10 +61,10 @@ fun DialogHeader(
             titleText,
             modifier = Modifier.align(Alignment.CenterVertically).weight(1f),
             color = MaterialTheme.colorScheme.onSurface,
-            style = MaterialTheme.typography.titleLarge
+            style = textStyle
         )
-        textButton?.invoke(
-            Modifier.align(Alignment.CenterVertically).padding(end = 8.dp)
+        trailingIcon?.invoke(
+            Modifier.align(Alignment.CenterVertically)
         )
     }
 }

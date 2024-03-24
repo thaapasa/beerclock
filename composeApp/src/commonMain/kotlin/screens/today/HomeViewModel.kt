@@ -23,7 +23,7 @@ import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.components.BacStatusViewModel
 import fi.tuska.beerclock.ui.components.DateView
-import fi.tuska.beerclock.ui.components.GaugeValue
+import fi.tuska.beerclock.ui.components.GaugeValueWithHelp
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
 import fi.tuska.beerclock.util.SuspendAction
 import kotlinx.coroutines.Dispatchers
@@ -47,20 +47,30 @@ class HomeViewModel(initAction: SuspendAction<HomeViewModel>? = null) : Snackbar
     private val drinkService = DrinkService()
     private val times = DrinkTimeService()
     private val prefs: GlobalUserPreferences = get()
+    private val strings = Strings.get()
 
     init {
         initAction?.let { launch { it(this@HomeViewModel) } }
     }
 
     private val bacGauge =
-        GaugeValue(
+        GaugeValueWithHelp(
             icon = { Text(text = "‰", color = it) },
-            maxValue = prefs.prefs.maxBAC
+            maxValue = prefs.prefs.maxBAC,
+            helpText = strings.help.bacStatusGauge,
         )
     private val dailyUnitsGauge =
-        GaugeValue(appIcon = AppIcon.DRINK, maxValue = prefs.prefs.maxDailyUnits)
+        GaugeValueWithHelp(
+            appIcon = AppIcon.DRINK,
+            maxValue = prefs.prefs.maxDailyUnits,
+            helpText = strings.help.dailyUnitsGauge,
+        )
     private val weeklyUnitsGauge =
-        GaugeValue(appIcon = AppIcon.CALENDAR_WEEK, maxValue = prefs.prefs.maxWeeklyUnits)
+        GaugeValueWithHelp(
+            appIcon = AppIcon.CALENDAR_WEEK,
+            maxValue = prefs.prefs.maxWeeklyUnits,
+            helpText = strings.help.weeklyUnitsGauge,
+        )
     override val gauges = listOf(bacGauge, dailyUnitsGauge, weeklyUnitsGauge)
 
     var drinkDay by mutableStateOf(times.currentDrinkDay())
