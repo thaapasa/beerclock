@@ -22,7 +22,7 @@ material3 = "1.2.1"
 requery = "3.43.0"
 stately = "2.0.5"
 sqldelight = "2.0.1"
-voyager = "1.0.0-rc10"
+voyager = "1.0.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
