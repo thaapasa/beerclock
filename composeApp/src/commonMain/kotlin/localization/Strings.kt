@@ -168,7 +168,10 @@ interface Strings {
         val osVersion: String
         val sqliteVersion: String
         val dbVersion: String
+        val copyrightText: String
         val aboutText: TextContent
+        val licenseTitle: String
+        val licenseInfo: TextContent
     }
 
 

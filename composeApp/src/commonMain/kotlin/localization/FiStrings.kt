@@ -206,12 +206,23 @@ object FiStrings : Strings {
         override val osVersion = "Järjestelmän versio"
         override val sqliteVersion = "SQLiten versio"
         override val dbVersion = "Tietokannan versio"
+        override val copyrightText = "Copyright © 2023-2024 Tuukka Haapasalo"
         override val aboutText =
             arrayOf(
                 PlainText("Kaljakello on ilmainen. Voit ladata sen lähdekoodin osoitteesta "),
                 LinkText(
                     "https://github.com/thaapasa/beerclock",
                     "https://github.com/thaapasa/beerclock"
+                ),
+                PlainText(".")
+            )
+        override val licenseTitle = "Vapaan lähdekoodin lisenssit"
+        override val licenseInfo =
+            arrayOf(
+                PlainText("Tämä sovellus sisältää ohjelmistoja, jotka on lisensoitu avoimen lähdekoodin lisensseillä. Lisätietoja voit lukea osoitteesta "),
+                LinkText(
+                    "https://github.com/thaapasa/beerclock/blob/main/NOTICE.md",
+                    "https://github.com/thaapasa/beerclock/blob/main/NOTICE.md"
                 ),
                 PlainText(".")
             )

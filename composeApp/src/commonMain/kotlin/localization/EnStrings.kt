@@ -181,12 +181,23 @@ object EnStrings : Strings {
         override val osVersion = "OS version"
         override val sqliteVersion = "SQLite version"
         override val dbVersion = "Database version"
+        override val copyrightText = "Copyright © 2023-2024 Tuukka Haapasalo"
         override val aboutText =
             arrayOf(
                 PlainText("BeerClock is free software. You can download the source codes for it from the address "),
                 LinkText(
                     "https://github.com/thaapasa/beerclock",
                     "https://github.com/thaapasa/beerclock"
+                ),
+                PlainText(".")
+            )
+        override val licenseTitle = "Open-source licenses"
+        override val licenseInfo =
+            arrayOf(
+                PlainText("This application includes software licensed under open-source licenses. For more details, please see "),
+                LinkText(
+                    "https://github.com/thaapasa/beerclock/blob/main/NOTICE.md",
+                    "https://github.com/thaapasa/beerclock/blob/main/NOTICE.md"
                 ),
                 PlainText(".")
             )

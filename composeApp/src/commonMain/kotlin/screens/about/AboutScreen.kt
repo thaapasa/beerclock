@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.database.DatabaseInfo
@@ -69,12 +70,28 @@ fun AboutPage(innerPadding: PaddingValues) {
                 Text(vm.appVersion, style = MaterialTheme.typography.headlineSmall)
             }
         }
+        Text(
+            strings.about.copyrightText,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodyMedium
+        )
+        Spacer(modifier = Modifier.height(16.dp))
         InfoItem(strings.about.deviceModel, vm.deviceModel)
         InfoItem(strings.about.osVersion, vm.osVersion)
         InfoItem(strings.about.sqliteVersion, vm.dbInfo.sqliteVersion)
         InfoItem(strings.about.dbVersion, vm.dbInfo.databaseVersion.toString())
         Spacer(modifier = Modifier.height(16.dp))
         TextWithLinks(strings.about.aboutText)
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            strings.about.licenseTitle,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleSmall
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        TextWithLinks(strings.about.licenseInfo)
     }
 }
 
