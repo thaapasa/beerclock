@@ -9,9 +9,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import fi.tuska.beerclock.logging.getLogger
-
-private val logger = getLogger("TextWithLinks")
+import fi.tuska.beerclock.util.openLink
 
 open class PlainText(val text: String) {
     @Composable
@@ -59,11 +57,7 @@ fun TextWithLinks(
         onClick = { offs ->
             text.getStringAnnotations(tag = "URL", start = offs, end = offs).firstOrNull()
                 ?.let { annotation ->
-                    (onClick ?: ::openUrl)(annotation.item)
+                    (onClick ?: ::openLink)(annotation.item)
                 }
         })
-}
-
-fun openUrl(url: String) {
-    logger.info("Click on $url")
 }
