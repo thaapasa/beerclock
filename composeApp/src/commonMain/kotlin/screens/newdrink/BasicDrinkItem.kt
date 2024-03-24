@@ -1,6 +1,8 @@
 package fi.tuska.beerclock.screens.newdrink
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,8 +14,8 @@ import fi.tuska.beerclock.screens.library.CategoryHeaderInfo
 import fi.tuska.beerclock.screens.library.CategoryHeaderItem
 import fi.tuska.beerclock.ui.components.AppListItem
 import fi.tuska.beerclock.ui.components.UnitAvatar
-import fi.tuska.beerclock.ui.composables.pressable
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BasicDrinkItem(
     drink: BasicDrinkInfo,
@@ -36,10 +38,9 @@ fun BasicDrinkItem(
             quantityCl = drink.quantityCl,
             abvPercentage = drink.abvPercentage
         ),
-        modifier = modifier.pressable(
-            onTap = { onClick(drink) },
-            onLongPress = { onLongClick(drink) }
-        ),
+        modifier = modifier.combinedClickable(
+            onClick = { onClick(drink) },
+            onLongClick = { onLongClick(drink) }),
         icon = { drink.image.smallImage() },
         trailingContent = { UnitAvatar(units = drink.units()) },
         tonalElevation = 1.dp,
