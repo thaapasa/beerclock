@@ -79,8 +79,8 @@ android {
         applicationId = "fi.tuska.beerclock"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 15
-        versionName = "0.0.15"
+        versionCode = 16
+        versionName = "0.0.16"
     }
     packaging {
         resources {
