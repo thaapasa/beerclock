@@ -21,12 +21,16 @@ import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
 
-class StatisticsScreen(private val period: StatisticsPeriod? = null) : Screen {
+class StatisticsScreen(
+    private val period: StatisticsPeriod? = null,
+    private val previousData: StatisticsData? = null,
+) : Screen {
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val vm = rememberWithDispose(period) { StatisticsViewModel(period, navigator) }
+        val vm =
+            rememberWithDispose(period) { StatisticsViewModel(period, navigator, previousData) }
         val scrollState = rememberScrollState()
         MainLayout(showTopBar = false) { innerPadding ->
             Column(
@@ -44,7 +48,7 @@ fun StatisticsPage(vm: StatisticsViewModel) {
     Spacer(modifier = Modifier.height(8.dp))
     StatisticsTitle(vm.period)
     Spacer(modifier = Modifier.height(8.dp))
-    vm.statistics.valueOrNull()?.let { stats ->
+    vm.displayStatistics()?.let { stats ->
         CategoryStatisticsView(stats)
     }
 }

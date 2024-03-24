@@ -20,7 +20,11 @@ import org.koin.core.component.get
 
 private val logger = getLogger("StatisticsViewModel")
 
-class StatisticsViewModel(requestedPeriod: StatisticsPeriod?, private val navigator: Navigator) :
+class StatisticsViewModel(
+    requestedPeriod: StatisticsPeriod?,
+    private val navigator: Navigator,
+    private val previousData: StatisticsData? = null,
+) :
     ViewModel(), KoinComponent {
     val times = DrinkTimeService()
     val period = requestedPeriod ?: StatisticsWeek(times.currentDrinkDay())
@@ -32,6 +36,8 @@ class StatisticsViewModel(requestedPeriod: StatisticsPeriod?, private val naviga
     }
 
     var statistics: DataState<StatisticsData> by mutableStateOf(DataState.Loading)
+
+    fun displayStatistics() = statistics.valueOrNull() ?: previousData
 
     init {
         launch {
@@ -48,7 +54,7 @@ class StatisticsViewModel(requestedPeriod: StatisticsPeriod?, private val naviga
     fun asWeek() = period.toWeek()
 
     fun show(period: StatisticsPeriod) {
-        navigator.replaceAll(StatisticsScreen(period))
+        navigator.replaceAll(StatisticsScreen(period, previousData = statistics.valueOrNull()))
     }
 
     fun prev() = show(period.prev())

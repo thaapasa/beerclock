@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
@@ -21,7 +22,10 @@ fun StatisticsGraph(data: StatisticsData) {
         modifier = Modifier.fillMaxWidth().height(240.dp)
             .background(color = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp))
     ) {
-        XYGraph(graph = data.graphDef(), modifier = Modifier.padding(4.dp).fillMaxWidth())
+        XYGraph(
+            graph = remember(data) { data.graphDef() },
+            modifier = Modifier.padding(4.dp).fillMaxWidth()
+        )
         {
             VerticalBarPlot(
                 xData = data.xValues,
