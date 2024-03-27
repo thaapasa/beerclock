@@ -12,9 +12,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
-import fi.tuska.beerclock.graphs.VerticalBarPlot
 import fi.tuska.beerclock.graphs.XYGraph
 import io.github.koalaplot.core.bar.DefaultVerticalBar
+import io.github.koalaplot.core.bar.VerticalBarPlot
 
 @Composable
 fun StatisticsGraph(data: StatisticsData) {
