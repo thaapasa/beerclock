@@ -120,6 +120,7 @@ class DrinkLibraryViewModel : SnackbarViewModel(SnackbarHostState()), KoinCompon
     }
 
     fun editDrink(drink: DrinkInfo) {
+        logger.info("Editing drink $drink")
         this.viewingDrink = null
         this.editingDrink = drink
     }

@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.images.AppIcon
+import fi.tuska.beerclock.ui.components.WrappedAction
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,10 +31,14 @@ fun SwipeControl(
     content: @Composable RowScope.() -> Unit,
 ) {
     var clicks by mutableStateOf(0)
+    // We must wrap the callbacks since the confirmValueChange function is remembered and
+    // will not update if the callbacks change
+    val wrappedModify = WrappedAction(onModify)
+    val wrappedDelete = WrappedAction(onDelete)
     val dismissState = rememberSwipeToDismissBoxState(confirmValueChange = {
         when (it) {
-            SwipeToDismissBoxValue.StartToEnd -> onModify()
-            SwipeToDismissBoxValue.EndToStart -> onDelete()
+            SwipeToDismissBoxValue.StartToEnd -> wrappedModify()
+            SwipeToDismissBoxValue.EndToStart -> wrappedDelete()
             else -> return@rememberSwipeToDismissBoxState false
         }
         clicks++

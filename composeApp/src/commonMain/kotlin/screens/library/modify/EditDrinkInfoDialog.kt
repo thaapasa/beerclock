@@ -24,7 +24,7 @@ fun EditDrinkInfoDialog(
     onDrinksUpdated: (() -> Unit)? = null,
     onClose: () -> Unit,
 ) {
-    val vm = rememberWithDispose { EditDrinkInfoViewModel(drink) }
+    val vm = rememberWithDispose(drink) { EditDrinkInfoViewModel(drink) }
     val strings = Strings.get()
     val scrollState = rememberScrollState()
 
