@@ -1,15 +1,18 @@
 package fi.tuska.beerclock.ui.components
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -20,9 +23,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+
 
 @Composable
 fun <T> ImageSelectField(
@@ -30,11 +35,24 @@ fun <T> ImageSelectField(
     options: List<T>,
     titleText: String? = null,
     onValueChange: (image: T) -> Unit,
-    valueToImage: @Composable (value: T, modifier: Modifier) -> Unit,
-    minImageSize: Dp
+    valueToImage: @Composable (value: T) -> Painter,
+    minImageSize: Dp,
 ) {
     var dialogOpen by remember { mutableStateOf(false) }
-    valueToImage.invoke(value, modifier = Modifier.clickable { dialogOpen = !dialogOpen })
+    var previewImg by remember { mutableStateOf<Painter?>(null) }
+
+    valueToImage(value).let { img ->
+        Image(
+            img,
+            contentDescription = "",
+            modifier = Modifier.size(64.dp).clip(RoundedCornerShape(12.dp))
+                .combinedClickableReleasable(
+                    onClick = { dialogOpen = true },
+                    onLongPress = { previewImg = img },
+                    onRelease = { previewImg = null },
+                )
+        )
+    }
     if (dialogOpen) {
         Dialog(onDismissRequest = { dialogOpen = false }) {
             Surface(
@@ -49,7 +67,7 @@ fun <T> ImageSelectField(
                             color = MaterialTheme.colorScheme.onPrimaryContainer,
                             style = MaterialTheme.typography.titleMedium,
                         )
-                        Divider(
+                        HorizontalDivider(
                             color = MaterialTheme.colorScheme.onPrimaryContainer,
                             thickness = 1.dp,
                             modifier = Modifier.padding(top = 2.dp, bottom = 8.dp)
@@ -60,15 +78,42 @@ fun <T> ImageSelectField(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        items(options) {
-                            valueToImage.invoke(it, Modifier.clickable {
-                                onValueChange(it)
-                                dialogOpen = false
-                            })
+                        items(options) { item ->
+                            val painter = valueToImage(item)
+                            Image(
+                                painter,
+                                contentDescription = "",
+                                modifier = Modifier.size(64.dp).clip(RoundedCornerShape(12.dp))
+                                    .combinedClickableReleasable(
+                                        onClick = {
+                                            onValueChange(item)
+                                            dialogOpen = false
+                                        },
+                                        onLongPress = { previewImg = painter },
+                                        onRelease = { previewImg = null },
+                                    )
+                            )
                         }
                     }
                 }
             }
+        }
+    }
+    previewImg?.let {
+        PreviewImageDialog(it) { previewImg = null }
+    }
+}
+
+
+@Composable
+fun PreviewImageDialog(painter: Painter, onClose: () -> Unit) {
+    Dialog(onDismissRequest = onClose, properties = FullScreenDialogProperties) {
+        Surface(modifier = Modifier.wrapContentSize()) {
+            Image(
+                painter,
+                contentDescription = "",
+                modifier = Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(12.dp))
+            )
         }
     }
 }

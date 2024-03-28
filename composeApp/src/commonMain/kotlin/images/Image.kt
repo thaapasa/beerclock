@@ -23,7 +23,7 @@ fun Image.smallImage(modifier: Modifier = Modifier, size: Dp = 64.dp) {
     Image(
         painter = painter(),
         contentDescription = Strings.get().drink.image,
-        modifier = modifier.size(size).clip(RoundedCornerShape(12.dp)),
+        modifier = Modifier.size(size).clip(RoundedCornerShape(12.dp)).then(modifier),
     )
 }
 
