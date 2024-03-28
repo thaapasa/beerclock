@@ -1,18 +1,25 @@
 package fi.tuska.beerclock.screens.drinks
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.DrinkDetails
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.localization.Strings
-import fi.tuska.beerclock.screens.history.DrinkInfoRow
 import kotlinx.datetime.Instant
 
 @Composable
 fun DrinkInfoTable(
     drink: BasicDrinkInfo,
     time: Instant? = null,
-    drinkDetails: DrinkDetails? = null
+    drinkDetails: DrinkDetails? = null,
 ) {
     val strings = Strings.get()
     val times = DrinkTimeService()
@@ -57,3 +64,16 @@ fun DrinkInfoTable(
         }
     }
 }
+
+
+@Composable
+inline fun DrinkInfoRow(label: String, value: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(label, style = MaterialTheme.typography.bodyMedium)
+        Text(value, style = MaterialTheme.typography.bodyMedium)
+    }
+}
+
