@@ -11,11 +11,13 @@ import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.DrinkAction
 import fi.tuska.beerclock.drinks.DrinkDef
 import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
+import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.screens.drinks.create.AddDrinkDialog
+import fi.tuska.beerclock.screens.library.DrinkLibraryViewModel
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -40,6 +42,12 @@ class NewDrinkViewModel(
     private val onSelectDrink: DrinkAction,
 ) : SnackbarViewModel(SnackbarHostState()), KoinComponent {
     private val drinks = DrinkService()
+    private val libraryVm = DrinkLibraryViewModel(snackbar)
+
+    override fun onDispose() {
+        super.onDispose()
+        libraryVm.onDispose()
+    }
 
     var searchQuery by mutableStateOf("")
     private val strings = Strings.get()
@@ -72,6 +80,14 @@ class NewDrinkViewModel(
         private set
     var proto: BasicDrinkInfo? = null
 
+    fun deleteDrinkInfo(drink: DrinkInfo) {
+        libraryVm.deleteDrink(drink)
+    }
+
+    fun modifyDrinkInfo(drink: DrinkInfo) {
+        libraryVm.editDrink(drink)
+    }
+
     @Composable
     fun AddDrinkDialog() {
         if (dialogOpen) {
@@ -82,6 +98,11 @@ class NewDrinkViewModel(
                 onClose = this::closeDialog
             )
         }
+    }
+
+    @Composable
+    fun EditDrinkInfoDialog() {
+        libraryVm.EditorDialog()
     }
 
     private inline fun isBusy() = dialogOpen

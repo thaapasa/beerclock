@@ -58,7 +58,8 @@ private val NewDrink =
     )
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class DrinkLibraryViewModel : SnackbarViewModel(SnackbarHostState()), KoinComponent {
+class DrinkLibraryViewModel(snackbar: SnackbarHostState? = null) :
+    SnackbarViewModel(snackbar ?: SnackbarHostState()), KoinComponent {
     private val drinks = DrinkService()
     var selections by mutableStateOf<Map<Category, Boolean>>(mapOf())
         private set

@@ -19,8 +19,10 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.drinks.DrinkAction
+import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.ui.composables.SwipeControl
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
 import kotlinx.datetime.LocalDate
@@ -59,16 +61,30 @@ class NewDrinkSearchScreen(
                 ) {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(searchResults, key = { it.key }) {
-                            BasicDrinkItem(
-                                drink = it,
-                                onClick = vm::selectDrink,
-                                onLongClick = vm::editDrink
-                            )
+                            if (it is DrinkInfo) {
+                                SwipeControl(
+                                    onDelete = { vm.deleteDrinkInfo(it) },
+                                    onModify = { vm.modifyDrinkInfo(it) },
+                                ) {
+                                    BasicDrinkItem(
+                                        drink = it,
+                                        onClick = vm::selectDrink,
+                                        onLongClick = vm::editDrink,
+                                    )
+                                }
+                            } else {
+                                BasicDrinkItem(
+                                    drink = it,
+                                    onClick = vm::selectDrink,
+                                    onLongClick = vm::editDrink,
+                                )
+                            }
                         }
                     }
                 }
             }
             vm.AddDrinkDialog()
+            vm.EditDrinkInfoDialog()
         }
     }
 }
