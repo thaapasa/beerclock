@@ -1,0 +1,1 @@
+ALTER TABLE drinkLibrary DROP COLUMN drink_count;

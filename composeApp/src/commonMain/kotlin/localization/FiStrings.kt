@@ -373,6 +373,7 @@ object FiStrings : Strings {
             "Luodaksesi varmuuskopion valitse 'Tallenna' ja valitse hakemisto minne haluat varmuuskopion tallentuvan.",
             "Siirrä varmuuskopio haluamallasi tavalla uudelle laitteelle, valitse 'Lataa', ja valitse varmuuskopiotiedosto ladataksesi sen Kaljakelloon.",
             "Varmuuskopion lataaminen poistaa kaikki nykyiset juomatietosi sovelluksesta, joten käytä ominaisuutta omalla vastuullasi!",
+            "Huom! Jos lataat vanhemman varmuuskopion Kaljakelloon, sammuta sovellus latauksen jälkeen ja käynnistä se uudelleen, niin Kaljakello päivittää tietokannan automaattisesti uusimpaan versioon."
         )
         override val exportDb = "Tallenna"
         override val importDb = "Lataa"

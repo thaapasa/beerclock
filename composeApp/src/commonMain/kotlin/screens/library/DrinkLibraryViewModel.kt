@@ -50,7 +50,6 @@ private val NewDrink =
             category = null,
             abv = 10.0,
             quantity_liters = 0.5,
-            drink_count = 0,
             image = DrinkImage.GENERIC_DRINK.name,
             created = Clock.System.now().toDbTime(),
             updated = Clock.System.now().toDbTime(),

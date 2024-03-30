@@ -6,8 +6,7 @@ CREATE TABLE drinkLibrary (
   category TEXT,
   quantity_liters REAL NOT NULL,
   abv REAL NOT NULL,
-  image TEXT NOT NULL,
-  drink_count INTEGER NOT NULL DEFAULT 0
+  image TEXT NOT NULL
 );
 
 CREATE UNIQUE INDEX drinkLibrary_name_idx ON drinkLibrary(name);
@@ -45,22 +44,15 @@ SET name=:name, category=:category, quantity_liters=:quantityLiters, abv=:abv, i
 WHERE id=:id;
 
 recordDrunk:
-INSERT INTO drinkLibrary(name, category, quantity_liters, abv, image, drink_count, created, updated)
-VALUES (:name, :category, :quantityLiters, :abv, :image, 1,
+INSERT INTO drinkLibrary(name, category, quantity_liters, abv, image, created, updated)
+VALUES (:name, :category, :quantityLiters, :abv, :image,
     strftime('%s', 'now'), strftime('%s', 'now'))
 ON CONFLICT (name)
 DO UPDATE SET category = excluded.category,
   image = excluded.image,
-  drink_count = drink_count + 1,
   abv = excluded.abv,
   updated = strftime('%s', 'now');
 -- Do not update quantity, as that may change
-
-importDrunk:
-UPDATE drinkLibrary
-SET drink_count = drink_count + 1,
-  updated = strftime('%s', 'now')
-WHERE name=:name;
 
 deleteById:
 DELETE FROM drinkLibrary

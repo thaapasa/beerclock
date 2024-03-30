@@ -345,7 +345,8 @@ object EnStrings : Strings {
             "The backup database will contain all the drink records and your drink library, but your personal preferences from the settings pages will not be included.",
             "To create the backup file, select 'Create backup file', and select the directory where that file will be saved to. BeerClock will then export a backup copy of the app's database.",
             "Move the file to the new phone (you can share it using any file sharing method you like), and then select 'Load from backup', and browse to the file on that phone to load it.",
-            "Loading a backup file will erase all data currently in the app database, so proceed at your own risk!"
+            "Loading a backup file will erase all data currently in the app database, so proceed at your own risk!",
+            "Note: if you load an older database backup into BeerClock, please close the app and reopen it so that BeerClock can automatically update the database to the lastest version."
         )
         override val exportDb = "Create backup"
         override val importDb = "Load backup"

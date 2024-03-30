@@ -38,9 +38,6 @@ class DrinkOperations(private val db: BeerDatabase) {
             abv = drink.abv,
             image = drink.image.name,
         )
-        db.drinkLibraryQueries.importDrunk(
-            name = drink.name,
-        )
     }
 
     fun insertDrinkInfo(drink: DrinkDetailsFromEditor) {
