@@ -106,7 +106,7 @@ class DrinkService : KoinComponent {
         if (drink == null) {
             return flow { emit(null) }
         }
-        return db.drinkRecordQueries.queryDetails(drink.name).asRowFlow().map {
+        return db.drinkRecordQueries.queryDetails(drink.producer, drink.name).asRowFlow().map {
             DrinkDetails(
                 timesDrunk = it.count,
                 quantityLiters = it.quantityLiters ?: 0.0,
@@ -158,10 +158,12 @@ class DrinkService : KoinComponent {
                 id = id,
                 time = drink.time.toDbTime(),
                 name = drink.name,
+                producer = drink.producer,
                 category = drink.category?.name,
                 quantityLiters = drink.quantityLiters,
                 abv = drink.abv,
                 image = drink.image.name,
+                note = drink.note,
             )
         }
     }
@@ -171,10 +173,12 @@ class DrinkService : KoinComponent {
             db.drinkLibraryQueries.update(
                 id = id,
                 name = drink.name,
+                producer = drink.producer,
                 category = drink.category?.name,
                 quantityLiters = drink.quantityLiters,
                 abv = drink.abv,
                 image = drink.image.name,
+                note = drink.note,
             )
         }
     }
@@ -185,10 +189,12 @@ class DrinkService : KoinComponent {
                 exampleDrinks().forEach {
                     db.drinkLibraryQueries.insert(
                         name = it.name,
+                        producer = it.producer,
                         category = it.category?.name,
                         quantityLiters = it.quantityCl / 100.0,
                         abv = it.abvPercentage / 100.0,
                         image = it.image.name,
+                        note = it.note,
                     )
                 }
             }
@@ -197,7 +203,7 @@ class DrinkService : KoinComponent {
 
     suspend fun getStatisticsByCategory(
         period: StatisticsPeriod,
-        prefs: UserPreferences
+        prefs: UserPreferences,
     ): StatisticsByCategory {
         val range = period.range
         return withContext(Dispatchers.IO) {
@@ -214,7 +220,7 @@ class DrinkService : KoinComponent {
 
     suspend fun getDrinkUnitsForPeriod(
         period: StatisticsPeriod,
-        prefs: UserPreferences
+        prefs: UserPreferences,
     ): List<DrinkUnitInfo> {
         val range = period.range
         return withContext(Dispatchers.IO) {

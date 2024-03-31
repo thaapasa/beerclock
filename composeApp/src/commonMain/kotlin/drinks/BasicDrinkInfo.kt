@@ -13,12 +13,16 @@ import kotlin.time.Duration.Companion.minutes
 abstract class BasicDrinkInfo(
     /** Name of the drink */
     val name: String,
+    /** Producer of the drink (optional) */
+    val producer: String? = null,
     /** Size of the drink, in cl */
     val quantityCl: Double,
     /** Strength of the drink, or alcohol by volume, as a percentage value (range: 0 - 100) */
     val abvPercentage: Double,
     /** Image of the drink */
     val image: Image,
+    /** Any notes (optional) */
+    val note: String? = null,
     /** Categorization of the drink */
     val category: Category? = null,
 ) : KoinComponent {

@@ -47,10 +47,13 @@ private val NewDrink =
         DrinkLibrary(
             id = 0,
             name = "",
+            producer = null,
+            search_term = "",
             category = null,
             abv = 10.0,
             quantity_liters = 0.5,
             image = DrinkImage.GENERIC_DRINK.name,
+            note = null,
             created = Clock.System.now().toDbTime(),
             updated = Clock.System.now().toDbTime(),
         )

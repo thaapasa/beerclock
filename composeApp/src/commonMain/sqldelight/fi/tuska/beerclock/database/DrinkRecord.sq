@@ -6,10 +6,14 @@ CREATE TABLE drinkRecord (
   category TEXT,
   quantity_liters REAL NOT NULL,
   abv REAL NOT NULL,
-  image TEXT NOT NULL
+  image TEXT NOT NULL,
+  producer TEXT COLLATE NOCASE,
+  search_term TEXT NOT NULL COLLATE NOCASE DEFAULT '',
+  note TEXT
 );
 
 CREATE INDEX drinkRecord_time ON drinkRecord(time);
+CREATE INDEX drinkRecord_producer_name_idx ON drinkRecord(producer, name);
 
 selectById:
 SELECT *
@@ -28,7 +32,7 @@ SELECT COUNT(*) AS count,
   MAX(time) AS maxTime,
   SUM(quantity_liters) AS quantityLiters
 FROM drinkRecord
-WHERE name = :name;
+WHERE producer = :producer AND name = :name;
 
 countUnitsByTime:
 SELECT SUM(quantity_liters * abv * :multiplier)
@@ -36,22 +40,29 @@ FROM drinkRecord
 WHERE time >= :startTime AND time < :endTime;
 
 insert:
-INSERT INTO drinkRecord(time, name, category, quantity_liters, abv, image)
-VALUES (:time, :name, :category, :quantityLiters, :abv, :image);
+INSERT INTO drinkRecord(time, producer, name, search_term, note, category, quantity_liters, abv, image)
+VALUES (:time,  :producer, :name,
+    CASE WHEN :producer IS NULL THEN :name ELSE :producer || ' ' || :name END,
+    :note, :category, :quantityLiters, :abv, :image);
 
 lastInsertedId:
 SELECT last_insert_rowid();
 
 import:
-INSERT INTO drinkRecord(import_id, time, name, category, quantity_liters, abv, image)
-VALUES (:importId, :time, :name, :category, :quantityLiters, :abv, :image)
+INSERT INTO drinkRecord(import_id, time, producer, name, search_term, category, note, quantity_liters, abv, image)
+VALUES (:importId, :time, :producer, :name,
+  CASE WHEN :producer IS NULL THEN :name ELSE :producer || ' ' || :name END,
+  :category, :note, :quantityLiters, :abv, :image)
 ON CONFLICT (import_id) DO UPDATE
-SET time=excluded.time, name=excluded.name, category=excluded.category,
+SET time=excluded.time, producer=excluded.producer, name=excluded.name,
+    search_term=excluded.search_term, note=excluded.note, category=excluded.category,
     quantity_liters=excluded.quantity_liters, abv=excluded.abv, image=excluded.image;
 
 update:
 UPDATE drinkRecord
-SET time=:time, name=:name, category=:category, quantity_liters=:quantityLiters, abv=:abv, image=:image
+SET time=:time, producer=:producer, name=:name,
+  search_term=CASE WHEN :producer IS NULL THEN :name ELSE :producer || ' ' || :name END,
+  note=:note, category=:category, quantity_liters=:quantityLiters, abv=:abv, image=:image
 WHERE id=:id;
 
 deleteById:
@@ -59,7 +70,7 @@ DELETE FROM drinkRecord
 WHERE id = :id;
 
 selectLatestDrinks:
-SELECT DISTINCT name, category, quantity_liters, abv, image
+SELECT DISTINCT producer, name, category, quantity_liters, abv, image
 FROM drinkRecord
 ORDER BY time DESC
 LIMIT :limit;

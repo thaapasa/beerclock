@@ -65,11 +65,13 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     protected fun toSaveDetails(): DrinkDetailsFromEditor {
         return DrinkDetailsFromEditor(
             time = realTime(),
+            producer = null,
             name = name,
             abv = abv / 100.0,
             quantityLiters = quantityCl / 100,
             image = image,
             category = category,
+            note = null,
         )
     }
 

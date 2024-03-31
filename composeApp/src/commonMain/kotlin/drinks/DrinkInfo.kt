@@ -8,11 +8,13 @@ import fi.tuska.beerclock.images.DrinkImage
  * to create new drink record entries.
  */
 class DrinkInfo(record: DrinkLibrary) : BasicDrinkInfo(
+    producer = record.producer,
     name = record.name,
     quantityCl = record.quantity_liters * 100,
     abvPercentage = record.abv * 100,
     image = DrinkImage.forName(record.image),
-    category = record.category?.let { Category.forName(it) }
+    category = record.category?.let { Category.forName(it) },
+    note = record.note,
 ) {
     val id = record.id
     override val key = record.id

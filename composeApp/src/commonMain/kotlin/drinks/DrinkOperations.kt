@@ -11,19 +11,23 @@ class DrinkOperations(private val db: BeerDatabase) {
     fun insertDrink(drink: DrinkDetailsFromEditor): DrinkRecordInfo {
         db.drinkRecordQueries.insert(
             time = drink.time.toDbTime(),
+            producer = drink.producer,
             name = drink.name,
             category = drink.category?.name,
             quantityLiters = drink.quantityLiters,
             abv = drink.abv,
             image = drink.image.name,
+            note = drink.note,
         )
         val rowId = db.drinkRecordQueries.lastInsertedId().executeAsOne()
         db.drinkLibraryQueries.recordDrunk(
             name = drink.name,
+            producer = drink.producer,
             category = drink.category?.name,
             quantityLiters = drink.quantityLiters,
             abv = drink.abv,
             image = drink.image.name,
+            note = drink.note,
         )
         return DrinkRecordInfo(db.drinkRecordQueries.selectById(rowId).executeAsOne())
     }
@@ -31,22 +35,26 @@ class DrinkOperations(private val db: BeerDatabase) {
     fun importDrink(importId: Long, drink: DrinkDetailsFromEditor) {
         db.drinkRecordQueries.import(
             importId = importId,
+            producer = drink.producer,
             time = drink.time.toDbTime(),
             name = drink.name,
             category = drink.category?.name,
             quantityLiters = drink.quantityLiters,
             abv = drink.abv,
             image = drink.image.name,
+            note = drink.note,
         )
     }
 
     fun insertDrinkInfo(drink: DrinkDetailsFromEditor) {
         db.drinkLibraryQueries.insert(
             name = drink.name,
+            producer = drink.producer,
             category = drink.category?.name,
             quantityLiters = drink.quantityLiters,
             abv = drink.abv,
             image = drink.image.name,
+            note = drink.note,
         )
     }
 
