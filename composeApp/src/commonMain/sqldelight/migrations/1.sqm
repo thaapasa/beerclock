@@ -10,8 +10,8 @@ CREATE TABLE drinkLibrary (
   name TEXT NOT NULL COLLATE NOCASE,
   created INTEGER NOT NULL,
   updated INTEGER NOT NULL,
-  category TEXT,
   quantity_liters REAL NOT NULL,
+  category TEXT,
   abv REAL NOT NULL,
   image TEXT NOT NULL
 );
