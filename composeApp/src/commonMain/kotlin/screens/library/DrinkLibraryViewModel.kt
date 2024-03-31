@@ -92,7 +92,7 @@ class DrinkLibraryViewModel(snackbar: SnackbarHostState? = null) :
             started = SharingStarted.WhileSubscribed(5_000)
         )
 
-    inline fun selectedCategories(): Set<Category> = selections.keys
+    fun selectedCategories(): Set<Category> = selections.keys
     fun toggleCategory(category: Category) {
         logger.info("Toggling category $category")
         selections = if (selections.getOrElse(category, ::getFalse)) {

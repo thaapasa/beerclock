@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -67,7 +66,7 @@ fun DrinkInfoDialogButtons(
         return
     }
     Spacer(modifier = Modifier.height(16.dp))
-    Divider(thickness = 1.dp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.onSurfaceVariant)
     Spacer(modifier = Modifier.height(24.dp))
     Row(
         modifier = Modifier.fillMaxWidth(),

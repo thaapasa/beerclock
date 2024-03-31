@@ -105,7 +105,7 @@ class NewDrinkViewModel(
         libraryVm.EditorDialog()
     }
 
-    private inline fun isBusy() = dialogOpen
+    fun isBusy() = dialogOpen
 
     fun selectDrink(drink: BasicDrinkInfo?) {
         if (isBusy()) return

@@ -132,7 +132,7 @@ fun Gauge(
                         tint = color
                     )
                 }
-                icon?.invoke(color = color)
+                icon?.invoke(color)
             }
         }
     }

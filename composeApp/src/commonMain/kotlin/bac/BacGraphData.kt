@@ -36,7 +36,7 @@ class BacGraphData(private val events: List<AlcoholAtTime>) :
     private fun dailyHourLabel(hour: Float) =
         times.toLocalDateTime(dayStart + hour.toDouble().hours)
 
-    private inline fun atTime(time: Instant): AlcoholAtTime = interpolateFromList(events, time)
+    private fun atTime(time: Instant): AlcoholAtTime = interpolateFromList(events, time)
 
     /**
      * The maximum amount of alcohol on the system during the entire day.
@@ -66,9 +66,9 @@ class BacGraphData(private val events: List<AlcoholAtTime>) :
         (listOf(atTime(now)) + events.filter { it.time > now }).map { it.toGraphPoint() }
 
 
-    private inline fun Instant.toDailyHours(): Float = (this - dayStart).inHours().toFloat()
+    private fun Instant.toDailyHours(): Float = (this - dayStart).inHours().toFloat()
 
-    private inline fun AlcoholAtTime.toGraphPoint(): Point<Float, Float> = Point(
+    private fun AlcoholAtTime.toGraphPoint(): Point<Float, Float> = Point(
         time.toDailyHours(),
         BacFormulas.bloodAlcoholConcentration(alcoholGrams, prefs.prefs).toFloat()
     )

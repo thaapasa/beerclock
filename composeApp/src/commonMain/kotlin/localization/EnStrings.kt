@@ -69,22 +69,22 @@ object EnStrings : Strings {
         return month(month).substring(0, 3)
     }
 
-    override fun date(date: LocalDate): String {
-        return "${dateShort(date)} ${date.year}"
+    override fun date(day: LocalDate): String {
+        return "${dateShort(day)} ${day.year}"
     }
 
-    override fun dateShort(date: LocalDate): String {
-        val day = date.dayOfMonth
-        val mon = month(date.month).substring(0, 3)
-        return "$day $mon"
+    override fun dateShort(day: LocalDate): String {
+        val dm = day.dayOfMonth
+        val mon = month(day.month).substring(0, 3)
+        return "$dm $mon"
     }
 
     override fun time(time: LocalTime): String {
         return "${time.hour.zeroPad(2)}:${time.minute.zeroPad(2)}"
     }
 
-    override fun dateTime(time: LocalDateTime): String {
-        return "${date(time.date)} ${time(time.time)}"
+    override fun dateTime(local: LocalDateTime): String {
+        return "${date(local.date)} ${time(local.time)}"
     }
 
     override val pickTime = "Pick time"

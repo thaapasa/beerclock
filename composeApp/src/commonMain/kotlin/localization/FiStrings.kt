@@ -96,20 +96,20 @@ object FiStrings : Strings {
         }
     }
 
-    override fun date(date: LocalDate): String {
-        return "${date.dayOfMonth}.${date.monthNumber}.${date.year}"
+    override fun date(day: LocalDate): String {
+        return "${day.dayOfMonth}.${day.monthNumber}.${day.year}"
     }
 
-    override fun dateShort(date: LocalDate): String {
-        return "${date.dayOfMonth}.${date.monthNumber}."
+    override fun dateShort(day: LocalDate): String {
+        return "${day.dayOfMonth}.${day.monthNumber}."
     }
 
     override fun time(time: LocalTime): String {
         return "${time.hour}.${time.minute.zeroPad(2)}"
     }
 
-    override fun dateTime(time: LocalDateTime): String {
-        return "${date(time.date)} klo ${time(time.time)}"
+    override fun dateTime(local: LocalDateTime): String {
+        return "${date(local.date)} klo ${time(local.time)}"
     }
 
     override val pickTime = "Valitse kellonaika"

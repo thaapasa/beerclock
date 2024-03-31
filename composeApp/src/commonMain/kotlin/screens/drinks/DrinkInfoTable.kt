@@ -67,7 +67,7 @@ fun DrinkInfoTable(
 
 
 @Composable
-inline fun DrinkInfoRow(label: String, value: String) {
+fun DrinkInfoRow(label: String, value: String) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween

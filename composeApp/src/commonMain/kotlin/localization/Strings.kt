@@ -28,13 +28,13 @@ interface Strings {
         fun userLanguage(): String =
             prefs.prefs.locale?.language ?: Locale.current.language
 
-        inline fun forLanguage(language: String): Strings = when (language) {
+        fun forLanguage(language: String): Strings = when (language) {
             "fi" -> FiStrings
             "en" -> EnStrings
             else -> EnStrings
         }
 
-        inline fun get(): Strings {
+        fun get(): Strings {
             return forLanguage(userLanguage())
         }
     }
@@ -54,8 +54,8 @@ interface Strings {
     fun monthShort(month: Month): String
     fun date(day: LocalDate): String
     fun date(day: LocalDateTime): String = date(day.date)
-    fun dateShort(date: LocalDate): String
-    fun dateShort(date: LocalDateTime): String = dateShort(date.date)
+    fun dateShort(day: LocalDate): String
+    fun dateShort(day: LocalDateTime): String = dateShort(day.date)
     fun time(time: LocalTime): String
     fun time(time: LocalDateTime): String = time(time.time)
     fun dateTime(local: LocalDateTime): String
@@ -225,8 +225,8 @@ interface Strings {
         val userSettingsTitle: String
         val drinkSettingsTitle: String
         val dataImportTitle: String
-        fun dateTitle(date: LocalDate): String
-        fun weekTitle(date: LocalDate): String
+        fun dateTitle(day: LocalDate): String
+        fun weekTitle(day: LocalDate): String
         val localeLabel: String
         val phoneLocale: String
         val localeDescription: String
