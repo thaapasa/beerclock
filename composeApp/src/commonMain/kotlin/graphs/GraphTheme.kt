@@ -9,10 +9,10 @@ import io.github.koalaplot.core.style.KoalaPlotTheme
 import io.github.koalaplot.core.style.LineStyle
 
 @Composable
-inline fun gridLineColor() = MaterialTheme.colorScheme.onSurfaceVariant
+fun gridLineColor() = MaterialTheme.colorScheme.onSurfaceVariant
 
 @Composable
-inline fun graphLabelColor() = MaterialTheme.colorScheme.onSurfaceVariant
+fun graphLabelColor() = MaterialTheme.colorScheme.onSurfaceVariant
 
 @Composable
 fun GraphTheme(content: @Composable () -> Unit) {

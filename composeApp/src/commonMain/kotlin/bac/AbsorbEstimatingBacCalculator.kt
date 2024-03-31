@@ -73,7 +73,7 @@ class AbsorbEstimatingBacCalculator(initialTime: Instant, initialAlcoholGrams: D
         curTime = newTime
     }
 
-    inline fun update(drink: DrinkRecordInfo) = update(drink.time, drink.alcoholGrams)
+    fun update(drink: DrinkRecordInfo) = update(drink.time, drink.alcoholGrams)
 
     private fun record(time: Instant, alcoholGrams: Double) {
         events.add(AlcoholAtTime(time, max(alcoholGrams, 0.0)))
@@ -82,7 +82,7 @@ class AbsorbEstimatingBacCalculator(initialTime: Instant, initialAlcoholGrams: D
     companion object {
         fun calculate(
             startOfDay: AlcoholAtTime,
-            drinks: List<DrinkRecordInfo>
+            drinks: List<DrinkRecordInfo>,
         ): List<AlcoholAtTime> {
             val calc = AbsorbEstimatingBacCalculator(startOfDay.time, startOfDay.alcoholGrams)
             drinks.forEach(calc::update)

@@ -23,7 +23,7 @@ fun StatusDisplay(status: ImportStatus, modifier: Modifier = Modifier) {
         )
         status.percentage?.let {
             LinearProgressIndicator(
-                progress = status.percentage,
+                progress = { it },
                 modifier = Modifier.fillMaxWidth()
             )
         } ?: LinearProgressIndicator(modifier = Modifier.fillMaxWidth())

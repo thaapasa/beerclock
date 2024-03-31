@@ -24,13 +24,13 @@ data class AlcoholAtTime(val time: Instant, val alcoholGrams: Double) {
     }
 
     companion object {
-        inline fun interpolateFromList(list: List<AlcoholAtTime>, time: Instant): AlcoholAtTime {
+        fun interpolateFromList(list: List<AlcoholAtTime>, time: Instant): AlcoholAtTime {
             val futureIdx = list.indexOfFirst { it.time > time }
             if (futureIdx <= 0) return AlcoholAtTime(time, 0.0)
             return list[futureIdx - 1].interpolate(list[futureIdx], time)
         }
 
-        inline fun timeRange(list: List<AlcoholAtTime>): TimeInterval {
+        fun timeRange(list: List<AlcoholAtTime>): TimeInterval {
             return TimeInterval(list.first().time, list.last().time)
         }
     }

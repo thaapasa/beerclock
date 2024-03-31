@@ -72,7 +72,7 @@ object BacFormulas {
      * Vd is the volume of distribution (L);
      * typically body weight (kg) multiplied by 0.71 L/kg for men and 0.58 L/kg for women
      */
-    inline fun volumeOfDistribution(weightKg: Double, genderMultiplier: Double) =
+    fun volumeOfDistribution(weightKg: Double, genderMultiplier: Double) =
         weightKg * genderMultiplier
 
     /**
@@ -81,25 +81,25 @@ object BacFormulas {
      * From [Wikipedia](https://en.wikipedia.org/wiki/Blood_alcohol_content):
      * β is the rate at which alcohol is eliminated (g/L/hr); typically 0.15
      */
-    inline fun alcoholBurnOffRate(volumeOfDistribution: Double) = 0.15 * volumeOfDistribution
+    fun alcoholBurnOffRate(volumeOfDistribution: Double) = 0.15 * volumeOfDistribution
 
     /**
      * Calculate how many grams of alcohol is burnt in the given amount of time.
      */
-    inline fun alcoholBurnedDuring(time: Duration, alcoholBurnOffRate: Double): Double =
+    fun alcoholBurnedDuring(time: Duration, alcoholBurnOffRate: Double): Double =
         time.inHours() * alcoholBurnOffRate
 
     /**
      * Calculates the time to burn the given amount of alcohol
      */
-    inline fun timeToBurnAlcohol(alcoholGrams: Double, alcoholBurnOffRate: Double): Duration =
+    fun timeToBurnAlcohol(alcoholGrams: Double, alcoholBurnOffRate: Double): Duration =
         (alcoholGrams / alcoholBurnOffRate).hours
 
     /**
      * Calculate how much alcohol is left after a given time, assuming that it is burned with
      * the given burn-off rate.
      */
-    inline fun burnOffAlcohol(
+    fun burnOffAlcohol(
         fromAlcoholGrams: Double,
         time: Duration,
         alcoholBurnOffRate: Double,
@@ -123,7 +123,7 @@ object BacFormulas {
      * Makes a really rough estimate on how long it could take for the drink to be absorbed
      * into your body.
      */
-    inline fun timeToAbsorbGrams(alcoholGrams: Double): Duration {
+    fun timeToAbsorbGrams(alcoholGrams: Double): Duration {
         return timeToAbsorbAlcoholGram * alcoholGrams
     }
 
@@ -131,7 +131,7 @@ object BacFormulas {
      * Calculate an estimated schedule on the rate of alcohol absorption for the given amount
      * of alcohol, starting at the given starting time.
      */
-    inline fun absorptionSchedule(alcoholGrams: Double, startTime: Instant): AbsorptionSchedule {
+    fun absorptionSchedule(alcoholGrams: Double, startTime: Instant): AbsorptionSchedule {
         val duration = timeToAbsorbGrams(alcoholGrams)
         return AbsorptionSchedule(simpleAlcoholAbsorptionRate, startTime, startTime + duration)
     }

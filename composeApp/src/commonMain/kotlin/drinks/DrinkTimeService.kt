@@ -32,10 +32,10 @@ class DrinkTimeService : KoinComponent {
 
     val zone = TimeZone.currentSystemDefault()
 
-    inline fun now(): Instant = Clock.System.now()
+    fun now(): Instant = Clock.System.now()
 
-    inline fun toInstant(time: LocalDateTime): Instant = time.toInstant(zone)
-    inline fun toLocalDateTime(instant: Instant = now()): LocalDateTime =
+    fun toInstant(time: LocalDateTime): Instant = time.toInstant(zone)
+    fun toLocalDateTime(instant: Instant = now()): LocalDateTime =
         instant.toLocalDateTime(zone)
 
     fun firstDayOfCurrentWeek(now: LocalDate = currentDrinkDay()): LocalDate {

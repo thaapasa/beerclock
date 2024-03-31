@@ -46,7 +46,7 @@ class InstantBacCalculator(initialTime: Instant, initialAlcoholGrams: Double) : 
         curTime = newTime
     }
 
-    inline fun update(drink: DrinkRecordInfo) = update(drink.time, drink.alcoholGrams)
+    fun update(drink: DrinkRecordInfo) = update(drink.time, drink.alcoholGrams)
 
     private fun record(time: Instant, alcoholGrams: Double) {
         events.add(AlcoholAtTime(time, max(alcoholGrams, 0.0)))
@@ -55,7 +55,7 @@ class InstantBacCalculator(initialTime: Instant, initialAlcoholGrams: Double) : 
     companion object {
         fun calculate(
             startOfDay: AlcoholAtTime,
-            drinks: List<DrinkRecordInfo>
+            drinks: List<DrinkRecordInfo>,
         ): List<AlcoholAtTime> {
             val calc = InstantBacCalculator(startOfDay.time, startOfDay.alcoholGrams)
             drinks.forEach(calc::update)

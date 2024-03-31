@@ -27,7 +27,7 @@ class AlcoholRemaining(initialTime: Instant, initialAlcoholGrams: Double) : Koin
         time = newTime
     }
 
-    inline fun update(drink: DrinkRecordInfo) = update(drink.time, drink.alcoholGrams)
+    fun update(drink: DrinkRecordInfo) = update(drink.time, drink.alcoholGrams)
 
     companion object {
         /**

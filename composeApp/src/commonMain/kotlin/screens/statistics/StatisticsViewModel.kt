@@ -60,8 +60,8 @@ class StatisticsViewModel(
     fun prev() = show(period.prev())
     fun next() = show(period.next())
 
-    private fun List<DrinkUnitInfo>.byDates(range: TimeInterval): Map<LocalDate, Double> {
-        val range = times.currentDrinkDay(range.start)..<times.currentDrinkDay(range.end)
+    private fun List<DrinkUnitInfo>.byDates(interval: TimeInterval): Map<LocalDate, Double> {
+        val range = times.currentDrinkDay(interval.start)..<times.currentDrinkDay(interval.end)
         val days = range.toList()
         val res = mutableMapOf(*days.map { it to 0.0 }.toTypedArray())
         this.forEach {

@@ -11,7 +11,7 @@ import kotlin.time.Duration.Companion.minutes
 object BacEventSmoother {
     fun smooth(
         events: List<AlcoholAtTime>,
-        resolution: Duration = 10.minutes
+        resolution: Duration = 10.minutes,
     ): List<AlcoholAtTime> {
         val unsmoothed = generateUnsmoothed(events, resolution)
         return WeightedAverage.calculate(unsmoothed)
@@ -23,7 +23,7 @@ object BacEventSmoother {
      */
     private fun generateUnsmoothed(
         events: List<AlcoholAtTime>,
-        resolution: Duration = 10.minutes
+        resolution: Duration = 10.minutes,
     ) = timeRange(events).iterable(resolution)
         .map { interpolateFromList(events, it) }
 }
@@ -40,7 +40,7 @@ internal object WeightedAverage {
     private val wRange = (-smoothPoints..smoothPoints)
     private val totalWeights = weights.sum()
 
-    private inline fun List<AlcoholAtTime>.weightedValue(pos: Int): AlcoholAtTime {
+    private fun List<AlcoholAtTime>.weightedValue(pos: Int): AlcoholAtTime {
         val values =
             wRange.map {
                 get(clampIndex(it + pos)).alcoholGrams * weights[it + smoothPoints]
