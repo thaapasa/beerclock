@@ -1,1 +1,28 @@
-ALTER TABLE drinkLibrary DROP COLUMN drink_count;
+-- SQLite does not allow DROP COLUMN, so we need to:
+-- 1. rename old table
+ALTER TABLE drinkLibrary RENAME TO old_drinkLibrary;
+
+DROP INDEX drinkLibrary_name_idx;
+
+-- 2. create new table
+CREATE TABLE drinkLibrary (
+  id INTEGER PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL COLLATE NOCASE,
+  created INTEGER NOT NULL,
+  updated INTEGER NOT NULL,
+  category TEXT,
+  quantity_liters REAL NOT NULL,
+  abv REAL NOT NULL,
+  image TEXT NOT NULL
+);
+
+-- 3. copy data from old table
+INSERT INTO drinkLibrary (id, name, created, updated, category, quantity_liters, abv, image)
+SELECT id, name, created, updated, category, quantity_liters, abv, image
+FROM old_drinkLibrary;
+
+-- 4. drop the old table
+DROP TABLE old_drinkLibrary;
+
+-- 5. re-create indexes
+CREATE UNIQUE INDEX drinkLibrary_name_idx ON drinkLibrary(name);

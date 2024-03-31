@@ -1,5 +1,3 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
@@ -34,7 +32,6 @@ kotlin {
             implementation(compose.material)
             implementation(compose.material3)
             implementation(compose.ui)
-            @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.sqldelight.runtime)
@@ -115,6 +112,7 @@ sqldelight {
             packageName.set("fi.tuska.beerclock.database")
             dialect(libs.sqldelight.dialect)
             schemaOutputDirectory.set(file("src/commonMain/sqldelight/databases"))
+            verifyMigrations = true
         }
     }
 }
