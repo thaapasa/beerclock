@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 class NumbersTest {
     @Test
     fun shouldPadInts() {
-        assertEquals("0003", 3.zeroPad(4))
+        assertEquals("00003", 3.zeroPad(4))
         assertEquals("1234", 1234.zeroPad(4))
         assertEquals("1234", 1234.zeroPad(3))
         assertEquals("1234", 1234.zeroPad(1))
