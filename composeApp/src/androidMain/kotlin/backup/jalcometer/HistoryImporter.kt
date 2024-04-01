@@ -75,7 +75,7 @@ data class JAlcometerHistory(
     fun toEditorData(drinkMap: Map<String, DrinkInfo>): DrinkDetailsFromEditor =
         DrinkDetailsFromEditor(
             name = name,
-            producer = null,
+            producer = "",
             category = drinkMap[name]?.category,
             abv = strength / 100.0,
             quantityLiters = volume,

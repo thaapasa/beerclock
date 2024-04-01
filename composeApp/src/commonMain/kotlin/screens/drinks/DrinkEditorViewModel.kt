@@ -32,7 +32,7 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
 
     val drinks = mutableStateListOf<DrinkRecord>()
     val eventBus: EventBus = get()
-    
+
     var producer by mutableStateOf("")
     var name by mutableStateOf("")
     var note by mutableStateOf("")
@@ -57,7 +57,7 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     }
 
     protected fun setValues(drink: BasicDrinkInfo, realTime: Instant = Clock.System.now()) {
-        producer = drink.producer ?: ""
+        producer = drink.producer
         name = drink.name
         quantityCl = drink.quantityCl
         abv = drink.abvPercentage
@@ -72,7 +72,7 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     protected fun toSaveDetails(): DrinkDetailsFromEditor {
         return DrinkDetailsFromEditor(
             time = realTime(),
-            producer = producer.ifBlank { null },
+            producer = producer,
             name = name,
             abv = abv / 100.0,
             quantityLiters = quantityCl / 100,

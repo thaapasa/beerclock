@@ -78,7 +78,7 @@ data class JAlcoMeterDrink(
     }
 
     fun toEditorData(): DrinkDetailsFromEditor = DrinkDetailsFromEditor(
-        producer = null,
+        producer = "",
         name = name,
         category = category,
         abv = strength / 100.0,

@@ -7,7 +7,7 @@ import kotlinx.datetime.LocalDate
 
 data class DrinkDetailsFromEditor(
     val name: String,
-    val producer: String?,
+    val producer: String,
     val category: Category?,
     val abv: Double,
     val quantityLiters: Double,

@@ -1,4 +1,4 @@
-ALTER TABLE drinkLibrary ADD COLUMN producer TEXT COLLATE NOCASE;
+ALTER TABLE drinkLibrary ADD COLUMN producer TEXT NOT NULL COLLATE NOCASE DEFAULT '';
 ALTER TABLE drinkLibrary ADD COLUMN search_term TEXT NOT NULL COLLATE NOCASE DEFAULT '';
 ALTER TABLE drinkLibrary ADD COLUMN note TEXT;
 
@@ -8,7 +8,7 @@ CREATE INDEX drinkLibrary_search_term_idx ON drinkLibrary(search_term);
 
 UPDATE drinkLibrary SET search_term = name;
 
-ALTER TABLE drinkRecord ADD COLUMN producer TEXT COLLATE NOCASE;
+ALTER TABLE drinkRecord ADD COLUMN producer TEXT NOT NULL COLLATE NOCASE DEFAULT '';
 ALTER TABLE drinkRecord ADD COLUMN search_term TEXT NOT NULL COLLATE NOCASE DEFAULT '';
 ALTER TABLE drinkRecord ADD COLUMN note TEXT;
 

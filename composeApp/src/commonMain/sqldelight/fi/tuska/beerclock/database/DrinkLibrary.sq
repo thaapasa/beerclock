@@ -7,7 +7,7 @@ CREATE TABLE drinkLibrary (
   quantity_liters REAL NOT NULL,
   abv REAL NOT NULL,
   image TEXT NOT NULL,
-  producer TEXT COLLATE NOCASE,
+  producer TEXT NOT NULL COLLATE NOCASE DEFAULT '',
   search_term TEXT NOT NULL COLLATE NOCASE DEFAULT '',
   note TEXT
 );
@@ -40,7 +40,7 @@ insert:
 INSERT INTO drinkLibrary(producer, name, search_term, category, quantity_liters, abv,
     image, note, created, updated)
 VALUES (:producer, :name,
-    CASE WHEN :producer IS NULL THEN :name ELSE :producer || ' ' || :name END,
+    CASE WHEN :producer = '' THEN :name ELSE :producer || ' ' || :name END,
     :category, :quantityLiters, :abv,
     :image, :note,
     strftime('%s', 'now'), strftime('%s', 'now'))
@@ -58,7 +58,7 @@ SELECT last_insert_rowid();
 update:
 UPDATE drinkLibrary
 SET name=:name, producer=:producer,
-    search_term=CASE WHEN :producer IS NULL THEN :name ELSE :producer || ' ' || :name END,
+    search_term=CASE WHEN :producer = '' THEN :name ELSE :producer || ' ' || :name END,
     category=:category, quantity_liters=:quantityLiters, abv=:abv,
     image=:image, note=:note, updated=strftime('%s', 'now')
 WHERE id=:id;
@@ -67,7 +67,7 @@ recordDrunk:
 INSERT INTO drinkLibrary(producer, name, search_term, category, quantity_liters, abv, image, note,
   created, updated)
 VALUES (:producer, :name,
-    CASE WHEN :producer IS NULL THEN :name ELSE :producer || ' ' || :name END,
+    CASE WHEN :producer = '' THEN :name ELSE :producer || ' ' || :name END,
     :category, :quantityLiters, :abv, :image, :note,
     strftime('%s', 'now'), strftime('%s', 'now'))
 ON CONFLICT (producer, name)

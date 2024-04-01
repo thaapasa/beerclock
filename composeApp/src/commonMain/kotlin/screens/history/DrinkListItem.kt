@@ -27,7 +27,7 @@ fun DrinkListItem(
         onDelete = { onDelete?.invoke(drink) },
     ) {
         AppListItem(
-            overline = drink.producer,
+            overline = drink.producer.ifBlank { null },
             headline = drink.name,
             supporting = strings.drink.drinkTime(drink.time) + " — " + strings.drink.drinkSize(
                 quantityCl = drink.quantityCl,

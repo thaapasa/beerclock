@@ -14,7 +14,7 @@ abstract class BasicDrinkInfo(
     /** Name of the drink */
     val name: String,
     /** Producer of the drink (optional) */
-    val producer: String? = null,
+    val producer: String = "",
     /** Size of the drink, in cl */
     val quantityCl: Double,
     /** Strength of the drink, or alcohol by volume, as a percentage value (range: 0 - 100) */
