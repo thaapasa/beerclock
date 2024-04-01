@@ -30,7 +30,9 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     private val prefs: GlobalUserPreferences = get()
 
     val drinks = mutableStateListOf<DrinkRecord>()
+    var producer by mutableStateOf("")
     var name by mutableStateOf("")
+    var note by mutableStateOf("")
     var abv by mutableStateOf(4.5)
     var quantityCl by mutableStateOf(33.0)
     var date by mutableStateOf(LocalDate(2000, 1, 1))
@@ -52,10 +54,12 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     }
 
     protected fun setValues(drink: BasicDrinkInfo, realTime: Instant = Clock.System.now()) {
+        producer = drink.producer ?: ""
         name = drink.name
         quantityCl = drink.quantityCl
         abv = drink.abvPercentage
         image = drink.image.toDrinkImage()
+        note = drink.note ?: ""
         category = drink.category
         val drinkTime = times.instantToDrinkTime(realTime)
         date = drinkTime.first
@@ -65,13 +69,13 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     protected fun toSaveDetails(): DrinkDetailsFromEditor {
         return DrinkDetailsFromEditor(
             time = realTime(),
-            producer = null,
+            producer = producer.ifBlank { null },
             name = name,
             abv = abv / 100.0,
             quantityLiters = quantityCl / 100,
             image = image,
             category = category,
-            note = null,
+            note = note.ifBlank { null },
         )
     }
 

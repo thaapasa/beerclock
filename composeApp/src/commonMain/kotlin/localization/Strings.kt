@@ -290,8 +290,10 @@ interface Strings {
         val dateLabel: String
         val timeLabel: String
         val nameLabel: String
+        val producerLabel: String
         val abvLabel: String
         val abvUnit: String
+        val noteLabel: String
         val quantityLabel: String
         val quantityUnit: String
         val submit: String
