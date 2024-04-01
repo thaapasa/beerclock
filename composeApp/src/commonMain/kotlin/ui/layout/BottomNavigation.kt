@@ -24,17 +24,17 @@ fun bottomNavigationItems(): List<BottomNavigationItem> {
         BottomNavigationItem(
             label = strings.menu.today,
             icon = AppIcon.DRINK,
-            screen = HomeScreen()
+            screen = HomeScreen,
         ),
         BottomNavigationItem(
             label = strings.menu.history,
             icon = AppIcon.HISTORY,
-            screen = HistoryScreen()
+            screen = HistoryScreen(),
         ),
         BottomNavigationItem(
             label = strings.menu.statistics,
             icon = AppIcon.GRAPH,
-            screen = StatisticsScreen()
+            screen = StatisticsScreen(),
         ),
     )
 }

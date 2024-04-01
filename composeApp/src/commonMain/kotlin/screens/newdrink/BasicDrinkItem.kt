@@ -33,6 +33,7 @@ fun BasicDrinkItem(
 
     val strings = Strings.get()
     AppListItem(
+        overline = drink.producer.ifBlank { null },
         headline = drink.name,
         supporting = strings.drink.drinkSize(
             quantityCl = drink.quantityCl,

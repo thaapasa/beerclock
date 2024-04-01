@@ -8,12 +8,13 @@ import fi.tuska.beerclock.images.DrinkImage
  * without taking into account the specific times.
  */
 class LatestDrinkInfo(record: SelectLatestDrinks) : BasicDrinkInfo(
+    producer = record.producer,
     name = record.name,
     quantityCl = record.quantity_liters * 100,
     abvPercentage = record.abv * 100,
     image = DrinkImage.forName(record.image),
     category = record.category?.let { Category.forName(it) }
 ) {
-    override val key = with(record) { "$name.$category.$quantity_liters.$abv.$image" }
+    override val key = with(record) { "$producer.$name.$category.$quantity_liters.$abv.$image" }
     override fun toString() = "$name ($quantityCl cl $abvPercentage %)"
 }

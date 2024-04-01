@@ -1,8 +1,9 @@
 package fi.tuska.beerclock.screens.drinks.create
 
+import cafe.adriel.voyager.navigator.Navigator
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
-import fi.tuska.beerclock.drinks.DrinkAction
 import fi.tuska.beerclock.drinks.DrinkTimeService
+import fi.tuska.beerclock.events.DrinkRecordAddedEvent
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.screens.drinks.DrinkEditorViewModel
@@ -13,7 +14,7 @@ private val logger = getLogger("NewDrinkScreen")
 class NewDrinkViewModel(
     proto: BasicDrinkInfo?,
     date: LocalDate?,
-    private val onSelectDrink: DrinkAction
+    private val navigator: Navigator,
 ) : DrinkEditorViewModel() {
 
     val times = DrinkTimeService()
@@ -26,7 +27,9 @@ class NewDrinkViewModel(
         savingAction {
             val newDrink = toSaveDetails()
             logger.info("Adding drink to database: $newDrink")
-            onSelectDrink(newDrink)
+            val d = drinkService.insertDrink(newDrink)
+            eventBus.post(DrinkRecordAddedEvent(d))
+            navigator.pop()
         }
     }
 }

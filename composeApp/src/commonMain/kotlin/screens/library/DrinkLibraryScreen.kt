@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
@@ -30,7 +32,8 @@ object DrinkLibraryScreen : Screen {
 
     @Composable
     override fun Content() {
-        val vm = rememberWithDispose { DrinkLibraryViewModel() }
+        val navigator = LocalNavigator.currentOrThrow
+        val vm = rememberWithDispose { DrinkLibraryViewModel(navigator) }
         val strings = Strings.get()
         SubLayout(
             title = strings.library.title,
@@ -72,7 +75,7 @@ fun DrinkLibraryPage(innerPadding: PaddingValues, vm: DrinkLibraryViewModel) {
                 }
             }
         }
-        vm.EditorDialog()
+        vm.InfoDialog()
     }
 
 }

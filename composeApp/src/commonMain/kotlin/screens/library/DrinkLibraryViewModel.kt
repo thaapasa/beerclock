@@ -9,20 +9,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
-import fi.tuska.beerclock.database.DrinkLibrary
-import fi.tuska.beerclock.database.toDbTime
+import cafe.adriel.voyager.navigator.Navigator
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkDetails
 import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkService
+import fi.tuska.beerclock.events.DrinkInfoAddedEvent
+import fi.tuska.beerclock.events.DrinkInfoDeletedEvent
+import fi.tuska.beerclock.events.DrinkInfoUpdatedEvent
+import fi.tuska.beerclock.events.EventBus
+import fi.tuska.beerclock.events.EventObserver
 import fi.tuska.beerclock.images.AppIcon
-import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
-import fi.tuska.beerclock.screens.library.create.CreateDrinkInfoDialog
-import fi.tuska.beerclock.screens.library.modify.EditDrinkInfoDialog
+import fi.tuska.beerclock.screens.library.create.CreateDrinkInfoScreen
+import fi.tuska.beerclock.screens.library.modify.EditDrinkInfoScreen
 import fi.tuska.beerclock.screens.newdrink.TextDrinkInfo
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
 import kotlinx.coroutines.Dispatchers
@@ -37,34 +40,28 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 fun getFalse() = false
 
-
 private val logger = getLogger("DrinkLibraryViewModel")
-private val NewDrink =
-    DrinkInfo(
-        DrinkLibrary(
-            id = 0,
-            name = "",
-            category = null,
-            abv = 10.0,
-            quantity_liters = 0.5,
-            image = DrinkImage.GENERIC_DRINK.name,
-            created = Clock.System.now().toDbTime(),
-            updated = Clock.System.now().toDbTime(),
-        )
-    )
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class DrinkLibraryViewModel(snackbar: SnackbarHostState? = null) :
+class DrinkLibraryViewModel(private val navigator: Navigator, snackbar: SnackbarHostState? = null) :
     SnackbarViewModel(snackbar ?: SnackbarHostState()), KoinComponent {
     private val drinks = DrinkService()
+    private val eventBus: EventBus = get()
     var selections by mutableStateOf<Map<Category, Boolean>>(mapOf())
         private set
 
     private var viewingDrink by mutableStateOf<DrinkInfo?>(null)
-    private var editingDrink by mutableStateOf<DrinkInfo?>(null)
+
+    init {
+        val observer = EventObserver(this)
+        observer.observeEventsOfType<DrinkInfoDeletedEvent> { showDrinkDeleted(it.drink) }
+        observer.observeEventsOfType<DrinkInfoAddedEvent> { }
+        observer.observeEventsOfType<DrinkInfoUpdatedEvent> { }
+    }
 
     private val exampleDrinksItem = TextDrinkInfo(
         key = "default-drinks",
@@ -111,32 +108,31 @@ class DrinkLibraryViewModel(snackbar: SnackbarHostState? = null) :
 
     fun addNewDrink() {
         this.viewingDrink = null
-        this.editingDrink = NewDrink
+        logger.info("Adding new drink")
+        navigator.push(CreateDrinkInfoScreen)
     }
 
     fun viewDrink(drink: DrinkInfo) {
         this.viewingDrink = drink
-        this.editingDrink = null
     }
 
     fun editDrink(drink: DrinkInfo) {
         logger.info("Editing drink $drink")
         this.viewingDrink = null
-        this.editingDrink = drink
+        navigator.push(EditDrinkInfoScreen(drink))
     }
 
     fun deleteDrink(drink: DrinkInfo) {
         launch {
             drinks.deleteDrinkInfoById(drink.id)
-            showDrinkDeleted(drink)
+            eventBus.post(DrinkInfoDeletedEvent(drink))
         }
-        closeEdit()
     }
 
 
-    private suspend fun showDrinkDeleted(drink: DrinkInfo) {
+    private fun showDrinkDeleted(drink: DrinkInfo) {
         val strings = Strings.get()
-        withContext(Dispatchers.Main) {
+        launch(Dispatchers.Main) {
             val result =
                 snackbar.showSnackbar(
                     strings.library.drinkDeleted(drink),
@@ -159,16 +155,13 @@ class DrinkLibraryViewModel(snackbar: SnackbarHostState? = null) :
         }
     }
 
-    private fun closeEdit() {
-        this.editingDrink = null
-    }
 
     private fun closeView() {
         this.viewingDrink = null
     }
 
     @Composable
-    fun EditorDialog() {
+    fun InfoDialog() {
         val viewDrink = viewingDrink
         val details by drinkDetails.collectAsState()
         if (viewDrink != null) {
@@ -180,16 +173,7 @@ class DrinkLibraryViewModel(snackbar: SnackbarHostState? = null) :
                 onDelete = this::deleteDrink
             )
         }
-        val drink = editingDrink
-        if (drink != null) {
-            if (drink == NewDrink) {
-                CreateDrinkInfoDialog(onClose = this::closeEdit)
-            } else {
-                EditDrinkInfoDialog(drink, onClose = this::closeEdit)
-            }
-        }
     }
-
 }
 
 data class DrinkGroup(val category: Category?, val drinks: List<BasicDrinkInfo>)

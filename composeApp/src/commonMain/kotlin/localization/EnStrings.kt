@@ -151,6 +151,9 @@ object EnStrings : Strings {
         override val totalQuantityLabel = "Total quantity"
         override val firstTimeLabel = "Earliest record"
         override val lastTimeLabel = "Latest record"
+
+        override fun drinkAdded(drink: DrinkRecordInfo) = "Added ${drink.name}"
+        override fun drinkDeleted(drink: DrinkRecordInfo) = "Deleted ${drink.name}"
     }
 
 
@@ -168,7 +171,6 @@ object EnStrings : Strings {
     object Home : Strings.HomeStrings {
         override val bacPermilles = "BAC ‰"
         override val bacTime = "Time"
-        override fun drinkAdded(drink: DrinkRecordInfo) = "Added ${drink.name}"
     }
 
 
@@ -393,8 +395,10 @@ object EnStrings : Strings {
         override val dateLabel = "Drinking day"
         override val timeLabel = "Time of day"
         override val nameLabel = "Name"
+        override val producerLabel = "Producer"
         override val abvLabel = "Alcohol by volume"
         override val abvUnit = "%"
+        override val noteLabel = "Notes"
         override val quantityLabel = "Quantity"
         override val quantityUnit = "cl"
         override val submit = "Ready"
@@ -411,8 +415,6 @@ object EnStrings : Strings {
         override val prevDay = "Previous day"
         override val selectDay = "Pick a day"
         override val nextDay = "Next day"
-        override fun drinkAdded(drink: DrinkRecordInfo) = "Added ${drink.name}"
-        override fun drinkDeleted(drink: DrinkRecordInfo) = "Deleted ${drink.name}"
     }
 
 

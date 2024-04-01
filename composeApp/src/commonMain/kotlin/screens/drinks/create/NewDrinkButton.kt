@@ -9,20 +9,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.drinks.DrinkAction
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.newdrink.NewDrinkSearchScreen
 import kotlinx.datetime.LocalDate
 
 @Composable
-fun NewDrinkButton(
-    onSelectDrink: DrinkAction,
-) {
+fun NewDrinkButton() {
     val strings = Strings.get()
     val navigator = LocalNavigator.currentOrThrow
     LargeFloatingActionButton(onClick = {
-        navigator.push(NewDrinkSearchScreen(onSelectDrink = onSelectDrink))
+        navigator.push(NewDrinkSearchScreen())
     }) {
         Icon(
             painter = AppIcon.BEER.painter(),
@@ -35,12 +32,11 @@ fun NewDrinkButton(
 @Composable
 fun AddDrinkToDateButton(
     date: LocalDate,
-    onSelectDrink: DrinkAction,
 ) {
     val strings = Strings.get()
     val navigator = LocalNavigator.currentOrThrow
     FloatingActionButton(onClick = {
-        navigator.push(NewDrinkSearchScreen(date, onSelectDrink = onSelectDrink))
+        navigator.push(NewDrinkSearchScreen(date))
     }) {
         Icon(
             painter = AppIcon.ADD_CIRCLE.painter(),

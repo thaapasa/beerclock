@@ -138,6 +138,9 @@ interface Strings {
             "${get().dec2F(liters * 100)} cl = ${get().dec1F(grams)} g"
 
         fun burnOffTimeInfo(time: Duration) = time.toString()
+
+        fun drinkAdded(drink: DrinkRecordInfo): String
+        fun drinkDeleted(drink: DrinkRecordInfo): String
     }
 
 
@@ -155,7 +158,6 @@ interface Strings {
     interface HomeStrings {
         val bacPermilles: String
         val bacTime: String
-        fun drinkAdded(drink: DrinkRecordInfo): String
     }
 
 
@@ -290,8 +292,10 @@ interface Strings {
         val dateLabel: String
         val timeLabel: String
         val nameLabel: String
+        val producerLabel: String
         val abvLabel: String
         val abvUnit: String
+        val noteLabel: String
         val quantityLabel: String
         val quantityUnit: String
         val submit: String
@@ -306,8 +310,6 @@ interface Strings {
         val prevDay: String
         val selectDay: String
         val nextDay: String
-        fun drinkAdded(drink: DrinkRecordInfo): String
-        fun drinkDeleted(drink: DrinkRecordInfo): String
     }
 
 

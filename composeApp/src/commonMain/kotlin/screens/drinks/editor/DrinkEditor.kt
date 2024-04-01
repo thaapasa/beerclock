@@ -3,7 +3,6 @@ package fi.tuska.beerclock.screens.drinks.editor
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,7 +29,7 @@ private val gap = 16.dp
 @Composable
 fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTime: Boolean = true) {
     val strings = Strings.get()
-    Column(modifier = modifier.padding(16.dp).fillMaxSize()) {
+    Column(modifier = Modifier.padding(16.dp).fillMaxWidth().then(modifier)) {
         if (showTime) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 DateInputField(
@@ -47,6 +46,7 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTim
                     modifier = Modifier.weight(1f),
                 )
             }
+
             Row(verticalAlignment = Alignment.CenterVertically) {
                 AppIcon.CLOCK.icon(
                     strings.drinkDialog.timeLabel,
@@ -70,8 +70,9 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTim
             OutlinedTextField(
                 label = { Text(strings.drinkDialog.nameLabel) },
                 value = vm.name,
+                singleLine = true,
                 onValueChange = { vm.name = it },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
             Spacer(modifier = Modifier.width(gap))
             DrinkImageSelectField(
@@ -80,8 +81,19 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTim
                 titleText = strings.drinkDialog.selectImageTitle
             )
         }
-        Spacer(modifier = Modifier.height(gap))
 
+        Spacer(modifier = Modifier.height(gap))
+        Row(Modifier.fillMaxWidth()) {
+            OutlinedTextField(
+                label = { Text(strings.drinkDialog.producerLabel) },
+                value = vm.producer,
+                singleLine = true,
+                onValueChange = { vm.producer = it },
+                modifier = Modifier.weight(1f),
+            )
+        }
+
+        Spacer(modifier = Modifier.height(gap))
         CategorySelector(vm.category, { vm.category = it })
         Spacer(modifier = Modifier.height(gap))
 
@@ -118,6 +130,16 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTim
                 onValueChange = { vm.quantityCl = it.toInt().toDouble() },
                 valueRange = 1f..75f,
                 steps = 74,
+            )
+        }
+        Spacer(modifier = Modifier.height(gap))
+        Row(modifier = Modifier.fillMaxWidth()) {
+            OutlinedTextField(
+                label = { Text(strings.drinkDialog.noteLabel) },
+                value = vm.note,
+                onValueChange = { vm.note = it },
+                modifier = Modifier.weight(1f),
+                minLines = 3,
             )
         }
     }

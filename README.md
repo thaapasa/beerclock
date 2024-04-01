@@ -51,3 +51,17 @@ The SQLite version installed:
 See the [troubleshooting](./diary/Troubleshooting.md) documentation for
 common errors and some workarounds when developing with Compose
 Multiplatform.
+
+## Development
+
+To verify that SQL migration files create the same schema as the .sq files, you can run:
+
+```bash
+./gradlew verifySqlDelightMigration
+```
+
+To run all tests, you can run:
+
+```bash
+./gradlew check
+```

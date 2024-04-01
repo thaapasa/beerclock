@@ -12,10 +12,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,7 +51,7 @@ fun SegmentedButton(
 
 @Composable
 fun SegmentDivider(color: Color = MaterialTheme.colorScheme.outline) {
-    HorizontalDivider(
+    VerticalDivider(
         thickness = 1.dp,
         modifier = Modifier.width(1.dp).fillMaxHeight(),
         color = color

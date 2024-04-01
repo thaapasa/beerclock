@@ -75,11 +75,13 @@ data class JAlcometerHistory(
     fun toEditorData(drinkMap: Map<String, DrinkInfo>): DrinkDetailsFromEditor =
         DrinkDetailsFromEditor(
             name = name,
+            producer = "",
             category = drinkMap[name]?.category,
             abv = strength / 100.0,
             quantityLiters = volume,
             time = time,
-            image = image
+            image = image,
+            note = comment.ifBlank { null },
         )
 
     override fun toString() = "$id: $name ($volume l $strength %) $image @ $time"

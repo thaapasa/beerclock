@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.drinks.drinkAndThen
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.drinks.create.AddDrinkToDateButton
@@ -27,15 +26,14 @@ import fi.tuska.beerclock.ui.components.SegmentDivider
 import fi.tuska.beerclock.ui.components.SegmentedButton
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
-import fi.tuska.beerclock.util.SuspendAction
+import fi.tuska.beerclock.util.JavaSerializable
 import kotlinx.datetime.LocalDate
 
-class HistoryScreen(
+data class HistoryScreen(
     private val startDate: LocalDate? = null,
     private val initialDailyGaugeValue: Double = 0.0,
     private val initialWeeklyGaugeValue: Double = 0.0,
-    private val initAction: SuspendAction<HistoryViewModel>? = null,
-) : Screen {
+) : Screen, JavaSerializable {
 
     @Composable
     override fun Content() {
@@ -45,21 +43,16 @@ class HistoryScreen(
         val vm = rememberWithDispose(startDate) {
             HistoryViewModel(
                 startDate,
-                initAction,
                 initialDailyGaugeValue = initialDailyGaugeValue,
                 initialWeeklyGaugeValue = initialWeeklyGaugeValue,
-                navigator = navigator
+                navigator = navigator,
             )
         }
 
         MainLayout(showTopBar = false,
             snackbarHostState = vm.snackbar,
             actionButton = {
-                AddDrinkToDateButton(
-                    date = vm.date,
-                    onSelectDrink = drinkAndThen { drink ->
-                        navigator.replace(HistoryScreen(vm.date) { it.showDrinkAdded(drink) })
-                    })
+                AddDrinkToDateButton(date = vm.date)
             })
         { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
@@ -94,8 +87,6 @@ class HistoryScreen(
                 )
             }
         }
-        // Render drink edit dialog when drink is selected for modification
-        vm.EditDialog()
     }
 }
 

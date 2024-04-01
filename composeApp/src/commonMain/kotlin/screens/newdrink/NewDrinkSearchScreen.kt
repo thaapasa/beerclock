@@ -18,26 +18,38 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.drinks.DrinkAction
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.ui.composables.SwipeControl
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
+import fi.tuska.beerclock.util.JavaSerializable
 import kotlinx.datetime.LocalDate
 
-class NewDrinkSearchScreen(
+data class NewDrinkSearchScreen(
+    /**
+     * Suggested drinking date for new drinks (given from history screen
+     * when recording drinks to past dates).
+     */
     val date: LocalDate? = null,
-    private val onSelectDrink: DrinkAction,
-) : Screen {
+    /**
+     * Initial search string. Updated from the view model when navigating to edit screen
+     * so that the query is restored when returning from editor.
+     */
+    var searchString: String? = null,
+) : Screen, JavaSerializable {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
         val strings = Strings.get()
         val navigator = LocalNavigator.currentOrThrow
-        val vm = rememberWithDispose { NewDrinkViewModel(navigator, date, onSelectDrink) }
+        val vm = rememberWithDispose {
+            NewDrinkViewModel(navigator, date, searchString) {
+                searchString = it
+            }
+        }
         val searchResults by vm.searchResults.collectAsState()
         val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -83,8 +95,7 @@ class NewDrinkSearchScreen(
                     }
                 }
             }
-            vm.AddDrinkDialog()
-            vm.EditDrinkInfoDialog()
+            vm.DrinkInfoDialog()
         }
     }
 }

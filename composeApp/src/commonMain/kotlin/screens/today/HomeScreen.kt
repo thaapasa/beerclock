@@ -9,32 +9,23 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.drinks.drinkAndThen
 import fi.tuska.beerclock.screens.drinks.create.NewDrinkButton
 import fi.tuska.beerclock.ui.components.BacStatusCard
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
-import fi.tuska.beerclock.util.SuspendAction
 
-class HomeScreen(private val initAction: SuspendAction<HomeViewModel>? = null) : Screen {
+object HomeScreen : Screen {
 
     @Composable
     override fun Content() {
-        val vm = rememberWithDispose { HomeViewModel(initAction) }
-        val navigator = LocalNavigator.currentOrThrow
+        val vm = rememberWithDispose { HomeViewModel() }
 
         LaunchedEffect(Unit) {
             vm.loadTodaysDrinks()
         }
 
         MainLayout(
-            actionButton = {
-                NewDrinkButton(drinkAndThen { drink ->
-                    navigator.replaceAll(HomeScreen { it.showDrinkAdded(drink) })
-                })
-            },
+            actionButton = { NewDrinkButton() },
             snackbarHostState = vm.snackbar,
         ) { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {

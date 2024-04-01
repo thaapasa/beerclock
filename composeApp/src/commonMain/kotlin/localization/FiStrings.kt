@@ -176,6 +176,9 @@ object FiStrings : Strings {
         override val totalQuantityLabel = "Juotu yhteensä"
         override val firstTimeLabel = "Aikaisin kirjaus"
         override val lastTimeLabel = "Viimeisin kirjaus"
+
+        override fun drinkAdded(drink: DrinkRecordInfo) = "Lisätty ${drink.name}"
+        override fun drinkDeleted(drink: DrinkRecordInfo) = "Poistettu ${drink.name}"
     }
 
 
@@ -193,7 +196,6 @@ object FiStrings : Strings {
     object Home : Strings.HomeStrings {
         override val bacPermilles = "Promillet ‰"
         override val bacTime = "Aika"
-        override fun drinkAdded(drink: DrinkRecordInfo) = "Lisätty ${drink.name}"
     }
 
 
@@ -416,8 +418,10 @@ object FiStrings : Strings {
         override val dateLabel = "Juomapäivä"
         override val timeLabel = "Kellonaika"
         override val nameLabel = "Nimi"
+        override val producerLabel = "Valmistaja"
         override val abvLabel = "Voimakkuus"
         override val abvUnit = "%"
+        override val noteLabel = "Muistiinpanoja"
         override val quantityLabel = "Määrä"
         override val quantityUnit = "cl"
         override val submit = "Valmis"
@@ -434,8 +438,6 @@ object FiStrings : Strings {
         override val prevDay = "Edellinen päivä"
         override val selectDay = "Valitse päivä"
         override val nextDay = "Seuraava päivä"
-        override fun drinkAdded(drink: DrinkRecordInfo) = "Lisätty ${drink.name}"
-        override fun drinkDeleted(drink: DrinkRecordInfo) = "Poistettu ${drink.name}"
     }
 
 

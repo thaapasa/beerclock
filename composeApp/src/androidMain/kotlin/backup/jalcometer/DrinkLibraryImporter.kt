@@ -72,18 +72,20 @@ data class JAlcoMeterDrink(
                     comment = getString(5),
                     sizeName = getString(6),
                     volume = getDouble(7),
-                    jAlcoMeterCategory = categories[categoryId]
+                    jAlcoMeterCategory = categories[categoryId],
                 )
             }
     }
 
     fun toEditorData(): DrinkDetailsFromEditor = DrinkDetailsFromEditor(
+        producer = "",
         name = name,
         category = category,
         abv = strength / 100.0,
         quantityLiters = volume,
         time = Clock.System.now(),
-        image = image
+        image = image,
+        note = comment,
     )
 
     override fun toString() = "$id: $name, $sizeName ($volume l $strength %) $icon -> $category"

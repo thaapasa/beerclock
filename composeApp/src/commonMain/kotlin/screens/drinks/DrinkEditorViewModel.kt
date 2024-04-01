@@ -11,6 +11,7 @@ import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
+import fi.tuska.beerclock.events.EventBus
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.images.toDrinkImage
 import fi.tuska.beerclock.settings.GlobalUserPreferences
@@ -30,7 +31,11 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     private val prefs: GlobalUserPreferences = get()
 
     val drinks = mutableStateListOf<DrinkRecord>()
+    val eventBus: EventBus = get()
+
+    var producer by mutableStateOf("")
     var name by mutableStateOf("")
+    var note by mutableStateOf("")
     var abv by mutableStateOf(4.5)
     var quantityCl by mutableStateOf(33.0)
     var date by mutableStateOf(LocalDate(2000, 1, 1))
@@ -52,10 +57,12 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     }
 
     protected fun setValues(drink: BasicDrinkInfo, realTime: Instant = Clock.System.now()) {
+        producer = drink.producer
         name = drink.name
         quantityCl = drink.quantityCl
         abv = drink.abvPercentage
         image = drink.image.toDrinkImage()
+        note = drink.note ?: ""
         category = drink.category
         val drinkTime = times.instantToDrinkTime(realTime)
         date = drinkTime.first
@@ -65,11 +72,13 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     protected fun toSaveDetails(): DrinkDetailsFromEditor {
         return DrinkDetailsFromEditor(
             time = realTime(),
+            producer = producer,
             name = name,
             abv = abv / 100.0,
             quantityLiters = quantityCl / 100,
             image = image,
             category = category,
+            note = note.ifBlank { null },
         )
     }
 

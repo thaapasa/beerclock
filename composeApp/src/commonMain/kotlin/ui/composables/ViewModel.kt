@@ -17,4 +17,8 @@ open class ViewModel : CoroutineScope by CoroutineScope(Dispatchers.Main), Dispo
         cancel() // Cancel all coroutines when the ViewModel is cleared
         isActive = false
     }
+
+    fun scope(): CoroutineScope {
+        return this
+    }
 }
