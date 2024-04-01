@@ -11,6 +11,7 @@ import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
+import fi.tuska.beerclock.events.EventBus
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.images.toDrinkImage
 import fi.tuska.beerclock.settings.GlobalUserPreferences
@@ -30,6 +31,8 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     private val prefs: GlobalUserPreferences = get()
 
     val drinks = mutableStateListOf<DrinkRecord>()
+    val eventBus: EventBus = get()
+    
     var producer by mutableStateOf("")
     var name by mutableStateOf("")
     var note by mutableStateOf("")

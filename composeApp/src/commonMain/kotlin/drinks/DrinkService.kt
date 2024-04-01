@@ -123,6 +123,14 @@ class DrinkService : KoinComponent {
         return result.isNotEmpty()
     }
 
+
+    suspend fun getDrinkById(id: Long): DrinkRecordInfo {
+        return withContext(Dispatchers.IO) {
+            val d = db.drinkRecordQueries.selectById(id = id).executeAsOne()
+            return@withContext DrinkRecordInfo(d)
+        }
+    }
+
     suspend fun deleteDrinkById(id: Long): Unit {
         withContext(Dispatchers.IO) {
             db.drinkRecordQueries.deleteById(id = id)
@@ -152,8 +160,8 @@ class DrinkService : KoinComponent {
         }
     }
 
-    suspend fun updateDrinkRecord(id: Long, drink: DrinkDetailsFromEditor) {
-        withContext(Dispatchers.IO) {
+    suspend fun updateDrinkRecord(id: Long, drink: DrinkDetailsFromEditor): DrinkRecordInfo {
+        return withContext(Dispatchers.IO) {
             db.drinkRecordQueries.update(
                 id = id,
                 time = drink.time.toDbTime(),
@@ -165,6 +173,7 @@ class DrinkService : KoinComponent {
                 image = drink.image.name,
                 note = drink.note,
             )
+            return@withContext getDrinkById(id)
         }
     }
 

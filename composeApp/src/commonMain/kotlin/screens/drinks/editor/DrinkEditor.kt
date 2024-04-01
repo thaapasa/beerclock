@@ -46,7 +46,6 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTim
                     modifier = Modifier.weight(1f),
                 )
             }
-            Spacer(modifier = Modifier.height(200.dp))
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 AppIcon.CLOCK.icon(
@@ -71,8 +70,9 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTim
             OutlinedTextField(
                 label = { Text(strings.drinkDialog.nameLabel) },
                 value = vm.name,
+                singleLine = true,
                 onValueChange = { vm.name = it },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
             Spacer(modifier = Modifier.width(gap))
             DrinkImageSelectField(
@@ -87,8 +87,9 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTim
             OutlinedTextField(
                 label = { Text(strings.drinkDialog.producerLabel) },
                 value = vm.producer,
+                singleLine = true,
                 onValueChange = { vm.producer = it },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
         }
 

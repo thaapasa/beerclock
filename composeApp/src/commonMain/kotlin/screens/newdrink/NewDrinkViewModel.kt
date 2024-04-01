@@ -8,15 +8,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import cafe.adriel.voyager.navigator.Navigator
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
-import fi.tuska.beerclock.drinks.DrinkAction
 import fi.tuska.beerclock.drinks.DrinkDef
 import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkService
+import fi.tuska.beerclock.events.DrinkRecordAddedEvent
+import fi.tuska.beerclock.events.EventBus
+import fi.tuska.beerclock.events.EventObserver
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
-import fi.tuska.beerclock.screens.drinks.create.AddDrinkDialog
+import fi.tuska.beerclock.screens.drinks.create.AddDrinkScreen
 import fi.tuska.beerclock.screens.library.DrinkLibraryViewModel
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,6 +34,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 private val logger = getLogger("NewDrinkViewModel")
 
@@ -39,17 +42,26 @@ private val logger = getLogger("NewDrinkViewModel")
 class NewDrinkViewModel(
     private val navigator: Navigator,
     private val date: LocalDate?,
-    private val onSelectDrink: DrinkAction,
+    searchString: String? = null,
+    private val updateSearch: (query: String) -> Unit,
 ) : SnackbarViewModel(SnackbarHostState()), KoinComponent {
     private val drinks = DrinkService()
     private val libraryVm = DrinkLibraryViewModel(snackbar)
+    private val eventBus: EventBus = get()
 
     override fun onDispose() {
         super.onDispose()
         libraryVm.onDispose()
     }
 
-    var searchQuery by mutableStateOf("")
+    init {
+        // Navigate back when a new drink is successfully recorded
+        EventObserver(this).observeEventsOfType<DrinkRecordAddedEvent>(consumeEvent = false) {
+            navigator.pop()
+        }
+    }
+
+    var searchQuery by mutableStateOf(searchString ?: "")
     private val strings = Strings.get()
     var active by mutableStateOf(true)
         private set
@@ -76,10 +88,6 @@ class NewDrinkViewModel(
                 started = SharingStarted.WhileSubscribed(5_000)
             )
 
-    var dialogOpen by mutableStateOf(false)
-        private set
-    var proto: BasicDrinkInfo? = null
-
     fun deleteDrinkInfo(drink: DrinkInfo) {
         libraryVm.deleteDrink(drink)
     }
@@ -89,26 +97,11 @@ class NewDrinkViewModel(
     }
 
     @Composable
-    fun AddDrinkDialog() {
-        if (dialogOpen) {
-            AddDrinkDialog(
-                date,
-                proto = proto,
-                onSelectDrink = onSelectDrink,
-                onClose = this::closeDialog
-            )
-        }
-    }
-
-    @Composable
     fun EditDrinkInfoDialog() {
         libraryVm.EditorDialog()
     }
 
-    fun isBusy() = dialogOpen
-
     fun selectDrink(drink: BasicDrinkInfo?) {
-        if (isBusy()) return
         if (drink == null) {
             editDrink(null)
             return
@@ -118,19 +111,17 @@ class NewDrinkViewModel(
     }
 
     fun editDrink(drink: BasicDrinkInfo?) {
-        if (isBusy()) return
         logger.info("Opening for editing: $drink")
-        proto = drink
-        dialogOpen = true
-    }
-
-    private fun closeDialog() {
-        dialogOpen = false
+        updateSearch(searchQuery)
+        navigator.push(AddDrinkScreen(date, proto = drink))
     }
 
     private fun drinkDrink(drink: BasicDrinkInfo) {
         launch {
-            onSelectDrink(DrinkDetailsFromEditor.fromBasicInfo(drink, date))
+            logger.info("Drinking drink: $drink")
+            val d = drinks.insertDrink(DrinkDetailsFromEditor.fromBasicInfo(drink, date))
+            eventBus.post(DrinkRecordAddedEvent(d))
+            navigator.pop()
         }
     }
 

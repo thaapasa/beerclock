@@ -41,7 +41,7 @@ class AppDataViewModel : ViewModel(), KoinComponent {
     }
 
     fun getHomeScreen(): Screen = when {
-        hasAgreedToDisclosure() -> HomeScreen()
+        hasAgreedToDisclosure() -> HomeScreen
         else -> DisclosureScreen
     }
 }

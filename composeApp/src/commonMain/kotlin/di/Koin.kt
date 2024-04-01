@@ -3,6 +3,7 @@ package fi.tuska.beerclock.di
 import fi.tuska.beerclock.database.BeerDatabase
 import fi.tuska.beerclock.database.DatabaseInfo
 import fi.tuska.beerclock.database.DbInfoQueries
+import fi.tuska.beerclock.events.EventBus
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.settings.UserStore
 import org.koin.core.context.startKoin
@@ -29,6 +30,7 @@ fun commonModule() = module {
             databaseVersion = BeerDatabase.Schema.version
         )
     }
+    single(createdAtStart = true) { EventBus() }
 }
 
 expect fun platformModule(): Module

@@ -3,6 +3,7 @@ package fi.tuska.beerclock.drinks
 import fi.tuska.beerclock.database.DrinkRecord
 import fi.tuska.beerclock.database.fromDbTime
 import fi.tuska.beerclock.images.DrinkImage
+import fi.tuska.beerclock.util.JavaSerializable
 import io.github.koalaplot.core.util.toString
 import kotlinx.datetime.Instant
 
@@ -17,7 +18,7 @@ class DrinkRecordInfo(record: DrinkRecord) : BasicDrinkInfo(
     image = DrinkImage.forName(record.image),
     category = record.category?.let { Category.forName(it) },
     note = record.note,
-) {
+), JavaSerializable {
     val id = record.id
     override val key = record.id
 
