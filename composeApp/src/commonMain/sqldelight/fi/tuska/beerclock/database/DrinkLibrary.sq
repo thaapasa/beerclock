@@ -33,7 +33,7 @@ WHERE id = :id;
 selectAllByCategory:
 SELECT *
 FROM drinkLibrary
-WHERE category IN :categories OR category IS NULL
+WHERE category = :category
 ORDER BY search_term;
 
 insert:

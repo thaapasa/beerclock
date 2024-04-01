@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.about.AboutScreen
 import fi.tuska.beerclock.screens.disclosure.DisclosureScreen
@@ -37,7 +38,7 @@ fun MainMenuContent(onNavigate: (select: Screen) -> Unit) {
             text = { Text(Strings.get().menu.settings) }
         )
         DropdownMenuItem(
-            onClick = { onNavigate(DrinkLibraryScreen) },
+            onClick = { onNavigate(DrinkLibraryScreen(Category.BEERS)) },
             text = { Text(Strings.get().menu.drinkLibrary) }
         )
         DropdownMenuItem(

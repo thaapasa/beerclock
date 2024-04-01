@@ -10,7 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import cafe.adriel.voyager.navigator.Navigator
-import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkDetails
 import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
@@ -21,12 +20,10 @@ import fi.tuska.beerclock.events.DrinkInfoDeletedEvent
 import fi.tuska.beerclock.events.DrinkInfoUpdatedEvent
 import fi.tuska.beerclock.events.EventBus
 import fi.tuska.beerclock.events.EventObserver
-import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.screens.library.create.CreateDrinkInfoScreen
 import fi.tuska.beerclock.screens.library.modify.EditDrinkInfoScreen
-import fi.tuska.beerclock.screens.newdrink.TextDrinkInfo
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,7 +31,6 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -42,16 +38,19 @@ import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
-fun getFalse() = false
-
 private val logger = getLogger("DrinkLibraryViewModel")
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class DrinkLibraryViewModel(private val navigator: Navigator, snackbar: SnackbarHostState? = null) :
+class DrinkLibraryViewModel(
+    private val navigator: Navigator,
+    initialCategory: Category? = null,
+    private val updateCategory: ((cat: Category?) -> Unit)? = null,
+    snackbar: SnackbarHostState? = null,
+) :
     SnackbarViewModel(snackbar ?: SnackbarHostState()), KoinComponent {
     private val drinks = DrinkService()
     private val eventBus: EventBus = get()
-    var selections by mutableStateOf<Map<Category, Boolean>>(mapOf())
+    var selectedCategory by mutableStateOf<Category?>(initialCategory)
         private set
 
     private var viewingDrink by mutableStateOf<DrinkInfo?>(null)
@@ -63,22 +62,21 @@ class DrinkLibraryViewModel(private val navigator: Navigator, snackbar: Snackbar
         observer.observeEventsOfType<DrinkInfoUpdatedEvent> { }
     }
 
-    private val exampleDrinksItem = TextDrinkInfo(
-        key = "default-drinks",
-        name = Strings.get().library.addDefaultDrinks,
-        icon = AppIcon.DRINK,
-        onClick = this::addExampleDrinks
-    )
+    fun categoryHeaderInfo(): CategoryHeaderInfo {
+        val cat = selectedCategory
+        return CategoryHeaderInfo(
+            cat,
+            Strings.get().drink.categoryName(cat)
+        )
+    }
 
-    val libraryResults: StateFlow<List<BasicDrinkInfo>> =
-        snapshotFlow { selections }
+    val libraryResults: StateFlow<List<DrinkInfo>> =
+        snapshotFlow { selectedCategory }
             .flatMapLatest {
-                drinks.flowDrinksForCategories(it.keys)
-            }.map {
-                it.partitionByCategory().toListWithHeaders() + listOf(exampleDrinksItem)
+                drinks.flowDrinksForCategories(it)
             }.stateIn(
                 scope = this,
-                initialValue = listOf(exampleDrinksItem),
+                initialValue = listOf(),
                 started = SharingStarted.WhileSubscribed(5_000)
             )
 
@@ -89,14 +87,9 @@ class DrinkLibraryViewModel(private val navigator: Navigator, snackbar: Snackbar
             started = SharingStarted.WhileSubscribed(5_000)
         )
 
-    fun selectedCategories(): Set<Category> = selections.keys
-    fun toggleCategory(category: Category) {
-        logger.info("Toggling category $category")
-        selections = if (selections.getOrElse(category, ::getFalse)) {
-            selections - category
-        } else {
-            selections + mapOf(category to true)
-        }
+    fun selectCategory(category: Category?) {
+        logger.info("Selecting category $category")
+        selectedCategory = category
     }
 
     fun addExampleDrinks() {
@@ -119,6 +112,7 @@ class DrinkLibraryViewModel(private val navigator: Navigator, snackbar: Snackbar
     fun editDrink(drink: DrinkInfo) {
         logger.info("Editing drink $drink")
         this.viewingDrink = null
+        updateCategory?.invoke(selectedCategory)
         navigator.push(EditDrinkInfoScreen(drink))
     }
 
@@ -174,21 +168,4 @@ class DrinkLibraryViewModel(private val navigator: Navigator, snackbar: Snackbar
             )
         }
     }
-}
-
-data class DrinkGroup(val category: Category?, val drinks: List<BasicDrinkInfo>)
-
-fun List<BasicDrinkInfo>.partitionByCategory(): Map<Category?, DrinkGroup> {
-    return groupBy { it.category }.mapValues { DrinkGroup(category = it.key, drinks = it.value) }
-}
-
-fun Map<Category?, DrinkGroup>.toListWithHeaders(): List<BasicDrinkInfo> {
-    val strings = Strings.get()
-    return values.sortedBy { it.category?.order ?: Int.MAX_VALUE }.map {
-        if (it.drinks.isNotEmpty()) {
-            listOf<BasicDrinkInfo>(
-                CategoryHeaderInfo(it.category, strings.drink.categoryName(it.category))
-            ) + it.drinks
-        } else listOf()
-    }.flatten()
 }

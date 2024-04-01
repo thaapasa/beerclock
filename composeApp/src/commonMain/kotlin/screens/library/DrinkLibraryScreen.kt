@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -20,20 +21,27 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import fi.tuska.beerclock.drinks.DrinkInfo
+import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.newdrink.BasicDrinkItem
+import fi.tuska.beerclock.screens.newdrink.TextDrinkInfo
 import fi.tuska.beerclock.ui.composables.SwipeControl
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
+import fi.tuska.beerclock.util.JavaSerializable
 
-object DrinkLibraryScreen : Screen {
+data class DrinkLibraryScreen(var initialCategory: Category?) : Screen, JavaSerializable {
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val vm = rememberWithDispose { DrinkLibraryViewModel(navigator) }
+        val vm = rememberWithDispose {
+            DrinkLibraryViewModel(
+                navigator,
+                initialCategory,
+                { initialCategory = it })
+        }
         val strings = Strings.get()
         SubLayout(
             title = strings.library.title,
@@ -51,28 +59,37 @@ object DrinkLibraryScreen : Screen {
 @Composable
 fun DrinkLibraryPage(innerPadding: PaddingValues, vm: DrinkLibraryViewModel) {
     val searchResults by vm.libraryResults.collectAsState()
+    val state = rememberLazyListState(0)
+
     Column(
         Modifier.padding(innerPadding).padding(top = 16.dp)
             .fillMaxWidth(),
     ) {
-        CategoryBar(selected = vm.selectedCategories(), toggle = vm::toggleCategory)
+        CategoryBar(selected = vm.selectedCategory, select = vm::selectCategory)
         Spacer(modifier = Modifier.height(8.dp))
         LazyColumn(
             modifier = Modifier.fillMaxWidth().weight(1f)
-                .clip(RoundedCornerShape(12.dp))
+                .clip(RoundedCornerShape(12.dp)), state = state
         ) {
+            item { BasicDrinkItem(drink = vm.categoryHeaderInfo()) }
             items(searchResults, key = { it.key }) { drink ->
-                when {
-                    drink is DrinkInfo -> SwipeControl(
-                        onModify = { vm.editDrink(drink) },
-                        onDelete = { vm.deleteDrink(drink) }) {
-                        BasicDrinkItem(
-                            drink = drink,
-                            onClick = { vm.viewDrink(drink) })
-                    }
-
-                    else -> BasicDrinkItem(drink = drink)
+                SwipeControl(
+                    onModify = { vm.editDrink(drink) },
+                    onDelete = { vm.deleteDrink(drink) }) {
+                    BasicDrinkItem(
+                        drink = drink,
+                        onClick = { vm.viewDrink(drink) })
                 }
+            }
+            item {
+                BasicDrinkItem(
+                    drink = TextDrinkInfo(
+                        key = "default-drinks",
+                        name = Strings.get().library.addDefaultDrinks,
+                        icon = AppIcon.DRINK,
+                        onClick = { vm.addExampleDrinks() },
+                    ), onClick = { vm.addExampleDrinks() }
+                )
             }
         }
         vm.InfoDialog()

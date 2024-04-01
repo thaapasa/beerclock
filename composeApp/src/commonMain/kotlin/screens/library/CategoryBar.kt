@@ -4,6 +4,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.drinks.Category
+import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.images.image
 
 
@@ -24,8 +26,8 @@ private val halfBorder = borderWidth / 2
 @Composable
 fun CategoryBar(
     modifier: Modifier = Modifier,
-    selected: Set<Category>,
-    toggle: (category: Category) -> Unit,
+    selected: Category?,
+    select: (category: Category?) -> Unit,
 ) {
 
     Surface(
@@ -37,34 +39,44 @@ fun CategoryBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Category.entries.map { cat ->
-                Box(
-                    modifier = Modifier.weight(1f).padding(1.dp)
-                        .let {
-                            if (selected.contains(cat)) it.border(
-                                halfBorder,
-                                color = MaterialTheme.colorScheme.primary,
-                                shape = RoundedCornerShape(50)
-                            )
-                            else it
-                        }
-                        .padding(halfBorder)
-                        .clip(RoundedCornerShape(50))
-                ) {
-                    cat.image.image(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .let {
-                                if (selected.contains(cat)) it.border(
-                                    halfBorder,
-                                    color = MaterialTheme.colorScheme.primary,
-                                    shape = RoundedCornerShape(50)
-                                ) else it
-                            }
-                            .clip(RoundedCornerShape(50))
-                            .clickable { toggle(cat) }
-                    )
-                }
+                CategoryEntry(
+                    selected = selected == cat,
+                    cat = cat,
+                    select
+                )
             }
+            CategoryEntry(selected = selected == null, cat = null, select)
         }
+    }
+}
+
+@Composable
+fun RowScope.CategoryEntry(selected: Boolean, cat: Category?, select: (cat: Category?) -> Unit) {
+    Box(
+        modifier = Modifier.weight(1f).padding(1.dp)
+            .let {
+                if (selected) it.border(
+                    halfBorder,
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = RoundedCornerShape(50)
+                )
+                else it
+            }
+            .padding(halfBorder)
+            .clip(RoundedCornerShape(50))
+    ) {
+        (cat?.image ?: DrinkImage.CAT_UNCATEGORIZED).image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .let {
+                    if (selected) it.border(
+                        halfBorder,
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(50)
+                    ) else it
+                }
+                .clip(RoundedCornerShape(50))
+                .clickable { select(cat) }
+        )
     }
 }
