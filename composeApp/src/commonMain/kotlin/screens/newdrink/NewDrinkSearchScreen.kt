@@ -95,7 +95,7 @@ data class NewDrinkSearchScreen(
                     }
                 }
             }
-            vm.EditDrinkInfoDialog()
+            vm.DrinkInfoDialog()
         }
     }
 }

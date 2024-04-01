@@ -25,6 +25,11 @@ SELECT *
 FROM drinkLibrary
 ORDER BY search_term;
 
+selectById:
+SELECT *
+FROM drinkLibrary
+WHERE id = :id;
+
 selectAllByCategory:
 SELECT *
 FROM drinkLibrary
@@ -46,6 +51,9 @@ DO UPDATE SET category = excluded.category,
     image = excluded.image,
     note = excluded.note,
     updated = strftime('%s', 'now');
+
+lastInsertedId:
+SELECT last_insert_rowid();
 
 update:
 UPDATE drinkLibrary

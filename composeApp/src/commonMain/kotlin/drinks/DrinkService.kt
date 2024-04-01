@@ -154,9 +154,9 @@ class DrinkService : KoinComponent {
     }
 
 
-    suspend fun insertDrinkInfo(drink: DrinkDetailsFromEditor) {
-        withContext(Dispatchers.IO) {
-            operations.insertDrinkInfo(drink)
+    suspend fun insertDrinkInfo(drink: DrinkDetailsFromEditor): DrinkInfo {
+        return withContext(Dispatchers.IO) {
+            return@withContext operations.insertDrinkInfo(drink)
         }
     }
 
@@ -177,8 +177,8 @@ class DrinkService : KoinComponent {
         }
     }
 
-    suspend fun updateDrinkInfo(id: Long, drink: DrinkDetailsFromEditor) {
-        withContext(Dispatchers.IO) {
+    suspend fun updateDrinkInfo(id: Long, drink: DrinkDetailsFromEditor): DrinkInfo {
+        return withContext(Dispatchers.IO) {
             db.drinkLibraryQueries.update(
                 id = id,
                 name = drink.name,
@@ -189,6 +189,7 @@ class DrinkService : KoinComponent {
                 image = drink.image.name,
                 note = drink.note,
             )
+            return@withContext DrinkInfo(db.drinkLibraryQueries.selectById(id).executeAsOne())
         }
     }
 

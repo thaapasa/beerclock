@@ -46,7 +46,7 @@ class NewDrinkViewModel(
     private val updateSearch: (query: String) -> Unit,
 ) : SnackbarViewModel(SnackbarHostState()), KoinComponent {
     private val drinks = DrinkService()
-    private val libraryVm = DrinkLibraryViewModel(snackbar)
+    private val libraryVm = DrinkLibraryViewModel(navigator, snackbar)
     private val eventBus: EventBus = get()
 
     override fun onDispose() {
@@ -93,12 +93,13 @@ class NewDrinkViewModel(
     }
 
     fun modifyDrinkInfo(drink: DrinkInfo) {
+        updateSearch(searchQuery)
         libraryVm.editDrink(drink)
     }
 
     @Composable
-    fun EditDrinkInfoDialog() {
-        libraryVm.EditorDialog()
+    fun DrinkInfoDialog() {
+        libraryVm.InfoDialog()
     }
 
     fun selectDrink(drink: BasicDrinkInfo?) {

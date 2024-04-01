@@ -46,7 +46,7 @@ class DrinkOperations(private val db: BeerDatabase) {
         )
     }
 
-    fun insertDrinkInfo(drink: DrinkDetailsFromEditor) {
+    fun insertDrinkInfo(drink: DrinkDetailsFromEditor): DrinkInfo {
         db.drinkLibraryQueries.insert(
             name = drink.name,
             producer = drink.producer,
@@ -56,6 +56,8 @@ class DrinkOperations(private val db: BeerDatabase) {
             image = drink.image.name,
             note = drink.note,
         )
+        val rowId = db.drinkLibraryQueries.lastInsertedId().executeAsOne()
+        return DrinkInfo(db.drinkLibraryQueries.selectById(rowId).executeAsOne())
     }
 
     fun getDrinkLibrary(): List<DrinkInfo> {
