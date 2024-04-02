@@ -53,10 +53,12 @@ data class NewDrinkSearchScreen(
         val searchResults by vm.searchResults.collectAsState()
         val keyboardController = LocalSoftwareKeyboardController.current
 
+        val query = vm.searchQuery
+
         MainLayout(showTopBar = false, snackbarHostState = vm.snackbar) { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
                 SearchBar(
-                    vm.searchQuery,
+                    query,
                     onQueryChange = { vm.searchQuery = it },
                     placeholder = { Text(strings.newdrink.searchPlaceholder) },
                     active = vm.active,
@@ -72,7 +74,10 @@ data class NewDrinkSearchScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(searchResults, key = { it.key }) {
+                        item {
+                            TextListItem(drink = vm.newDrinkHeaderInfo())
+                        }
+                        items(searchResults.drinks, key = { it.key }) {
                             if (it is DrinkInfo) {
                                 SwipeControl(
                                     onDelete = { vm.deleteDrinkInfo(it) },
@@ -90,6 +95,11 @@ data class NewDrinkSearchScreen(
                                     onClick = vm::selectDrink,
                                     onLongClick = vm::editDrink,
                                 )
+                            }
+                        }
+                        if (searchResults.showEmptyWarning) {
+                            item {
+                                TextListItem(vm.emptyListWarningInfo())
                             }
                         }
                     }

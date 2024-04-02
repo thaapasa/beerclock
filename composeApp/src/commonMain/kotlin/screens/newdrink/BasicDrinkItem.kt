@@ -1,17 +1,13 @@
 package fi.tuska.beerclock.screens.newdrink
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.images.smallImage
 import fi.tuska.beerclock.localization.Strings
-import fi.tuska.beerclock.screens.library.CategoryHeaderInfo
-import fi.tuska.beerclock.screens.library.CategoryHeaderItem
 import fi.tuska.beerclock.ui.components.AppListItem
 import fi.tuska.beerclock.ui.components.UnitAvatar
 
@@ -23,14 +19,6 @@ fun BasicDrinkItem(
     onLongClick: (drinkInfo: BasicDrinkInfo?) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
-    if (drink is TextDrinkInfo) {
-        TextDrinkItem(drink, modifier = modifier)
-        return
-    } else if (drink is CategoryHeaderInfo) {
-        CategoryHeaderItem(drink, modifier = modifier)
-        return
-    }
-
     val strings = Strings.get()
     AppListItem(
         overline = drink.producer.ifBlank { null },
@@ -44,22 +32,6 @@ fun BasicDrinkItem(
             onLongClick = { onLongClick(drink) }),
         icon = { drink.image.smallImage() },
         trailingContent = { UnitAvatar(units = drink.units()) },
-        tonalElevation = 1.dp,
-    )
-}
-
-@Composable
-fun TextDrinkItem(
-    drink: TextDrinkInfo,
-    modifier: Modifier = Modifier,
-) {
-    AppListItem(
-        headline = drink.name,
-        supporting = drink.description,
-        modifier = modifier.clickable(onClick = drink.onClick),
-        trailingContent = {
-            drink.icon?.icon(tint = MaterialTheme.colorScheme.primary)
-        },
         tonalElevation = 1.dp,
     )
 }

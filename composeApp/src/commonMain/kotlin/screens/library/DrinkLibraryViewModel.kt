@@ -22,10 +22,12 @@ import fi.tuska.beerclock.events.DrinkInfoDeletedEvent
 import fi.tuska.beerclock.events.DrinkInfoUpdatedEvent
 import fi.tuska.beerclock.events.EventBus
 import fi.tuska.beerclock.events.EventObserver
+import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.screens.library.create.CreateDrinkInfoScreen
 import fi.tuska.beerclock.screens.library.modify.EditDrinkInfoScreen
+import fi.tuska.beerclock.screens.newdrink.TextListInfo
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -95,6 +97,7 @@ class DrinkLibraryViewModel(
                 val index = resultList.indexOfFirst { it.id == scrollId }
                 if (index >= 0) {
                     logger.info("Scrolling to item $scrollId at index $scrollId (+1)")
+                    // +1 because the list has a header row before the results
                     state.scrollToItem(index + 1)
                     scrollToItemId = null
                 }
@@ -171,6 +174,12 @@ class DrinkLibraryViewModel(
         }
     }
 
+    val defaultDrinksInfo = TextListInfo(
+        key = "default-drinks",
+        name = Strings.get().library.addDefaultDrinks,
+        icon = AppIcon.DRINK,
+        onClick = this::addExampleDrinks,
+    )
 
     private fun closeView() {
         this.viewingDrink = null

@@ -25,7 +25,7 @@ import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.newdrink.BasicDrinkItem
-import fi.tuska.beerclock.screens.newdrink.TextDrinkInfo
+import fi.tuska.beerclock.screens.newdrink.TextListItem
 import fi.tuska.beerclock.ui.composables.SwipeControl
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
@@ -73,7 +73,9 @@ fun DrinkLibraryPage(innerPadding: PaddingValues, vm: DrinkLibraryViewModel) {
             modifier = Modifier.fillMaxWidth().weight(1f)
                 .clip(RoundedCornerShape(12.dp)), state = state
         ) {
-            item { BasicDrinkItem(drink = vm.categoryHeaderInfo()) }
+            item {
+                CategoryHeaderItem(item = vm.categoryHeaderInfo())
+            }
             items(searchResults, key = { it.key }) { drink ->
                 SwipeControl(
                     onModify = { vm.editDrink(drink) },
@@ -84,14 +86,7 @@ fun DrinkLibraryPage(innerPadding: PaddingValues, vm: DrinkLibraryViewModel) {
                 }
             }
             item {
-                BasicDrinkItem(
-                    drink = TextDrinkInfo(
-                        key = "default-drinks",
-                        name = Strings.get().library.addDefaultDrinks,
-                        icon = AppIcon.DRINK,
-                        onClick = { vm.addExampleDrinks() },
-                    ), onClick = { vm.addExampleDrinks() }
-                )
+                TextListItem(vm.defaultDrinksInfo)
             }
         }
         vm.InfoDialog()

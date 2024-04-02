@@ -38,6 +38,8 @@ import org.koin.core.component.get
 
 private val logger = getLogger("NewDrinkViewModel")
 
+data class NewDrinkSearchResult(val drinks: List<BasicDrinkInfo>, val showEmptyWarning: Boolean)
+
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 class NewDrinkViewModel(
     private val navigator: Navigator,
@@ -73,7 +75,7 @@ class NewDrinkViewModel(
         }
     }
 
-    val searchResults: StateFlow<List<BasicDrinkInfo>> =
+    val searchResults: StateFlow<NewDrinkSearchResult> =
         snapshotFlow { searchQuery }
             // Do not debounce for empty string to get latest drinks list ASAP
             .debounce { if (it.isEmpty()) 0 else 300 }
@@ -84,9 +86,24 @@ class NewDrinkViewModel(
                 }
             }.stateIn(
                 scope = this,
-                initialValue = emptyList(),
+                initialValue = NewDrinkSearchResult(emptyList(), false),
                 started = SharingStarted.WhileSubscribed(5_000)
             )
+
+    fun newDrinkHeaderInfo(): TextListInfo {
+        return if (searchQuery.isNotBlank()) TextListInfo(
+            "add-new-title",
+            strings.newdrink.addNewDrink(searchQuery),
+            icon = AppIcon.ADD_CIRCLE,
+            onClick = { editDrink(DrinkDef(name = searchQuery)) }
+        )
+        else TextListInfo(
+            "latest-title",
+            strings.newdrink.latestDrinksTitle,
+            icon = AppIcon.ADD_CIRCLE,
+            onClick = { selectDrink(null) }
+        )
+    }
 
     fun deleteDrinkInfo(drink: DrinkInfo) {
         libraryVm.deleteDrink(drink)
@@ -126,27 +143,25 @@ class NewDrinkViewModel(
         }
     }
 
-    private fun flowMatchingDrinks(drinkName: String): Flow<List<BasicDrinkInfo>> =
+    private fun flowMatchingDrinks(drinkName: String): Flow<NewDrinkSearchResult> =
         drinks.flowMatchingDrinksByName(drinkName, 10).map { matching ->
-            val header = listOf(TextDrinkInfo(
-                "add-new-title",
-                strings.newdrink.addNewDrink(drinkName),
-                icon = AppIcon.ADD_CIRCLE,
-                onClick = { editDrink(DrinkDef(name = drinkName)) }
-            ))
+
             if (matching.isEmpty()) {
                 if (!drinks.libraryHasDrinks()) {
-                    return@map header + TextDrinkInfo(
-                        "empty-library-note",
-                        strings.newdrink.emptyLibraryTitle,
-                        description = strings.newdrink.emptyLibraryDescription,
-                        icon = AppIcon.DRINK,
-                        onClick = { addExampleDrinks() }
-                    )
+                    return@map NewDrinkSearchResult(listOf(), true)
                 }
             }
-            return@map header + matching
+            return@map NewDrinkSearchResult(matching, false)
         }
+
+
+    fun emptyListWarningInfo() = TextListInfo(
+        "empty-library-note",
+        strings.newdrink.emptyLibraryTitle,
+        description = strings.newdrink.emptyLibraryDescription,
+        icon = AppIcon.DRINK,
+        onClick = this::addExampleDrinks
+    )
 
 
     private fun addExampleDrinks() {
@@ -157,16 +172,7 @@ class NewDrinkViewModel(
 
     private fun flowLatestDrinks() = flow {
         val latest = drinks.getLatestDrinks(15)
-        emit(
-            listOf(
-                TextDrinkInfo(
-                    "latest-title",
-                    strings.newdrink.latestDrinksTitle,
-                    icon = AppIcon.ADD_CIRCLE,
-                    onClick = { selectDrink(null) }
-                )
-            ) + latest
-        )
+        emit(NewDrinkSearchResult(latest, false))
     }
 
 }
