@@ -1,9 +1,11 @@
 package fi.tuska.beerclock.screens.library
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,12 +56,13 @@ class DrinkLibraryViewModel(
         private set
 
     private var viewingDrink by mutableStateOf<DrinkInfo?>(null)
+    private var scrollToItemId by mutableStateOf<Long?>(null)
 
     init {
         val observer = EventObserver(this)
         observer.observeEventsOfType<DrinkInfoDeletedEvent> { showDrinkDeleted(it.drink) }
-        observer.observeEventsOfType<DrinkInfoAddedEvent> { }
-        observer.observeEventsOfType<DrinkInfoUpdatedEvent> { }
+        observer.observeEventsOfType<DrinkInfoAddedEvent> { scrollToItemId = it.drink.id }
+        observer.observeEventsOfType<DrinkInfoUpdatedEvent> { scrollToItemId = it.drink.id }
     }
 
     fun categoryHeaderInfo(): CategoryHeaderInfo {
@@ -79,6 +82,25 @@ class DrinkLibraryViewModel(
                 initialValue = listOf(),
                 started = SharingStarted.WhileSubscribed(5_000)
             )
+
+    @Composable
+    fun ScrollToEventItem(resultList: List<DrinkInfo>, state: LazyListState) {
+        val scrollId = scrollToItemId
+        // Keep resultList here also because we will probably get the event first, when
+        // the results have not yet been loaded. This will re-trigger this code when
+        // the results have been loaded, and keep trying to scroll until a matching event
+        // has been found.
+        LaunchedEffect(scrollId, resultList) {
+            if (scrollId != null) {
+                val index = resultList.indexOfFirst { it.id == scrollId }
+                if (index >= 0) {
+                    logger.info("Scrolling to item $scrollId at index $scrollId (+1)")
+                    state.scrollToItem(index + 1)
+                    scrollToItemId = null
+                }
+            }
+        }
+    }
 
     val drinkDetails: StateFlow<DrinkDetails?> =
         snapshotFlow { viewingDrink }.flatMapLatest { drinks.flowDrinkDetails(it) }.stateIn(

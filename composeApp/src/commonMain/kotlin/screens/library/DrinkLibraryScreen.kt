@@ -61,6 +61,8 @@ fun DrinkLibraryPage(innerPadding: PaddingValues, vm: DrinkLibraryViewModel) {
     val searchResults by vm.libraryResults.collectAsState()
     val state = rememberLazyListState(0)
 
+    vm.ScrollToEventItem(searchResults, state)
+
     Column(
         Modifier.padding(innerPadding).padding(top = 16.dp)
             .fillMaxWidth(),
