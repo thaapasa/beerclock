@@ -13,7 +13,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.drinks.DrinkDetails
@@ -32,12 +31,6 @@ fun DrinkItemInfoDialog(
     onDelete: ((drink: DrinkInfo) -> Unit)? = null,
 ) {
     DrinkDialog(drink, onClose) {
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = drink.name,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
         Spacer(modifier = Modifier.height(16.dp))
         HorizontalDivider(
             thickness = 1.dp,

@@ -23,6 +23,10 @@ fun DrinkInfoTable(
 ) {
     val strings = Strings.get()
     val times = DrinkTimeService()
+    DrinkInfoRow(
+        strings.drink.categoryLabel,
+        strings.drink.categoryName(drink.category),
+    )
     time?.let { DrinkInfoRow(strings.drink.timeInfoLabel, strings.drink.drinkTime(it)) }
     DrinkInfoRow(
         strings.drink.sizeInfoLabel,
