@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -42,10 +45,12 @@ val elevation = 24.dp
 fun <T : BasicDrinkInfo> DrinkDialog(
     drink: T,
     onClose: () -> Unit,
+    buttonContent: (@Composable ColumnScope.() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val textColor = MaterialTheme.colorScheme.onSurface
     var imageShown by remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
 
     Dialog(
         onDismissRequest = onClose, properties = DialogProperties(
@@ -55,7 +60,8 @@ fun <T : BasicDrinkInfo> DrinkDialog(
     ) {
         Surface(
             modifier = if (imageShown) Modifier.fillMaxWidth()
-            else Modifier.wrapContentWidth().wrapContentHeight(),
+            else Modifier.padding(top = 32.dp, bottom = 32.dp).wrapContentWidth()
+                .wrapContentHeight(),
             shape = MaterialTheme.shapes.large,
             tonalElevation = elevation,
             color = MaterialTheme.colorScheme.surfaceColorAtElevation(elevation),
@@ -97,9 +103,41 @@ fun <T : BasicDrinkInfo> DrinkDialog(
                         style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
-                    content()
+
+                    Spacer(modifier = Modifier.height(16.dp))
+                    HorizontalDivider(
+                        thickness = 1.dp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Column(
+                        modifier = Modifier.weight(1f, fill = false).verticalScroll(scrollState)
+                    ) {
+                        content()
+                    }
+
+                    buttonContent?.let {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        HorizontalDivider(
+                            thickness = 1.dp,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        it()
+                    }
                 }
             }
         }
     }
+}
+
+@Composable
+inline fun DrinkNotes(content: @Composable () -> Unit) {
+    HorizontalDivider(
+        thickness = 0.5.dp,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+    )
+    content()
 }

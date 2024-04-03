@@ -4,12 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +19,7 @@ import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.drinks.DrinkInfoTable
 import fi.tuska.beerclock.ui.components.DrinkDialog
+import fi.tuska.beerclock.ui.components.DrinkNotes
 
 @Composable
 fun DrinkItemInfoDialog(
@@ -30,20 +29,17 @@ fun DrinkItemInfoDialog(
     onModify: ((drink: DrinkInfo) -> Unit)? = null,
     onDelete: ((drink: DrinkInfo) -> Unit)? = null,
 ) {
-    DrinkDialog(drink, onClose) {
-        Spacer(modifier = Modifier.height(16.dp))
-        HorizontalDivider(
-            thickness = 1.dp,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        DrinkInfoTable(drink, drinkDetails = drinkDetails)
-
+    DrinkDialog(drink, onClose, buttonContent = {
         DrinkInfoDialogButtons(
             drink,
             onModify = { onModify?.invoke(it).also { onClose() } },
             onDelete = { onDelete?.invoke(it).also { onClose() } },
         )
+    }) {
+        DrinkInfoTable(drink, drinkDetails = drinkDetails)
+        drink.note?.ifBlank { null }?.let {
+            DrinkNotes { Text(it, style = MaterialTheme.typography.bodyMedium) }
+        }
     }
 }
 
@@ -58,9 +54,6 @@ fun DrinkInfoDialogButtons(
     if (onModify == null && onDelete == null) {
         return
     }
-    Spacer(modifier = Modifier.height(16.dp))
-    HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-    Spacer(modifier = Modifier.height(24.dp))
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.End
