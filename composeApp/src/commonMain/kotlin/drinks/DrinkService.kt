@@ -114,6 +114,21 @@ class DrinkService : KoinComponent {
         }
     }
 
+    suspend fun flowDrinkNotes(drink: BasicDrinkInfo?): Flow<List<DrinkNote>> {
+        if (drink == null) {
+            return flow { emit(emptyList()) }
+        }
+        return db.drinkRecordQueries.getNotesForDrink(drink.producer, drink.name).asFlow()
+            .map { list ->
+                list.map {
+                    DrinkNote(
+                        time = Instant.fromDbTime(it.time),
+                        note = it.note
+                    )
+                }
+            }
+    }
+
     suspend fun libraryHasDrinks(): Boolean {
         val result = withContext(Dispatchers.IO) {
             db.drinkLibraryQueries.hasDrinks().executeAsList()

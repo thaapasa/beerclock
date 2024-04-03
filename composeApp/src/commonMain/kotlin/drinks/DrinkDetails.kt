@@ -6,5 +6,7 @@ data class DrinkDetails(
     val timesDrunk: Long,
     val quantityLiters: Double,
     val firstTimeDrunk: Instant?,
-    val lastTimeDrunk: Instant?
+    val lastTimeDrunk: Instant?,
 )
+
+data class DrinkNote(val time: Instant, val note: String)

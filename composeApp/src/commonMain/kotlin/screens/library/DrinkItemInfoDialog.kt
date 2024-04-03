@@ -1,20 +1,33 @@
 package fi.tuska.beerclock.screens.library
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.drinks.DrinkDetails
 import fi.tuska.beerclock.drinks.DrinkInfo
+import fi.tuska.beerclock.drinks.DrinkNote
+import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.drinks.DrinkInfoTable
@@ -25,10 +38,13 @@ import fi.tuska.beerclock.ui.components.DrinkNotes
 fun DrinkItemInfoDialog(
     drink: DrinkInfo,
     drinkDetails: DrinkDetails?,
+    notes: List<DrinkNote>,
     onClose: () -> Unit,
     onModify: ((drink: DrinkInfo) -> Unit)? = null,
     onDelete: ((drink: DrinkInfo) -> Unit)? = null,
 ) {
+    val strings = Strings.get()
+    val times = DrinkTimeService()
     DrinkDialog(drink, onClose, buttonContent = {
         DrinkInfoDialogButtons(
             drink,
@@ -37,8 +53,33 @@ fun DrinkItemInfoDialog(
         )
     }) {
         DrinkInfoTable(drink, drinkDetails = drinkDetails)
-        drink.note?.ifBlank { null }?.let {
-            DrinkNotes { Text(it, style = MaterialTheme.typography.bodyMedium) }
+        if (drink.note?.isNotBlank() == true || notes.isNotEmpty()) {
+            DrinkNotes {
+                var first = true
+                if (drink.note?.isNotBlank() == true) {
+                    Text(drink.note, style = MaterialTheme.typography.bodyMedium)
+                    first = false
+                }
+                notes.map {
+                    if (!first) {
+                        Text(
+                            ". . .",
+                            style = MaterialTheme.typography.bodySmall,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(top = 16.dp, bottom = 16.dp).fillMaxWidth()
+                                .alpha(0.6f),
+                        )
+                    }
+                    Text(it.note, style = MaterialTheme.typography.bodyMedium)
+                    Text(
+                        strings.dateTime(times.toLocalDateTime(it.time)),
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.fillMaxWidth().alpha(0.8f),
+                        textAlign = TextAlign.Right,
+                    )
+                    first = false
+                }
+            }
         }
     }
 }
@@ -83,4 +124,24 @@ fun DrinkInfoDialogButtons(
             }
         }
     }
+}
+
+val defaultPathEffect = PathEffect.dashPathEffect(floatArrayOf(8f, 8f))
+
+@Composable
+fun StyledHorizontalDivider(
+    modifier: Modifier = Modifier,
+    thickness: Dp = DividerDefaults.Thickness,
+    color: Color = DividerDefaults.color,
+    pathEffect: PathEffect? = defaultPathEffect,
+    cap: StrokeCap = StrokeCap.Round,
+) = Canvas(modifier.fillMaxWidth().height(thickness)) {
+    drawLine(
+        color = color,
+        strokeWidth = thickness.toPx(),
+        pathEffect = pathEffect,
+        cap = cap,
+        start = Offset(0f, thickness.toPx() / 2),
+        end = Offset(size.width, thickness.toPx() / 2),
+    )
 }

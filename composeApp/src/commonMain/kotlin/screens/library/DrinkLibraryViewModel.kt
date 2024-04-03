@@ -16,6 +16,7 @@ import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkDetails
 import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
 import fi.tuska.beerclock.drinks.DrinkInfo
+import fi.tuska.beerclock.drinks.DrinkNote
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.events.DrinkInfoAddedEvent
 import fi.tuska.beerclock.events.DrinkInfoDeletedEvent
@@ -43,6 +44,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
 private val logger = getLogger("DrinkLibraryViewModel")
+
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class DrinkLibraryViewModel(
@@ -109,6 +111,14 @@ class DrinkLibraryViewModel(
         snapshotFlow { viewingDrink }.flatMapLatest { drinks.flowDrinkDetails(it) }.stateIn(
             scope = this,
             initialValue = null,
+            started = SharingStarted.WhileSubscribed(5_000)
+        )
+
+
+    val drinkNotes: StateFlow<List<DrinkNote>> =
+        snapshotFlow { viewingDrink }.flatMapLatest { drinks.flowDrinkNotes(it) }.stateIn(
+            scope = this,
+            initialValue = emptyList(),
             started = SharingStarted.WhileSubscribed(5_000)
         )
 
@@ -189,10 +199,12 @@ class DrinkLibraryViewModel(
     fun InfoDialog() {
         val viewDrink = viewingDrink
         val details by drinkDetails.collectAsState()
+        val notes by drinkNotes.collectAsState()
         if (viewDrink != null) {
             DrinkItemInfoDialog(
                 viewDrink,
                 details,
+                notes,
                 onClose = this::closeView,
                 onModify = this::editDrink,
                 onDelete = this::deleteDrink

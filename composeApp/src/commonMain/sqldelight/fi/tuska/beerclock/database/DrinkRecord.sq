@@ -34,6 +34,12 @@ SELECT COUNT(*) AS count,
 FROM drinkRecord
 WHERE producer = :producer AND name = :name;
 
+getNotesForDrink:
+SELECT time, note
+FROM drinkRecord
+WHERE producer = :producer AND name = :name AND note IS NOT NULL
+ORDER BY time DESC;
+
 countUnitsByTime:
 SELECT SUM(quantity_liters * abv * :multiplier)
 FROM drinkRecord
