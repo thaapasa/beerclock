@@ -3,7 +3,6 @@ package fi.tuska.beerclock.localization
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
-import fi.tuska.beerclock.drinks.SingleUnitWeights
 import fi.tuska.beerclock.screens.statistics.StatisticsMonth
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.screens.statistics.StatisticsWeek
@@ -96,8 +95,7 @@ object EnStrings : Strings {
     override val remove = "Remove"
     override val cancel = "Cancel"
 
-    override fun countryName(countryCode: String) =
-        Country.forIsoCode(countryCode)?.nameEn ?: countryCode
+    override fun countryName(country: Country) = country.nameEn
 
     override fun languageName(locale: AppLocale) = locale.nameEn
 
@@ -336,8 +334,8 @@ object EnStrings : Strings {
             "This determines what is the maximum value for weekly standard drink units the app gauges show."
         override val unitStandardDrinks = "units"
 
-        override fun alcoholGramsByCountryOption(countryCode: String) =
-            "${countryName(countryCode)} (${SingleUnitWeights[countryCode]} g/unit)"
+        override fun alcoholGramsByCountryOption(country: Country) =
+            "${countryName(country)} (${country.standardUnitWeightGrams} g/unit)"
 
         override val pickCountry = "Select country"
 

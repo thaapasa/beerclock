@@ -3,7 +3,6 @@ package fi.tuska.beerclock.localization
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
-import fi.tuska.beerclock.drinks.SingleUnitWeights
 import fi.tuska.beerclock.screens.statistics.StatisticsMonth
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.screens.statistics.StatisticsWeek
@@ -121,8 +120,7 @@ object FiStrings : Strings {
     override val remove = "Poista"
     override val cancel = "Peruuta"
 
-    override fun countryName(countryCode: String) =
-        Country.forIsoCode(countryCode)?.nameFi ?: countryCode
+    override fun countryName(country: Country) = country.nameFi
 
     override fun languageName(locale: AppLocale) = locale.nameFi
 
@@ -363,8 +361,8 @@ object FiStrings : Strings {
         override val unitStandardDrinks = "annosta"
 
 
-        override fun alcoholGramsByCountryOption(countryCode: String) =
-            "${countryName(countryCode)}: ${SingleUnitWeights[countryCode]} g/annos"
+        override fun alcoholGramsByCountryOption(country: Country) =
+            "${countryName(country)}: ${country.standardUnitWeightGrams} g/annos"
 
         override val pickCountry = "Valitse maa"
 

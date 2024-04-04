@@ -69,7 +69,7 @@ interface Strings {
     val remove: String
     val cancel: String
 
-    fun countryName(countryCode: String): String
+    fun countryName(country: Country): String
     fun languageName(locale: AppLocale): String
     fun themeName(themeSelection: ThemeSelection): String
 
@@ -258,7 +258,7 @@ interface Strings {
         val maxWeeklyUnitsLabel: String
         val maxWeeklyUnitsDescription: String
         val unitStandardDrinks: String
-        fun alcoholGramsByCountryOption(countryCode: String): String
+        fun alcoholGramsByCountryOption(country: Country): String
         val pickCountry: String
 
         val importExportTitle: String
