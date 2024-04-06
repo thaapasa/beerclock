@@ -21,6 +21,15 @@ Prompt: dark and moody image of a beer glass as a clock with the time slowly tic
 Read the [project diary](./diary/README.md) for some description in
 how the project was setup.
 
+## App screenshots
+
+<p align="center" width="100%">
+<img src="screenshot-main.png" alt="App main screen" width="240" style="padding-right: 8px;"/>
+<img src="screenshot-history.png" alt="Drink history" width="240" style="padding-right: 8px;" />
+<img src="screenshot-statistics.png" alt="Statistics" width="240" /><br />
+</p>
+
+
 ## Supported platforms and minimum required OS level
 
 - Android 8.0 Oreo (API level 26)
@@ -31,6 +40,10 @@ how the project was setup.
     - Required by Compose Multiplatform
 
 ## Libraries
+
+BeerClock is based on the latest Compose Multiplatform release (as of development).
+When updating versions, see the version compatibility
+[notes](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-compatibility-and-versioning.html#limitations-of-compose-multiplatform-releases).
 
 BeerClock uses [SQLite](https://www.sqlite.org/index.html) as the database
 to store the drink data. For Android, the SQLite backend is replaced with
