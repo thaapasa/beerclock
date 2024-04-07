@@ -36,6 +36,7 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     var producer by mutableStateOf("")
     var name by mutableStateOf("")
     var note by mutableStateOf("")
+    var rating by mutableStateOf<Double?>(null)
     var abv by mutableStateOf(4.5)
     var quantityCl by mutableStateOf(33.0)
     var date by mutableStateOf(LocalDate(2000, 1, 1))
@@ -64,6 +65,7 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
         image = drink.image.toDrinkImage()
         note = drink.note ?: ""
         category = drink.category
+        rating = drink.rating
         val drinkTime = times.instantToDrinkTime(realTime)
         date = drinkTime.first
         time = drinkTime.second
@@ -78,6 +80,7 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
             quantityLiters = quantityCl / 100,
             image = image,
             category = category,
+            rating = rating,
             note = note.ifBlank { null },
         )
     }

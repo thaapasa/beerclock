@@ -21,6 +21,8 @@ abstract class BasicDrinkInfo(
     val abvPercentage: Double,
     /** Image of the drink */
     val image: Image,
+    /** Drink rating, as a value from 0 to 5 with a step of 0.5; if given */
+    val rating: Double? = null,
     /** Any notes (optional) */
     val note: String? = null,
     /** Categorization of the drink */

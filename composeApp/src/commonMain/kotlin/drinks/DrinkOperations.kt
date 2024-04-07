@@ -17,6 +17,7 @@ class DrinkOperations(private val db: BeerDatabase) {
             quantityLiters = drink.quantityLiters,
             abv = drink.abv,
             image = drink.image.name,
+            rating = drink.rating,
             note = drink.note,
         )
         val rowId = db.drinkRecordQueries.lastInsertedId().executeAsOne()
@@ -27,6 +28,7 @@ class DrinkOperations(private val db: BeerDatabase) {
             quantityLiters = drink.quantityLiters,
             abv = drink.abv,
             image = drink.image.name,
+            rating = drink.rating,
             note = drink.note,
         )
         return DrinkRecordInfo(db.drinkRecordQueries.selectById(rowId).executeAsOne())
@@ -42,6 +44,7 @@ class DrinkOperations(private val db: BeerDatabase) {
             quantityLiters = drink.quantityLiters,
             abv = drink.abv,
             image = drink.image.name,
+            rating = drink.rating,
             note = drink.note,
         )
     }
@@ -54,6 +57,7 @@ class DrinkOperations(private val db: BeerDatabase) {
             quantityLiters = drink.quantityLiters,
             abv = drink.abv,
             image = drink.image.name,
+            rating = drink.rating,
             note = drink.note,
         )
         val rowId = db.drinkLibraryQueries.lastInsertedId().executeAsOne()

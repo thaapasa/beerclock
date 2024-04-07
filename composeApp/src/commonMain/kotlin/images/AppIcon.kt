@@ -34,6 +34,8 @@ import beerclock.composeapp.generated.resources.ic_save_as
 import beerclock.composeapp.generated.resources.ic_search
 import beerclock.composeapp.generated.resources.ic_speed
 import beerclock.composeapp.generated.resources.ic_sports_bar
+import beerclock.composeapp.generated.resources.ic_star
+import beerclock.composeapp.generated.resources.ic_star_filled
 import beerclock.composeapp.generated.resources.ic_water_drop
 import fi.tuska.beerclock.settings.Gender
 import org.jetbrains.compose.resources.DrawableResource
@@ -67,6 +69,8 @@ enum class AppIcon(private val drawable: DrawableResource) : Image {
     PALETTE(Res.drawable.ic_palette),
     PERSON(Res.drawable.ic_person),
     SAVE_AS(Res.drawable.ic_save_as),
+    STAR(Res.drawable.ic_star),
+    STAR_FILLED(Res.drawable.ic_star_filled),
     SEARCH(Res.drawable.ic_search),
     WATER_DROP(Res.drawable.ic_water_drop);
 

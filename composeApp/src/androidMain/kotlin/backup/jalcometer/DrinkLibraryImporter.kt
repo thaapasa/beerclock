@@ -85,6 +85,7 @@ data class JAlcoMeterDrink(
         quantityLiters = volume,
         time = Clock.System.now(),
         image = image,
+        rating = null,
         note = comment,
     )
 

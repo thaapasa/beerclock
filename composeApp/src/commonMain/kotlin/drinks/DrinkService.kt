@@ -184,6 +184,7 @@ class DrinkService : KoinComponent {
                 quantityLiters = drink.quantityLiters,
                 abv = drink.abv,
                 image = drink.image.name,
+                rating = drink.rating,
                 note = drink.note,
             )
             return@withContext getDrinkById(id)
@@ -200,6 +201,7 @@ class DrinkService : KoinComponent {
                 quantityLiters = drink.quantityLiters,
                 abv = drink.abv,
                 image = drink.image.name,
+                rating = drink.rating,
                 note = drink.note,
             )
             return@withContext DrinkInfo(db.drinkLibraryQueries.selectById(id).executeAsOne())
@@ -217,6 +219,7 @@ class DrinkService : KoinComponent {
                         quantityLiters = it.quantityCl / 100.0,
                         abv = it.abvPercentage / 100.0,
                         image = it.image.name,
+                        rating = it.rating,
                         note = it.note,
                     )
                 }

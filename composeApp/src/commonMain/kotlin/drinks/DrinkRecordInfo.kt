@@ -17,6 +17,7 @@ class DrinkRecordInfo(record: DrinkRecord) : BasicDrinkInfo(
     abvPercentage = record.abv * 100,
     image = DrinkImage.forName(record.image),
     category = record.category?.let { Category.forName(it) },
+    rating = record.rating,
     note = record.note,
 ), JavaSerializable {
     val id = record.id
