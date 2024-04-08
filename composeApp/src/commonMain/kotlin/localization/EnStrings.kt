@@ -396,6 +396,7 @@ object EnStrings : Strings {
         override val producerLabel = "Producer"
         override val abvLabel = "Alcohol by volume"
         override val abvUnit = "%"
+        override val ratingLabel = "Rating"
         override val noteLabel = "Notes"
         override val quantityLabel = "Quantity"
         override val quantityUnit = "cl"

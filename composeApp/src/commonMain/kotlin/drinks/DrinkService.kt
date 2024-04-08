@@ -118,12 +118,13 @@ class DrinkService : KoinComponent {
         if (drink == null) {
             return flow { emit(emptyList()) }
         }
-        return db.drinkRecordQueries.getNotesForDrink(drink.producer, drink.name).asFlow()
+        return db.drinkRecordQueries.getNotesAndRatingsForDrink(drink.producer, drink.name).asFlow()
             .map { list ->
                 list.map {
                     DrinkNote(
                         time = Instant.fromDbTime(it.time),
-                        note = it.note
+                        note = it.note,
+                        rating = it.rating,
                     )
                 }
             }

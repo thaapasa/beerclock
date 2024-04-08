@@ -138,7 +138,7 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTim
             RatingField(
                 value = vm.rating,
                 onValueChange = { vm.rating = it },
-                label = { Text("Rating") })
+                label = { Text(strings.drinkDialog.ratingLabel) })
         }
         Row(modifier = Modifier.fillMaxWidth()) {
             OutlinedTextField(

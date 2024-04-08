@@ -35,10 +35,11 @@ SELECT COUNT(*) AS count,
 FROM drinkRecord
 WHERE producer = :producer AND name = :name;
 
-getNotesForDrink:
-SELECT time, note
+getNotesAndRatingsForDrink:
+SELECT time, note, rating
 FROM drinkRecord
-WHERE producer = :producer AND name = :name AND note IS NOT NULL
+WHERE producer = :producer AND name = :name
+  AND (note IS NOT NULL OR rating IS NOT NULL)
 ORDER BY time DESC;
 
 countUnitsByTime:

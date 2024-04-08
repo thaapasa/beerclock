@@ -33,6 +33,7 @@ import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.drinks.DrinkInfoTable
 import fi.tuska.beerclock.ui.components.DrinkDialog
 import fi.tuska.beerclock.ui.components.DrinkNotes
+import fi.tuska.beerclock.ui.components.Rating
 
 @Composable
 fun DrinkItemInfoDialog(
@@ -60,7 +61,7 @@ fun DrinkItemInfoDialog(
                     Text(drink.note, style = MaterialTheme.typography.bodyMedium)
                     first = false
                 }
-                notes.map {
+                notes.map { note ->
                     if (!first) {
                         Text(
                             ". . .",
@@ -70,9 +71,10 @@ fun DrinkItemInfoDialog(
                                 .alpha(0.6f),
                         )
                     }
-                    Text(it.note, style = MaterialTheme.typography.bodyMedium)
+                    note.rating?.let { Rating(it, modifier = Modifier.padding(bottom = 4.dp)) }
+                    note.note?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
                     Text(
-                        strings.dateTime(times.toLocalDateTime(it.time)),
+                        strings.dateTime(times.toLocalDateTime(note.time)),
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.fillMaxWidth().alpha(0.8f),
                         textAlign = TextAlign.Right,

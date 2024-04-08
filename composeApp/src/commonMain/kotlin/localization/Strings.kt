@@ -295,6 +295,7 @@ interface Strings {
         val producerLabel: String
         val abvLabel: String
         val abvUnit: String
+        val ratingLabel: String
         val noteLabel: String
         val quantityLabel: String
         val quantityUnit: String
