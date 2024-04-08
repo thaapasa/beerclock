@@ -16,6 +16,7 @@ import beerclock.composeapp.generated.resources.ic_chevron_left
 import beerclock.composeapp.generated.resources.ic_chevron_right
 import beerclock.composeapp.generated.resources.ic_clock
 import beerclock.composeapp.generated.resources.ic_close
+import beerclock.composeapp.generated.resources.ic_contract
 import beerclock.composeapp.generated.resources.ic_date_range
 import beerclock.composeapp.generated.resources.ic_delete
 import beerclock.composeapp.generated.resources.ic_edit
@@ -23,6 +24,7 @@ import beerclock.composeapp.generated.resources.ic_female
 import beerclock.composeapp.generated.resources.ic_glass_full
 import beerclock.composeapp.generated.resources.ic_graph
 import beerclock.composeapp.generated.resources.ic_history
+import beerclock.composeapp.generated.resources.ic_info
 import beerclock.composeapp.generated.resources.ic_input
 import beerclock.composeapp.generated.resources.ic_language
 import beerclock.composeapp.generated.resources.ic_local_bar
@@ -32,6 +34,7 @@ import beerclock.composeapp.generated.resources.ic_palette
 import beerclock.composeapp.generated.resources.ic_person
 import beerclock.composeapp.generated.resources.ic_save_as
 import beerclock.composeapp.generated.resources.ic_search
+import beerclock.composeapp.generated.resources.ic_settings
 import beerclock.composeapp.generated.resources.ic_speed
 import beerclock.composeapp.generated.resources.ic_sports_bar
 import beerclock.composeapp.generated.resources.ic_star
@@ -54,6 +57,7 @@ enum class AppIcon(private val drawable: DrawableResource) : Image {
     CHEVRON_RIGHT(Res.drawable.ic_chevron_right),
     CLOCK(Res.drawable.ic_clock),
     CLOSE(Res.drawable.ic_close),
+    CONTRACT(Res.drawable.ic_contract),
     DELETE(Res.drawable.ic_delete),
     DRINK(Res.drawable.ic_local_bar),
     EDIT(Res.drawable.ic_edit),
@@ -62,6 +66,7 @@ enum class AppIcon(private val drawable: DrawableResource) : Image {
     GLASS_FULL(Res.drawable.ic_glass_full),
     GRAPH(Res.drawable.ic_graph),
     HISTORY(Res.drawable.ic_history),
+    INFO(Res.drawable.ic_info),
     INPUT(Res.drawable.ic_input),
     LANGUAGE(Res.drawable.ic_language),
     MALE(Res.drawable.ic_male),
@@ -69,6 +74,7 @@ enum class AppIcon(private val drawable: DrawableResource) : Image {
     PALETTE(Res.drawable.ic_palette),
     PERSON(Res.drawable.ic_person),
     SAVE_AS(Res.drawable.ic_save_as),
+    SETTINGS(Res.drawable.ic_settings),
     STAR(Res.drawable.ic_star),
     STAR_FILLED(Res.drawable.ic_star_filled),
     SEARCH(Res.drawable.ic_search),
