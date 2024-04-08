@@ -5,7 +5,9 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,6 +22,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.ui.shapes.VerticalSliceShape
 
@@ -87,7 +90,7 @@ fun RatingStar(fill: Double, modifier: Modifier = Modifier) {
 @Composable
 fun RatingField(
     value: Double?,
-    onValueChange: (rating: Double) -> Unit,
+    onValueChange: (rating: Double?) -> Unit,
     label: @Composable (() -> Unit)? = null,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     enabled: Boolean = true,
@@ -101,6 +104,8 @@ fun RatingField(
         value = value?.toString() ?: "",
         visualTransformation = visualTransformation,
         innerTextField = { Rating(value, onSelect = onValueChange) },
+        trailingIcon = value?.let { { AppIcon.CLOSE.iconButton { onValueChange(null) } } },
+        leadingIcon = value?.let { { Spacer(modifier = Modifier.width(48.dp)) } },
         placeholder = null,
         label = label,
         singleLine = true,
