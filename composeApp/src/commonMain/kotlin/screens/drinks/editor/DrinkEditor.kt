@@ -21,6 +21,7 @@ import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.drinks.DrinkEditorViewModel
 import fi.tuska.beerclock.ui.components.DateInputField
 import fi.tuska.beerclock.ui.components.DecimalField
+import fi.tuska.beerclock.ui.components.RatingField
 import fi.tuska.beerclock.ui.components.TimeInputField
 import fi.tuska.beerclock.ui.components.UnitAvatar
 
@@ -133,6 +134,12 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTim
             )
         }
         Spacer(modifier = Modifier.height(gap))
+        Row(modifier = Modifier.fillMaxWidth()) {
+            RatingField(
+                value = vm.rating,
+                onValueChange = { vm.rating = it },
+                label = { Text(strings.drinkDialog.ratingLabel) })
+        }
         Row(modifier = Modifier.fillMaxWidth()) {
             OutlinedTextField(
                 label = { Text(strings.drinkDialog.noteLabel) },

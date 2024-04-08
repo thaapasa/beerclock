@@ -13,6 +13,7 @@ data class DrinkDetailsFromEditor(
     val quantityLiters: Double,
     val time: Instant,
     val image: DrinkImage,
+    val rating: Double?,
     val note: String?,
 ) {
     companion object {
@@ -26,6 +27,7 @@ data class DrinkDetailsFromEditor(
                 quantityLiters = basic.quantityCl / 100.0,
                 image = basic.image.toDrinkImage(),
                 time = time,
+                rating = basic.rating,
                 note = basic.note,
             )
         }

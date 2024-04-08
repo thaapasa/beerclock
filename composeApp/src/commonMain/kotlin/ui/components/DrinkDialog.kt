@@ -1,9 +1,11 @@
 package fi.tuska.beerclock.ui.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -103,6 +105,16 @@ fun <T : BasicDrinkInfo> DrinkDialog(
                         style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
+
+                    if (drink.rating != null) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            Rating(rating = drink.rating)
+                        }
+                    }
 
                     Spacer(modifier = Modifier.height(16.dp))
                     HorizontalDivider(

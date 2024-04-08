@@ -81,6 +81,7 @@ data class JAlcometerHistory(
             quantityLiters = volume,
             time = time,
             image = image,
+            rating = null,
             note = comment.ifBlank { null },
         )
 

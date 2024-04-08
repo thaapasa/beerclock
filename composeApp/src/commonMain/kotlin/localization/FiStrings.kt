@@ -419,6 +419,7 @@ object FiStrings : Strings {
         override val producerLabel = "Valmistaja"
         override val abvLabel = "Voimakkuus"
         override val abvUnit = "%"
+        override val ratingLabel = "Arvostelu"
         override val noteLabel = "Muistiinpanoja"
         override val quantityLabel = "Määrä"
         override val quantityUnit = "cl"

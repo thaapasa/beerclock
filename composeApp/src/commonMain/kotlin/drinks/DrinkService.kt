@@ -118,12 +118,13 @@ class DrinkService : KoinComponent {
         if (drink == null) {
             return flow { emit(emptyList()) }
         }
-        return db.drinkRecordQueries.getNotesForDrink(drink.producer, drink.name).asFlow()
+        return db.drinkRecordQueries.getNotesAndRatingsForDrink(drink.producer, drink.name).asFlow()
             .map { list ->
                 list.map {
                     DrinkNote(
                         time = Instant.fromDbTime(it.time),
-                        note = it.note
+                        note = it.note,
+                        rating = it.rating,
                     )
                 }
             }
@@ -184,6 +185,7 @@ class DrinkService : KoinComponent {
                 quantityLiters = drink.quantityLiters,
                 abv = drink.abv,
                 image = drink.image.name,
+                rating = drink.rating,
                 note = drink.note,
             )
             return@withContext getDrinkById(id)
@@ -200,6 +202,7 @@ class DrinkService : KoinComponent {
                 quantityLiters = drink.quantityLiters,
                 abv = drink.abv,
                 image = drink.image.name,
+                rating = drink.rating,
                 note = drink.note,
             )
             return@withContext DrinkInfo(db.drinkLibraryQueries.selectById(id).executeAsOne())
@@ -217,6 +220,7 @@ class DrinkService : KoinComponent {
                         quantityLiters = it.quantityCl / 100.0,
                         abv = it.abvPercentage / 100.0,
                         image = it.image.name,
+                        rating = it.rating,
                         note = it.note,
                     )
                 }

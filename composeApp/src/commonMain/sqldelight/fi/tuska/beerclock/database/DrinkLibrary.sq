@@ -9,7 +9,8 @@ CREATE TABLE drinkLibrary (
   image TEXT NOT NULL,
   producer TEXT NOT NULL COLLATE NOCASE DEFAULT '',
   search_term TEXT NOT NULL COLLATE NOCASE DEFAULT '',
-  note TEXT
+  note TEXT,
+  rating REAL
 );
 
 CREATE UNIQUE INDEX drinkLibrary_name_idx ON drinkLibrary(producer, name);
@@ -38,17 +39,18 @@ ORDER BY search_term;
 
 insert:
 INSERT INTO drinkLibrary(producer, name, search_term, category, quantity_liters, abv,
-    image, note, created, updated)
+    image, rating, note, created, updated)
 VALUES (:producer, :name,
     CASE WHEN :producer = '' THEN :name ELSE :producer || ' ' || :name END,
     :category, :quantityLiters, :abv,
-    :image, :note,
+    :image, :rating, :note,
     strftime('%s', 'now'), strftime('%s', 'now'))
 ON CONFLICT (producer, name)
 DO UPDATE SET category = excluded.category,
     quantity_liters = excluded.quantity_liters,
     abv = excluded.abv,
     image = excluded.image,
+    rating = excluded.rating,
     note = excluded.note,
     updated = strftime('%s', 'now');
 
@@ -60,15 +62,17 @@ UPDATE drinkLibrary
 SET name=:name, producer=:producer,
     search_term=CASE WHEN :producer = '' THEN :name ELSE :producer || ' ' || :name END,
     category=:category, quantity_liters=:quantityLiters, abv=:abv,
-    image=:image, note=:note, updated=strftime('%s', 'now')
+    image=:image, rating=:rating, note=:note, updated=strftime('%s', 'now')
 WHERE id=:id;
 
 recordDrunk:
-INSERT INTO drinkLibrary(producer, name, search_term, category, quantity_liters, abv, image, note,
+INSERT INTO drinkLibrary(producer, name, search_term, category, quantity_liters, abv, image,
+  rating, note,
   created, updated)
 VALUES (:producer, :name,
     CASE WHEN :producer = '' THEN :name ELSE :producer || ' ' || :name END,
-    :category, :quantityLiters, :abv, :image, :note,
+    :category, :quantityLiters, :abv, :image,
+    :rating, :note,
     strftime('%s', 'now'), strftime('%s', 'now'))
 ON CONFLICT (producer, name)
 DO UPDATE SET category = excluded.category,
