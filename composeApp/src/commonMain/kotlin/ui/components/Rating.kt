@@ -38,10 +38,21 @@ fun Rating(
         horizontalArrangement = Arrangement.Center,
     ) {
         (0..4).map {
-            Box(modifier = Modifier.wrapContentSize().clip(RoundedCornerShape(50)).clickable {
-                onSelect?.invoke(it + 1.0)
-            }) {
-                RatingStar(fill = ((rating ?: 0.0) - it).coerceIn(0.0, 1.0))
+            val fill = ((rating ?: 0.0) - it).coerceIn(0.0, 1.0)
+            val max = it + 1.0
+            Box(
+                modifier = Modifier.wrapContentSize().clip(RoundedCornerShape(50))
+                    .clickable {
+                        val newVal = when {
+                            rating == null -> 1.0
+                            rating > max -> 1.0
+                            fill >= 1.0 -> 0.5
+                            fill >= 0.5 -> 0.0
+                            else -> 1.0
+                        }
+                        onSelect?.invoke(it + newVal)
+                    }) {
+                RatingStar(fill = fill)
             }
         }
     }
@@ -85,6 +96,7 @@ fun RatingField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
+
     OutlinedTextFieldDefaults.DecorationBox(
         value = value?.toString() ?: "",
         visualTransformation = visualTransformation,
