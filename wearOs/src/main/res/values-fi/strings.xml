@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kaljakello</string>
+    <string name="hello_world">Morjens %1$s!</string>
+    <string name="tile_label">Esimerkkitiili</string>
+    <string name="complication_label">Promillet</string>
+</resources>
