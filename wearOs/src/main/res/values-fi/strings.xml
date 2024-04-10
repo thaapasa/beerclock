@@ -3,5 +3,5 @@
     <string name="app_name">Kaljakello</string>
     <string name="hello_world">Morjens %1$s!</string>
     <string name="tile_label">Esimerkkitiili</string>
-    <string name="complication_label">Promillet</string>
+    <string name="complication_label">Tämänhetkiset promillet</string>
 </resources>
