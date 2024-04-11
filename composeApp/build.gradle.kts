@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.sqlDelight)
+    kotlin("kapt")
+    id("kotlin-parcelize")
 }
 
 kotlin {

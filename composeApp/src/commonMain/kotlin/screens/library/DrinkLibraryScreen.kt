@@ -18,20 +18,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.ParcelableScreen
 import fi.tuska.beerclock.screens.newdrink.BasicDrinkItem
 import fi.tuska.beerclock.screens.newdrink.TextListItem
 import fi.tuska.beerclock.ui.composables.SwipeControl
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
-import fi.tuska.beerclock.util.JavaSerializable
+import fi.tuska.beerclock.util.CommonParcelize
 
-data class DrinkLibraryScreen(var initialCategory: Category?) : Screen, JavaSerializable {
+@CommonParcelize
+data class DrinkLibraryScreen(var initialCategory: Category?) : ParcelableScreen {
 
     @Composable
     override fun Content() {

@@ -8,10 +8,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import cafe.adriel.voyager.navigator.Navigator
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
-import fi.tuska.beerclock.drinks.DrinkDef
 import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkService
+import fi.tuska.beerclock.drinks.drinkDef
 import fi.tuska.beerclock.events.DrinkRecordAddedEvent
 import fi.tuska.beerclock.events.EventBus
 import fi.tuska.beerclock.events.EventObserver
@@ -95,7 +95,7 @@ class NewDrinkViewModel(
             "add-new-title",
             strings.newdrink.addNewDrink(searchQuery),
             icon = AppIcon.ADD_CIRCLE,
-            onClick = { editDrink(DrinkDef(name = searchQuery)) }
+            onClick = { editDrink(drinkDef(name = searchQuery)) }
         )
         else TextListInfo(
             "latest-title",

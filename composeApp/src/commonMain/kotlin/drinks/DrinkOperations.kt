@@ -31,7 +31,7 @@ class DrinkOperations(private val db: BeerDatabase) {
             rating = drink.rating,
             note = drink.note,
         )
-        return DrinkRecordInfo(db.drinkRecordQueries.selectById(rowId).executeAsOne())
+        return DrinkRecordInfo.fromRecord(db.drinkRecordQueries.selectById(rowId).executeAsOne())
     }
 
     fun importDrink(importId: Long, drink: DrinkDetailsFromEditor) {
@@ -61,11 +61,11 @@ class DrinkOperations(private val db: BeerDatabase) {
             note = drink.note,
         )
         val rowId = db.drinkLibraryQueries.lastInsertedId().executeAsOne()
-        return DrinkInfo(db.drinkLibraryQueries.selectById(rowId).executeAsOne())
+        return DrinkInfo.fromRecord(db.drinkLibraryQueries.selectById(rowId).executeAsOne())
     }
 
     fun getDrinkLibrary(): List<DrinkInfo> {
-        return db.drinkLibraryQueries.selectAll().executeAsList().map(::DrinkInfo)
+        return db.drinkLibraryQueries.selectAll().executeAsList().map(DrinkInfo::fromRecord)
     }
 }
 

@@ -1,6 +1,10 @@
 package fi.tuska.beerclock.screens.statistics
 
 import fi.tuska.beerclock.drinks.DrinkTimeService
+import fi.tuska.beerclock.util.CommonParcelable
+import fi.tuska.beerclock.util.CommonParcelize
+import fi.tuska.beerclock.util.CommonTypeParceler
+import fi.tuska.beerclock.util.LocalDateParceler
 import fi.tuska.beerclock.util.OneMonth
 import fi.tuska.beerclock.util.OneWeek
 import fi.tuska.beerclock.util.OneYear
@@ -18,7 +22,7 @@ enum class StatisticsPeriodType {
 abstract class StatisticsPeriod(
     val date: LocalDate,
     val period: StatisticsPeriodType,
-) {
+) : CommonParcelable {
     abstract val range: TimeInterval
     private val times = DrinkTimeService()
     open fun toYear() = StatisticsYear(date)
@@ -29,8 +33,12 @@ abstract class StatisticsPeriod(
 }
 
 
-class StatisticsYear(date: LocalDate) :
-    StatisticsPeriod(date, period = StatisticsPeriodType.YEAR) {
+@CommonParcelize
+class StatisticsYear(
+    @CommonTypeParceler<LocalDate, LocalDateParceler>()
+    private val yearDate: LocalDate,
+) :
+    StatisticsPeriod(yearDate, period = StatisticsPeriodType.YEAR) {
     val year = date.year
     override val range = TimeInterval.ofYear(year)
     override fun toYear() = this
@@ -39,9 +47,13 @@ class StatisticsYear(date: LocalDate) :
     override fun prev() = StatisticsYear(date.minus(OneYear))
 }
 
-class StatisticsMonth(date: LocalDate) :
+@CommonParcelize
+class StatisticsMonth(
+    @CommonTypeParceler<LocalDate, LocalDateParceler>()
+    private val monthDate: LocalDate,
+) :
     StatisticsPeriod(
-        date,
+        monthDate,
         period = StatisticsPeriodType.MONTH,
     ) {
     val year = date.year
@@ -53,9 +65,13 @@ class StatisticsMonth(date: LocalDate) :
     override fun prev() = StatisticsMonth(date.minus(OneMonth))
 }
 
-class StatisticsWeek(date: LocalDate) :
+@CommonParcelize
+class StatisticsWeek(
+    @CommonTypeParceler<LocalDate, LocalDateParceler>()
+    private val weekDate: LocalDate,
+) :
     StatisticsPeriod(
-        date,
+        weekDate,
         period = StatisticsPeriodType.WEEK,
     ) {
     val weekOfYear = date.toWeekOfYear()

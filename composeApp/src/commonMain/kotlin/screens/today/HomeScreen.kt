@@ -8,13 +8,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
+import fi.tuska.beerclock.screens.ParcelableScreen
 import fi.tuska.beerclock.screens.drinks.create.NewDrinkButton
 import fi.tuska.beerclock.ui.components.BacStatusCard
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
+import fi.tuska.beerclock.util.CommonParcelize
 
-object HomeScreen : Screen {
+@CommonParcelize
+object HomeScreen : ParcelableScreen {
 
     @Composable
     override fun Content() {

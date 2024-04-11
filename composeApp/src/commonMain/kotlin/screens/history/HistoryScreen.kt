@@ -14,11 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.ParcelableScreen
 import fi.tuska.beerclock.screens.drinks.create.AddDrinkToDateButton
 import fi.tuska.beerclock.ui.components.BacStatusCard
 import fi.tuska.beerclock.ui.components.DatePickerIcon
@@ -26,14 +26,18 @@ import fi.tuska.beerclock.ui.components.SegmentDivider
 import fi.tuska.beerclock.ui.components.SegmentedButton
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
-import fi.tuska.beerclock.util.JavaSerializable
+import fi.tuska.beerclock.util.CommonParcelize
+import fi.tuska.beerclock.util.CommonTypeParceler
+import fi.tuska.beerclock.util.LocalDateParceler
 import kotlinx.datetime.LocalDate
 
+@CommonParcelize
 data class HistoryScreen(
+    @CommonTypeParceler<LocalDate?, LocalDateParceler>()
     private val startDate: LocalDate? = null,
     private val initialDailyGaugeValue: Double = 0.0,
     private val initialWeeklyGaugeValue: Double = 0.0,
-) : Screen, JavaSerializable {
+) : ParcelableScreen {
 
     @Composable
     override fun Content() {

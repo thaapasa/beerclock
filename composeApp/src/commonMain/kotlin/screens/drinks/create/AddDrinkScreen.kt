@@ -5,21 +5,25 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.ParcelableScreen
 import fi.tuska.beerclock.screens.drinks.DrinkDialogLayout
 import fi.tuska.beerclock.screens.drinks.editor.DrinkEditor
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
-import fi.tuska.beerclock.util.JavaSerializable
+import fi.tuska.beerclock.util.CommonParcelize
+import fi.tuska.beerclock.util.CommonTypeParceler
+import fi.tuska.beerclock.util.LocalDateParceler
 import kotlinx.datetime.LocalDate
 
+@CommonParcelize
 data class AddDrinkScreen(
+    @CommonTypeParceler<LocalDate?, LocalDateParceler>()
     private val date: LocalDate? = null,
     private val proto: BasicDrinkInfo? = null,
-) : Screen, JavaSerializable {
+) : ParcelableScreen {
 
     @Composable
     override fun Content() {

@@ -18,23 +18,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.images.AppImage
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.ParcelableScreen
 import fi.tuska.beerclock.screens.today.HomeScreen
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.settings.UserStore
 import fi.tuska.beerclock.ui.composables.ViewModel
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
+import fi.tuska.beerclock.util.CommonParcelize
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
-object DisclosureScreen : Screen {
+@CommonParcelize
+object DisclosureScreen : ParcelableScreen {
 
     @Composable
     override fun Content() {
