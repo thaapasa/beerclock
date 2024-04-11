@@ -1,18 +1,19 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.jetbrainsKotlinParcelize)
 }
 
 android {
-    namespace = "fi.tuska.beerclock.wear"
-    compileSdk = 34
+    namespace = "fi.tuska.beerclock"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "fi.tuska.beerclock.wear"
-        minSdk = 26
-        targetSdk = 34
-        versionCode = 22
-        versionName = "1.0.2"
+        applicationId = "fi.tuska.beerclock"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        versionCode = libs.versions.app.version.code.get().toInt()
+        versionName = libs.versions.app.version.name.get()
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -20,6 +21,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-DEBUG"
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -58,6 +63,10 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.play.services)
     implementation(libs.androidx.tiles)
     implementation(libs.androidx.tiles.material)
     implementation(libs.horologist.compose.tools)

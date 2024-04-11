@@ -7,9 +7,9 @@
 package fi.tuska.beerclock.wear.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,13 +21,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
-import fi.tuska.beerclock.wear.R
+import com.google.android.gms.wearable.DataClient
+import com.google.android.gms.wearable.DataEventBuffer
+import com.google.android.gms.wearable.Wearable
+import fi.tuska.beerclock.R
 import fi.tuska.beerclock.wear.presentation.theme.BeerclockTheme
 
-class BeerWearActivity : ComponentActivity() {
+class BeerWearActivity : ComponentActivity(), DataClient.OnDataChangedListener {
+    private val TAG = "BeerWearActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
 
@@ -38,6 +43,23 @@ class BeerWearActivity : ComponentActivity() {
         setContent {
             WearApp("Android")
         }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        Log.i(TAG, "Listening for events")
+        Wearable.getDataClient(this).addListener(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i(TAG, "Pausing event listening")
+        Wearable.getDataClient(this).removeListener(this)
+    }
+
+    override fun onDataChanged(event: DataEventBuffer) {
+        Log.i(TAG, "Received event!")
     }
 }
 

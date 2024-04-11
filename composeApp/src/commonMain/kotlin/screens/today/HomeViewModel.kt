@@ -22,6 +22,8 @@ import fi.tuska.beerclock.ui.components.BacStatusViewModel
 import fi.tuska.beerclock.ui.components.DateView
 import fi.tuska.beerclock.ui.components.GaugeValueWithHelp
 import fi.tuska.beerclock.ui.composables.DrinkObservingViewModel
+import fi.tuska.beerclock.wear.CurrentBacStatus
+import fi.tuska.beerclock.wear.sendCurrentBacStatusToWatch
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -101,6 +103,15 @@ class HomeViewModel : DrinkObservingViewModel(SnackbarHostState()),
             val newDrinks = drinkService.getDrinksForHomeScreen(drinkDay)
             val weekUnits = drinkService.getUnitsForWeek(drinkDay, prefs.prefs)
             setDrinks(newDrinks, weekUnits)
+
+            sendCurrentBacStatusToWatch(
+                CurrentBacStatus(
+                    time = Clock.System.now(),
+                    dailyUnits = dailyUnitsGauge.value,
+                    alcoholGrams = bacStatus.atTime(Clock.System.now()).alcoholGrams,
+                    volumeOfDistribution = prefs.prefs.volumeOfDistribution
+                )
+            )
         }
     }
 
