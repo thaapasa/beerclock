@@ -34,9 +34,9 @@ import kotlinx.datetime.LocalDate
 @CommonParcelize
 data class HistoryScreen(
     @CommonTypeParceler<LocalDate?, LocalDateParceler>()
-    private val startDate: LocalDate? = null,
-    private val initialDailyGaugeValue: Double = 0.0,
-    private val initialWeeklyGaugeValue: Double = 0.0,
+    val startDate: LocalDate? = null,
+    val initialDailyGaugeValue: Double = 0.0,
+    val initialWeeklyGaugeValue: Double = 0.0,
 ) : ParcelableScreen {
 
     @Composable

@@ -26,9 +26,9 @@ import fi.tuska.beerclock.util.ToNullParceler
 
 @CommonParcelize
 class StatisticsScreen(
-    private val period: StatisticsPeriod? = null,
+    val period: StatisticsPeriod? = null,
     @CommonTypeParceler<StatisticsData?, ToNullParceler>()
-    private val previousData: StatisticsData? = null,
+    val previousData: StatisticsData? = null,
 ) : ParcelableScreen {
 
     @Composable

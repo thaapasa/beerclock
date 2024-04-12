@@ -37,7 +37,7 @@ open class BasicDrinkInfo(
     val category: Category? = null,
 ) : KoinComponent, CommonParcelable {
     protected val prefs: GlobalUserPreferences = get()
-    
+
     /** Amount of alcohol in the drink, in liters */
     val alcoholLiters: Double = quantityCl * abvPercentage / 10_000.0
 
@@ -61,5 +61,14 @@ open class BasicDrinkInfo(
         val fullHours = minutesToBurn / 60
         val fullMinutes = minutesToBurn % 60
         return fullHours.hours + fullMinutes.minutes
+    }
+
+    override fun equals(other: Any?): Boolean {
+        // Let's go with: to be equal drink infos must be of the same class and have the same key.
+        // This should work for our purposes, for all subclasses.
+        // We don't want different subclasses to mix'n'match
+        return other is BasicDrinkInfo && other::class.isInstance(this) && this::class.isInstance(
+            other
+        ) && key == other.key
     }
 }

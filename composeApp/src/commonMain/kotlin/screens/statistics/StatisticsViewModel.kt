@@ -44,7 +44,7 @@ class StatisticsViewModel(
             val stats = drinkService.getStatisticsByCategory(period, prefs.prefs)
             val drinks = drinkService.getDrinkUnitsForPeriod(period, prefs.prefs)
             val byDates = drinks.byDates(period.range)
-            val data = toStatisticsData(period, stats, byDates.toList())
+            val data = toStatisticsData(period, stats, byDates.toList(), prefs.prefs)
             statistics = DataState.Success(data)
         }
     }

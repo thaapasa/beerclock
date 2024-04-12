@@ -30,6 +30,8 @@ abstract class StatisticsPeriod(
     open fun toWeek() = StatisticsWeek(date)
     abstract fun next(): StatisticsPeriod
     abstract fun prev(): StatisticsPeriod
+    override fun equals(other: Any?): Boolean =
+        other != null && other is StatisticsPeriod && period == other.period && date == other.date
 }
 
 
