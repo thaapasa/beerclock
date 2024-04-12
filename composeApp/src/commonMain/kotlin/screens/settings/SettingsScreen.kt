@@ -12,12 +12,14 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.ParcelableScreen
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
+import fi.tuska.beerclock.util.CommonParcelize
 
-object SettingsScreen : Screen {
+@CommonParcelize
+object SettingsScreen : ParcelableScreen {
 
     @Composable
     override fun Content() {

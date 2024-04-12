@@ -36,7 +36,7 @@ class DrinkService : KoinComponent {
             ).executeAsList()
         }
         logger.info("Found ${drinks.size} drinks for $date")
-        return drinks.map(::DrinkRecordInfo).reversed()
+        return drinks.map(DrinkRecordInfo::fromRecord).reversed()
     }
 
     fun flowDrinksForDay(date: LocalDate): Flow<List<DrinkRecordInfo>> {
@@ -44,7 +44,7 @@ class DrinkService : KoinComponent {
         return db.drinkRecordQueries.selectByTime(
             startTime = range.start.toDbTime(),
             endTime = range.end.toDbTime(),
-        ).asFlow().map { it.map(::DrinkRecordInfo).reversed() }.flowOn(Dispatchers.IO)
+        ).asFlow().map { it.map(DrinkRecordInfo::fromRecord).reversed() }.flowOn(Dispatchers.IO)
     }
 
     suspend fun getDrinksForHomeScreen(today: LocalDate): List<DrinkRecordInfo> {
@@ -57,7 +57,7 @@ class DrinkService : KoinComponent {
             ).executeAsList()
         }
         logger.info("Found ${drinks.size} drinks for $yesterday - $today")
-        return drinks.map(::DrinkRecordInfo)
+        return drinks.map(DrinkRecordInfo::fromRecord)
     }
 
     suspend fun getUnitsForWeek(today: LocalDate, prefs: UserPreferences): Double {
@@ -81,23 +81,23 @@ class DrinkService : KoinComponent {
         ).asRowFlow().map { it.SUM ?: 0.0 }
     }
 
-    suspend fun getLatestDrinks(limit: Long): List<LatestDrinkInfo> {
+    suspend fun getLatestDrinks(limit: Long): List<BasicDrinkInfo> {
         val drinks = withContext(Dispatchers.IO) {
             db.drinkRecordQueries.selectLatestDrinks(
                 limit = limit
             ).executeAsList()
         }
-        return drinks.map(::LatestDrinkInfo)
+        return drinks.map(LatestDrinkInfo::fromRecord)
     }
 
     fun flowMatchingDrinksByName(name: String, limit: Long): Flow<List<DrinkInfo>> {
         val drinks = db.drinkLibraryQueries.findMatchingByName(name, limit).asFlow()
-        return drinks.map { it.map(::DrinkInfo) }.flowOn(Dispatchers.IO)
+        return drinks.map { it.map(DrinkInfo::fromRecord) }.flowOn(Dispatchers.IO)
     }
 
     fun flowDrinksForCategories(category: Category?): Flow<List<DrinkInfo>> {
         val flow = db.drinkLibraryQueries.selectAllByCategory(category?.toString()).asFlow()
-        return flow.map { it.map(::DrinkInfo) }.flowOn(Dispatchers.IO)
+        return flow.map { it.map(DrinkInfo::fromRecord) }.flowOn(Dispatchers.IO)
     }
 
     suspend fun flowDrinkDetails(drink: BasicDrinkInfo?): Flow<DrinkDetails?> {
@@ -141,7 +141,7 @@ class DrinkService : KoinComponent {
     suspend fun getDrinkById(id: Long): DrinkRecordInfo {
         return withContext(Dispatchers.IO) {
             val d = db.drinkRecordQueries.selectById(id = id).executeAsOne()
-            return@withContext DrinkRecordInfo(d)
+            return@withContext DrinkRecordInfo.fromRecord(d)
         }
     }
 
@@ -205,7 +205,9 @@ class DrinkService : KoinComponent {
                 rating = drink.rating,
                 note = drink.note,
             )
-            return@withContext DrinkInfo(db.drinkLibraryQueries.selectById(id).executeAsOne())
+            return@withContext DrinkInfo.fromRecord(
+                db.drinkLibraryQueries.selectById(id).executeAsOne()
+            )
         }
     }
 

@@ -94,7 +94,6 @@ import beerclock.composeapp.generated.resources.drink_white_wine_bottle_3
 import beerclock.composeapp.generated.resources.drink_white_wine_glass_1
 import beerclock.composeapp.generated.resources.drink_white_wine_glass_2
 import fi.tuska.beerclock.logging.getLogger
-import fi.tuska.beerclock.util.JavaSerializable
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -102,7 +101,7 @@ import org.jetbrains.compose.resources.painterResource
 private val logger = getLogger("DrinkImage")
 
 @OptIn(ExperimentalResourceApi::class)
-enum class DrinkImage(val drawable: DrawableResource) : Image, JavaSerializable {
+enum class DrinkImage(val drawable: DrawableResource) : Image {
     CAT_BEERS(Res.drawable.cat_beer),
     CAT_CIDERS(Res.drawable.cat_ciders),
     BEER_GLASS_1(Res.drawable.drink_beer_glass_1),

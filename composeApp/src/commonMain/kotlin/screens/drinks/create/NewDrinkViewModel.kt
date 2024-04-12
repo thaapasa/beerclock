@@ -35,11 +35,10 @@ class NewDrinkViewModel(
 }
 
 object NewDrinkProto : BasicDrinkInfo(
+    key = "new-drink",
     name = "",
     quantityCl = 10.0,
     abvPercentage = 5.0,
     image = DrinkImage.GENERIC_DRINK,
     category = null,
-) {
-    override val key = "new-drink"
-}
+)

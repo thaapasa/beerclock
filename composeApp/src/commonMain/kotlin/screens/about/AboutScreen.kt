@@ -21,21 +21,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.database.DatabaseInfo
 import fi.tuska.beerclock.images.AppImage
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.localization.TextWithLinks
+import fi.tuska.beerclock.screens.ParcelableScreen
 import fi.tuska.beerclock.ui.composables.ViewModel
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
+import fi.tuska.beerclock.util.CommonParcelize
 import fi.tuska.beerclock.util.getAppVersion
 import fi.tuska.beerclock.util.getDeviceModel
 import fi.tuska.beerclock.util.getOSVersion
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
-object AboutScreen : Screen {
+@CommonParcelize
+object AboutScreen : ParcelableScreen {
 
     @Composable
     override fun Content() {

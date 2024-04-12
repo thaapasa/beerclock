@@ -15,30 +15,34 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.ParcelableScreen
 import fi.tuska.beerclock.ui.composables.SwipeControl
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
-import fi.tuska.beerclock.util.JavaSerializable
+import fi.tuska.beerclock.util.CommonParcelize
+import fi.tuska.beerclock.util.CommonTypeParceler
+import fi.tuska.beerclock.util.LocalDateParceler
 import kotlinx.datetime.LocalDate
 
+@CommonParcelize
 data class NewDrinkSearchScreen(
     /**
      * Suggested drinking date for new drinks (given from history screen
      * when recording drinks to past dates).
      */
+    @CommonTypeParceler<LocalDate?, LocalDateParceler>
     val date: LocalDate? = null,
     /**
      * Initial search string. Updated from the view model when navigating to edit screen
      * so that the query is restored when returning from editor.
      */
     var searchString: String? = null,
-) : Screen, JavaSerializable {
+) : ParcelableScreen {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable

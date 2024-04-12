@@ -14,17 +14,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.localization.Strings
+import fi.tuska.beerclock.screens.ParcelableScreen
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.MainLayout
+import fi.tuska.beerclock.util.CommonParcelize
+import fi.tuska.beerclock.util.CommonTypeParceler
+import fi.tuska.beerclock.util.ToNullParceler
 
+@CommonParcelize
 class StatisticsScreen(
     private val period: StatisticsPeriod? = null,
+    @CommonTypeParceler<StatisticsData?, ToNullParceler>()
     private val previousData: StatisticsData? = null,
-) : Screen {
+) : ParcelableScreen {
 
     @Composable
     override fun Content() {
