@@ -21,8 +21,8 @@ import kotlinx.datetime.LocalDate
 @CommonParcelize
 data class AddDrinkScreen(
     @CommonTypeParceler<LocalDate?, LocalDateParceler>()
-    private val date: LocalDate? = null,
-    private val proto: BasicDrinkInfo? = null,
+    val date: LocalDate? = null,
+    val proto: BasicDrinkInfo? = null,
 ) : ParcelableScreen {
 
     @Composable
