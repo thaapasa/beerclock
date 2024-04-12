@@ -29,7 +29,6 @@ how the project was setup.
 <img src="screenshot-statistics.png" alt="Statistics" width="240" /><br />
 </p>
 
-
 ## Supported platforms and minimum required OS level
 
 - Android 8.0 Oreo (API level 26)
@@ -77,4 +76,10 @@ To run all tests, you can run:
 
 ```bash
 ./gradlew check
+```
+
+To run instrumented tests on a running Android emulator, fire up the emulator and run:
+
+```bash
+./gradlew :composeApp:connectedAndroidTest
 ```
