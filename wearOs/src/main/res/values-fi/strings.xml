@@ -3,5 +3,6 @@
     <string name="app_name">Kaljakello</string>
     <string name="hello_world">Morjens %1$s!</string>
     <string name="tile_label">Esimerkkitiili</string>
-    <string name="complication_label">Tämänhetkiset promillet</string>
+    <string name="bac_complication_label">Tämänhetkiset promillet</string>
+    <string name="bac_complication_value">%1$.1f</string>
 </resources>

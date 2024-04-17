@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Beer Clock</string>
     <string name="hello_world">Hello, %1$s!</string>
-    <string name="tile_label">Example tile</string>
-    <string name="complication_label">Current ABV ‰</string>
+    <string name="bac_complication_label">Current ABV ‰</string>
+    <string name="bac_complication_value">%1$.1f</string>
 </resources>

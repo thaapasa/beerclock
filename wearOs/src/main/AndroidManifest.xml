@@ -25,12 +25,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
-                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
-                <!--
-                <action android:name="com.google.android.gms.wearable.REQUEST_RECEIVED" />
-                <action android:name="com.google.android.gms.wearable.CAPABILITY_CHANGED" />
-                <action android:name="com.google.android.gms.wearable.CHANNEL_EVENT" />
-                -->
                 <data
                     android:scheme="wear"
                     android:host="*" />
@@ -40,7 +34,7 @@
         <service
             android:name=".wear.complication.CurrentBacComplicationService"
             android:exported="true"
-            android:label="@string/complication_label"
+            android:label="@string/bac_complication_label"
             android:icon="@drawable/ic_permille"
             android:directBootAware="true"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
@@ -50,7 +44,7 @@
 
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="RANGED_VALUE,GOAL_PROGRESS" />
+                android:value="GOAL_PROGRESS,RANGED_VALUE" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="15" />
