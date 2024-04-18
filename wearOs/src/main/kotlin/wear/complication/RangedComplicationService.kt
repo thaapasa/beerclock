@@ -1,5 +1,6 @@
 package fi.tuska.beerclock.wear.complication
 
+import android.app.PendingIntent
 import android.graphics.drawable.Icon
 import android.os.Build
 import androidx.annotation.DrawableRes
@@ -16,6 +17,7 @@ import androidx.wear.watchface.complications.datasource.SuspendingComplicationDa
 import fi.tuska.beerclock.wear.CurrentBacStatus
 import fi.tuska.beerclock.wear.LocaleHelper
 import fi.tuska.beerclock.wear.getState
+import fi.tuska.beerclock.wear.presentation.BeerWearActivity
 import kotlin.math.max
 import kotlin.math.min
 
@@ -49,24 +51,27 @@ abstract class RangedComplicationService(
         }
         val data = toComplicationData(state)
 
+        val tapAction =
+            BeerWearActivity.getComplicationTapIntent(this, request.complicationInstanceId)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && request.complicationType == ComplicationType.GOAL_PROGRESS) {
-            return createGoalProgressData(data)
+            return createGoalProgressData(data, tapAction)
         }
-        return createRangedData(data)
+        return createRangedData(data, tapAction)
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun createGoalProgressData(data: RangedData) =
+    private fun createGoalProgressData(data: RangedData, tapAction: PendingIntent? = null) =
         GoalProgressComplicationData.Builder(
             value = data.value,
             targetValue = data.max,
             contentDescription = createContentDescription(),
         )
             .setTitle(createTitle(data))
+            .setTapAction(tapAction)
             .setMonochromaticImage(createMonochromaticImage())
             .build()
 
-    private fun createRangedData(data: RangedData) =
+    private fun createRangedData(data: RangedData, tapAction: PendingIntent? = null) =
         RangedValueComplicationData.Builder(
             value = data.value,
             max = max(data.value, data.max),
@@ -74,6 +79,7 @@ abstract class RangedComplicationService(
             contentDescription = createContentDescription(),
         )
             .setTitle(createTitle(data))
+            .setTapAction(tapAction)
             .setMonochromaticImage(createMonochromaticImage())
             .build()
 
@@ -90,3 +96,4 @@ abstract class RangedComplicationService(
 }
 
 data class RangedData(val value: Float, val max: Float)
+

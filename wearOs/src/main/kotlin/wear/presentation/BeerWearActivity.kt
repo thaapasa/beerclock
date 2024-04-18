@@ -6,6 +6,9 @@
 
 package fi.tuska.beerclock.wear.presentation
 
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -60,6 +63,21 @@ class BeerWearActivity : ComponentActivity(), DataClient.OnDataChangedListener {
 
     override fun onDataChanged(event: DataEventBuffer) {
         Log.i(TAG, "Received event!")
+    }
+
+    companion object {
+        fun getComplicationTapIntent(context: Context, complicationId: Int): PendingIntent {
+            val intent = Intent(context, BeerWearActivity::class.java)
+
+            // Pass complicationId as the requestCode to ensure that different complications get
+            // different intents.
+            return PendingIntent.getActivity(
+                context,
+                complicationId,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
+        }
     }
 }
 
