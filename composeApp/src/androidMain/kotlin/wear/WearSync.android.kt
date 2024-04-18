@@ -16,10 +16,13 @@ actual suspend fun sendCurrentBacStatusToWatch(state: CurrentBacStatus) {
 
     try {
         val request = PutDataMapRequest.create("/current-bac").apply {
+            dataMap.putString("locale", state.locale?.toLanguageTag() ?: "")
             dataMap.putLong("time", state.time.toEpochMilliseconds())
             dataMap.putDouble("dailyUnits", state.dailyUnits)
+            dataMap.putDouble("maxDailyUnits", state.maxDailyUnits)
             dataMap.putDouble("alcoholGrams", state.alcoholGrams)
             dataMap.putDouble("volumeOfDistribution", state.volumeOfDistribution)
+            dataMap.putDouble("maxBac", state.maxBac)
         }
             .asPutDataRequest()
             .setUrgent()

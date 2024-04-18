@@ -44,7 +44,7 @@ class HomeViewModel : DrinkObservingViewModel(SnackbarHostState()),
     private val bacGauge =
         GaugeValueWithHelp(
             icon = { Text(text = "‰", color = it) },
-            maxValue = prefs.prefs.maxBAC,
+            maxValue = prefs.prefs.maxBac,
             helpText = strings.help.bacStatusGauge,
         )
     private val dailyUnitsGauge =
@@ -106,10 +106,13 @@ class HomeViewModel : DrinkObservingViewModel(SnackbarHostState()),
 
             sendCurrentBacStatusToWatch(
                 CurrentBacStatus(
+                    locale = prefs.prefs.locale?.locale,
                     time = Clock.System.now(),
                     dailyUnits = dailyUnitsGauge.value,
+                    maxDailyUnits = prefs.prefs.maxDailyUnits,
                     alcoholGrams = bacStatus.atTime(Clock.System.now()).alcoholGrams,
-                    volumeOfDistribution = prefs.prefs.volumeOfDistribution
+                    volumeOfDistribution = prefs.prefs.volumeOfDistribution,
+                    maxBac = prefs.prefs.maxBac
                 )
             )
         }
@@ -132,7 +135,7 @@ class HomeViewModel : DrinkObservingViewModel(SnackbarHostState()),
             bloodAlcoholConcentration(
                 bacStatus.atTime(now).alcoholGrams,
                 prefs.prefs
-            ), prefs.prefs.maxBAC
+            ), prefs.prefs.maxBac
         )
 
         if (drinkDay != times.currentDrinkDay()) {

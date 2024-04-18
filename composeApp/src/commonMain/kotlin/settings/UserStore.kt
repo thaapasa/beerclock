@@ -90,11 +90,11 @@ internal class UserStore : KoinComponent {
     }
 
     suspend fun setMAXBac(bac: Double) {
-        if (prefs.prefs.maxBAC == bac) {
+        if (prefs.prefs.maxBac == bac) {
             return
         }
-        setState { copy(maxBAC = bac) }
-        setStateValue(PreferenceKeys.maxBAC, bac.toString())
+        setState { copy(maxBac = bac) }
+        setStateValue(PreferenceKeys.maxBac, bac.toString())
     }
 
     suspend fun setMaxDailyUnits(units: Double) {
@@ -133,7 +133,7 @@ internal class UserStore : KoinComponent {
         const val startOfDay = "prefs.user.startOfDay"
         const val alchoholGramsInUnit = "prefs.user.alchoholGramsInUnit"
         const val drivingLimitBac = "prefs.user.drivingLimitBac"
-        const val maxBAC = "prefs.user.maxBAC"
+        const val maxBac = "prefs.user.maxBAC"
         const val maxDailyUnits = "prefs.user.maxDailyUnits"
         const val maxWeeklyUnits = "prefs.user.maxWeeklyUnits"
     }

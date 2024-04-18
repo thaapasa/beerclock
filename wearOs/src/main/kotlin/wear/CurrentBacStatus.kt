@@ -4,17 +4,24 @@ import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import java.time.Instant
+import java.util.Locale
 import kotlin.math.min
 
 private const val millisInHour = 3_600_000.0
 
 @Parcelize
 data class CurrentBacStatus(
+    val languageTag: String?,
     val time: Instant,
     val dailyUnits: Double,
+    val maxDailyUnits: Double,
     val alcoholGrams: Double,
     val volumeOfDistribution: Double,
+    val maxBac: Double,
 ) : Parcelable {
+
+    @IgnoredOnParcel
+    val locale = languageTag?.let { Locale(it) }
 
     /**
      * Blood alcohol concentration (per mille).

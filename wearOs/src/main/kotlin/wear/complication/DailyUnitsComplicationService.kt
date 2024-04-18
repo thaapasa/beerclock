@@ -5,23 +5,22 @@ import android.content.Context
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import fi.tuska.beerclock.R
 import fi.tuska.beerclock.wear.CurrentBacStatus
-import java.time.Instant
 
 /**
  * Service that returns the current blood alcohol concentration value (per mille)
  * based on the data recorded to BeerClock app.
  */
-class CurrentBacComplicationService :
+class DailyUnitsComplicationService :
     RangedComplicationService(
-        iconRes = R.drawable.ic_permille,
-        valueRes = R.string.bac_complication_value,
-        labelRes = R.string.bac_complication_label,
+        iconRes = R.drawable.ic_local_bar,
+        valueRes = R.string.daily_units_complication_value,
+        labelRes = R.string.daily_units_complication_label,
     ) {
 
-    override fun previewData(): RangedData = RangedData(0.7f, 1.0f)
+    override fun previewData(): RangedData = RangedData(3.7f, 7.0f)
 
     override fun toComplicationData(state: CurrentBacStatus): RangedData =
-        RangedData(value = state.bacAtTime(Instant.now()).toFloat(), max = state.maxBac.toFloat())
+        RangedData(value = state.dailyUnits.toFloat(), max = state.maxDailyUnits.toFloat())
 
     companion object {
         private fun componentName(context: Context): ComponentName =

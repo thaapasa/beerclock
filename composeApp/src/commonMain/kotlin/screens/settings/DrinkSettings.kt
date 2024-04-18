@@ -56,8 +56,8 @@ internal fun ColumnScope.DrinkSettings(vm: SettingsViewModel) {
     Spacer(Modifier.height(16.dp))
     FormGroup(groupIcon = { AppIcon.GAUGE.icon(tint = iconColor) }) {
         DecimalField(
-            value = vm.maxBAC,
-            onValueChange = { vm.maxBAC = it },
+            value = vm.maxBac,
+            onValueChange = { vm.maxBac = it },
             modifier = Modifier.fillMaxWidth(),
             label = { Text(strings.settings.maxBacLabel) },
             supportingText = { Text(strings.settings.maxBacDescription) },

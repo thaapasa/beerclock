@@ -37,7 +37,7 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
     var startOfDay by mutableStateOf(prefs.prefs.startOfDay)
     var gramsInUnit by mutableStateOf(prefs.prefs.alchoholGramsInUnit)
     var drivingLimitBac by mutableStateOf(prefs.prefs.drivingLimitBac)
-    var maxBAC by mutableStateOf(prefs.prefs.maxBAC)
+    var maxBac by mutableStateOf(prefs.prefs.maxBac)
     var maxDailyUnits by mutableStateOf(prefs.prefs.maxDailyUnits)
     var maxWeeklyUnits by mutableStateOf(prefs.prefs.maxWeeklyUnits)
 
@@ -52,7 +52,7 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
     fun saveTheme() = launch { store.setTheme(theme) }
     fun saveDynamicPalette() = launch { store.setDynamicPalette(dynamicPalette) }
     fun saveDrivingLimitBac() = launch { store.setDrivingLimitBac(drivingLimitBac) }
-    fun saveMaxBAC() = launch { store.setMAXBac(maxBAC) }
+    fun saveMaxBAC() = launch { store.setMAXBac(maxBac) }
     fun saveMaxDailyUnits() = launch { store.setMaxDailyUnits(maxDailyUnits) }
     fun saveMaxWeeklyUnits() = launch { store.setMaxWeeklyUnits(maxWeeklyUnits) }
 
@@ -66,7 +66,7 @@ internal class SettingsViewModel(val snackbar: SnackbarHostState) : ViewModel(),
         LaunchedEffect(startOfDay) { saveStartOfDay() }
         LaunchedEffect(gramsInUnit) { saveGramsInUnitText() }
         LaunchedEffect(drivingLimitBac) { saveDrivingLimitBac() }
-        LaunchedEffect(maxBAC) { saveMaxBAC() }
+        LaunchedEffect(maxBac) { saveMaxBAC() }
         LaunchedEffect(maxDailyUnits) { saveMaxDailyUnits() }
         LaunchedEffect(maxWeeklyUnits) { saveMaxWeeklyUnits() }
     }

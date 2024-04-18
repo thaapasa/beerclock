@@ -56,7 +56,7 @@ data class UserPreferences(
     /**
      * What is the maximum BAC per mille value the app gauges show on the daily status view?
      */
-    val maxBAC: Double = 1.0,
+    val maxBac: Double = 1.0,
 ) {
     /**
      * Volume of distribution, approximated from body weight and gender multiplier.

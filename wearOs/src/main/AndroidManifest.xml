@@ -44,10 +44,29 @@
 
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
-                android:value="GOAL_PROGRESS,RANGED_VALUE" />
+                android:value="RANGED_VALUE,GOAL_PROGRESS" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="15" />
+        </service>
+
+        <service
+            android:name=".wear.complication.DailyUnitsComplicationService"
+            android:exported="true"
+            android:label="@string/daily_units_complication_label"
+            android:icon="@drawable/ic_local_bar"
+            android:directBootAware="true"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="RANGED_VALUE,GOAL_PROGRESS" />
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="600" />
         </service>
 
         <activity
