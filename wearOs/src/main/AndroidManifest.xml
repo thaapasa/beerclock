@@ -47,7 +47,7 @@
                 android:value="RANGED_VALUE,GOAL_PROGRESS" />
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
-                android:value="15" />
+                android:value="30" />
         </service>
 
         <service
