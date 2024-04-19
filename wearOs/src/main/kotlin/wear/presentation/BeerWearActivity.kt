@@ -10,32 +10,38 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
-import com.google.android.gms.wearable.DataClient
-import com.google.android.gms.wearable.DataEventBuffer
-import com.google.android.gms.wearable.Wearable
 import fi.tuska.beerclock.R
+import fi.tuska.beerclock.wear.presentation.components.Gauge
+import fi.tuska.beerclock.wear.presentation.components.GaugeValue
+import fi.tuska.beerclock.wear.presentation.components.adaptiveIconPainterResource
 import fi.tuska.beerclock.wear.presentation.theme.BeerclockTheme
 
-class BeerWearActivity : ComponentActivity(), DataClient.OnDataChangedListener {
-    private val TAG = "BeerWearActivity"
+class BeerWearActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
 
@@ -44,26 +50,10 @@ class BeerWearActivity : ComponentActivity(), DataClient.OnDataChangedListener {
         setTheme(android.R.style.Theme_DeviceDefault)
 
         setContent {
-            WearApp("Android")
+            WearApp()
         }
     }
 
-
-    override fun onResume() {
-        super.onResume()
-        Log.i(TAG, "Listening for events")
-        Wearable.getDataClient(this).addListener(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.i(TAG, "Pausing event listening")
-        Wearable.getDataClient(this).removeListener(this)
-    }
-
-    override fun onDataChanged(event: DataEventBuffer) {
-        Log.i(TAG, "Received event!")
-    }
 
     companion object {
         fun getComplicationTapIntent(context: Context, complicationId: Int): PendingIntent {
@@ -82,7 +72,19 @@ class BeerWearActivity : ComponentActivity(), DataClient.OnDataChangedListener {
 }
 
 @Composable
-fun WearApp(greetingName: String) {
+fun WearApp() {
+    val bacGauge = remember {
+        GaugeValue(initialValue = 0.7, maxValue = 1.4, iconRes = R.drawable.ic_permille)
+    }
+    val unitsGauge = remember {
+        GaugeValue(initialValue = 1.5, maxValue = 7.0, iconRes = R.drawable.ic_local_bar)
+    }
+    LaunchedEffect(bacGauge) {
+        bacGauge.setValue(0.8, maxValue = 1.4)
+    }
+    LaunchedEffect(unitsGauge) {
+        unitsGauge.setValue(2.5, maxValue = 7.0)
+    }
     BeerclockTheme {
         Box(
             modifier = Modifier
@@ -91,23 +93,63 @@ fun WearApp(greetingName: String) {
             contentAlignment = Alignment.Center
         ) {
             TimeText()
-            Greeting(greetingName = greetingName)
+            Box(
+                modifier = Modifier
+                    .padding(top = 42.dp)
+                    .align(Alignment.TopCenter)
+            ) {
+                Text(
+                    stringResource(id = R.string.app_name),
+                    style = MaterialTheme.typography.body1,
+                    color = MaterialTheme.colors.onSurface
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .size(64.dp)
+                    .align(Alignment.BottomCenter)
+            ) {
+                Image(
+                    painter = adaptiveIconPainterResource(R.mipmap.ic_launcher),
+                    contentDescription = "fo",
+                    modifier = Modifier.clip(
+                        RoundedCornerShape(50)
+                    )
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .width(52.dp)
+                    .align(Alignment.CenterStart)
+            ) {
+                Gauge(
+                    value = bacGauge,
+                    labelRes = R.string.bac_complication_label,
+                    valueRes = R.string.bac_complication_value
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .size(52.dp)
+                    .align(Alignment.CenterEnd)
+            ) {
+                Gauge(
+                    value = unitsGauge,
+                    labelRes = R.string.daily_units_complication_label,
+                    valueRes = R.string.daily_units_complication_value
+                )
+            }
         }
+
     }
 }
 
-@Composable
-fun Greeting(greetingName: String) {
-    Text(
-        modifier = Modifier.fillMaxWidth(),
-        textAlign = TextAlign.Center,
-        color = MaterialTheme.colors.primary,
-        text = stringResource(R.string.hello_world, greetingName)
-    )
-}
 
 @Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
-    WearApp("Preview Android")
+    WearApp()
 }
