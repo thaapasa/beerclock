@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Kaljakello</string>
-    <string name="hello_world">Morjens %1$s!</string>
     <string name="bac_complication_label">Tämänhetkiset promillet</string>
     <string name="bac_complication_value">%1$.1f</string>
     <string name="daily_units_complication_label">Päivittäiset annokset</string>
