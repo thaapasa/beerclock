@@ -34,10 +34,11 @@ fun DateInputField(
     onValueChange: (date: LocalDate) -> Unit,
     modifier: Modifier = Modifier,
     labelText: String? = null,
+    showDateIcon: Boolean = true,
 ) {
     val strings = Strings.get()
     var pickerShown by remember { mutableStateOf(false) }
-    var state = rememberDatePickerState()
+    val state = rememberDatePickerState()
     LaunchedEffect(value) {
         state.selectedDateMillis = value.toUTCEpochMillis()
     }
@@ -64,15 +65,17 @@ fun DateInputField(
         },
         label = { labelText?.let { Text(it) } },
         readOnly = true,
-        leadingIcon = {
-            IconButton({ pickerShown = true }) {
-                Icon(
-                    painter = AppIcon.CALENDAR.painter(),
-                    contentDescription = labelText ?: strings.pickDate,
-                    modifier = Modifier.size(16.dp)
-                )
+        leadingIcon = if (showDateIcon) {
+            {
+                IconButton({ pickerShown = true }) {
+                    Icon(
+                        painter = AppIcon.CALENDAR.painter(),
+                        contentDescription = labelText ?: strings.pickDate,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
             }
-        },
+        } else null,
     )
     if (pickerShown) {
         DatePickerDialog(

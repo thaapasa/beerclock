@@ -24,12 +24,17 @@ import fi.tuska.beerclock.ui.components.DecimalField
 import fi.tuska.beerclock.ui.components.RatingField
 import fi.tuska.beerclock.ui.components.TimeInputField
 import fi.tuska.beerclock.ui.components.UnitAvatar
+import fi.tuska.beerclock.ui.layout.ScreenSizeInfo
+import fi.tuska.beerclock.ui.layout.getScreenSizeInfo
 
 private val gap = 16.dp
+fun isNarrowScreen(size: ScreenSizeInfo) = size.widthDp < 400.dp
 
 @Composable
 fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTime: Boolean = true) {
+    val screenSize = getScreenSizeInfo()
     val strings = Strings.get()
+    val isNarrow = isNarrowScreen(screenSize)
     Column(modifier = Modifier.padding(16.dp).fillMaxWidth().then(modifier)) {
         if (showTime) {
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -38,6 +43,7 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTim
                     onValueChange = { vm.date = it },
                     labelText = strings.drinkDialog.dateLabel,
                     modifier = Modifier.weight(1f),
+                    showDateIcon = !isNarrow,
                 )
                 Spacer(modifier = Modifier.width(gap))
                 TimeInputField(
@@ -104,7 +110,9 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTim
                 value = vm.abv,
                 onValueChange = { vm.abv = it },
                 modifier = Modifier.weight(1f),
-                leadingIcon = { AppIcon.BOLT.icon(modifier = Modifier.size(16.dp)) },
+                leadingIcon = if (isNarrow) null else {
+                    { AppIcon.BOLT.icon(modifier = Modifier.size(16.dp)) }
+                },
                 trailingIcon = { Text(strings.drinkDialog.abvUnit) }
             )
             Spacer(modifier = Modifier.width(gap))
@@ -113,13 +121,19 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTim
                 value = vm.quantityCl,
                 onValueChange = { vm.quantityCl = it },
                 modifier = Modifier.weight(1f),
-                leadingIcon = { AppIcon.GLASS_FULL.icon(modifier = Modifier.size(16.dp)) },
+                leadingIcon = if (isNarrow) null else {
+                    {
+                        AppIcon.GLASS_FULL.icon(
+                            modifier = Modifier.size(16.dp).padding(0.dp)
+                        )
+                    }
+                },
                 trailingIcon = { Text(strings.drinkDialog.quantityUnit) }
             )
-            Spacer(modifier = Modifier.width(gap))
+            Spacer(modifier = Modifier.width(12.dp))
             UnitAvatar(
                 units = vm.units(),
-                modifier = Modifier.padding(start = 4.dp, top = 4.dp)
+                modifier = Modifier.padding(top = 4.dp)
             )
         }
         Row(verticalAlignment = Alignment.CenterVertically) {

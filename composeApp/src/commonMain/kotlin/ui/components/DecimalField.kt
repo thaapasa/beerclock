@@ -24,7 +24,7 @@ fun DecimalField(
     supportingText: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     modifier: Modifier = Modifier,
-    errorText: String? = null
+    errorText: String? = null,
 ) {
     val strings = Strings.get()
     var textState by remember { mutableStateOf(TextFieldValue(value.toString())) }
@@ -44,6 +44,7 @@ fun DecimalField(
         value = textState,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
+        maxLines = 1,
         onValueChange = {
             // Update the state only for valid decimal numbers
             textState = it
