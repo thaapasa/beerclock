@@ -42,7 +42,7 @@ class HomeViewModel : DrinkObservingViewModel(SnackbarHostState()),
     private val bacGauge =
         GaugeValueWithHelp(
             icon = { Text(text = "‰", color = it) },
-            maxValue = prefs.prefs.maxBAC,
+            maxValue = prefs.prefs.maxBac,
             helpText = strings.help.bacStatusGauge,
         )
     private val dailyUnitsGauge =
@@ -80,7 +80,7 @@ class HomeViewModel : DrinkObservingViewModel(SnackbarHostState()),
         }
     }
 
-    override fun invalidateDrinks() {
+    override suspend fun invalidateDrinks() {
         loadTodaysDrinks()
     }
 
@@ -94,14 +94,12 @@ class HomeViewModel : DrinkObservingViewModel(SnackbarHostState()),
         }
     }
 
-    fun loadTodaysDrinks() {
-        launch {
-            drinkDay = times.currentDrinkDay()
-            logger.info("Loading today's drinks for $drinkDay")
-            val newDrinks = drinkService.getDrinksForHomeScreen(drinkDay)
-            val weekUnits = drinkService.getUnitsForWeek(drinkDay, prefs.prefs)
-            setDrinks(newDrinks, weekUnits)
-        }
+    suspend fun loadTodaysDrinks() {
+        drinkDay = times.currentDrinkDay()
+        logger.info("Loading today's drinks for $drinkDay")
+        val newDrinks = drinkService.getDrinksForHomeScreen(drinkDay)
+        val weekUnits = drinkService.getUnitsForWeek(drinkDay, prefs.prefs)
+        setDrinks(newDrinks, weekUnits)
     }
 
     private fun setDrinks(newDrinks: List<DrinkRecordInfo>, weekUnits: Double) {
@@ -121,12 +119,14 @@ class HomeViewModel : DrinkObservingViewModel(SnackbarHostState()),
             bloodAlcoholConcentration(
                 bacStatus.atTime(now).alcoholGrams,
                 prefs.prefs
-            ), prefs.prefs.maxBAC
+            ), prefs.prefs.maxBac
         )
 
         if (drinkDay != times.currentDrinkDay()) {
             logger.info("New drink day starts, reload drinks")
-            loadTodaysDrinks()
+            launch {
+                loadTodaysDrinks()
+            }
         }
     }
 }

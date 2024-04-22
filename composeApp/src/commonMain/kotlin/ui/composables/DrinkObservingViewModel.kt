@@ -26,7 +26,7 @@ open class DrinkObservingViewModel(
     KoinComponent {
 
     protected val drinkService = DrinkService()
-    protected open fun invalidateDrinks() {}
+    protected open suspend fun invalidateDrinks() {}
 
     protected val eventObserver = EventObserver(scope())
 

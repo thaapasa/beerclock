@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Beer Clock</string>
+    <string name="bac_complication_label">Current ABV ‰</string>
+    <string name="bac_complication_value">%1$.1f</string>
+    <string name="daily_units_complication_label">Daily units</string>
+    <string name="daily_units_complication_value">%1$.1f</string>
+</resources>

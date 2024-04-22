@@ -6,6 +6,7 @@ import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.settings.UserPreferences
+import fi.tuska.beerclock.wear.WearSyncService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
@@ -26,6 +27,7 @@ class DrinkService : KoinComponent {
 
     val db: BeerDatabase = get()
     private val times = DrinkTimeService()
+    private val wearSync = WearSyncService(this)
 
     suspend fun getDrinksForDay(date: LocalDate): List<DrinkRecordInfo> {
         val range = times.dayTimeRange(date)
@@ -150,6 +152,7 @@ class DrinkService : KoinComponent {
             db.drinkRecordQueries.deleteById(id = id)
         }
         logger.info("Deleted drink record $id")
+        wearSync.sendStatusToWatch()
     }
 
     suspend fun deleteDrinkInfoById(id: Long): Unit {
@@ -161,9 +164,11 @@ class DrinkService : KoinComponent {
 
     suspend fun insertDrink(drink: DrinkDetailsFromEditor): DrinkRecordInfo {
         return withContext(Dispatchers.IO) {
-            db.transactionWithResult {
+            val res = db.transactionWithResult {
                 operations.insertDrink(drink)
             }
+            wearSync.sendStatusToWatch()
+            res
         }
     }
 
@@ -188,6 +193,8 @@ class DrinkService : KoinComponent {
                 rating = drink.rating,
                 note = drink.note,
             )
+            wearSync.sendStatusToWatch()
+
             return@withContext getDrinkById(id)
         }
     }
