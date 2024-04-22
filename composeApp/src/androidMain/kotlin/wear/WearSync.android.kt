@@ -10,26 +10,29 @@ import kotlin.coroutines.cancellation.CancellationException
 
 private val logger = getLogger("WearSync")
 
-actual suspend fun sendCurrentBacStatusToWatch(state: CurrentBacStatus) {
+actual fun isWatchSupported(): Boolean = true
+
+actual suspend fun sendCurrentBacStatusToWatch(status: CurrentBacStatus) {
     val context: Context by inject(Context::class.java)
     val dataClient = Wearable.getDataClient(context)
 
     try {
         val request = PutDataMapRequest.create("/current-bac").apply {
-            dataMap.putString("locale", state.locale?.toLanguageTag() ?: "")
-            dataMap.putLong("time", state.time.toEpochMilliseconds())
-            dataMap.putDouble("dailyUnits", state.dailyUnits)
-            dataMap.putDouble("maxDailyUnits", state.maxDailyUnits)
-            dataMap.putDouble("alcoholGrams", state.alcoholGrams)
-            dataMap.putDouble("volumeOfDistribution", state.volumeOfDistribution)
-            dataMap.putDouble("maxBac", state.maxBac)
+            dataMap.putString("locale", status.locale?.toLanguageTag() ?: "")
+            dataMap.putLong("time", status.time.toEpochMilliseconds())
+            dataMap.putDouble("dailyUnits", status.dailyUnits)
+            dataMap.putDouble("maxDailyUnits", status.maxDailyUnits)
+            dataMap.putLong("dayEndTime", status.dayEndTime.toEpochMilliseconds())
+            dataMap.putDouble("alcoholGrams", status.alcoholGrams)
+            dataMap.putDouble("volumeOfDistribution", status.volumeOfDistribution)
+            dataMap.putDouble("maxBac", status.maxBac)
         }
             .asPutDataRequest()
             .setUrgent()
 
         val result = dataClient.putDataItem(request).await()
 
-        logger.info("Saved $state to data item $request -> $result")
+        logger.info("Saved $status to data item $request -> $result")
     } catch (cancellationException: CancellationException) {
         throw cancellationException
     } catch (e: Exception) {

@@ -20,8 +20,8 @@ class CurrentBacComplicationService :
 
     override fun previewData(): RangedData = RangedData(0.7f, 1.0f)
 
-    override fun toComplicationData(state: CurrentBacStatus): RangedData =
-        RangedData(value = state.bacAtTime(Instant.now()).toFloat(), max = state.maxBac.toFloat())
+    override fun toComplicationData(state: CurrentBacStatus, currentTime: Instant): RangedData =
+        RangedData(value = state.bacAtTime(currentTime).toFloat(), max = state.maxBac.toFloat())
 
     companion object {
         private fun componentName(context: Context): ComponentName =

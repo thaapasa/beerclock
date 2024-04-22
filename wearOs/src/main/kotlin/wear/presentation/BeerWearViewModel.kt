@@ -42,8 +42,9 @@ class BeerWearViewModel(application: Application) :
 
     private fun updateBacStatus() {
         lastStatus?.let {
-            bacGauge.setValue(value = it.bacAtTime(Instant.now()), maxValue = it.maxBac)
-            dailyUnitsGauge.setValue(value = it.dailyUnits, maxValue = it.maxDailyUnits)
+            val now = Instant.now()
+            bacGauge.setValue(value = it.bacAtTime(now), maxValue = it.maxBac)
+            dailyUnitsGauge.setValue(value = it.dailyUnitsAtTime(now), maxValue = it.maxDailyUnits)
         } ?: {
             bacGauge.setValue(value = 0.0, maxValue = 1.5)
             dailyUnitsGauge.setValue(value = 0.0, maxValue = 7.0)

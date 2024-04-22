@@ -22,8 +22,6 @@ import fi.tuska.beerclock.ui.components.BacStatusViewModel
 import fi.tuska.beerclock.ui.components.DateView
 import fi.tuska.beerclock.ui.components.GaugeValueWithHelp
 import fi.tuska.beerclock.ui.composables.DrinkObservingViewModel
-import fi.tuska.beerclock.wear.CurrentBacStatus
-import fi.tuska.beerclock.wear.sendCurrentBacStatusToWatch
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -82,7 +80,7 @@ class HomeViewModel : DrinkObservingViewModel(SnackbarHostState()),
         }
     }
 
-    override fun invalidateDrinks() {
+    override suspend fun invalidateDrinks() {
         loadTodaysDrinks()
     }
 
@@ -96,26 +94,12 @@ class HomeViewModel : DrinkObservingViewModel(SnackbarHostState()),
         }
     }
 
-    fun loadTodaysDrinks() {
-        launch {
-            drinkDay = times.currentDrinkDay()
-            logger.info("Loading today's drinks for $drinkDay")
-            val newDrinks = drinkService.getDrinksForHomeScreen(drinkDay)
-            val weekUnits = drinkService.getUnitsForWeek(drinkDay, prefs.prefs)
-            setDrinks(newDrinks, weekUnits)
-
-            sendCurrentBacStatusToWatch(
-                CurrentBacStatus(
-                    locale = prefs.prefs.locale?.locale,
-                    time = Clock.System.now(),
-                    dailyUnits = dailyUnitsGauge.value,
-                    maxDailyUnits = prefs.prefs.maxDailyUnits,
-                    alcoholGrams = bacStatus.atTime(Clock.System.now()).alcoholGrams,
-                    volumeOfDistribution = prefs.prefs.volumeOfDistribution,
-                    maxBac = prefs.prefs.maxBac
-                )
-            )
-        }
+    suspend fun loadTodaysDrinks() {
+        drinkDay = times.currentDrinkDay()
+        logger.info("Loading today's drinks for $drinkDay")
+        val newDrinks = drinkService.getDrinksForHomeScreen(drinkDay)
+        val weekUnits = drinkService.getUnitsForWeek(drinkDay, prefs.prefs)
+        setDrinks(newDrinks, weekUnits)
     }
 
     private fun setDrinks(newDrinks: List<DrinkRecordInfo>, weekUnits: Double) {
@@ -140,7 +124,9 @@ class HomeViewModel : DrinkObservingViewModel(SnackbarHostState()),
 
         if (drinkDay != times.currentDrinkDay()) {
             logger.info("New drink day starts, reload drinks")
-            loadTodaysDrinks()
+            launch {
+                loadTodaysDrinks()
+            }
         }
     }
 }

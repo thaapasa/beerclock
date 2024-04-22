@@ -30,6 +30,7 @@ class DataListenerService : WearableListenerService() {
                     languageTag = languageTag?.ifBlank { null },
                     time = Instant.ofEpochMilli(map.getLong("time", defaultTime)),
                     dailyUnits = map.getDouble("dailyUnits"),
+                    dayEndTime = Instant.ofEpochMilli(map.getLong("dayEndTime", defaultTime)),
                     maxDailyUnits = map.getDouble("maxDailyUnits"),
                     alcoholGrams = map.getDouble("alcoholGrams"),
                     volumeOfDistribution = map.getDouble("volumeOfDistribution"),
@@ -45,7 +46,7 @@ class DataListenerService : WearableListenerService() {
 
                     CurrentBacComplicationService.requestUpdate(applicationContext)
                     DailyUnitsComplicationService.requestUpdate(applicationContext)
-                    Log.i(TAG, "Requested update")
+                    Log.i(TAG, "Requested complication updates")
                 }
             }
         }

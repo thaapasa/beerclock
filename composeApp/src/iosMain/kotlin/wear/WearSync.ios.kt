@@ -1,5 +1,7 @@
 package fi.tuska.beerclock.wear
 
-actual suspend fun sendCurrentBacStatusToWatch(state: CurrentBacStatus) {
+actual fun isWatchSupported(): Boolean = false
+
+actual suspend fun sendCurrentBacStatusToWatch(status: CurrentBacStatus) {
     // Noop on iOS
 }

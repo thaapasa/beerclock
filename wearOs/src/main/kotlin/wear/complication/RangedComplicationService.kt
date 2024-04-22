@@ -18,6 +18,7 @@ import fi.tuska.beerclock.wear.CurrentBacStatus
 import fi.tuska.beerclock.wear.LocaleHelper
 import fi.tuska.beerclock.wear.getState
 import fi.tuska.beerclock.wear.presentation.BeerWearActivity
+import java.time.Instant
 import kotlin.math.max
 import kotlin.math.min
 
@@ -28,7 +29,7 @@ abstract class RangedComplicationService(
 ) :
     SuspendingComplicationDataSourceService() {
 
-    abstract fun toComplicationData(state: CurrentBacStatus): RangedData
+    abstract fun toComplicationData(state: CurrentBacStatus, currentTime: Instant): RangedData
     abstract fun previewData(): RangedData
 
     override fun getPreviewData(type: ComplicationType): ComplicationData? {
@@ -49,7 +50,7 @@ abstract class RangedComplicationService(
         state.locale?.let {
             LocaleHelper.setCurrentLocale(applicationContext, it)
         }
-        val data = toComplicationData(state)
+        val data = toComplicationData(state, Instant.now())
 
         val tapAction =
             BeerWearActivity.getComplicationTapIntent(this, request.complicationInstanceId)

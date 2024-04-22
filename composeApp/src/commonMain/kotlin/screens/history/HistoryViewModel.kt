@@ -102,7 +102,7 @@ class HistoryViewModel(
     override fun Content() {
         DateView(date, modifier = Modifier.padding(16.dp))
     }
-    
+
     fun selectDay(date: LocalDate) = navigator.replace(
         HistoryScreen(
             date,

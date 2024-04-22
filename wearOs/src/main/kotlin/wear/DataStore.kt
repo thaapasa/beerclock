@@ -20,6 +20,7 @@ private val LOCALE = stringPreferencesKey("locale")
 private val UPDATE_TIME = longPreferencesKey("updateTime")
 private val MAX_DAILY_UNITS = doublePreferencesKey("maxDailyUnits")
 private val DAILY_UNITS = doublePreferencesKey("dailyUnits")
+private val DAY_END_TIME = longPreferencesKey("dayEndTime")
 private val ALCOHOL_GRAMS = doublePreferencesKey("alcoholGrams")
 private val VOLUME_OF_DISTRIBUTION = doublePreferencesKey("volumeOfDistribution")
 private val MAX_BAC = doublePreferencesKey("maxBac")
@@ -32,6 +33,7 @@ fun CurrentBacStatus.Companion.flowCurrentState(context: Context): Flow<CurrentB
                 languageTag = preferences[LOCALE]?.ifBlank { null },
                 time = Instant.ofEpochMilli(preferences[UPDATE_TIME] ?: defaultTime),
                 dailyUnits = preferences[DAILY_UNITS] ?: 0.0,
+                dayEndTime = Instant.ofEpochMilli(preferences[DAY_END_TIME] ?: defaultTime),
                 maxDailyUnits = preferences[MAX_DAILY_UNITS] ?: 7.0,
                 alcoholGrams = preferences[ALCOHOL_GRAMS] ?: 0.0,
                 volumeOfDistribution = preferences[VOLUME_OF_DISTRIBUTION] ?: 50.0,
@@ -51,6 +53,7 @@ suspend fun CurrentBacStatus.saveState(
         settings[UPDATE_TIME] = time.toEpochMilli()
         settings[DAILY_UNITS] = dailyUnits
         settings[MAX_DAILY_UNITS] = maxDailyUnits
+        settings[DAY_END_TIME] = dayEndTime.toEpochMilli()
         settings[ALCOHOL_GRAMS] = alcoholGrams
         settings[VOLUME_OF_DISTRIBUTION] = volumeOfDistribution
         settings[MAX_BAC] = maxBac

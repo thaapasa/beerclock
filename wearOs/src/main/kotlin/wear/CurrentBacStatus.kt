@@ -15,6 +15,7 @@ data class CurrentBacStatus(
     val time: Instant,
     val dailyUnits: Double,
     val maxDailyUnits: Double,
+    val dayEndTime: Instant,
     val alcoholGrams: Double,
     val volumeOfDistribution: Double,
     val maxBac: Double,
@@ -48,6 +49,11 @@ data class CurrentBacStatus(
         val burnedOffAlcoholGrams = alcoholBurnOffRateGpH * durationMillis / millisInHour
         val remainingAlcoholGrams = alcoholGrams - min(burnedOffAlcoholGrams, alcoholGrams)
         return remainingAlcoholGrams / volumeOfDistribution
+    }
+
+    fun dailyUnitsAtTime(targetTime: Instant): Double = when {
+        targetTime < dayEndTime -> dailyUnits
+        else -> 0.0
     }
 
     companion object
