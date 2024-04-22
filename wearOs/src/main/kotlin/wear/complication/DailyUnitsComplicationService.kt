@@ -8,7 +8,7 @@ import fi.tuska.beerclock.wear.CurrentBacStatus
 import java.time.Instant
 
 /**
- * Service that returns the current blood alcohol concentration value (per mille)
+ * Service that returns the current number of units consumed today (standard units in user's country)
  * based on the data recorded to BeerClock app.
  */
 class DailyUnitsComplicationService :

@@ -36,7 +36,7 @@ class DataListenerService : WearableListenerService() {
                     volumeOfDistribution = map.getDouble("volumeOfDistribution"),
                     maxBac = map.getDouble("maxBac"),
                 )
-                Log.i(TAG, "Data event -> $state")
+                Log.d(TAG, "Data event: $state")
 
                 state.locale?.let { Locale.setDefault(it) }
 
