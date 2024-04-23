@@ -96,7 +96,7 @@ android {
         applicationId = "fi.tuska.beerclock"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = libs.versions.app.version.code.get().toInt()
+        versionCode = libs.versions.app.version.code.get().toInt() * 10
         versionName = libs.versions.app.version.name.get()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
