@@ -5,6 +5,7 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import java.time.Instant
 import java.util.Locale
+import kotlin.math.max
 import kotlin.math.min
 
 private const val millisInHour = 3_600_000.0
@@ -45,7 +46,7 @@ data class CurrentBacStatus(
      * @return BAC (per mille).
      */
     fun bacAtTime(targetTime: Instant): Double {
-        val durationMillis = min(targetTime.toEpochMilli() - time.toEpochMilli(), 0)
+        val durationMillis = max(targetTime.toEpochMilli() - time.toEpochMilli(), 0)
         val burnedOffAlcoholGrams = alcoholBurnOffRateGpH * durationMillis / millisInHour
         val remainingAlcoholGrams = alcoholGrams - min(burnedOffAlcoholGrams, alcoholGrams)
         return remainingAlcoholGrams / volumeOfDistribution
