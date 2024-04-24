@@ -72,9 +72,7 @@ class HomeViewModel : DrinkObservingViewModel(SnackbarHostState()),
         updateBacContinuously()
     }
 
-    fun canDrive(): Boolean {
-        return bacGauge.value < 0.01
-    }
+    fun canDrive(): Boolean = bacGauge.value < prefs.prefs.drivingLimitBac
 
     fun timeWhenSober(): Instant = bacStatus.timeWhenBacAt(0.0)
 
