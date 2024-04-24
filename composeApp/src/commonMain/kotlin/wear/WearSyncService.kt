@@ -22,13 +22,14 @@ class WearSyncService(private val drinkService: DrinkService) : KoinComponent {
         val drinks = preloadedDrinks ?: drinkService.getDrinksForHomeScreen(today)
         val bacStatus = BacStatus(drinks, today)
         val dailyUnits = drinks.filter { it.time >= dayStart }.sumOf { it.units() }
+        val now = Clock.System.now()
         return CurrentBacStatus(
             locale = prefs.prefs.locale?.locale,
-            time = Clock.System.now(),
+            time = now,
             dailyUnits = dailyUnits,
             dayEndTime = times.dayEndTime(today),
             maxDailyUnits = prefs.prefs.maxDailyUnits,
-            alcoholGrams = bacStatus.atTime(Clock.System.now()).alcoholGrams,
+            alcoholGrams = bacStatus.atTime(now).alcoholGrams,
             volumeOfDistribution = prefs.prefs.volumeOfDistribution,
             maxBac = prefs.prefs.maxBac
         )
