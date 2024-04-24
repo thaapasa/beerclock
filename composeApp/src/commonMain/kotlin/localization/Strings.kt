@@ -4,17 +4,21 @@ import androidx.compose.ui.text.intl.Locale
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
+import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.settings.Gender
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.components.HelpText
 import fi.tuska.beerclock.ui.theme.ThemeSelection
+import kotlinx.datetime.Clock
+import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
+import kotlinx.datetime.plus
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.time.Duration
@@ -59,6 +63,20 @@ interface Strings {
     fun time(time: LocalTime): String
     fun time(time: LocalDateTime): String = time(time.time)
     fun dateTime(local: LocalDateTime): String
+    fun relativeTimeToday(time: LocalTime): String = time(time)
+    fun relativeTimeTomorrow(time: LocalTime): String
+
+    fun relativeTime(time: Instant): String {
+        val times = DrinkTimeService()
+        val now = Clock.System.now()
+        val today = times.toLocalDateTime(now)
+        val targetTime = times.toLocalDateTime(time)
+        return when (targetTime.date) {
+            today.date -> relativeTimeToday(targetTime.time)
+            today.date.plus(DatePeriod(days = 1)) -> relativeTimeTomorrow(targetTime.time)
+            else -> dateTime(targetTime)
+        }
+    }
 
     val pickTime: String
     val pickDate: String
@@ -158,6 +176,8 @@ interface Strings {
     interface HomeStrings {
         val bacPermilles: String
         val bacTime: String
+        val yesterday: HelpText
+        fun cantDrive(soberTime: Instant): HelpText
     }
 
 

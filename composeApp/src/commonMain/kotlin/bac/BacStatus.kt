@@ -4,6 +4,7 @@ import fi.tuska.beerclock.bac.AlcoholAtTime.Companion.interpolateFromList
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.settings.GlobalUserPreferences
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import org.koin.core.component.KoinComponent
@@ -27,6 +28,19 @@ class BacStatus(sortedInputDrinks: List<DrinkRecordInfo>, drinkDay: LocalDate) :
     val graphData: BacGraphData
 
     fun atTime(time: Instant) = interpolateFromList(instantEvents, time)
+
+    fun timeWhenBacAt(bacLevel: Double): Instant {
+        val now = Clock.System.now()
+        val status = atTime(now)
+        val targetGrams = BacFormulas.alcoholGramsWhenBacIs(bacLevel, prefs.prefs)
+        if (status.alcoholGrams < targetGrams) {
+            return now
+        }
+        val needToBurnGrams = status.alcoholGrams - targetGrams
+        val timeToBurn =
+            BacFormulas.timeToBurnAlcohol(needToBurnGrams, prefs.prefs.alcoholBurnOffRate)
+        return now + timeToBurn
+    }
 
     init {
         val (before, today) = sortedInputDrinks.partition { it.time < dayStart }

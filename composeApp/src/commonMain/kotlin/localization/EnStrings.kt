@@ -86,6 +86,11 @@ object EnStrings : Strings {
         return "${date(local.date)} ${time(local.time)}"
     }
 
+    override fun relativeTimeToday(time: LocalTime) = "at ${time(time)}"
+
+    override fun relativeTimeTomorrow(time: LocalTime) = "tomorrow at ${time(time)}"
+
+
     override val pickTime = "Pick time"
     override val pickDate = "Pick date"
     override val dialogOk = "OK"
@@ -169,6 +174,17 @@ object EnStrings : Strings {
     object Home : Strings.HomeStrings {
         override val bacPermilles = "BAC ‰"
         override val bacTime = "Time"
+        override val yesterday = HelpText(
+            "Past midnight",
+            "It's already tomorrow, but drinks are still marked for yesterday since it's before day start time (see app settings)."
+        )
+
+        override fun cantDrive(soberTime: Instant) = HelpText(
+            "Don't drive!",
+            "You're in no condition to drive right now! Based on the data you've entered you may be sober ${
+                relativeTime(soberTime)
+            }."
+        )
     }
 
 

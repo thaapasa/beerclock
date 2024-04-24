@@ -12,6 +12,7 @@ import beerclock.composeapp.generated.resources.ic_add_circle
 import beerclock.composeapp.generated.resources.ic_bolt
 import beerclock.composeapp.generated.resources.ic_calendar
 import beerclock.composeapp.generated.resources.ic_car
+import beerclock.composeapp.generated.resources.ic_car_crash
 import beerclock.composeapp.generated.resources.ic_chevron_left
 import beerclock.composeapp.generated.resources.ic_chevron_right
 import beerclock.composeapp.generated.resources.ic_clock
@@ -53,6 +54,7 @@ enum class AppIcon(private val drawable: DrawableResource) : Image {
     CALENDAR(Res.drawable.ic_calendar),
     CALENDAR_WEEK(Res.drawable.ic_date_range),
     CAR(Res.drawable.ic_car),
+    CAR_ALERT(Res.drawable.ic_car_crash),
     CHEVRON_LEFT(Res.drawable.ic_chevron_left),
     CHEVRON_RIGHT(Res.drawable.ic_chevron_right),
     CLOCK(Res.drawable.ic_clock),

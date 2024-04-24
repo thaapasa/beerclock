@@ -25,6 +25,7 @@ import fi.tuska.beerclock.ui.composables.DrinkObservingViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import kotlin.time.Duration.Companion.seconds
@@ -65,19 +66,21 @@ class HomeViewModel : DrinkObservingViewModel(SnackbarHostState()),
         private set
     var now by mutableStateOf(Clock.System.now())
     var isYesterday by mutableStateOf(times.toLocalDateTime(now).time < prefs.prefs.startOfDay)
+        private set
 
     init {
         updateBacContinuously()
     }
 
+    fun canDrive(): Boolean {
+        return bacGauge.value < 0.01
+    }
+
+    fun timeWhenSober(): Instant = bacStatus.timeWhenBacAt(0.0)
+
     @Composable
     override fun Content() {
         DateView(drinkDay, modifier = Modifier.padding(16.dp))
-        if (isYesterday) {
-            AppIcon.MOON.icon(
-                modifier = Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp)
-            )
-        }
     }
 
     override suspend fun invalidateDrinks() {

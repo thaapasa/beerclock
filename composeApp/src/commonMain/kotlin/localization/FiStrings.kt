@@ -111,6 +111,10 @@ object FiStrings : Strings {
         return "${date(local.date)} klo ${time(local.time)}"
     }
 
+    override fun relativeTimeToday(time: LocalTime) = "klo ${EnStrings.time(time)}"
+
+    override fun relativeTimeTomorrow(time: LocalTime) = "huomenna klo ${EnStrings.time(time)}"
+
     override val pickTime = "Valitse kellonaika"
     override val pickDate = "Valitse päivämäärä"
     override val dialogOk = "OK"
@@ -194,6 +198,18 @@ object FiStrings : Strings {
     object Home : Strings.HomeStrings {
         override val bacPermilles = "Promillet ‰"
         override val bacTime = "Aika"
+        override val yesterday = HelpText(
+            "Keskiyön jälkeen",
+            "Nyt on jo huominen, mutta juomat merkataan eiliselle, koska päivän alkamisaika ei ole vielä mennyt (ks. sovelluksen asetukset)."
+        )
+
+        override fun cantDrive(soberTime: Instant) = HelpText(
+            "Älä aja!",
+            "Et ole ajokunnossa juuri nyt! Syöttämäsi tietojen mukaan saatat olla selvin päin ${
+                relativeTime(soberTime)
+            }."
+        )
+
     }
 
 

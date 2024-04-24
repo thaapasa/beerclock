@@ -66,6 +66,13 @@ object BacFormulas {
         alcoholGrams / prefs.volumeOfDistribution
 
     /**
+     * @return the amount of alcohol in your system, in grams, if your blood alcohol concentration
+     * is `bac`.
+     */
+    fun alcoholGramsWhenBacIs(bac: Double, prefs: UserPreferences): Double =
+        bac * prefs.volumeOfDistribution
+
+    /**
      * Volume of distribution, approximated from body weight and gender multiplier.
      * See [Wikipedia](https://en.wikipedia.org/wiki/Blood_alcohol_content):
      *
