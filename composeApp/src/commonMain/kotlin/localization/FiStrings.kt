@@ -441,8 +441,10 @@ object FiStrings : Strings {
         override val quantityUnit = "cl"
         override val submit = "Valmis"
 
-        override fun drinkTimeInfo(drinkTime: LocalDateTime) =
-            "Ajaksi merkataan ${dateTime(drinkTime)}"
+        override fun drinkTimeInfo(drinkTime: LocalDateTime, inFuture: Boolean) =
+            if (inFuture) "Valittu aika on tulevaisuudessa, ole hyvä ja korjaa aika!" else "Ajaksi merkataan ${
+                dateTime(drinkTime)
+            }"
     }
 
 

@@ -47,14 +47,19 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
 
     fun realTime(): Instant = times.drinkTimeToInstant(date, time)
     fun localRealTime() = times.toLocalDateTime(realTime())
+    fun isInFuture(now: Instant = Clock.System.now()): Boolean {
+        val drinkTime = times.drinkTimeToInstant(date, time)
+        return drinkTime > now
+    }
+
     fun units(): Double = BacFormulas.getUnitsFromDisplayQuantityAbv(
         quantityCl = quantityCl,
         abvPercentage = abv,
         prefs = prefs.prefs
     )
 
-    fun isValid(): Boolean {
-        return name.isNotBlank() && quantityCl > 0.0
+    fun isValid(now: Instant = Clock.System.now()): Boolean {
+        return name.isNotBlank() && quantityCl > 0.0 && !isInFuture(now)
     }
 
     protected fun setValues(drink: BasicDrinkInfo, realTime: Instant = Clock.System.now()) {

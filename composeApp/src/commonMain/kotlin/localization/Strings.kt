@@ -320,7 +320,7 @@ interface Strings {
         val quantityLabel: String
         val quantityUnit: String
         val submit: String
-        fun drinkTimeInfo(drinkTime: LocalDateTime): String
+        fun drinkTimeInfo(drinkTime: LocalDateTime, inFuture: Boolean): String
     }
 
 

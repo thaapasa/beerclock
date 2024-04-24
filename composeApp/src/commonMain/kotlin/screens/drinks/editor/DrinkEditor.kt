@@ -66,7 +66,7 @@ fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTim
                 )
             }
             Text(
-                strings.drinkDialog.drinkTimeInfo(vm.localRealTime()),
+                strings.drinkDialog.drinkTimeInfo(vm.localRealTime(), vm.isInFuture()),
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(start = 8.dp, bottom = 4.dp, end = 8.dp),
             )

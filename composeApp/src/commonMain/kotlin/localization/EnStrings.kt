@@ -418,8 +418,10 @@ object EnStrings : Strings {
         override val quantityUnit = "cl"
         override val submit = "Ready"
 
-        override fun drinkTimeInfo(drinkTime: LocalDateTime) =
-            "Drink will be recorded at ${dateTime(drinkTime)}"
+        override fun drinkTimeInfo(drinkTime: LocalDateTime, inFuture: Boolean) =
+            if (inFuture) "Selected time is in future, please select a valid time!" else "Drink will be recorded at ${
+                dateTime(drinkTime)
+            }"
     }
 
 
