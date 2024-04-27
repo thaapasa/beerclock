@@ -1,33 +1,68 @@
 package fi.tuska.beerclock.screens.mixcalculator
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.drinks.mix.MixedDrinkInfo
+import fi.tuska.beerclock.images.AppIcon
+import fi.tuska.beerclock.images.DrinkImagesList
+import fi.tuska.beerclock.images.largeImage
 import fi.tuska.beerclock.localization.Strings
-import fi.tuska.beerclock.screens.drinks.editor.DrinkImageSelectField
+import fi.tuska.beerclock.ui.components.ImagePreviewViewModel
+import fi.tuska.beerclock.ui.components.ImageSelectDialog
 import fi.tuska.beerclock.ui.composables.ViewModel
+import fi.tuska.beerclock.ui.composables.rememberWithDispose
 
 val gap = 16.dp
 
 @Composable
 fun MixedDrinkEditor(vm: MixedDrinkEditorViewModel, onClose: () -> Unit) {
     val strings = Strings.get()
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-        Text("Uusi juomasekoitus")
+    var selectImage by remember { mutableStateOf(false) }
+    val previewImg = rememberWithDispose { ImagePreviewViewModel() }
+
+    if (selectImage) {
+        ImageSelectDialog(
+            onClose = { selectImage = false },
+            options = DrinkImagesList,
+            minImageSize = 64.dp,
+            onValueChange = { vm.image = it },
+            preview = previewImg,
+        )
     }
+    previewImg.Content()
+
+    Box(
+        modifier = Modifier.fillMaxWidth().wrapContentHeight()
+    ) {
+        vm.image.largeImage(
+            modifier = Modifier.align(Alignment.Center).padding(top = 16.dp)
+                .clickable(onClick = { selectImage = true })
+        )
+
+        AppIcon.CLOSE.iconButton(
+            onClick = onClose,
+            modifier = Modifier.align(Alignment.TopEnd)
+        )
+    }
+
     Spacer(modifier = Modifier.height(gap))
     Row(Modifier.fillMaxWidth()) {
         OutlinedTextField(
@@ -37,17 +72,9 @@ fun MixedDrinkEditor(vm: MixedDrinkEditorViewModel, onClose: () -> Unit) {
             onValueChange = { vm.name = it },
             modifier = Modifier.weight(1f),
         )
-        Spacer(modifier = Modifier.width(gap))
-        DrinkImageSelectField(
-            value = vm.image,
-            onValueChange = { vm.image = it },
-            titleText = strings.drinkDialog.selectImageTitle
-        )
     }
     Spacer(modifier = Modifier.height(gap))
-    Row(Modifier.fillMaxWidth()) {
-        Button(onClick = {}) { Text("Peruuta") }
-        Spacer(modifier = Modifier.weight(1f))
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
         Button(onClick = {}) { Text("Tallenna") }
     }
 }

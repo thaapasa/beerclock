@@ -208,6 +208,9 @@ enum class DrinkImage(val drawable: DrawableResource) : Image {
     }
 }
 
+val DrinkImagesList = DrinkImage.entries.toList()
+
+
 fun Image.toDrinkImage(): DrinkImage {
     return if (this is DrinkImage) this else DrinkImage.GENERIC_DRINK
 }
