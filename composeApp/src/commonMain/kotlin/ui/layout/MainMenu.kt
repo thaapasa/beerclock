@@ -31,6 +31,7 @@ import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.about.AboutScreen
 import fi.tuska.beerclock.screens.disclosure.DisclosureScreen
 import fi.tuska.beerclock.screens.library.DrinkLibraryScreen
+import fi.tuska.beerclock.screens.mixcalculator.MixedDrinksScreen
 import fi.tuska.beerclock.screens.settings.SettingsScreen
 
 
@@ -45,6 +46,11 @@ fun ColumnScope.MainMenuContent(onNavigate: (select: Screen) -> Unit) {
         leadingIcon = { AppIcon.DRINK.icon() },
         onClick = { onNavigate(DrinkLibraryScreen(Category.BEERS)) },
         text = { Text(Strings.get().menu.drinkLibrary) }
+    )
+    DropdownMenuItem(
+        leadingIcon = { AppIcon.EXPERIMENT.icon() },
+        onClick = { onNavigate(MixedDrinksScreen) },
+        text = { Text(Strings.get().menu.mixedDrinkCalculator) }
     )
     HorizontalDivider(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp))
     DropdownMenuItem(

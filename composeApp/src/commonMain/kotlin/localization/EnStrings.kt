@@ -123,6 +123,7 @@ object EnStrings : Strings {
         override val drinkLibrary = "Drink library"
         override val history = "History"
         override val statistics = "Statistics"
+        override val mixedDrinkCalculator = "Mixed drinks"
     }
 
 
@@ -452,6 +453,14 @@ object EnStrings : Strings {
         override val totalsTitle = "All drinks"
         override val unitsLabel = "Units"
         override val dayLabel = "Day"
+    }
+
+
+    /* Mixed drinks screen */
+    override val mixedDrinks = MixedDrinks
+
+    object MixedDrinks : Strings.MixedDrinksStrings {
+        override val title: String = "Mixed drinks"
     }
 
 

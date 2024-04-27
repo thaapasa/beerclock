@@ -105,6 +105,7 @@ interface Strings {
         val drinkLibrary: String
         val history: String
         val statistics: String
+        val mixedDrinkCalculator: String
     }
 
 
@@ -349,6 +350,14 @@ interface Strings {
         val totalsTitle: String
         val unitsLabel: String
         val dayLabel: String
+    }
+
+
+    /* Mixed drinks screen */
+    val mixedDrinks: MixedDrinksStrings
+
+    interface MixedDrinksStrings {
+        val title: String
     }
 
 

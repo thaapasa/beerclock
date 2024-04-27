@@ -148,6 +148,7 @@ object FiStrings : Strings {
         override val drinkLibrary = "Juomakirjasto"
         override val history = "Historia"
         override val statistics = "Tilastot"
+        override val mixedDrinkCalculator = "Juomasekoitukset"
     }
 
 
@@ -475,6 +476,14 @@ object FiStrings : Strings {
         override val totalsTitle = "Kaikki juomat"
         override val unitsLabel = "Annoksia"
         override val dayLabel = "Päivä"
+    }
+
+
+    /* Mixed drinks screen */
+    override val mixedDrinks = MixedDrinks
+
+    object MixedDrinks : Strings.MixedDrinksStrings {
+        override val title: String = "Juomasekoitukset"
     }
 
 
