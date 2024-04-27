@@ -36,6 +36,7 @@ val FullScreenDialogProperties =
 fun AppDialog(
     onClose: () -> Unit,
     fullScreen: Boolean = false,
+    padding: PaddingValues = PaddingValues(16.dp),
     textColor: Color = MaterialTheme.colorScheme.onSurface,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -47,14 +48,18 @@ fun AppDialog(
     ) {
         Surface(
             modifier = if (fullScreen) Modifier.fillMaxWidth()
-            else Modifier.padding(top = 32.dp, bottom = 32.dp).wrapContentWidth()
+            else Modifier.padding(top = 32.dp, bottom = 32.dp)
+                .wrapContentWidth()
                 .wrapContentHeight(),
             shape = MaterialTheme.shapes.large,
             tonalElevation = elevation,
             color = MaterialTheme.colorScheme.surfaceColorAtElevation(elevation),
             contentColor = textColor
         ) {
-            Column(modifier = Modifier.fillMaxWidth().padding(if (fullScreen) 0.dp else 16.dp)) {
+            Column(modifier = Modifier.fillMaxWidth().let {
+                if (!fullScreen) it.padding(padding)
+                else it
+            }) {
                 content()
             }
         }
