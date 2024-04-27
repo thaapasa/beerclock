@@ -7,7 +7,11 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
@@ -23,6 +27,14 @@ fun Modifier.combinedClickableReleasable(
 ): Modifier {
     val interactionSource = remember { MutableInteractionSource() }
     val indication: Indication = rememberRipple()
+    // detectTapGestures() remembers its contents, so we need wrap callbacks to mutable
+    // state so that they are updated properly
+    var wrappedClick by remember { mutableStateOf(onClick) }
+    LaunchedEffect(onClick) { wrappedClick = onClick }
+    var wrappedLongPress by remember { mutableStateOf(onLongPress) }
+    LaunchedEffect(onLongPress) { wrappedLongPress = onLongPress }
+    var wrappedRelease by remember { mutableStateOf(onRelease) }
+    LaunchedEffect(onRelease) { wrappedRelease = onRelease }
     return indication(interactionSource, indication)
         .pointerInput(Unit) {
             detectTapGestures(
@@ -30,12 +42,12 @@ fun Modifier.combinedClickableReleasable(
                     val press = PressInteraction.Press(offset)
                     interactionSource.emit(press)
                     tryAwaitRelease()
-                    onRelease()
+                    wrappedRelease()
                     val release = PressInteraction.Release(press)
                     interactionSource.emit(release)
                 },
-                onTap = { onClick() },
-                onLongPress = { onLongPress() },
+                onTap = { wrappedClick() },
+                onLongPress = { wrappedLongPress() }
             )
         }
 }
