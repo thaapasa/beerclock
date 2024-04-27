@@ -18,7 +18,6 @@ fun DrinkImageSelectField(
         onValueChange = onValueChange,
         options = drinkOptions,
         titleText = titleText,
-        valueToImage = { it.painter() },
         minImageSize = 64.dp
     )
 }
