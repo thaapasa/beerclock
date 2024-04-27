@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.drinks.mix.MixedDrinkInfo
+import fi.tuska.beerclock.drinks.mix.MixedDrinksService
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.images.DrinkImagesList
 import fi.tuska.beerclock.images.largeImage
@@ -29,6 +30,7 @@ import fi.tuska.beerclock.ui.components.ImagePreviewViewModel
 import fi.tuska.beerclock.ui.components.ImageSelectDialog
 import fi.tuska.beerclock.ui.composables.ViewModel
 import fi.tuska.beerclock.ui.composables.rememberWithDispose
+import kotlinx.coroutines.launch
 
 val gap = 16.dp
 
@@ -75,11 +77,21 @@ fun MixedDrinkEditor(vm: MixedDrinkEditorViewModel, onClose: () -> Unit) {
     }
     Spacer(modifier = Modifier.height(gap))
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-        Button(onClick = {}) { Text("Tallenna") }
+        Button(onClick = vm::save) { Text("Tallenna") }
     }
 }
 
 class MixedDrinkEditorViewModel(proto: MixedDrinkInfo) : ViewModel() {
     var name by mutableStateOf(proto.name)
     var image by mutableStateOf(proto.image)
+    var category by mutableStateOf(proto.category)
+    val mixService = MixedDrinksService()
+
+    fun toMixedDrinkInfo(): MixedDrinkInfo = MixedDrinkInfo(name, image, category)
+
+    fun save() {
+        launch {
+            mixService.insertDrinkMix(toMixedDrinkInfo())
+        }
+    }
 }
