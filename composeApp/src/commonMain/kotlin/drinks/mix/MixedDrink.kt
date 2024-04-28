@@ -1,20 +1,23 @@
 package fi.tuska.beerclock.drinks.mix
 
 import fi.tuska.beerclock.database.MixedDrink
+import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.images.DrinkImage
+import kotlinx.datetime.Clock
 
 data class MixedDrinkInfo(
+    val id: Long? = null,
     val name: String,
     val image: DrinkImage = DrinkImage.CAT_PUNCHES,
     val category: Category? = Category.COCKTAILS,
-    val id: Long? = null,
+    val key: String = "$id-${Clock.System.now().toDbTime()}",
 ) {
 
     fun asDrinkInfo(): BasicDrinkInfo {
         return BasicDrinkInfo(
-            key = id?.toString() ?: "new",
+            key = key,
             name = name,
             image = image,
             category = category,
@@ -29,6 +32,7 @@ data class MixedDrinkInfo(
             name = record.name,
             image = DrinkImage.forName(record.image),
             category = record.category?.let(Category::forName),
+            key = "${record.id}-${record.version}",
         )
     }
 }

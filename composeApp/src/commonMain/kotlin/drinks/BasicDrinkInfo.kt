@@ -15,8 +15,8 @@ import kotlin.time.Duration.Companion.minutes
 @CommonParcelize
 open class BasicDrinkInfo(
     /**
-     * Identifying key to be used to determine identity in lists etc. Could be a
-     * database index column, or some other uniquely identifying field.
+     * Identifying key to be used to determine identity and state in lists etc. Must uniquely
+     * identify the item and must change whenever the data contents change.
      */
     val key: String,
     /** Name of the drink */
@@ -70,5 +70,11 @@ open class BasicDrinkInfo(
         return other is BasicDrinkInfo && other::class.isInstance(this) && this::class.isInstance(
             other
         ) && key == other.key
+    }
+
+    override fun hashCode(): Int {
+        // by definition key must uniquely identify the item and must change if contents change
+        // so it works for hashCode as well
+        return key.hashCode()
     }
 }

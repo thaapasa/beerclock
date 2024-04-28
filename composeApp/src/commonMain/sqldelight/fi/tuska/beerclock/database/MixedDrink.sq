@@ -1,8 +1,8 @@
 CREATE TABLE mixedDrink (
   id INTEGER PRIMARY KEY NOT NULL,
   name TEXT NOT NULL COLLATE NOCASE,
-  created INTEGER NOT NULL,
-  updated INTEGER NOT NULL,
+  created INTEGER NOT NULL DEFAULT (unixepoch('now')),
+  version INTEGER NOT NULL DEFAULT 0,
   category TEXT,
   image TEXT NOT NULL
 );
@@ -10,6 +10,7 @@ CREATE TABLE mixedDrink (
 CREATE TABLE mixedDrinkComponent (
   id INTEGER PRIMARY KEY NOT NULL,
   mix_id INTEGER NOT NULL REFERENCES mixedDrink(id) ON DELETE CASCADE,
+  version INTEGER NOT NULL DEFAULT 0,
   ord INTEGER NOT NULL,
   name TEXT NOT NULL COLLATE NOCASE,
   quantity_liters REAL NOT NULL,
@@ -17,12 +18,21 @@ CREATE TABLE mixedDrinkComponent (
 );
 
 insertMixedDrink:
-INSERT INTO mixedDrink (name, created, updated, category, image)
-VALUES (:name, :created, :created, :category, :image);
+INSERT INTO mixedDrink (name,  category, image)
+VALUES (:name, :category, :image);
 
 lastInsertedId:
 SELECT last_insert_rowid();
 
+updateMixedDrink:
+UPDATE mixedDrink
+SET name=:name, category=:category, image=:image, version=version+1
+WHERE id=:id;
+
+deleteMixedDrink:
+DELETE FROM mixedDrink
+WHERE id=:id;
+
 getMixedDrinks:
 SELECT * FROM mixedDrink
-ORDER BY name DESC;
+ORDER BY name;

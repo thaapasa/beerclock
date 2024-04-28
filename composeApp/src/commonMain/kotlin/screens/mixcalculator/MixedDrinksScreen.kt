@@ -58,13 +58,13 @@ fun ColumnScope.MixedDrinksView(vm: MixedDrinksViewModel) {
         modifier = Modifier.fillMaxWidth().weight(1f)
             .clip(RoundedCornerShape(12.dp))
     ) {
-        items(searchResults, key = { it.id ?: "new" }) { mix ->
+        items(searchResults, key = { it.key }) { mix ->
             SwipeControl(
-                onModify = { },
-                onDelete = { }) {
+                onModify = { vm.modifyMix(mix) },
+                onDelete = { vm.deleteMix(mix) }) {
                 BasicDrinkItem(
                     drink = mix.asDrinkInfo(),
-                    onClick = { })
+                    onClick = { vm.modifyMix(mix) })
             }
         }
     }

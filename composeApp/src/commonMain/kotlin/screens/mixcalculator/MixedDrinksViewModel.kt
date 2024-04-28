@@ -13,12 +13,12 @@ import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class MixedDrinksViewModel : SnackbarViewModel(snackbar = SnackbarHostState()) {
     private val mixService = MixedDrinksService()
 
     var editingMix by mutableStateOf<MixedDrinkInfo?>(null)
-
 
     val mixedDrinkResults: StateFlow<List<MixedDrinkInfo>> =
         mixService.flowMixedDrinks()
@@ -43,6 +43,17 @@ class MixedDrinksViewModel : SnackbarViewModel(snackbar = SnackbarHostState()) {
 
     fun addNewMix() {
         this.editingMix = MixedDrinkInfo(name = "")
+    }
+
+    fun modifyMix(drinkMix: MixedDrinkInfo) {
+        this.editingMix = drinkMix
+    }
+
+    fun deleteMix(drinkMix: MixedDrinkInfo) {
+        val mixId = drinkMix.id ?: return
+        launch {
+            mixService.deleteDrinkMix(mixId)
+        }
     }
 
 }

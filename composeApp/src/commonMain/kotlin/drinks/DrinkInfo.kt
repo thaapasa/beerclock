@@ -30,7 +30,8 @@ class DrinkInfo(
         fun fromRecord(record: DrinkLibrary): DrinkInfo = DrinkInfo(
             id = record.id,
             info = BasicDrinkInfo(
-                key = record.id.toString(),
+                // id + updated = unique enough for our purposes
+                key = "${record.id}-${record.version}",
                 producer = record.producer,
                 name = record.name,
                 quantityCl = record.quantity_liters * 100,
@@ -38,7 +39,7 @@ class DrinkInfo(
                 image = DrinkImage.forName(record.image),
                 category = record.category?.let { Category.forName(it) },
                 rating = record.rating,
-                note = record.note
+                note = record.note,
             )
         )
     }

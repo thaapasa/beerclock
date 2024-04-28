@@ -77,21 +77,28 @@ fun MixedDrinkEditor(vm: MixedDrinkEditorViewModel, onClose: () -> Unit) {
     }
     Spacer(modifier = Modifier.height(gap))
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-        Button(onClick = vm::save) { Text("Tallenna") }
+        Button(onClick = { vm.save(andThen = onClose) }) { Text("Tallenna") }
     }
 }
 
 class MixedDrinkEditorViewModel(proto: MixedDrinkInfo) : ViewModel() {
+    val id = proto.id
     var name by mutableStateOf(proto.name)
     var image by mutableStateOf(proto.image)
     var category by mutableStateOf(proto.category)
     val mixService = MixedDrinksService()
 
-    fun toMixedDrinkInfo(): MixedDrinkInfo = MixedDrinkInfo(name, image, category)
+    fun toMixedDrinkInfo(): MixedDrinkInfo = MixedDrinkInfo(id = id, name, image, category)
 
-    fun save() {
+    fun save(andThen: () -> Unit) {
         launch {
-            mixService.insertDrinkMix(toMixedDrinkInfo())
+            if (id != null) {
+                mixService.updateDrinkMix(id, toMixedDrinkInfo())
+            } else {
+                mixService.insertDrinkMix(toMixedDrinkInfo())
+            }
+            andThen()
         }
     }
+
 }

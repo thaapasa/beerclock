@@ -10,7 +10,8 @@ CREATE TABLE drinkRecord (
   producer TEXT NOT NULL COLLATE NOCASE DEFAULT '',
   search_term TEXT NOT NULL COLLATE NOCASE DEFAULT '',
   note TEXT,
-  rating REAL
+  rating REAL,
+  version INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE INDEX drinkRecord_time ON drinkRecord(time);
@@ -67,13 +68,15 @@ ON CONFLICT (import_id) DO UPDATE
 SET time=excluded.time, producer=excluded.producer, name=excluded.name,
     search_term=excluded.search_term, rating=excluded.rating,
     note=excluded.note, category=excluded.category,
-    quantity_liters=excluded.quantity_liters, abv=excluded.abv, image=excluded.image;
+    quantity_liters=excluded.quantity_liters, abv=excluded.abv, image=excluded.image,
+    version=version + 1;
 
 update:
 UPDATE drinkRecord
 SET time=:time, producer=:producer, name=:name,
   search_term=CASE WHEN :producer = '' THEN :name ELSE :producer || ' ' || :name END,
-  rating=:rating, note=:note, category=:category, quantity_liters=:quantityLiters, abv=:abv, image=:image
+  rating=:rating, note=:note, category=:category, quantity_liters=:quantityLiters,
+  abv=:abv, image=:image, version=version + 1
 WHERE id=:id;
 
 deleteById:
