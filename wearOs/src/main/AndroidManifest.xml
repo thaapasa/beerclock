@@ -7,7 +7,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.DeviceDefault">
+        android:theme="@style/Theme.App.Starting">
 
         <uses-library
             android:name="com.google.android.wearable"
@@ -73,7 +73,7 @@
             android:name=".wear.presentation.BeerWearActivity"
             android:exported="true"
             android:taskAffinity=".main"
-            android:theme="@style/BeerWearActivityTheme.Starting">
+            android:theme="@style/Theme.App.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
