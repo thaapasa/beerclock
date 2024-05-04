@@ -167,7 +167,9 @@ interface Strings {
     val errors: ErrorStrings
 
     interface ErrorStrings {
+        val invalidValue: String
         val invalidDecimal: String
+        val invalidInteger: String
     }
 
 

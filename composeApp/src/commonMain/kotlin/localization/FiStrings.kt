@@ -189,7 +189,9 @@ object FiStrings : Strings {
     override val errors = Errors
 
     object Errors : Strings.ErrorStrings {
+        override val invalidValue = "Virheellinen syöte"
         override val invalidDecimal = "Syötä desimaaliluku"
+        override val invalidInteger = "Syötä kokonaisluku"
     }
 
 

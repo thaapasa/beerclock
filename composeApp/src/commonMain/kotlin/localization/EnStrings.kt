@@ -165,7 +165,9 @@ object EnStrings : Strings {
     override val errors = Errors
 
     object Errors : Strings.ErrorStrings {
+        override val invalidValue = "Not a valid value"
         override val invalidDecimal = "Not a valid decimal value"
+        override val invalidInteger = "Not a valid integer value"
     }
 
 

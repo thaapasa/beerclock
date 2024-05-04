@@ -16,21 +16,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.ParcelableScreen
 import fi.tuska.beerclock.screens.newdrink.BasicDrinkItem
 import fi.tuska.beerclock.ui.composables.SwipeControl
+import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.ui.layout.SubLayout
 import fi.tuska.beerclock.util.CommonParcelize
 
 @CommonParcelize
 object MixedDrinksScreen : ParcelableScreen {
 
-    val vm = MixedDrinksViewModel()
-
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
+        val vm = rememberWithDispose { MixedDrinksViewModel(navigator) }
+
         val strings = Strings.get()
         SubLayout(
             title = strings.mixedDrinks.title,
@@ -50,8 +54,6 @@ object MixedDrinksScreen : ParcelableScreen {
 
 @Composable
 fun ColumnScope.MixedDrinksView(vm: MixedDrinksViewModel) {
-    vm.EditorDialog()
-
     val searchResults by vm.mixedDrinkResults.collectAsState()
 
     LazyColumn(
