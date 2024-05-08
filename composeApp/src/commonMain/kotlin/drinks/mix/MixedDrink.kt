@@ -1,14 +1,18 @@
 package fi.tuska.beerclock.drinks.mix
 
+import fi.tuska.beerclock.bac.BacFormulas
 import fi.tuska.beerclock.database.MixedDrink
 import fi.tuska.beerclock.database.MixedDrinkComponent
 import fi.tuska.beerclock.database.toDbTime
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.images.DrinkImage
+import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.CommonParcelable
 import fi.tuska.beerclock.util.CommonParcelize
 import kotlinx.datetime.Clock
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 @CommonParcelize
 data class MixedDrinkInfo(
@@ -51,7 +55,14 @@ data class MixedDrinkItem(
     val abvPercentage: Double,
     val quantityCl: Double,
     val key: String = "$id-${Clock.System.now().toDbTime()}",
-) : CommonParcelable {
+) : CommonParcelable, KoinComponent {
+
+    val prefs: GlobalUserPreferences = get()
+
+    val alcoholGrams =
+        amount * BacFormulas.getAlcoholGrams(quantityCl = quantityCl, abvPercentage = abvPercentage)
+
+    fun units(): Double = BacFormulas.getUnitsFromAlcoholWeight(alcoholGrams, prefs.prefs)
 
     companion object {
         fun fromRecord(record: MixedDrinkComponent): MixedDrinkItem = MixedDrinkItem(

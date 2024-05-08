@@ -39,10 +39,11 @@ open class BasicDrinkInfo(
     protected val prefs: GlobalUserPreferences = get()
 
     /** Amount of alcohol in the drink, in liters */
-    val alcoholLiters: Double = quantityCl * abvPercentage / 10_000.0
+    val alcoholLiters: Double =
+        BacFormulas.getAlcoholLiters(quantityCl = quantityCl, abvPercentage = abvPercentage)
 
     /** Amount of alcohol in the drink, in grams */
-    val alcoholGrams: Double = alcoholLiters * BacFormulas.alcoholDensity
+    val alcoholGrams: Double = BacFormulas.getAlcoholGrams(alcoholLiters = alcoholLiters)
 
     /**
      * Given the selection of how many grams of alcohol are there in a single standard unit:

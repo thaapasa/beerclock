@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -31,7 +32,7 @@ private val gap = 8.dp
 @Composable
 fun MixedDrinkItemEditor(vm: MixedDrinkItemEditorViewModel, onClose: () -> Unit) {
     val strings = Strings.get()
-    DialogHeader(titleText = "Lisää ainesosa",
+    DialogHeader(titleText = if (vm.isNewItem) "Lisää ainesosa" else "Muokkaa ainesosaa",
         height = 40.dp,
         textStyle = MaterialTheme.typography.titleMedium,
         trailingIcon = { modifier ->
@@ -75,6 +76,16 @@ fun MixedDrinkItemEditor(vm: MixedDrinkItemEditorViewModel, onClose: () -> Unit)
         )
     }
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+        if (vm.canDelete) {
+            Button(
+                onClick = vm::delete,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                    contentColor = MaterialTheme.colorScheme.error
+                )
+            ) { AppIcon.DELETE.icon() }
+            Spacer(modifier = Modifier.width(gap))
+        }
         Button(onClick = vm::save, enabled = vm.isValid()) { Text("Tallenna") }
     }
 }
@@ -82,6 +93,7 @@ fun MixedDrinkItemEditor(vm: MixedDrinkItemEditorViewModel, onClose: () -> Unit)
 class MixedDrinkItemEditorViewModel(
     proto: MixedDrinkItem? = null,
     private val saveAction: (item: MixedDrinkItem) -> Unit,
+    private val deleteAction: (() -> Unit)? = null,
 ) : ViewModel() {
     var id = proto?.id
     var amount by mutableDoubleStateOf(proto?.amount ?: 1.0)
@@ -89,11 +101,18 @@ class MixedDrinkItemEditorViewModel(
     var abv by mutableDoubleStateOf(proto?.abvPercentage ?: 10.0)
     var quantityCl by mutableDoubleStateOf(proto?.quantityCl ?: 100.0)
 
+    val isNewItem = proto == null
     fun isValid(): Boolean = name.isNotEmpty() && amount > 0 && abv >= 0.0 && quantityCl > 0
 
     fun save() {
         if (!isValid()) return
         saveAction(toMixedDrinkItem())
+    }
+
+    val canDelete = deleteAction != null
+
+    fun delete() {
+        deleteAction?.invoke()
     }
 
     fun toMixedDrinkItem(): MixedDrinkItem =

@@ -58,6 +58,16 @@ object BacFormulas {
         return alcoholGrams / prefs.alchoholGramsInUnit
     }
 
+
+    /** @return amount of alcohol in the drink, in liters */
+    fun getAlcoholLiters(quantityCl: Double, abvPercentage: Double): Double =
+        quantityCl * abvPercentage / 10_000.0
+
+    /** @return amount of alcohol in the drink, in grams */
+    fun getAlcoholGrams(alcoholLiters: Double): Double = alcoholLiters * alcoholDensity
+    fun getAlcoholGrams(quantityCl: Double, abvPercentage: Double): Double =
+        getAlcoholLiters(quantityCl, abvPercentage) * alcoholDensity
+
     /**
      * @return the amount of alcohol in your blood, for the given amount of alcohol consumed.
      * The result is the amount by volume, expressed per mille ("promillet" in Finnish).

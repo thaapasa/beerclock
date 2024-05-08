@@ -1,6 +1,8 @@
 package fi.tuska.beerclock.screens.mixcalculator
 
 import MixedDrinkItemListItem
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,13 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -42,7 +43,7 @@ private val gap = 16.dp
 fun ColumnScope.MixedDrinkEditor(vm: MixedDrinkEditorViewModel, onClose: () -> Unit) {
     val strings = Strings.get()
 
-    Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+    Row(Modifier.fillMaxWidth().padding(horizontal = gap)) {
         OutlinedTextField(
             label = { Text(strings.drinkDialog.nameLabel) },
             value = vm.name,
@@ -57,6 +58,7 @@ fun ColumnScope.MixedDrinkEditor(vm: MixedDrinkEditorViewModel, onClose: () -> U
             titleText = strings.drinkDialog.selectImageTitle,
         )
     }
+    Spacer(modifier = Modifier.height(gap))
     OutlinedTextField(
         label = { Text("Ohjeet") },
         value = vm.instructions,
@@ -67,8 +69,11 @@ fun ColumnScope.MixedDrinkEditor(vm: MixedDrinkEditorViewModel, onClose: () -> U
     Spacer(modifier = Modifier.height(gap))
     HorizontalDivider(modifier = Modifier.fillMaxWidth())
     Row(
-        Modifier.fillMaxWidth().padding(start = 16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        Modifier.fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp))
+            .height(64.dp)
+            .padding(start = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text("Ainekset")
         Spacer(modifier = Modifier.weight(1f))
@@ -76,9 +81,8 @@ fun ColumnScope.MixedDrinkEditor(vm: MixedDrinkEditorViewModel, onClose: () -> U
             AppIcon.ADD_CIRCLE.icon(tint = MaterialTheme.colorScheme.primary)
         }
     }
-    Spacer(modifier = Modifier.height(gap))
-    LazyColumn(modifier = Modifier.fillMaxWidth().weight(1f)) {
-        items(vm.items, key = { it.key }) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        vm.items.map {
             MixedDrinkItemListItem(it, onModify = vm::editItem, onDelete = vm::deleteItem)
         }
     }
@@ -140,6 +144,9 @@ class MixedDrinkEditorViewModel(proto: MixedDrink) : ViewModel() {
             } else {
                 this.items.add(it)
             }
+            this.dismissEditor()
+        }, deleteAction = {
+            this.items.remove(item)
             this.dismissEditor()
         })
     }

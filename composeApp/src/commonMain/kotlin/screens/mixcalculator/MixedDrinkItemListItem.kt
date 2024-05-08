@@ -1,9 +1,5 @@
 import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import fi.tuska.beerclock.drinks.mix.MixedDrinkItem
 import fi.tuska.beerclock.localization.Strings
@@ -18,7 +14,7 @@ fun MixedDrinkItemListItem(
     onDelete: ((drink: MixedDrinkItem) -> Unit)? = null,
 ) {
     val strings = Strings.get()
-    var selected by remember { mutableStateOf(false) }
+
     SwipeControl(
         onModify = { onModify?.invoke(item) },
         onDelete = { onDelete?.invoke(item) },
@@ -29,8 +25,8 @@ fun MixedDrinkItemListItem(
                 quantityCl = item.quantityCl,
                 abvPercentage = item.abvPercentage
             ),
-            trailingContent = { UnitAvatar(units = 0.4) },
-            modifier = Modifier.clickable { selected = !selected },
+            trailingContent = { UnitAvatar(units = item.units()) },
+            modifier = Modifier.clickable(onClick = { onModify?.invoke(item) })
         )
     }
 }
