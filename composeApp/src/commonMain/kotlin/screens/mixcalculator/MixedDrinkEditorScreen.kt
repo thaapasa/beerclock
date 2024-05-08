@@ -23,19 +23,20 @@ data class MixedDrinkEditorScreen(val proto: MixedDrink? = null) : ParcelableScr
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val vm =
-            rememberWithDispose {
-                MixedDrinkEditorViewModel(proto ?: emptyItem)
-            }
+        val vm = rememberWithDispose {
+            MixedDrinkEditorViewModel(proto ?: emptyItem)
+        }
 
         val strings = Strings.get()
-        DrinkDialogLayout(title = "Juomasekoitus", saveButton = { modifier ->
-            TextButton(
-                enabled = true,
-                onClick = { vm.save(andThen = { navigator.pop() }) },
-                modifier = modifier.padding(end = 8.dp)
-            ) { Text(strings.drinkDialog.submit) }
-        }) {
+        DrinkDialogLayout(
+            title = if (vm.isNewMix) strings.mixedDrinks.newMixTitle else strings.mixedDrinks.editMixTitle,
+            saveButton = { modifier ->
+                TextButton(
+                    enabled = true,
+                    onClick = { vm.save(andThen = { navigator.pop() }) },
+                    modifier = modifier.padding(end = 8.dp)
+                ) { Text(strings.drinkDialog.submit) }
+            }) {
             MixedDrinkEditor(vm, onClose = { navigator.pop() })
         }
     }

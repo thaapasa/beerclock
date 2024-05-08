@@ -20,7 +20,7 @@ fun MixedDrinkItemListItem(
         onDelete = { onDelete?.invoke(item) },
     ) {
         AppListItem(
-            headline = "${item.amount} x ${item.name}",
+            headline = "${strings.amount(item.amount)} ${item.name}",
             supporting = strings.drink.drinkSize(
                 quantityCl = item.quantityCl,
                 abvPercentage = item.abvPercentage

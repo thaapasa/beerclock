@@ -60,7 +60,7 @@ fun ColumnScope.MixedDrinkEditor(vm: MixedDrinkEditorViewModel, onClose: () -> U
     }
     Spacer(modifier = Modifier.height(gap))
     OutlinedTextField(
-        label = { Text("Ohjeet") },
+        label = { Text(strings.mixedDrinks.instructionsTitle) },
         value = vm.instructions,
         singleLine = false,
         onValueChange = { vm.instructions = it },
@@ -75,7 +75,7 @@ fun ColumnScope.MixedDrinkEditor(vm: MixedDrinkEditorViewModel, onClose: () -> U
             .padding(start = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text("Ainekset")
+        Text(strings.mixedDrinks.itemsTitle)
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = vm::addNew) {
             AppIcon.ADD_CIRCLE.icon(tint = MaterialTheme.colorScheme.primary)
@@ -103,6 +103,8 @@ class MixedDrinkEditorViewModel(proto: MixedDrink) : ViewModel() {
     val mixService = MixedDrinksService()
     var itemEditor by mutableStateOf<MixedDrinkItemEditorViewModel?>(null)
         private set
+
+    val isNewMix = id == null
 
     init {
         items.addAll(proto.items)

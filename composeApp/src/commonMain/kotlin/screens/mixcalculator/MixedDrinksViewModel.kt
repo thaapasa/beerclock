@@ -1,6 +1,9 @@
 package fi.tuska.beerclock.screens.mixcalculator
 
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.navigator.Navigator
 import fi.tuska.beerclock.drinks.mix.MixedDrinkInfo
 import fi.tuska.beerclock.drinks.mix.MixedDrinksService
@@ -13,6 +16,9 @@ import kotlinx.coroutines.launch
 class MixedDrinksViewModel(val navigator: Navigator) :
     SnackbarViewModel(snackbar = SnackbarHostState()) {
     private val mixService = MixedDrinksService()
+
+    var openedMix by mutableStateOf<MixedDrinkInfo?>(null)
+        private set
 
     val mixedDrinkResults: StateFlow<List<MixedDrinkInfo>> =
         mixService.flowMixedDrinks()
@@ -41,4 +47,11 @@ class MixedDrinksViewModel(val navigator: Navigator) :
         }
     }
 
+    fun showMix(drinkMix: MixedDrinkInfo) {
+        openedMix = drinkMix
+    }
+
+    fun closeDialog() {
+        openedMix = null
+    }
 }

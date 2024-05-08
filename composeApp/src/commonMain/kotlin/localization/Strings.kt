@@ -54,6 +54,9 @@ interface Strings {
 
     fun dec1FU(value: Double, unit: String) = "${dec1F(value)}$nbsp$unit"
     fun dec2FU(value: Double, unit: String) = "${dec2F(value)}$nbsp$unit"
+    fun amount(amount: Double) = "${dec2F(amount)}${nbsp}×"
+    val amountUnit: String
+    val amountLabel: String
 
     fun weekday(day: DayOfWeek): String
     fun weekdayShort(day: DayOfWeek): String
@@ -365,6 +368,13 @@ interface Strings {
 
     interface MixedDrinksStrings {
         val title: String
+        val itemsTitle: String
+        val instructionsTitle: String
+        val newMixTitle: String
+        val editMixTitle: String
+        val newItemTitle: String
+        val editItemTitle: String
+        val save: String
     }
 
 

@@ -32,6 +32,8 @@ object FiStrings : Strings {
 
     override val dec1F = createNumberFormatter(1)
     override val dec2F = createNumberFormatter(2)
+    override val amountUnit = "×"
+    override val amountLabel = "Määrä"
 
     override fun weekday(day: DayOfWeek): String {
         return when (day) {
@@ -486,6 +488,13 @@ object FiStrings : Strings {
 
     object MixedDrinks : Strings.MixedDrinksStrings {
         override val title: String = "Juomasekoitukset"
+        override val itemsTitle = "Ainekset"
+        override val instructionsTitle = "Valmistusohjeet"
+        override val newMixTitle = "Uusi sekoitus"
+        override val editMixTitle = "Muokkaa sekoitusta"
+        override val newItemTitle = "Muokkaa ainesosaa"
+        override val editItemTitle = "Lisää ainesosa"
+        override val save = "Tallenna"
     }
 
 

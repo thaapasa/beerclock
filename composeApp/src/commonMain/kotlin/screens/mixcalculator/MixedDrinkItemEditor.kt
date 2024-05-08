@@ -32,7 +32,7 @@ private val gap = 8.dp
 @Composable
 fun MixedDrinkItemEditor(vm: MixedDrinkItemEditorViewModel, onClose: () -> Unit) {
     val strings = Strings.get()
-    DialogHeader(titleText = if (vm.isNewItem) "Lisää ainesosa" else "Muokkaa ainesosaa",
+    DialogHeader(titleText = if (vm.isNewItem) strings.mixedDrinks.newItemTitle else strings.mixedDrinks.editItemTitle,
         height = 40.dp,
         textStyle = MaterialTheme.typography.titleMedium,
         trailingIcon = { modifier ->
@@ -43,11 +43,11 @@ fun MixedDrinkItemEditor(vm: MixedDrinkItemEditorViewModel, onClose: () -> Unit)
         })
     Row(modifier = Modifier.fillMaxWidth()) {
         DecimalField(
-            label = { Text("Kerroin") },
+            label = { Text(strings.amountLabel) },
             value = vm.amount,
             onValueChange = { vm.amount = it },
             modifier = Modifier.width(96.dp),
-            trailingIcon = { Text("×") }
+            trailingIcon = { Text(strings.amountUnit) }
         )
         Spacer(Modifier.width(gap))
         OutlinedTextField(
@@ -86,7 +86,7 @@ fun MixedDrinkItemEditor(vm: MixedDrinkItemEditorViewModel, onClose: () -> Unit)
             ) { AppIcon.DELETE.icon() }
             Spacer(modifier = Modifier.width(gap))
         }
-        Button(onClick = vm::save, enabled = vm.isValid()) { Text("Tallenna") }
+        Button(onClick = vm::save, enabled = vm.isValid()) { Text(strings.mixedDrinks.save) }
     }
 }
 

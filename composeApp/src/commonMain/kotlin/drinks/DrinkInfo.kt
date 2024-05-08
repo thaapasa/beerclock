@@ -30,7 +30,6 @@ class DrinkInfo(
         fun fromRecord(record: DrinkLibrary): DrinkInfo = DrinkInfo(
             id = record.id,
             info = BasicDrinkInfo(
-                // id + updated = unique enough for our purposes
                 key = "${record.id}-${record.version}",
                 producer = record.producer,
                 name = record.name,

@@ -66,8 +66,9 @@ fun ColumnScope.MixedDrinksView(vm: MixedDrinksViewModel) {
                 onDelete = { vm.deleteMix(mix) }) {
                 BasicDrinkItem(
                     drink = mix.asDrinkInfo(),
-                    onClick = { vm.modifyMix(mix) })
+                    onClick = { vm.showMix(mix) })
             }
         }
     }
+    vm.openedMix?.let { MixedDrinkDialog(it, vm) }
 }

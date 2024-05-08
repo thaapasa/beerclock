@@ -32,7 +32,8 @@ object EnStrings : Strings {
 
     override val dec1F = createNumberFormatter(1)
     override val dec2F = createNumberFormatter(2)
-
+    override val amountUnit = "×"
+    override val amountLabel = "Amount"
 
     override fun weekday(day: DayOfWeek): String {
         return when (day) {
@@ -463,6 +464,13 @@ object EnStrings : Strings {
 
     object MixedDrinks : Strings.MixedDrinksStrings {
         override val title: String = "Mixed drinks"
+        override val itemsTitle = "Ingredients"
+        override val instructionsTitle = "Instructions"
+        override val newMixTitle = "New drink mix"
+        override val editMixTitle = "Edit drink mix"
+        override val newItemTitle = "Add ingredient"
+        override val editItemTitle = "Edit ingredient"
+        override val save = "Save"
     }
 
 
