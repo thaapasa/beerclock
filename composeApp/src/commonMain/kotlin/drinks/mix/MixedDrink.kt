@@ -59,10 +59,12 @@ data class MixedDrinkItem(
 
     val prefs: GlobalUserPreferences = get()
 
-    val alcoholGrams =
+    val totalQuantityCl = amount * quantityCl
+
+    val totalAlcoholGrams =
         amount * BacFormulas.getAlcoholGrams(quantityCl = quantityCl, abvPercentage = abvPercentage)
 
-    fun units(): Double = BacFormulas.getUnitsFromAlcoholWeight(alcoholGrams, prefs.prefs)
+    fun units(): Double = BacFormulas.getUnitsFromAlcoholWeight(totalAlcoholGrams, prefs.prefs)
 
     companion object {
         fun fromRecord(record: MixedDrinkComponent): MixedDrinkItem = MixedDrinkItem(
@@ -81,7 +83,15 @@ data class MixedDrinkItem(
 data class MixedDrink(
     val info: MixedDrinkInfo,
     val items: List<MixedDrinkItem>,
-) : CommonParcelable {
+) : CommonParcelable, KoinComponent {
     val id = info.id
     val key = info.key
+
+    val prefs: GlobalUserPreferences = get()
+
+    val totalQuantityCl = items.sumOf { it.totalQuantityCl }
+    val totalAlcoholGrams = items.sumOf { it.totalAlcoholGrams }
+    val totalAlcoholCl = items.sumOf { it.totalQuantityCl * it.abvPercentage / 100.0 }
+    val totalAbv = if (totalQuantityCl > 0) (totalAlcoholCl / totalQuantityCl) * 100.0 else 0.0
+    val totalUnits = BacFormulas.getUnitsFromAlcoholWeight(totalAlcoholGrams, prefs.prefs)
 }
