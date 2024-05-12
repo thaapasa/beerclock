@@ -3,6 +3,7 @@ package fi.tuska.beerclock.localization
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
+import fi.tuska.beerclock.drinks.mix.MixedDrink
 import fi.tuska.beerclock.screens.statistics.StatisticsMonth
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.screens.statistics.StatisticsWeek
@@ -471,6 +472,7 @@ object EnStrings : Strings {
         override val newItemTitle = "Add ingredient"
         override val editItemTitle = "Edit ingredient"
         override val save = "Save"
+        override fun drinkDeleted(mix: MixedDrink) = "Deleted ${mix.info.name}"
     }
 
 

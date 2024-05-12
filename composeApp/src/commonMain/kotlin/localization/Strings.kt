@@ -5,6 +5,7 @@ import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.DrinkTimeService
+import fi.tuska.beerclock.drinks.mix.MixedDrink
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.settings.Gender
 import fi.tuska.beerclock.settings.GlobalUserPreferences
@@ -375,6 +376,7 @@ interface Strings {
         val newItemTitle: String
         val editItemTitle: String
         val save: String
+        fun drinkDeleted(mix: MixedDrink): String
     }
 
 

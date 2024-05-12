@@ -7,15 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import fi.tuska.beerclock.images.AppIcon
@@ -58,7 +55,6 @@ fun ColumnScope.MixedDrinksView(vm: MixedDrinksViewModel) {
 
     LazyColumn(
         modifier = Modifier.fillMaxWidth().weight(1f)
-            .clip(RoundedCornerShape(12.dp))
     ) {
         items(searchResults, key = { it.key }) { mix ->
             SwipeControl(

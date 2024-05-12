@@ -132,7 +132,7 @@ class MixedDrinkEditorViewModel(proto: MixedDrink) : ViewModel(), KoinComponent 
     private fun recalc() {
         val totalQuantityCl = items.sumOf { it.quantityCl }
         val totalAlcoholCl = items.sumOf { it.quantityCl * it.abvPercentage / 100.0 }
-        val totalAbv = totalAlcoholCl * 100.0 / totalQuantityCl
+        val totalAbv = if (totalQuantityCl > 0.0) totalAlcoholCl * 100.0 / totalQuantityCl else 0.0
         abvGauge.setValue(totalAbv, maxValuesByCategory[category] ?: defaultMaxAbv)
         units = BacFormulas.getUnitsFromDisplayQuantityAbv(totalQuantityCl, totalAbv, prefs.prefs)
     }
