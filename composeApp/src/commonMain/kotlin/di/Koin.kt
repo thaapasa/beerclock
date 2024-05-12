@@ -25,6 +25,11 @@ fun commonModule() = module {
     single { BeerDatabase(get()) }
     single(createdAtStart = true) { GlobalUserPreferences(UserStore.load(get())) }
     single(createdAtStart = true) {
+        // Setup SQLite to follow foreign key constraint
+        // This needs to be activated manually: https://sqlite.org/pragma.html#pragma_foreign_keys
+        DbInfoQueries(get()).setupForeignKeyConstraints()
+    }
+    single(createdAtStart = true) {
         DatabaseInfo(
             sqliteVersion = DbInfoQueries(get()).dbVersion().executeAsOne(),
             databaseVersion = BeerDatabase.Schema.version

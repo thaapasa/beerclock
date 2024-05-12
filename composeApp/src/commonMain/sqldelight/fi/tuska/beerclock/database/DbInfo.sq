@@ -1,2 +1,5 @@
 dbVersion:
 SELECT sqlite_version() AS version;
+
+setupForeignKeyConstraints:
+PRAGMA foreign_keys = TRUE;
