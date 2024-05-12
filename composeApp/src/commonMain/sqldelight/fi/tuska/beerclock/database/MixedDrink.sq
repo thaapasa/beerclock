@@ -10,12 +10,13 @@ CREATE TABLE mixedDrink (
 
 CREATE TABLE mixedDrinkComponent (
   id INTEGER PRIMARY KEY NOT NULL,
-  mix_id INTEGER NOT NULL REFERENCES mixedDrink(id) ON DELETE CASCADE,
+  mix_id INTEGER NOT NULL,
   version INTEGER NOT NULL DEFAULT 0,
   ord INTEGER NOT NULL,
   name TEXT NOT NULL COLLATE NOCASE,
   quantity_liters REAL NOT NULL,
-  abv REAL NOT NULL
+  abv REAL NOT NULL,
+  FOREIGN KEY (mix_id) REFERENCES mixedDrink(id) ON DELETE CASCADE
 );
 
 insertMixedDrink:
@@ -37,6 +38,16 @@ WHERE id=:id;
 getMixedDrinks:
 SELECT * FROM mixedDrink
 ORDER BY name;
+
+getMixedDrinkOverviews:
+SELECT m.id, MIN(m.name) AS name, MIN(m.version) AS version,
+    MIN(m.instructions) AS instructions, MIN(m.category) AS category, MIN(m.image) AS image,
+    SUM(c.quantity_liters) AS quantity_liters,
+    SUM(c.quantity_liters * c.abv / 100.0) AS alcohol_liters
+FROM mixedDrink m
+LEFT JOIN mixedDrinkComponent c ON (c.mix_id = m.id)
+GROUP BY m.id
+ORDER BY m.name;
 
 getMixedDrink:
 SELECT * FROM mixedDrink

@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.drinks.mix
 
 import fi.tuska.beerclock.bac.BacFormulas
+import fi.tuska.beerclock.database.GetMixedDrinkOverviews
 import fi.tuska.beerclock.database.MixedDrink
 import fi.tuska.beerclock.database.MixedDrinkComponent
 import fi.tuska.beerclock.database.toDbTime
@@ -46,6 +47,44 @@ data class MixedDrinkInfo(
         )
     }
 }
+
+
+@CommonParcelize
+data class MixedDrinkOverview(
+    val info: MixedDrinkInfo,
+    val quantityLiters: Double,
+    val alcoholLiters: Double,
+) : CommonParcelable {
+    val key = info.key
+
+    fun asDrinkInfo(): BasicDrinkInfo {
+        return BasicDrinkInfo(
+            key = key,
+            name = info.name,
+            image = info.image,
+            category = info.category,
+            abvPercentage = if (quantityLiters > 0.0) 100.0 * alcoholLiters / quantityLiters else 0.0,
+            quantityCl = quantityLiters * 100.0,
+        )
+    }
+
+    companion object {
+        fun fromRecord(record: GetMixedDrinkOverviews): MixedDrinkOverview =
+            MixedDrinkOverview(
+                MixedDrinkInfo(
+                    id = record.id,
+                    name = record.name ?: "",
+                    instructions = record.instructions,
+                    image = record.image?.let(DrinkImage::forName) ?: DrinkImage.GENERIC_DRINK,
+                    category = record.category?.let(Category::forName),
+                    key = "${record.id}-${record.version}",
+                ),
+                quantityLiters = record.quantity_liters ?: 0.0,
+                alcoholLiters = record.alcohol_liters ?: 0.0,
+            )
+    }
+}
+
 
 @CommonParcelize
 data class MixedDrinkItem(

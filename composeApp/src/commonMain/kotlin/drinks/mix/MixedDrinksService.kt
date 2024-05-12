@@ -88,9 +88,9 @@ class MixedDrinksService : KoinComponent {
         }
     }
 
-    fun flowMixedDrinks(): Flow<List<MixedDrinkInfo>> {
-        val drinks = db.mixedDrinkQueries.getMixedDrinks().asFlow()
-        return drinks.map { it.map(MixedDrinkInfo::fromRecord) }.flowOn(Dispatchers.IO)
+    fun flowMixedDrinks(): Flow<List<MixedDrinkOverview>> {
+        val drinks = db.mixedDrinkQueries.getMixedDrinkOverviews().asFlow()
+        return drinks.map { it.map(MixedDrinkOverview::fromRecord) }.flowOn(Dispatchers.IO)
     }
 
     suspend fun getDrinkMix(id: Long): MixedDrink {

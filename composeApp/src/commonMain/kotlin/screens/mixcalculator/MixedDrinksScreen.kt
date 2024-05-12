@@ -62,11 +62,11 @@ fun ColumnScope.MixedDrinksView(vm: MixedDrinksViewModel) {
     ) {
         items(searchResults, key = { it.key }) { mix ->
             SwipeControl(
-                onModify = { vm.modifyMix(mix) },
-                onDelete = { vm.deleteMix(mix) }) {
+                onModify = { vm.modifyMix(mix.info) },
+                onDelete = { vm.deleteMix(mix.info) }) {
                 BasicDrinkItem(
                     drink = mix.asDrinkInfo(),
-                    onClick = { vm.showMix(mix) })
+                    onClick = { vm.showMix(mix.info) })
             }
         }
     }

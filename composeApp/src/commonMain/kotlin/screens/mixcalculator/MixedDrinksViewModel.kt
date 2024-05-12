@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.navigator.Navigator
 import fi.tuska.beerclock.drinks.mix.MixedDrinkInfo
+import fi.tuska.beerclock.drinks.mix.MixedDrinkOverview
 import fi.tuska.beerclock.drinks.mix.MixedDrinksService
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -20,7 +21,7 @@ class MixedDrinksViewModel(val navigator: Navigator) :
     var openedMix by mutableStateOf<MixedDrinkInfo?>(null)
         private set
 
-    val mixedDrinkResults: StateFlow<List<MixedDrinkInfo>> =
+    val mixedDrinkResults: StateFlow<List<MixedDrinkOverview>> =
         mixService.flowMixedDrinks()
             .stateIn(
                 scope = this,
