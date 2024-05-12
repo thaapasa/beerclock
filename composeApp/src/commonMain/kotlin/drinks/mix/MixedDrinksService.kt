@@ -36,7 +36,6 @@ class MixedDrinksService : KoinComponent {
                         name = item.name,
                         abvPercentage = item.abvPercentage,
                         quantityLiters = item.quantityCl / 100.0,
-                        amount = item.amount,
                     )
                 }
                 logger.info("Inserted new mixed drink with id $rowId")
@@ -61,7 +60,6 @@ class MixedDrinksService : KoinComponent {
                         db.mixedDrinkQueries.updateDrinkComponent(
                             id = item.id,
                             ord = index.toLong(),
-                            amount = item.amount,
                             name = item.name,
                             abvPercentage = item.abvPercentage,
                             quantityLiters = item.quantityCl / 100.0,
@@ -71,7 +69,6 @@ class MixedDrinksService : KoinComponent {
                         db.mixedDrinkQueries.insertDrinkComponent(
                             mixId = id,
                             ord = index.toLong(),
-                            amount = item.amount,
                             name = item.name,
                             abvPercentage = item.abvPercentage,
                             quantityLiters = item.quantityCl / 100.0,

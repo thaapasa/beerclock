@@ -69,7 +69,7 @@ fun ColumnScope.MixedDrinkDialog(mix: MixedDrinkInfo, drinksVm: MixedDrinksViewM
             )
             data.items.map {
                 Text(
-                    "${strings.amount(it.amount)} ${strings.drink.quantity(it.quantityCl)} ${it.name}${
+                    "${strings.drink.quantity(it.quantityCl)} ${it.name}${
                         if (it.abvPercentage > 0.0) " (${strings.drink.abv(it.abvPercentage)})" else ""
                     }",
                     style = MaterialTheme.typography.bodyMedium

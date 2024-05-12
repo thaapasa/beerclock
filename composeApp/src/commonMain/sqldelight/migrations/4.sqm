@@ -14,7 +14,6 @@ CREATE TABLE mixedDrinkComponent (
   version INTEGER NOT NULL DEFAULT 0,
   ord INTEGER NOT NULL,
   name TEXT NOT NULL COLLATE NOCASE,
-  amount REAL NOT NULL DEFAULT 1,
   quantity_liters REAL NOT NULL,
   abv REAL NOT NULL
 );

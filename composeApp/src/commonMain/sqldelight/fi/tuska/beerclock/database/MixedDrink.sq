@@ -14,7 +14,6 @@ CREATE TABLE mixedDrinkComponent (
   version INTEGER NOT NULL DEFAULT 0,
   ord INTEGER NOT NULL,
   name TEXT NOT NULL COLLATE NOCASE,
-  amount REAL NOT NULL DEFAULT 1,
   quantity_liters REAL NOT NULL,
   abv REAL NOT NULL
 );
@@ -50,11 +49,11 @@ clearDrinkComponents:
 DELETE FROM mixedDrinkComponent WHERE mix_id=:mixId AND (id NOT IN :retainItemIds);
 
 insertDrinkComponent:
-INSERT INTO mixedDrinkComponent (mix_id, version, ord, name, amount, quantity_liters, abv)
-VALUES (:mixId, 1, :ord, :name, :amount, :quantityLiters, :abvPercentage);
+INSERT INTO mixedDrinkComponent (mix_id, version, ord, name,  quantity_liters, abv)
+VALUES (:mixId, 1, :ord, :name, :quantityLiters, :abvPercentage);
 
 updateDrinkComponent:
 UPDATE mixedDrinkComponent
-SET version=version+1, ord=:ord, name=:name, amount=:amount,
+SET version=version+1, ord=:ord, name=:name,
     quantity_liters=:quantityLiters, abv=:abvPercentage
 WHERE id=:id;

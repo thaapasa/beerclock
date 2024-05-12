@@ -42,14 +42,6 @@ fun MixedDrinkItemEditor(vm: MixedDrinkItemEditorViewModel, onClose: () -> Unit)
             )
         })
     Row(modifier = Modifier.fillMaxWidth()) {
-        DecimalField(
-            label = { Text(strings.amountLabel) },
-            value = vm.amount,
-            onValueChange = { vm.amount = it },
-            modifier = Modifier.width(96.dp),
-            trailingIcon = { Text(strings.amountUnit) }
-        )
-        Spacer(Modifier.width(gap))
         OutlinedTextField(
             label = { Text(strings.drinkDialog.nameLabel) },
             value = vm.name,
@@ -96,13 +88,12 @@ class MixedDrinkItemEditorViewModel(
     private val deleteAction: (() -> Unit)? = null,
 ) : ViewModel() {
     var id = proto?.id
-    var amount by mutableDoubleStateOf(proto?.amount ?: 1.0)
     var name by mutableStateOf(proto?.name ?: "")
     var abv by mutableDoubleStateOf(proto?.abvPercentage ?: 10.0)
     var quantityCl by mutableDoubleStateOf(proto?.quantityCl ?: 100.0)
 
     val isNewItem = proto == null
-    fun isValid(): Boolean = name.isNotEmpty() && amount > 0 && abv >= 0.0 && quantityCl > 0
+    fun isValid(): Boolean = name.isNotEmpty() && abv >= 0.0 && quantityCl > 0
 
     fun save() {
         if (!isValid()) return
@@ -118,7 +109,6 @@ class MixedDrinkItemEditorViewModel(
     fun toMixedDrinkItem(): MixedDrinkItem =
         MixedDrinkItem(
             id = id,
-            amount = amount,
             name = name,
             abvPercentage = abv,
             quantityCl = quantityCl
