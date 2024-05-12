@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,9 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.mix.MixedDrink
 import fi.tuska.beerclock.drinks.mix.MixedDrinkInfo
 import fi.tuska.beerclock.drinks.mix.MixedDrinksService
@@ -58,8 +54,7 @@ fun ColumnScope.MixedDrinkDialog(mix: MixedDrinkInfo, drinksVm: MixedDrinksViewM
                 }
                 Gauge(
                     value = vm.abvGauge,
-                    modifier = Modifier.size(64.dp).clip(RoundedCornerShape(32.dp)),
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.primary,
                 )
             }
             Text(
@@ -88,8 +83,6 @@ fun ColumnScope.MixedDrinkDialog(mix: MixedDrinkInfo, drinksVm: MixedDrinksViewM
     }
 }
 
-private const val defaultMaxAbv = 25.0
-
 class MixedDrinkDialogViewModel(private val mix: MixedDrinkInfo) : ViewModel() {
     private val mixService = MixedDrinksService()
     var mixData by mutableStateOf<MixedDrink?>(null)
@@ -110,17 +103,6 @@ class MixedDrinkDialogViewModel(private val mix: MixedDrinkInfo) : ViewModel() {
                 data.totalAbv,
                 maxValuesByCategory[data.info.category] ?: defaultMaxAbv
             )
-        }
-    }
-
-    private val maxValuesByCategory = enumValues<Category>().associateWith {
-        when (it) {
-            Category.BEERS -> 8.0
-            Category.WINES -> 18.0
-            Category.COCKTAILS -> 20.0
-            Category.SPIRITS -> 50.0
-            Category.SPECIALITY -> 25.0
-            Category.LOW_ALCOHOL -> 5.0
         }
     }
 }
