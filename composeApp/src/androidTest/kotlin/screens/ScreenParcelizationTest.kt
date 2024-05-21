@@ -129,12 +129,19 @@ class ScreenParcelizationTest {
     }
 
     @Test
+    fun shouldParcelizeCreateDrinkInfoScreen() {
+        val screen = CreateDrinkInfoScreen(proto = testDrink)
+        val newScreen = parcelizeAndRead(screen)
+        assertEquals(screen, newScreen)
+        assertEquals(testDrink, newScreen.proto)
+    }
+
+    @Test
     fun shouldParcelizeSingletonScreens() {
         testSingletonScreenParcelization(AboutScreen)
         testSingletonScreenParcelization(SettingsScreen)
         testSingletonScreenParcelization(DisclosureScreen)
         testSingletonScreenParcelization(HomeScreen)
-        testSingletonScreenParcelization(CreateDrinkInfoScreen)
     }
 
     private fun testSingletonScreenParcelization(singletonScreen: Screen) {

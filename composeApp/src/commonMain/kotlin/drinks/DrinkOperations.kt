@@ -60,7 +60,14 @@ class DrinkOperations(private val db: BeerDatabase) {
             rating = drink.rating,
             note = drink.note,
         )
-        val rowId = db.drinkLibraryQueries.lastInsertedId().executeAsOne()
+        // There is no way of getting SQLite to return the updated row id in an
+        // UPSERT statement (if it updated instead of creating a new record),
+        // as RETURNING is not yet supported by SQLite 3.32.x (least supported version).
+        // Hence, just get the id via the unique name+producer index
+        val rowId = db.drinkLibraryQueries.selectIdByProducerName(
+            name = drink.name,
+            producer = drink.producer
+        ).executeAsOne()
         return DrinkInfo.fromRecord(db.drinkLibraryQueries.selectById(rowId).executeAsOne())
     }
 

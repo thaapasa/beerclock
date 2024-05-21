@@ -78,4 +78,16 @@ open class BasicDrinkInfo(
         // so it works for hashCode as well
         return key.hashCode()
     }
+
+    companion object {
+        val default = BasicDrinkInfo(
+            "default",
+            name = "",
+            producer = "",
+            quantityCl = 33.0,
+            abvPercentage = 4.5,
+            image = DrinkImage.GENERIC_DRINK,
+        )
+    }
 }
+

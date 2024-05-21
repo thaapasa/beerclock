@@ -12,7 +12,7 @@ import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import org.koin.core.component.KoinComponent
 
-private val logger = getLogger("DrinkStatusViewModel")
+private val logger = getLogger("DrinkObserver")
 
 open class DrinkObservingViewModel(
     snackbar: SnackbarHostState,

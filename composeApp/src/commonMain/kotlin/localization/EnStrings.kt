@@ -236,6 +236,7 @@ object EnStrings : Strings {
         override val saveDrinkTitle = "Save"
         override val addDefaultDrinks = "Add default drinks"
         override val defaultDrinksAdded = "Default drinks added to library!"
+        override fun drinkAdded(drink: DrinkInfo) = "Added ${drink.name}"
         override fun drinkDeleted(drink: DrinkInfo) = "Deleted ${drink.name}"
     }
 
@@ -472,6 +473,7 @@ object EnStrings : Strings {
         override val newItemTitle = "Add ingredient"
         override val editItemTitle = "Edit ingredient"
         override val save = "Save"
+        override val saveToLibrary = "Save as drink"
         override fun drinkDeleted(mix: MixedDrink) = "Deleted ${mix.info.name}"
     }
 

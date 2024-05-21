@@ -235,6 +235,7 @@ interface Strings {
         val saveDrinkTitle: String
         val addDefaultDrinks: String
         val defaultDrinksAdded: String
+        fun drinkAdded(drink: DrinkInfo): String
         fun drinkDeleted(drink: DrinkInfo): String
     }
 
@@ -376,6 +377,7 @@ interface Strings {
         val newItemTitle: String
         val editItemTitle: String
         val save: String
+        val saveToLibrary: String
         fun drinkDeleted(mix: MixedDrink): String
     }
 

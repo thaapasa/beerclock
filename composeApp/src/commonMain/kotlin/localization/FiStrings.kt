@@ -306,6 +306,7 @@ object FiStrings : Strings {
         override val saveDrinkTitle = "Tallenna"
         override val addDefaultDrinks = "Lisää esimerkkijuomat"
         override val defaultDrinksAdded = "Esimerkkijuomat lisätty kirjastoon!"
+        override fun drinkAdded(drink: DrinkInfo) = "Lisätty ${drink.name}"
         override fun drinkDeleted(drink: DrinkInfo) = "Poistettu ${drink.name}"
     }
 
@@ -496,6 +497,7 @@ object FiStrings : Strings {
         override val newItemTitle = "Muokkaa ainesosaa"
         override val editItemTitle = "Lisää ainesosa"
         override val save = "Tallenna"
+        override val saveToLibrary = "Tee juoma"
         override fun drinkDeleted(mix: MixedDrink) = "Poistettu ${mix.info.name}"
     }
 

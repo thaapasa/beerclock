@@ -1,11 +1,18 @@
 package fi.tuska.beerclock.screens.mixcalculator
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,7 +41,14 @@ private val gap = 16.dp
 fun ColumnScope.MixedDrinkDialog(mix: MixedDrinkInfo, drinksVm: MixedDrinksViewModel) {
     val vm = rememberWithDispose { MixedDrinkDialogViewModel(mix) }
     val strings = Strings.get()
-    DrinkDialog(drink = mix.asDrinkInfo(), onClose = drinksVm::closeDialog) {
+    DrinkDialog(drink = mix.asDrinkInfo(), onClose = drinksVm::closeDialog, buttonContent = {
+        MixedDrinkDialogButtons(
+            mix,
+            onModify = drinksVm::modifyMix,
+            onDelete = drinksVm::deleteMix,
+            onSaveToLibrary = drinksVm::saveToLibrary,
+        )
+    }) {
         vm.mixData?.let { data ->
             Row {
                 Column(modifier = Modifier.weight(1f)) {
@@ -79,6 +93,44 @@ fun ColumnScope.MixedDrinkDialog(mix: MixedDrinkInfo, drinksVm: MixedDrinksViewM
                 modifier = Modifier.padding(bottom = 2.dp)
             )
             Text(it, style = MaterialTheme.typography.bodyMedium)
+        }
+    }
+}
+
+
+@Composable
+fun MixedDrinkDialogButtons(
+    mix: MixedDrinkInfo,
+    onModify: (mix: MixedDrinkInfo) -> Unit,
+    onDelete: (mix: MixedDrinkInfo) -> Unit,
+    onSaveToLibrary: (mix: MixedDrinkInfo) -> Unit,
+) {
+    val strings = Strings.get()
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.End
+    ) {
+        IconButton({ onModify(mix) }) {
+            AppIcon.DELETE.icon(
+                modifier = Modifier.size(ButtonDefaults.IconSize),
+                tint = MaterialTheme.colorScheme.tertiary
+            )
+        }
+        IconButton({ onDelete(mix) }) {
+            AppIcon.EDIT.icon(
+                modifier = Modifier.size(ButtonDefaults.IconSize),
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
+        Spacer(modifier = Modifier.width(16.dp))
+        FilledTonalButton(
+            { onSaveToLibrary(mix) },
+            contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+            colors = ButtonDefaults.filledTonalButtonColors(contentColor = MaterialTheme.colorScheme.primary)
+        ) {
+            AppIcon.DRINK.icon(modifier = Modifier.size(ButtonDefaults.IconSize))
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+            Text(strings.mixedDrinks.saveToLibrary)
         }
     }
 }

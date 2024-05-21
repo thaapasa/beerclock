@@ -141,7 +141,7 @@ fun Gauge(
             ) {
                 iconPainter?.let {
                     Icon(
-                        contentDescription = "Gauge icon",
+                        contentDescription = "",
                         painter = it,
                         tint = color,
                     )

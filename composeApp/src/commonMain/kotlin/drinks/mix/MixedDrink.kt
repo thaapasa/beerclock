@@ -129,4 +129,15 @@ data class MixedDrink(
     val totalAlcoholCl = items.sumOf { it.quantityCl * it.abvPercentage / 100.0 }
     val totalAbv = if (totalQuantityCl > 0) (totalAlcoholCl / totalQuantityCl) * 100.0 else 0.0
     val totalUnits = BacFormulas.getUnitsFromAlcoholWeight(totalAlcoholGrams, prefs.prefs)
+
+    fun asDrinkInfo(): BasicDrinkInfo {
+        return BasicDrinkInfo(
+            key = key,
+            name = info.name,
+            image = info.image,
+            category = info.category,
+            abvPercentage = totalAbv,
+            quantityCl = totalQuantityCl,
+        )
+    }
 }

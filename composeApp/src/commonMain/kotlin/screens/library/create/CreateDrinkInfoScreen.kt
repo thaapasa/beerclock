@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.screens.ParcelableScreen
 import fi.tuska.beerclock.screens.drinks.DrinkDialogLayout
@@ -15,12 +16,12 @@ import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.util.CommonParcelize
 
 @CommonParcelize
-object CreateDrinkInfoScreen : ParcelableScreen {
+class CreateDrinkInfoScreen(val proto: BasicDrinkInfo? = null) : ParcelableScreen {
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val vm = rememberWithDispose { CreateDrinkInfoViewModel(navigator) }
+        val vm = rememberWithDispose { CreateDrinkInfoViewModel(navigator, proto) }
         val strings = Strings.get()
 
         DrinkDialogLayout(title = strings.library.newDrinkTitle, saveButton = { modifier ->

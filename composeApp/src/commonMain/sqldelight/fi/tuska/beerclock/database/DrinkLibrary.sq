@@ -32,6 +32,11 @@ SELECT *
 FROM drinkLibrary
 WHERE id = :id;
 
+selectIdByProducerName:
+SELECT id
+FROM drinkLibrary
+WHERE name=:name AND producer=:producer;
+
 selectAllByCategory:
 SELECT *
 FROM drinkLibrary
