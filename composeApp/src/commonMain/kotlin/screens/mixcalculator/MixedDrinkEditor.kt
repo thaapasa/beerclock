@@ -1,6 +1,5 @@
 package fi.tuska.beerclock.screens.mixcalculator
 
-import MixedDrinkItemListItem
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -84,12 +83,18 @@ fun ColumnScope.MixedDrinkEditor(vm: MixedDrinkEditorViewModel, onClose: () -> U
     ) {
         Text(strings.mixedDrinks.itemsTitle)
         Spacer(modifier = Modifier.weight(1f))
-        UnitAvatar(units = vm.units)
-        Spacer(modifier = Modifier.width(8.dp))
         Gauge(
             value = vm.abvGauge,
             color = MaterialTheme.colorScheme.primary,
         )
+        Spacer(modifier = Modifier.width(8.dp))
+        Gauge(
+            value = vm.quantityGauge,
+            color = MaterialTheme.colorScheme.primary,
+            formatter = { Strings.get().drink.quantity(it) }
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        UnitAvatar(units = vm.units)
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = vm::addNew) {
             AppIcon.ADD_CIRCLE.icon(tint = MaterialTheme.colorScheme.primary)
@@ -97,7 +102,12 @@ fun ColumnScope.MixedDrinkEditor(vm: MixedDrinkEditorViewModel, onClose: () -> U
     }
     Column(modifier = Modifier.fillMaxWidth()) {
         vm.items.map {
-            MixedDrinkItemListItem(it, onModify = vm::editItem, onDelete = vm::deleteItem)
+            MixedDrinkItemListItem(
+                it,
+                totalQuantityCl = vm.quantityCl,
+                onModify = vm::editItem,
+                onDelete = vm::deleteItem
+            )
         }
     }
     vm.itemEditor?.let {
@@ -119,8 +129,14 @@ class MixedDrinkEditorViewModel(proto: MixedDrink) : ViewModel(), KoinComponent 
     var itemEditor by mutableStateOf<MixedDrinkItemEditorViewModel?>(null)
         private set
 
+
     val abvGauge = GaugeValue(initialValue = 0.0, appIcon = AppIcon.BOLT, maxValue = defaultMaxAbv)
+    val quantityGauge =
+        GaugeValue(initialValue = 0.0, appIcon = AppIcon.GLASS_FULL, maxValue = 100.0)
     var units by mutableStateOf(0.0)
+        private set
+    var quantityCl by mutableStateOf(0.0)
+        private set
 
     val isNewMix = id == null
 
@@ -131,9 +147,11 @@ class MixedDrinkEditorViewModel(proto: MixedDrink) : ViewModel(), KoinComponent 
 
     private fun recalc() {
         val totalQuantityCl = items.sumOf { it.quantityCl }
+        quantityCl = totalQuantityCl
         val totalAlcoholCl = items.sumOf { it.quantityCl * it.abvPercentage / 100.0 }
         val totalAbv = if (totalQuantityCl > 0.0) totalAlcoholCl * 100.0 / totalQuantityCl else 0.0
         abvGauge.setValue(totalAbv, maxValuesByCategory[category] ?: defaultMaxAbv)
+        quantityGauge.setValue(totalQuantityCl, totalQuantityCl)
         units = BacFormulas.getUnitsFromDisplayQuantityAbv(totalQuantityCl, totalAbv, prefs.prefs)
     }
 

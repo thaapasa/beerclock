@@ -67,11 +67,14 @@ class GaugeValueWithHelp(
     val helpText: HelpText,
 ) : GaugeValue(initialValue, icon, appIcon, maxValue)
 
+fun defaultGaugeValueFormatter(v: Double) = Strings.get().dec1F(v.toDouble())
+
 @Composable
 fun Gauge(
     value: GaugeValue,
     color: Color = MaterialTheme.colorScheme.primary,
     size: Dp? = null,
+    formatter: (v: Double) -> String = ::defaultGaugeValueFormatter,
     modifier: Modifier = Modifier,
 ) {
     Gauge(
@@ -79,11 +82,13 @@ fun Gauge(
         value = value.value.toFloat(),
         size = size,
         icon = value.icon,
+        formatter = formatter,
         iconPainter = value.appIcon?.painter(),
         color = if (value.isOverLimit()) MaterialTheme.colorScheme.tertiary else color,
         modifier = modifier
     )
 }
+
 
 @Composable
 fun Gauge(
@@ -91,6 +96,7 @@ fun Gauge(
     value: Float,
     iconPainter: Painter? = null,
     size: Dp? = null,
+    formatter: (v: Double) -> String = ::defaultGaugeValueFormatter,
     icon: @Composable ((color: Color) -> Unit)? = null,
     color: Color = MaterialTheme.colorScheme.primary,
     modifier: Modifier = Modifier,
@@ -123,7 +129,7 @@ fun Gauge(
             )
         }
         Text(
-            text = Strings.get().dec1F(v.value.toDouble()),
+            text = formatter(v.value.toDouble()),
             color = MaterialTheme.colorScheme.onSecondaryContainer,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.align(Alignment.Center).scale(scale),
