@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.drinks
 
 import fi.tuska.beerclock.bac.BacFormulas
+import fi.tuska.beerclock.database.KeyedObject
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.CommonParcelable
@@ -35,7 +36,7 @@ open class BasicDrinkInfo(
     val note: String? = null,
     /** Categorization of the drink */
     val category: Category? = null,
-) : KoinComponent, CommonParcelable {
+) : KeyedObject(key), KoinComponent, CommonParcelable {
     protected val prefs: GlobalUserPreferences = get()
 
     /** Amount of alcohol in the drink, in liters */
@@ -62,21 +63,6 @@ open class BasicDrinkInfo(
         val fullHours = minutesToBurn / 60
         val fullMinutes = minutesToBurn % 60
         return fullHours.hours + fullMinutes.minutes
-    }
-
-    override fun equals(other: Any?): Boolean {
-        // Let's go with: to be equal drink infos must be of the same class and have the same key.
-        // This should work for our purposes, for all subclasses.
-        // We don't want different subclasses to mix'n'match
-        return other is BasicDrinkInfo && other::class.isInstance(this) && this::class.isInstance(
-            other
-        ) && key == other.key
-    }
-
-    override fun hashCode(): Int {
-        // by definition key must uniquely identify the item and must change if contents change
-        // so it works for hashCode as well
-        return key.hashCode()
     }
 
     companion object {

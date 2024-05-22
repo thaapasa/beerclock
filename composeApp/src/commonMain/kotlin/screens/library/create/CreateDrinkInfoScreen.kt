@@ -16,7 +16,7 @@ import fi.tuska.beerclock.ui.composables.rememberWithDispose
 import fi.tuska.beerclock.util.CommonParcelize
 
 @CommonParcelize
-class CreateDrinkInfoScreen(val proto: BasicDrinkInfo? = null) : ParcelableScreen {
+data class CreateDrinkInfoScreen(val proto: BasicDrinkInfo? = null) : ParcelableScreen {
 
     @Composable
     override fun Content() {

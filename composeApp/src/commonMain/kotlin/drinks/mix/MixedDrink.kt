@@ -2,6 +2,7 @@ package fi.tuska.beerclock.drinks.mix
 
 import fi.tuska.beerclock.bac.BacFormulas
 import fi.tuska.beerclock.database.GetMixedDrinkOverviews
+import fi.tuska.beerclock.database.KeyedObject
 import fi.tuska.beerclock.database.MixedDrink
 import fi.tuska.beerclock.database.MixedDrinkComponent
 import fi.tuska.beerclock.database.toDbTime
@@ -23,7 +24,7 @@ data class MixedDrinkInfo(
     val image: DrinkImage = DrinkImage.CAT_PUNCHES,
     val category: Category? = Category.COCKTAILS,
     val key: String = "$id-${Clock.System.now().toDbTime()}",
-) : CommonParcelable {
+) : KeyedObject(key), CommonParcelable {
 
     fun asDrinkInfo(): BasicDrinkInfo {
         return BasicDrinkInfo(
@@ -54,7 +55,7 @@ data class MixedDrinkOverview(
     val info: MixedDrinkInfo,
     val quantityLiters: Double,
     val alcoholLiters: Double,
-) : CommonParcelable {
+) : KeyedObject(info.key), CommonParcelable {
     val key = info.key
 
     fun asDrinkInfo(): BasicDrinkInfo {
@@ -93,7 +94,7 @@ data class MixedDrinkItem(
     val abvPercentage: Double,
     val quantityCl: Double,
     val key: String = "$id-${Clock.System.now().toDbTime()}",
-) : CommonParcelable, KoinComponent {
+) : KeyedObject(key), CommonParcelable, KoinComponent {
 
     val prefs: GlobalUserPreferences = get()
 
