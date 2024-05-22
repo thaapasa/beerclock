@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -18,10 +19,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
@@ -64,35 +67,46 @@ class GaugeValueWithHelp(
     val helpText: HelpText,
 ) : GaugeValue(initialValue, icon, appIcon, maxValue)
 
+fun defaultGaugeValueFormatter(v: Double) = Strings.get().dec1F(v.toDouble())
+
 @Composable
 fun Gauge(
     value: GaugeValue,
     color: Color = MaterialTheme.colorScheme.primary,
+    size: Dp? = null,
+    formatter: (v: Double) -> String = ::defaultGaugeValueFormatter,
     modifier: Modifier = Modifier,
 ) {
     Gauge(
         position = value.position().toFloat(),
         value = value.value.toFloat(),
+        size = size,
         icon = value.icon,
+        formatter = formatter,
         iconPainter = value.appIcon?.painter(),
         color = if (value.isOverLimit()) MaterialTheme.colorScheme.tertiary else color,
         modifier = modifier
     )
 }
 
+
 @Composable
 fun Gauge(
     position: Float,
     value: Float,
     iconPainter: Painter? = null,
+    size: Dp? = null,
+    formatter: (v: Double) -> String = ::defaultGaugeValueFormatter,
     icon: @Composable ((color: Color) -> Unit)? = null,
     color: Color = MaterialTheme.colorScheme.primary,
     modifier: Modifier = Modifier,
 ) {
     val v = animateFloatAsState(targetValue = value)
     val p = animateFloatAsState(targetValue = position)
+    val width = size ?: 64.dp
+    val scale = width / 64.dp
     Box(
-        modifier = modifier.aspectRatio(1f).background(
+        modifier = modifier.width(width).aspectRatio(1f).background(
             color = MaterialTheme.colorScheme.secondaryContainer,
             shape = CircleShape
         )
@@ -115,10 +129,10 @@ fun Gauge(
             )
         }
         Text(
-            text = Strings.get().dec1F(v.value.toDouble()),
+            text = formatter(v.value.toDouble()),
             color = MaterialTheme.colorScheme.onSecondaryContainer,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier.align(Alignment.Center).scale(scale),
         )
         (iconPainter ?: icon)?.let {
             Box(
@@ -127,9 +141,9 @@ fun Gauge(
             ) {
                 iconPainter?.let {
                     Icon(
-                        contentDescription = "Gauge icon",
+                        contentDescription = "",
                         painter = it,
-                        tint = color
+                        tint = color,
                     )
                 }
                 icon?.invoke(color)

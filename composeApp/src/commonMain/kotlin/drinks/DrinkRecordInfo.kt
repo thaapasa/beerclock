@@ -39,7 +39,7 @@ class DrinkRecordInfo(
             id = record.id,
             time = Instant.fromDbTime(record.time),
             info = BasicDrinkInfo(
-                key = record.id.toString(),
+                key = "${record.id}-${record.version}",
                 producer = record.producer,
                 name = record.name,
                 quantityCl = record.quantity_liters * 100,

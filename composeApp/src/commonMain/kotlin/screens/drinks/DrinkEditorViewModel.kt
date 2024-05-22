@@ -12,7 +12,6 @@ import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
 import fi.tuska.beerclock.drinks.DrinkService
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.events.EventBus
-import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.images.toDrinkImage
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.composables.ViewModel
@@ -24,6 +23,8 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+
+private val defaultDrink = BasicDrinkInfo.default
 
 open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     protected val drinkService = DrinkService()
@@ -37,11 +38,11 @@ open class DrinkEditorViewModel : ViewModel(), KoinComponent {
     var name by mutableStateOf("")
     var note by mutableStateOf("")
     var rating by mutableStateOf<Double?>(null)
-    var abv by mutableStateOf(4.5)
-    var quantityCl by mutableStateOf(33.0)
+    var abv by mutableStateOf(defaultDrink.abvPercentage)
+    var quantityCl by mutableStateOf(defaultDrink.quantityCl)
     var date by mutableStateOf(LocalDate(2000, 1, 1))
     var time by mutableStateOf(LocalTime(0, 0, 0))
-    var image by mutableStateOf(DrinkImage.GENERIC_DRINK)
+    var image by mutableStateOf(defaultDrink.image)
     var category by mutableStateOf<Category?>(null)
     var isSaving by mutableStateOf(false)
 

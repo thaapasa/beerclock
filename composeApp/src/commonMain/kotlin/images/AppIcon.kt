@@ -21,6 +21,7 @@ import beerclock.composeapp.generated.resources.ic_contract
 import beerclock.composeapp.generated.resources.ic_date_range
 import beerclock.composeapp.generated.resources.ic_delete
 import beerclock.composeapp.generated.resources.ic_edit
+import beerclock.composeapp.generated.resources.ic_experiment
 import beerclock.composeapp.generated.resources.ic_female
 import beerclock.composeapp.generated.resources.ic_glass_full
 import beerclock.composeapp.generated.resources.ic_graph
@@ -61,6 +62,7 @@ enum class AppIcon(private val drawable: DrawableResource) : Image {
     CLOSE(Res.drawable.ic_close),
     CONTRACT(Res.drawable.ic_contract),
     DELETE(Res.drawable.ic_delete),
+    EXPERIMENT(Res.drawable.ic_experiment),
     DRINK(Res.drawable.ic_local_bar),
     EDIT(Res.drawable.ic_edit),
     FEMALE(Res.drawable.ic_female),

@@ -1,13 +1,19 @@
 package fi.tuska.beerclock.screens.library.create
 
 import cafe.adriel.voyager.navigator.Navigator
+import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.events.DrinkInfoAddedEvent
 import fi.tuska.beerclock.logging.getLogger
 import fi.tuska.beerclock.screens.drinks.DrinkEditorViewModel
 
 private val logger = getLogger("NewDrinkScreen")
 
-class CreateDrinkInfoViewModel(private val navigator: Navigator) : DrinkEditorViewModel() {
+class CreateDrinkInfoViewModel(private val navigator: Navigator, proto: BasicDrinkInfo? = null) :
+    DrinkEditorViewModel() {
+
+    init {
+        proto?.let { setValues(it) }
+    }
 
     fun saveDrink() {
         savingAction {

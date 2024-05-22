@@ -5,12 +5,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import fi.tuska.beerclock.localization.Strings
-import fi.tuska.beerclock.util.safeToDouble
+import fi.tuska.beerclock.util.safeToInt
 
 @Composable
-fun DecimalField(
-    value: Double,
-    onValueChange: (value: Double) -> Unit,
+fun IntegerField(
+    value: Int,
+    onValueChange: (value: Int) -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
     label: @Composable (() -> Unit)? = null,
     supportingText: @Composable (() -> Unit)? = null,
@@ -23,13 +23,13 @@ fun DecimalField(
         value,
         onValueChange,
         valueToString = { it.toString() },
-        valueFromString = ::safeToDouble,
+        valueFromString = ::safeToInt,
         leadingIcon = leadingIcon,
         label = label,
         supportingText = supportingText,
         trailingIcon = trailingIcon,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         modifier = modifier,
-        errorText = errorText ?: strings.errors.invalidDecimal,
+        errorText = errorText ?: strings.errors.invalidInteger,
     )
 }

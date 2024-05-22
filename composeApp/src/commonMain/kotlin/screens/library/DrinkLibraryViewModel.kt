@@ -1,9 +1,7 @@
 package fi.tuska.beerclock.screens.library
 
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -30,15 +28,13 @@ import fi.tuska.beerclock.screens.library.create.CreateDrinkInfoScreen
 import fi.tuska.beerclock.screens.library.modify.EditDrinkInfoScreen
 import fi.tuska.beerclock.screens.newdrink.TextListInfo
 import fi.tuska.beerclock.ui.composables.SnackbarViewModel
-import kotlinx.coroutines.Dispatchers
+import fi.tuska.beerclock.ui.composables.showNotificationWithCancel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -65,8 +61,15 @@ class DrinkLibraryViewModel(
     init {
         val observer = EventObserver(this)
         observer.observeEventsOfType<DrinkInfoDeletedEvent> { showDrinkDeleted(it.drink) }
-        observer.observeEventsOfType<DrinkInfoAddedEvent> { scrollToItemId = it.drink.id }
-        observer.observeEventsOfType<DrinkInfoUpdatedEvent> { scrollToItemId = it.drink.id }
+        observer.observeEventsOfType<DrinkInfoAddedEvent> {
+            selectedCategory = it.drink.category
+            scrollToItemId = it.drink.id
+            showDrinkAdded(it.drink)
+        }
+        observer.observeEventsOfType<DrinkInfoUpdatedEvent> {
+            selectedCategory = it.drink.category
+            scrollToItemId = it.drink.id
+        }
     }
 
     fun categoryHeaderInfo(): CategoryHeaderInfo {
@@ -137,7 +140,7 @@ class DrinkLibraryViewModel(
     fun addNewDrink() {
         this.viewingDrink = null
         logger.info("Adding new drink")
-        navigator.push(CreateDrinkInfoScreen)
+        navigator.push(CreateDrinkInfoScreen(proto = selectedCategory?.toBasicDrinkInfo()))
     }
 
     fun viewDrink(drink: DrinkInfo) {
@@ -158,29 +161,25 @@ class DrinkLibraryViewModel(
         }
     }
 
+    private fun showDrinkAdded(drink: DrinkInfo) {
+        val strings = Strings.get()
+        showNotificationWithCancel(
+            snackbar,
+            strings.library.drinkAdded(drink),
+            strings.remove
+        ) {
+            drinks.deleteDrinkInfoById(drink.id)
+            logger.info("Deleted $drink")
+        }
+    }
 
     private fun showDrinkDeleted(drink: DrinkInfo) {
         val strings = Strings.get()
-        launch(Dispatchers.Main) {
-            val result =
-                snackbar.showSnackbar(
-                    strings.library.drinkDeleted(drink),
-                    actionLabel = strings.cancel,
-                    duration = SnackbarDuration.Short
-                )
-            if (result == SnackbarResult.ActionPerformed) {
-                // Remove added drink
-                withContext(Dispatchers.IO) {
-                    val restored =
-                        drinks.insertDrinkInfo(
-                            DrinkDetailsFromEditor.fromBasicInfo(
-                                drink,
-                                Clock.System.now()
-                            )
-                        )
-                    logger.info("Restored $restored to db")
-                }
-            }
+        showNotificationWithCancel(snackbar, strings.library.drinkDeleted(drink), strings.cancel) {
+            val restored = drinks.insertDrinkInfo(
+                DrinkDetailsFromEditor.fromBasicInfo(drink, Clock.System.now())
+            )
+            logger.info("Restored $restored to db")
         }
     }
 

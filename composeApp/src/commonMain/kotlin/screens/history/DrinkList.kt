@@ -11,10 +11,10 @@ fun DrinkList(
     drinkList: List<DrinkRecordInfo>,
     onModify: ((drink: DrinkRecordInfo) -> Unit)? = null,
     onDelete: ((drink: DrinkRecordInfo) -> Unit)? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     return LazyColumn(modifier = modifier) {
-        items(drinkList, key = { it.id }) {
+        items(drinkList, key = { it.key }) {
             DrinkListItem(it, onModify = onModify, onDelete = onDelete)
         }
     }

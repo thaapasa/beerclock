@@ -27,6 +27,17 @@ enum class Category(
     SPECIALITY(DrinkImage.CAT_SPECIALITY, "Speciality Drinks", "Erikoisjuomat", 7),
     LOW_ALCOHOL(DrinkImage.CAT_LOW_ALCOHOL, "Low-Alcohol Drinks", "Miedot alkoholijuomat", 8);
 
+    fun toBasicDrinkInfo() =
+        BasicDrinkInfo(
+            "category-${image.name}",
+            name = "",
+            producer = "",
+            quantityCl = BasicDrinkInfo.default.quantityCl,
+            abvPercentage = BasicDrinkInfo.default.abvPercentage,
+            image = BasicDrinkInfo.default.image,
+            category = this
+        )
+
     companion object {
         fun forName(name: String): Category? = try {
             Category.valueOf(name)

@@ -1,6 +1,7 @@
 package fi.tuska.beerclock.drinks
 
 import fi.tuska.beerclock.bac.BacFormulas
+import fi.tuska.beerclock.database.KeyedObject
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.CommonParcelable
@@ -15,8 +16,8 @@ import kotlin.time.Duration.Companion.minutes
 @CommonParcelize
 open class BasicDrinkInfo(
     /**
-     * Identifying key to be used to determine identity in lists etc. Could be a
-     * database index column, or some other uniquely identifying field.
+     * Identifying key to be used to determine identity and state in lists etc. Must uniquely
+     * identify the item and must change whenever the data contents change.
      */
     val key: String,
     /** Name of the drink */
@@ -35,14 +36,15 @@ open class BasicDrinkInfo(
     val note: String? = null,
     /** Categorization of the drink */
     val category: Category? = null,
-) : KoinComponent, CommonParcelable {
+) : KeyedObject(key), KoinComponent, CommonParcelable {
     protected val prefs: GlobalUserPreferences = get()
 
     /** Amount of alcohol in the drink, in liters */
-    val alcoholLiters: Double = quantityCl * abvPercentage / 10_000.0
+    val alcoholLiters: Double =
+        BacFormulas.getAlcoholLiters(quantityCl = quantityCl, abvPercentage = abvPercentage)
 
     /** Amount of alcohol in the drink, in grams */
-    val alcoholGrams: Double = alcoholLiters * BacFormulas.alcoholDensity
+    val alcoholGrams: Double = BacFormulas.getAlcoholGrams(alcoholLiters = alcoholLiters)
 
     /**
      * Given the selection of how many grams of alcohol are there in a single standard unit:
@@ -63,12 +65,15 @@ open class BasicDrinkInfo(
         return fullHours.hours + fullMinutes.minutes
     }
 
-    override fun equals(other: Any?): Boolean {
-        // Let's go with: to be equal drink infos must be of the same class and have the same key.
-        // This should work for our purposes, for all subclasses.
-        // We don't want different subclasses to mix'n'match
-        return other is BasicDrinkInfo && other::class.isInstance(this) && this::class.isInstance(
-            other
-        ) && key == other.key
+    companion object {
+        val default = BasicDrinkInfo(
+            "default",
+            name = "",
+            producer = "",
+            quantityCl = 33.0,
+            abvPercentage = 4.5,
+            image = DrinkImage.GENERIC_DRINK,
+        )
     }
 }
+

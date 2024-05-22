@@ -3,6 +3,7 @@ package fi.tuska.beerclock.localization
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
+import fi.tuska.beerclock.drinks.mix.MixedDrink
 import fi.tuska.beerclock.screens.statistics.StatisticsMonth
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.screens.statistics.StatisticsWeek
@@ -32,7 +33,8 @@ object EnStrings : Strings {
 
     override val dec1F = createNumberFormatter(1)
     override val dec2F = createNumberFormatter(2)
-
+    override val amountUnit = "×"
+    override val amountLabel = "Amount"
 
     override fun weekday(day: DayOfWeek): String {
         return when (day) {
@@ -123,6 +125,7 @@ object EnStrings : Strings {
         override val drinkLibrary = "Drink library"
         override val history = "History"
         override val statistics = "Statistics"
+        override val mixedDrinkCalculator = "Mixed drinks"
     }
 
 
@@ -164,7 +167,9 @@ object EnStrings : Strings {
     override val errors = Errors
 
     object Errors : Strings.ErrorStrings {
+        override val invalidValue = "Not a valid value"
         override val invalidDecimal = "Not a valid decimal value"
+        override val invalidInteger = "Not a valid integer value"
     }
 
 
@@ -231,6 +236,7 @@ object EnStrings : Strings {
         override val saveDrinkTitle = "Save"
         override val addDefaultDrinks = "Add default drinks"
         override val defaultDrinksAdded = "Default drinks added to library!"
+        override fun drinkAdded(drink: DrinkInfo) = "Added ${drink.name}"
         override fun drinkDeleted(drink: DrinkInfo) = "Deleted ${drink.name}"
     }
 
@@ -452,6 +458,23 @@ object EnStrings : Strings {
         override val totalsTitle = "All drinks"
         override val unitsLabel = "Units"
         override val dayLabel = "Day"
+    }
+
+
+    /* Mixed drinks screen */
+    override val mixedDrinks = MixedDrinks
+
+    object MixedDrinks : Strings.MixedDrinksStrings {
+        override val title: String = "Mixed drinks"
+        override val itemsTitle = "Ingredients"
+        override val instructionsTitle = "Instructions"
+        override val newMixTitle = "New drink mix"
+        override val editMixTitle = "Edit drink mix"
+        override val newItemTitle = "Add ingredient"
+        override val editItemTitle = "Edit ingredient"
+        override val save = "Save"
+        override val saveToLibrary = "Save as drink"
+        override fun drinkDeleted(mix: MixedDrink) = "Deleted ${mix.info.name}"
     }
 
 

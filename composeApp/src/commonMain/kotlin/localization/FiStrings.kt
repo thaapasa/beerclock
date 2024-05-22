@@ -3,6 +3,7 @@ package fi.tuska.beerclock.localization
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
+import fi.tuska.beerclock.drinks.mix.MixedDrink
 import fi.tuska.beerclock.screens.statistics.StatisticsMonth
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.screens.statistics.StatisticsWeek
@@ -32,6 +33,8 @@ object FiStrings : Strings {
 
     override val dec1F = createNumberFormatter(1)
     override val dec2F = createNumberFormatter(2)
+    override val amountUnit = "×"
+    override val amountLabel = "Määrä"
 
     override fun weekday(day: DayOfWeek): String {
         return when (day) {
@@ -148,6 +151,7 @@ object FiStrings : Strings {
         override val drinkLibrary = "Juomakirjasto"
         override val history = "Historia"
         override val statistics = "Tilastot"
+        override val mixedDrinkCalculator = "Juomasekoitukset"
     }
 
 
@@ -188,7 +192,9 @@ object FiStrings : Strings {
     override val errors = Errors
 
     object Errors : Strings.ErrorStrings {
+        override val invalidValue = "Virheellinen syöte"
         override val invalidDecimal = "Syötä desimaaliluku"
+        override val invalidInteger = "Syötä kokonaisluku"
     }
 
 
@@ -300,6 +306,7 @@ object FiStrings : Strings {
         override val saveDrinkTitle = "Tallenna"
         override val addDefaultDrinks = "Lisää esimerkkijuomat"
         override val defaultDrinksAdded = "Esimerkkijuomat lisätty kirjastoon!"
+        override fun drinkAdded(drink: DrinkInfo) = "Lisätty ${drink.name}"
         override fun drinkDeleted(drink: DrinkInfo) = "Poistettu ${drink.name}"
     }
 
@@ -475,6 +482,23 @@ object FiStrings : Strings {
         override val totalsTitle = "Kaikki juomat"
         override val unitsLabel = "Annoksia"
         override val dayLabel = "Päivä"
+    }
+
+
+    /* Mixed drinks screen */
+    override val mixedDrinks = MixedDrinks
+
+    object MixedDrinks : Strings.MixedDrinksStrings {
+        override val title: String = "Juomasekoitukset"
+        override val itemsTitle = "Ainekset"
+        override val instructionsTitle = "Valmistusohjeet"
+        override val newMixTitle = "Uusi sekoitus"
+        override val editMixTitle = "Muokkaa sekoitusta"
+        override val newItemTitle = "Muokkaa ainesosaa"
+        override val editItemTitle = "Lisää ainesosa"
+        override val save = "Tallenna"
+        override val saveToLibrary = "Tee juoma"
+        override fun drinkDeleted(mix: MixedDrink) = "Poistettu ${mix.info.name}"
     }
 
 

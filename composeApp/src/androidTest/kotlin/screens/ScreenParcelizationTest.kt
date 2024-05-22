@@ -9,6 +9,9 @@ import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.StatisticsByCategory
 import fi.tuska.beerclock.drinks.drinkDef
+import fi.tuska.beerclock.drinks.mix.MixedDrink
+import fi.tuska.beerclock.drinks.mix.MixedDrinkInfo
+import fi.tuska.beerclock.drinks.mix.MixedDrinkItem
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.screens.about.AboutScreen
 import fi.tuska.beerclock.screens.disclosure.DisclosureScreen
@@ -18,6 +21,8 @@ import fi.tuska.beerclock.screens.history.HistoryScreen
 import fi.tuska.beerclock.screens.library.DrinkLibraryScreen
 import fi.tuska.beerclock.screens.library.create.CreateDrinkInfoScreen
 import fi.tuska.beerclock.screens.library.modify.EditDrinkInfoScreen
+import fi.tuska.beerclock.screens.mixcalculator.MixedDrinkEditorScreen
+import fi.tuska.beerclock.screens.mixcalculator.MixedDrinksScreen
 import fi.tuska.beerclock.screens.newdrink.NewDrinkSearchScreen
 import fi.tuska.beerclock.screens.settings.SettingsScreen
 import fi.tuska.beerclock.screens.statistics.MonthlyStatisticsData
@@ -129,12 +134,37 @@ class ScreenParcelizationTest {
     }
 
     @Test
+    fun shouldParcelizeCreateDrinkInfoScreen() {
+        val screen = CreateDrinkInfoScreen(proto = testDrink)
+        val newScreen = parcelizeAndRead(screen)
+        assertEquals(screen, newScreen)
+        assertEquals(testDrink, newScreen.proto)
+    }
+
+    @Test
+    fun shouldParcelizeMizedDrinkEditorScreen() {
+        val info = MixedDrinkInfo(
+            name = "Punch",
+            category = Category.COCKTAILS,
+            instructions = "Mix and enjoy",
+            image = DrinkImage.PUNCH_2
+        )
+        val component = MixedDrinkItem(name = "Booze", quantityCl = 50.0, abvPercentage = 38.0)
+        val mix = MixedDrink(info = info, items = listOf(component))
+        val screen = MixedDrinkEditorScreen(proto = mix)
+        val newScreen = parcelizeAndRead(screen)
+        assertEquals(screen, newScreen)
+        assertEquals(newScreen.proto, mix)
+        assertEquals(newScreen.proto?.totalQuantityCl, 50.0)
+    }
+
+    @Test
     fun shouldParcelizeSingletonScreens() {
         testSingletonScreenParcelization(AboutScreen)
         testSingletonScreenParcelization(SettingsScreen)
         testSingletonScreenParcelization(DisclosureScreen)
         testSingletonScreenParcelization(HomeScreen)
-        testSingletonScreenParcelization(CreateDrinkInfoScreen)
+        testSingletonScreenParcelization(MixedDrinksScreen)
     }
 
     private fun testSingletonScreenParcelization(singletonScreen: Screen) {

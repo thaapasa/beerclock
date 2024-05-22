@@ -5,6 +5,7 @@ import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.drinks.DrinkTimeService
+import fi.tuska.beerclock.drinks.mix.MixedDrink
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.settings.Gender
 import fi.tuska.beerclock.settings.GlobalUserPreferences
@@ -22,6 +23,9 @@ import kotlinx.datetime.plus
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.time.Duration
+
+val nbsp = "\u00A0"
+val enspace = "\u2002"
 
 interface Strings {
 
@@ -49,8 +53,11 @@ interface Strings {
     val dec1F: (value: Double) -> String
     val dec2F: (value: Double) -> String
 
-    fun dec1FU(value: Double, unit: String) = "${dec1F(value)} $unit"
-    fun dec2FU(value: Double, unit: String) = "${dec2F(value)} $unit"
+    fun dec1FU(value: Double, unit: String) = "${dec1F(value)}$nbsp$unit"
+    fun dec2FU(value: Double, unit: String) = "${dec2F(value)}$nbsp$unit"
+    fun amount(amount: Double) = "${dec2F(amount)}${nbsp}×"
+    val amountUnit: String
+    val amountLabel: String
 
     fun weekday(day: DayOfWeek): String
     fun weekdayShort(day: DayOfWeek): String
@@ -105,6 +112,7 @@ interface Strings {
         val drinkLibrary: String
         val history: String
         val statistics: String
+        val mixedDrinkCalculator: String
     }
 
 
@@ -121,10 +129,12 @@ interface Strings {
         }
 
         fun abv(abvPercentage: Double) = get().dec1FU(abvPercentage, "%")
-        fun quantity(quantityCl: Double) = get().dec1FU(quantityCl, "cl")
+        fun quantity(quantityCl: Double) =
+            if (quantityCl >= 100) get().dec1FU(quantityCl / 100.0, "l")
+            else get().dec1FU(quantityCl, "cl")
 
         fun drinkSize(quantityCl: Double, abvPercentage: Double): String =
-            "${quantity(quantityCl)} ${abv(abvPercentage)}"
+            "${quantity(quantityCl)}$enspace${abv(abvPercentage)}"
 
         fun totalDrinkCount(drinks: Long): String
 
@@ -166,7 +176,9 @@ interface Strings {
     val errors: ErrorStrings
 
     interface ErrorStrings {
+        val invalidValue: String
         val invalidDecimal: String
+        val invalidInteger: String
     }
 
 
@@ -223,6 +235,7 @@ interface Strings {
         val saveDrinkTitle: String
         val addDefaultDrinks: String
         val defaultDrinksAdded: String
+        fun drinkAdded(drink: DrinkInfo): String
         fun drinkDeleted(drink: DrinkInfo): String
     }
 
@@ -349,6 +362,23 @@ interface Strings {
         val totalsTitle: String
         val unitsLabel: String
         val dayLabel: String
+    }
+
+
+    /* Mixed drinks screen */
+    val mixedDrinks: MixedDrinksStrings
+
+    interface MixedDrinksStrings {
+        val title: String
+        val itemsTitle: String
+        val instructionsTitle: String
+        val newMixTitle: String
+        val editMixTitle: String
+        val newItemTitle: String
+        val editItemTitle: String
+        val save: String
+        val saveToLibrary: String
+        fun drinkDeleted(mix: MixedDrink): String
     }
 
 
