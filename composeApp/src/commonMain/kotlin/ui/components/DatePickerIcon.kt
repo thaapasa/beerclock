@@ -32,7 +32,7 @@ fun DatePickerIcon(
     title: String = Strings.get().pickDate,
 ) {
     var pickerShown by remember { mutableStateOf(false) }
-    var state = rememberDatePickerState()
+    val state = rememberDatePickerState()
     LaunchedEffect(value) {
         state.selectedDateMillis = value.toUTCEpochMillis()
     }

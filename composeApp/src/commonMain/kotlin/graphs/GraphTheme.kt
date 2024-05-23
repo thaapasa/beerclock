@@ -16,21 +16,21 @@ fun graphLabelColor() = MaterialTheme.colorScheme.onSurfaceVariant
 
 @Composable
 fun GraphTheme(content: @Composable () -> Unit) {
-    val grindLIneC = gridLineColor()
+    val gridLineC = gridLineColor()
 
     KoalaPlotTheme(
         sizes = KoalaPlotTheme.sizes.copy(gap = 4.dp),
         axis = KoalaPlotTheme.axis.copy(
-            color = grindLIneC,
+            color = gridLineC,
             minorTickSize = 0.dp,
             majorTickSize = 0.dp,
             minorGridlineStyle = LineStyle(
-                SolidColor(grindLIneC),
+                SolidColor(gridLineC),
                 strokeWidth = 0.dp,
                 pathEffect = PathEffect.dashPathEffect(floatArrayOf(3f, 3f))
             ),
             majorGridlineStyle = LineStyle(
-                SolidColor(grindLIneC),
+                SolidColor(gridLineC),
                 strokeWidth = 0.dp,
             )
         ),

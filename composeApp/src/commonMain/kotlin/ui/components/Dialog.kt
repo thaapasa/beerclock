@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -63,25 +62,6 @@ fun AppDialog(
                 content()
             }
         }
-    }
-}
-
-@Composable
-fun FullScreenDialog(
-    onDismissRequest: () -> Unit,
-    dialogProperties: DialogProperties = FullScreenDialogProperties,
-    content: @Composable () -> Unit,
-) {
-    Dialog(
-        onDismissRequest = onDismissRequest,
-        properties = dialogProperties,
-    ) {
-        Surface(
-            modifier = Modifier.padding(getFullscreenDialogSafeAreaPadding()).fillMaxSize(),
-            color = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-            content = content
-        )
     }
 }
 
