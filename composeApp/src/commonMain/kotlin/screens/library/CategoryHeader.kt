@@ -19,7 +19,7 @@ data class CategoryHeaderInfo(
     val name: String,
     val onClick: () -> Unit = {},
 ) {
-    val image = category?.image ?: DrinkImage.GENERIC_DRINK
+    val image = category?.image ?: DrinkImage.CAT_UNCATEGORIZED
     val key = category?.name ?: "no-category"
 }
 
