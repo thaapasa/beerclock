@@ -16,20 +16,25 @@ import beerclock.composeapp.generated.resources.cat_warm_drinks
 import beerclock.composeapp.generated.resources.cat_wines
 import beerclock.composeapp.generated.resources.drink_absinthe_1
 import beerclock.composeapp.generated.resources.drink_baileys_glass_1
+import beerclock.composeapp.generated.resources.drink_becherovka_1
 import beerclock.composeapp.generated.resources.drink_beer_bottle_1
 import beerclock.composeapp.generated.resources.drink_beer_bottle_2
 import beerclock.composeapp.generated.resources.drink_beer_bottle_3
+import beerclock.composeapp.generated.resources.drink_beer_bottle_4
+import beerclock.composeapp.generated.resources.drink_beer_bottle_5
 import beerclock.composeapp.generated.resources.drink_beer_can_1
 import beerclock.composeapp.generated.resources.drink_beer_can_2
 import beerclock.composeapp.generated.resources.drink_beer_can_3
 import beerclock.composeapp.generated.resources.drink_beer_can_4
 import beerclock.composeapp.generated.resources.drink_beer_can_5
 import beerclock.composeapp.generated.resources.drink_beer_can_6
+import beerclock.composeapp.generated.resources.drink_beer_can_7
 import beerclock.composeapp.generated.resources.drink_beer_glass_1
 import beerclock.composeapp.generated.resources.drink_beer_glass_2
 import beerclock.composeapp.generated.resources.drink_beer_glass_3
 import beerclock.composeapp.generated.resources.drink_beer_glass_4
 import beerclock.composeapp.generated.resources.drink_beer_glass_5
+import beerclock.composeapp.generated.resources.drink_beer_glass_6
 import beerclock.composeapp.generated.resources.drink_beer_stein_1
 import beerclock.composeapp.generated.resources.drink_bloody_mary_1
 import beerclock.composeapp.generated.resources.drink_caipirosca_1
@@ -37,6 +42,7 @@ import beerclock.composeapp.generated.resources.drink_caipirosca_2
 import beerclock.composeapp.generated.resources.drink_champagne_bottle_1
 import beerclock.composeapp.generated.resources.drink_champagne_bottle_2
 import beerclock.composeapp.generated.resources.drink_champagne_glass_1
+import beerclock.composeapp.generated.resources.drink_champagne_glass_2
 import beerclock.composeapp.generated.resources.drink_cider_bottle_1
 import beerclock.composeapp.generated.resources.drink_cider_glass_1
 import beerclock.composeapp.generated.resources.drink_cognac_1
@@ -49,6 +55,7 @@ import beerclock.composeapp.generated.resources.drink_generic_drink
 import beerclock.composeapp.generated.resources.drink_gin_1
 import beerclock.composeapp.generated.resources.drink_gin_bottle_1
 import beerclock.composeapp.generated.resources.drink_gin_tonic_1
+import beerclock.composeapp.generated.resources.drink_gin_tonic_2
 import beerclock.composeapp.generated.resources.drink_hot_shot_1
 import beerclock.composeapp.generated.resources.drink_iced_tea_1
 import beerclock.composeapp.generated.resources.drink_irish_coffee_1
@@ -68,6 +75,7 @@ import beerclock.composeapp.generated.resources.drink_pina_colada_1
 import beerclock.composeapp.generated.resources.drink_poison_1
 import beerclock.composeapp.generated.resources.drink_punch_1
 import beerclock.composeapp.generated.resources.drink_punch_2
+import beerclock.composeapp.generated.resources.drink_punch_bowl_1
 import beerclock.composeapp.generated.resources.drink_red_wine_bottle_1
 import beerclock.composeapp.generated.resources.drink_red_wine_bottle_2
 import beerclock.composeapp.generated.resources.drink_red_wine_glass_1
@@ -76,6 +84,7 @@ import beerclock.composeapp.generated.resources.drink_rum_bottle_1
 import beerclock.composeapp.generated.resources.drink_rum_cola_1
 import beerclock.composeapp.generated.resources.drink_sake_bottle_1
 import beerclock.composeapp.generated.resources.drink_sake_glass_1
+import beerclock.composeapp.generated.resources.drink_screwdriver_1
 import beerclock.composeapp.generated.resources.drink_shandy_1
 import beerclock.composeapp.generated.resources.drink_spritzer_1
 import beerclock.composeapp.generated.resources.drink_tequila_1
@@ -93,6 +102,7 @@ import beerclock.composeapp.generated.resources.drink_white_wine_bottle_2
 import beerclock.composeapp.generated.resources.drink_white_wine_bottle_3
 import beerclock.composeapp.generated.resources.drink_white_wine_glass_1
 import beerclock.composeapp.generated.resources.drink_white_wine_glass_2
+import beerclock.composeapp.generated.resources.drink_white_wine_glass_3
 import fi.tuska.beerclock.logging.getLogger
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -111,11 +121,14 @@ enum class DrinkImage(val drawable: DrawableResource) : Image {
     CIDER_GLASS_1(Res.drawable.drink_cider_glass_1),
     SHANDY_1(Res.drawable.drink_shandy_1),
     MEAD_1(Res.drawable.drink_mead_1),
+    BEER_GLASS_6(Res.drawable.drink_beer_glass_6),
     BEER_GLASS_3(Res.drawable.drink_beer_glass_3),
     BEER_GLASS_4(Res.drawable.drink_beer_glass_4),
     BEER_BOTTLE_1(Res.drawable.drink_beer_bottle_1),
     BEER_BOTTLE_2(Res.drawable.drink_beer_bottle_2),
     BEER_BOTTLE_3(Res.drawable.drink_beer_bottle_3),
+    BEER_BOTTLE_4(Res.drawable.drink_beer_bottle_4),
+    BEER_BOTTLE_5(Res.drawable.drink_beer_bottle_5),
     CIDER_BOTTLE_1(Res.drawable.drink_cider_bottle_1),
     MIXED_DRINK_BOTTLE_1(Res.drawable.drink_mixed_drink_bottle_1),
     BEER_CAN_1(Res.drawable.drink_beer_can_1),
@@ -124,12 +137,15 @@ enum class DrinkImage(val drawable: DrawableResource) : Image {
     BEER_CAN_4(Res.drawable.drink_beer_can_4),
     BEER_CAN_5(Res.drawable.drink_beer_can_5),
     BEER_CAN_6(Res.drawable.drink_beer_can_6),
+    BEER_CAN_7(Res.drawable.drink_beer_can_7),
     LONKERO_1(Res.drawable.drink_lonkero_1),
     CAT_WINES(Res.drawable.cat_wines),
     RED_WINE_GLASS_1(Res.drawable.drink_red_wine_glass_1),
     WHITE_WINE_GLASS_1(Res.drawable.drink_white_wine_glass_1),
     WHITE_WINE_GLASS_2(Res.drawable.drink_white_wine_glass_2),
+    WHITE_WINE_GLASS_3(Res.drawable.drink_white_wine_glass_3),
     CHAMPAGNE_GLASS_1(Res.drawable.drink_champagne_glass_1),
+    CHAMPAGNE_GLASS_2(Res.drawable.drink_champagne_glass_2),
     SPRITZER_1(Res.drawable.drink_spritzer_1),
     DESSERT_WINE_1(Res.drawable.drink_dessert_wine_1),
     DESSERT_WINE_2(Res.drawable.drink_dessert_wine_2),
@@ -149,13 +165,16 @@ enum class DrinkImage(val drawable: DrawableResource) : Image {
     PINA_COLADA_1(Res.drawable.drink_pina_colada_1),
     BAILEYS_GLASS_1(Res.drawable.drink_baileys_glass_1),
     GIN_TONIC_1(Res.drawable.drink_gin_tonic_1),
+    GIN_TONIC_2(Res.drawable.drink_gin_tonic_2),
     MOJITO_1(Res.drawable.drink_mojito_1),
     CAIPIROSCA_1(Res.drawable.drink_caipirosca_1),
     CAIPIROSCA_2(Res.drawable.drink_caipirosca_2),
     RUM_COLA_1(Res.drawable.drink_rum_cola_1),
+    SCREWDRIVER_1(Res.drawable.drink_screwdriver_1),
     ICED_TEA_1(Res.drawable.drink_iced_tea_1),
     MOCKTAIL_1(Res.drawable.drink_mocktail_1),
     CAT_PUNCHES(Res.drawable.cat_punches),
+    PUNCH_BOWL_1(Res.drawable.drink_punch_bowl_1),
     PUNCH_1(Res.drawable.drink_punch_1),
     PUNCH_2(Res.drawable.drink_punch_2),
     MOCKTAIL_2(Res.drawable.drink_mocktail_2),
@@ -169,6 +188,7 @@ enum class DrinkImage(val drawable: DrawableResource) : Image {
     RUM_1(Res.drawable.drink_rum_1),
     VODKA_1(Res.drawable.drink_vodka_1),
     TEQUILA_1(Res.drawable.drink_tequila_1),
+    BECHEROVKA_1(Res.drawable.drink_becherovka_1),
     LIQUEUR_3(Res.drawable.drink_liqueur_3),
     HOT_SHOT_1(Res.drawable.drink_hot_shot_1),
     ABSINTHE_1(Res.drawable.drink_absinthe_1),
