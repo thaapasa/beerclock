@@ -31,6 +31,7 @@ import fi.tuska.beerclock.drinks.mix.MixedDrinksService
 import fi.tuska.beerclock.images.AppIcon
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
+import fi.tuska.beerclock.screens.drinks.editor.CategorySelector
 import fi.tuska.beerclock.screens.drinks.editor.DrinkImageSelectField
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.ui.components.AppDialog
@@ -64,6 +65,12 @@ fun ColumnScope.MixedDrinkEditor(vm: MixedDrinkEditorViewModel, onClose: () -> U
             titleText = strings.drinkDialog.selectImageTitle,
         )
     }
+    Spacer(modifier = Modifier.height(gap))
+    CategorySelector(
+        vm.category,
+        { vm.category = it },
+        modifier = Modifier.padding(horizontal = gap)
+    )
     Spacer(modifier = Modifier.height(gap))
     OutlinedTextField(
         label = { Text(strings.mixedDrinks.instructionsTitle) },
