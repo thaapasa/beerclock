@@ -12,7 +12,7 @@ actual fun getAppVersion(): String {
     val context: Context by inject(Context::class.java)
     return try {
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-        packageInfo.versionName
+        packageInfo.versionName ?: "?"
     } catch (e: PackageManager.NameNotFoundException) {
         logger.warn("Could not get app version: ${e.message}")
         "?"

@@ -20,7 +20,7 @@ import fi.tuska.beerclock.util.CommonParcelize
 
 @CommonParcelize
 object SettingsScreen : ParcelableScreen {
-
+    
     @Composable
     override fun Content() {
         val snackbar = SnackbarHostState()

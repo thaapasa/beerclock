@@ -1,6 +1,6 @@
 package fi.tuska.beerclock.database
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 // Extension function for Instant to convert to Unix timestamps used in the database
 fun Instant.toDbTime(): Long = this.epochSeconds

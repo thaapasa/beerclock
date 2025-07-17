@@ -1,7 +1,7 @@
 package fi.tuska.beerclock.wear
 
 import androidx.compose.ui.text.intl.Locale
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 expect fun isWatchSupported(): Boolean
 

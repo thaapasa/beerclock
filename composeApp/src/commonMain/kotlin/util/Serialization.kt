@@ -1,14 +1,12 @@
 package fi.tuska.beerclock.util
 
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
+import kotlin.time.Instant
 
 // For Android @Parcelize
-@OptIn(ExperimentalMultiplatform::class)
-@OptionalExpectation
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.BINARY)
-expect annotation class CommonParcelize()
+annotation class CommonParcelize()
 
 expect interface CommonParcelable
 

@@ -8,8 +8,8 @@ import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
+import kotlin.time.Clock
 
 private val logger = getLogger("ImportData")
 

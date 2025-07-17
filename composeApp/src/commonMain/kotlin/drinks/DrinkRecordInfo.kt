@@ -7,7 +7,7 @@ import fi.tuska.beerclock.util.CommonParcelize
 import fi.tuska.beerclock.util.CommonTypeParceler
 import fi.tuska.beerclock.util.InstantParceler
 import io.github.koalaplot.core.util.toString
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * Used to record that a drink has been drunk at a specified time.

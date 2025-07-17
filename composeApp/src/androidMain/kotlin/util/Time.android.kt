@@ -2,12 +2,13 @@ package fi.tuska.beerclock.util
 
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.number
 import java.time.temporal.WeekFields
 import java.util.Calendar
 import java.util.Locale
 
 fun LocalDate.toJavaLocalDate(): java.time.LocalDate {
-    return java.time.LocalDate.of(year, month, dayOfMonth)
+    return java.time.LocalDate.of(year, month.number, day)
 }
 
 actual fun LocalDate.toWeekOfYear(): WeekOfYear {
@@ -21,6 +22,16 @@ actual fun LocalDate.toWeekOfYear(): WeekOfYear {
 
 actual fun getFirstDayOfWeek(): DayOfWeek {
     val calendar = Calendar.getInstance()
-    val firstDayOfWeek = calendar.firstDayOfWeek
-    return DayOfWeek.of((firstDayOfWeek + 5) % 7 + 1)
+    return when (calendar.firstDayOfWeek) {
+        Calendar.MONDAY -> DayOfWeek.MONDAY
+        Calendar.TUESDAY -> DayOfWeek.TUESDAY
+        Calendar.WEDNESDAY -> DayOfWeek.WEDNESDAY
+        Calendar.THURSDAY -> DayOfWeek.THURSDAY
+        Calendar.FRIDAY -> DayOfWeek.FRIDAY
+        Calendar.SATURDAY -> DayOfWeek.SATURDAY
+        Calendar.SUNDAY -> DayOfWeek.SUNDAY
+        else -> {
+            throw RuntimeException("Calendar first day of week is invalid")
+        }
+    }
 }

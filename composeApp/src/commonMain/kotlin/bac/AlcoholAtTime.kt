@@ -1,7 +1,7 @@
 package fi.tuska.beerclock.bac
 
 import fi.tuska.beerclock.util.TimeInterval
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * Records what the blood alcohol level was at a given time, as grams of alcohol

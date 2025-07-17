@@ -13,13 +13,13 @@ import fi.tuska.beerclock.ui.theme.ThemeSelection
 import fi.tuska.beerclock.util.toWeekOfYear
 import fi.tuska.beerclock.util.zeroPad
 import kotlinx.datetime.DayOfWeek
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Instant
 
 object FiStrings : Strings {
     override val appName = "Kaljakello"
@@ -45,7 +45,6 @@ object FiStrings : Strings {
             DayOfWeek.FRIDAY -> "perjantai"
             DayOfWeek.SATURDAY -> "lauantai"
             DayOfWeek.SUNDAY -> "sunnuntai"
-            else -> day.toString()
         }
     }
 
@@ -58,7 +57,6 @@ object FiStrings : Strings {
             DayOfWeek.FRIDAY -> "pe"
             DayOfWeek.SATURDAY -> "la"
             DayOfWeek.SUNDAY -> "su"
-            else -> "?"
         }
     }
 
@@ -76,7 +74,6 @@ object FiStrings : Strings {
             Month.OCTOBER -> "lokakuu"
             Month.NOVEMBER -> "marraskuu"
             Month.DECEMBER -> "joulukuu"
-            else -> month.toString()
         }
     }
 
@@ -94,16 +91,15 @@ object FiStrings : Strings {
             Month.OCTOBER -> "loka"
             Month.NOVEMBER -> "marras"
             Month.DECEMBER -> "joulu"
-            else -> month.toString()
         }
     }
 
     override fun date(day: LocalDate): String {
-        return "${day.dayOfMonth}.${day.monthNumber}.${day.year}"
+        return "${day.day}.${day.month}.${day.year}"
     }
 
     override fun dateShort(day: LocalDate): String {
-        return "${day.dayOfMonth}.${day.monthNumber}."
+        return "${day.day}.${day.month}."
     }
 
     override fun time(time: LocalTime): String {

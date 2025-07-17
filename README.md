@@ -50,7 +50,7 @@ to store the drink data. For Android, the SQLite backend is replaced with
 
 The SQLite version installed:
 
-- Android: 3.43.0 (from requery)
+- Android: 3.49.0 (from requery)
 - iOS: supplied by platform (cumulative usage 2023/12):
     - iOS 17.0: 3.39.5 (4.9 %)
     - iOS 16.0: 3.39.0 (82.4 %)

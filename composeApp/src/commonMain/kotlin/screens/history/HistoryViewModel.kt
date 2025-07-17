@@ -91,7 +91,7 @@ class HistoryViewModel(
         launch {
             drinks.collect { drinks ->
                 dailyUnitsGauge.setValue(
-                    drinks.mapOr({ it.sumOf { it.units() } }, initialDailyGaugeValue),
+                    drinks.mapOr({ list -> list.sumOf { it.units() } }, initialDailyGaugeValue),
                     prefs.prefs.maxDailyUnits
                 )
             }

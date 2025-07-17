@@ -8,12 +8,12 @@ import fi.tuska.beerclock.drinks.DrinkInfo
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
-import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toKotlinLocalDateTime
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.time.Instant
 
 private val logger = getLogger("HistoryImporter")
 

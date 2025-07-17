@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import beerclock.composeapp.generated.resources.Res
 import beerclock.composeapp.generated.resources.ic_add_circle
+import beerclock.composeapp.generated.resources.ic_arrow_back
 import beerclock.composeapp.generated.resources.ic_bolt
 import beerclock.composeapp.generated.resources.ic_calendar
 import beerclock.composeapp.generated.resources.ic_car
@@ -31,6 +32,7 @@ import beerclock.composeapp.generated.resources.ic_input
 import beerclock.composeapp.generated.resources.ic_language
 import beerclock.composeapp.generated.resources.ic_local_bar
 import beerclock.composeapp.generated.resources.ic_male
+import beerclock.composeapp.generated.resources.ic_menu
 import beerclock.composeapp.generated.resources.ic_moon
 import beerclock.composeapp.generated.resources.ic_palette
 import beerclock.composeapp.generated.resources.ic_person
@@ -50,6 +52,7 @@ import org.jetbrains.compose.resources.painterResource
 @OptIn(ExperimentalResourceApi::class)
 enum class AppIcon(private val drawable: DrawableResource) : Image {
     ADD_CIRCLE(Res.drawable.ic_add_circle),
+    ARROW_BACK(Res.drawable.ic_arrow_back),
     BEER(Res.drawable.ic_sports_bar),
     BOLT(Res.drawable.ic_bolt),
     CALENDAR(Res.drawable.ic_calendar),
@@ -74,6 +77,7 @@ enum class AppIcon(private val drawable: DrawableResource) : Image {
     INPUT(Res.drawable.ic_input),
     LANGUAGE(Res.drawable.ic_language),
     MALE(Res.drawable.ic_male),
+    MENU(Res.drawable.ic_menu),
     MOON(Res.drawable.ic_moon),
     PALETTE(Res.drawable.ic_palette),
     PERSON(Res.drawable.ic_person),

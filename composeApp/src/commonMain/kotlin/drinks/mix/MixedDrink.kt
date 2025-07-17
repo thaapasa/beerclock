@@ -12,9 +12,9 @@ import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.CommonParcelable
 import fi.tuska.beerclock.util.CommonParcelize
-import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import kotlin.time.Clock
 
 @CommonParcelize
 data class MixedDrinkInfo(

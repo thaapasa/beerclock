@@ -10,7 +10,7 @@ import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.settings.UserPreferences
 import fi.tuska.beerclock.util.toList
 import fi.tuska.beerclock.util.toWeekOfYear
-import io.github.koalaplot.core.xygraph.LinearAxisModel
+import io.github.koalaplot.core.xygraph.FloatLinearAxisModel
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.plus
@@ -54,8 +54,8 @@ abstract class DailyStatisticsData(
     override fun graphDef(): GraphDefinition {
         val strings = Strings.get()
         return GraphDefinition(
-            xAxisModel = LinearAxisModel(-0.5f..days.toFloat() - 0.5f),
-            yAxisModel = LinearAxisModel(0f..maxUnits.toFloat()),
+            xAxisModel = FloatLinearAxisModel(-0.5f..days.toFloat() - 0.5f),
+            yAxisModel = FloatLinearAxisModel(0f..maxUnits.toFloat()),
             xTitle = strings.statistics.dayLabel,
             yTitle = strings.statistics.unitsLabel,
             formatXLabel = this::formatXLabel,
@@ -107,8 +107,8 @@ class YearlyStatisticsData(
     override fun maxBarValue() = maxWeeklyUnits.toFloat()
 
     override fun graphDef() = GraphDefinition(
-        xAxisModel = LinearAxisModel(-0.5f..weeks.size - 0.5f),
-        yAxisModel = LinearAxisModel(0f..maxUnits),
+        xAxisModel = FloatLinearAxisModel(-0.5f..weeks.size - 0.5f),
+        yAxisModel = FloatLinearAxisModel(0f..maxUnits),
         xTitle = strings.statistics.weekTitle,
         yTitle = strings.statistics.unitsLabel,
         formatXLabel = {

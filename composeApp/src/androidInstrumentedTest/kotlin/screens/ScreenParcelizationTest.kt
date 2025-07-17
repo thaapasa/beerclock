@@ -1,6 +1,5 @@
 package fi.tuska.beerclock.screens
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import cafe.adriel.voyager.core.screen.Screen
 import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.Category
@@ -32,15 +31,13 @@ import fi.tuska.beerclock.screens.today.HomeScreen
 import fi.tuska.beerclock.settings.UserPreferences
 import fi.tuska.beerclock.util.parcelizeAndRead
 import junit.framework.TestCase
-import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
-import org.junit.runner.RunWith
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertSame
+import kotlin.time.Clock
 
-@RunWith(AndroidJUnit4::class)
 class ScreenParcelizationTest {
 
     @Test

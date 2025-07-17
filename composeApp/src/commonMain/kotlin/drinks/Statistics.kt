@@ -10,7 +10,7 @@ import fi.tuska.beerclock.screens.statistics.StatisticsPeriod
 import fi.tuska.beerclock.screens.statistics.StatisticsPeriodType
 import fi.tuska.beerclock.settings.UserPreferences
 import fi.tuska.beerclock.ui.components.GaugeValue
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 data class CategoryStatistics(
     val title: String,

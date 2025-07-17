@@ -13,7 +13,7 @@ import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.DrinkDetails
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.localization.Strings
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 @Composable
 fun DrinkInfoTable(

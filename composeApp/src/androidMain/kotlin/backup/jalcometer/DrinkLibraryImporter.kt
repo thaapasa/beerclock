@@ -7,7 +7,7 @@ import fi.tuska.beerclock.drinks.DrinkDetailsFromEditor
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 private val logger = getLogger("HistoryImporter")
 

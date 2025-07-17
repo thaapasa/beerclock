@@ -24,11 +24,11 @@ import fi.tuska.beerclock.ui.components.GaugeValueWithHelp
 import fi.tuska.beerclock.ui.composables.DrinkObservingViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Instant
 
 private val logger = getLogger("HomeViewModel")
 

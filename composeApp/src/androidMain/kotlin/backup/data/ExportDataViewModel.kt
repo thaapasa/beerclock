@@ -8,12 +8,14 @@ import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.logging.getLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import org.koin.core.component.KoinComponent
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 
 private val logger = getLogger("ExportData")
 
+@OptIn(ExperimentalTime::class)
 class ExportDataViewModel(
     context: Context,
     snackbar: SnackbarHostState,

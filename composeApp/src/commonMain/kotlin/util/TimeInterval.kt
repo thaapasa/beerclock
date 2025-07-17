@@ -2,12 +2,12 @@ package fi.tuska.beerclock.util
 
 import fi.tuska.beerclock.drinks.DrinkTimeService
 import kotlinx.datetime.DatePeriod
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
 import kotlinx.datetime.daysUntil
 import kotlinx.datetime.plus
 import kotlin.time.Duration
+import kotlin.time.Instant
 
 val OneYear = DatePeriod(years = 1)
 val OneMonth = DatePeriod(months = 1)
@@ -79,7 +79,7 @@ data class TimeInterval(val start: Instant, val end: Instant) {
 class TimeIntervalIterator(
     startTime: Instant,
     private val endTime: Instant,
-    private val resolution: Duration
+    private val resolution: Duration,
 ) : Iterator<Instant> {
 
     private var currentTime = startTime

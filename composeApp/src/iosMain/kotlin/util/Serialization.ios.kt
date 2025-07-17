@@ -1,7 +1,7 @@
 package fi.tuska.beerclock.util
 
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
+import kotlin.time.Instant
 
 // Note: no need to define CommonParcelize here (bc its @OptionalExpectation)
 actual interface CommonParcelable  // not used on iOS

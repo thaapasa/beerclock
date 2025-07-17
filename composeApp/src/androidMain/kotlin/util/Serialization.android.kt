@@ -2,15 +2,11 @@ package fi.tuska.beerclock.util
 
 import android.os.Parcel
 import android.os.Parcelable
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.toInstant
-import kotlinx.datetime.toLocalDate
 import kotlinx.parcelize.Parceler
-import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.TypeParceler
+import kotlin.time.Instant
 
-actual typealias CommonParcelize = Parcelize
 actual typealias CommonParcelable = Parcelable
 
 actual typealias CommonParceler<T> = Parceler<T>
@@ -30,7 +26,12 @@ actual object ToNullParceler : Parceler<Any?> {
 actual object LocalDateParceler : Parceler<LocalDate?> {
     override fun create(parcel: Parcel): LocalDate? {
         val data = parcel.readString()
-        return if (data == "null") null else data?.toLocalDate()
+        return if (data == "null") null else data?.let {
+            (LocalDate::parse)(
+                it,
+                LocalDate.Formats.ISO
+            )
+        }
     }
 
     override fun LocalDate?.write(parcel: Parcel, flags: Int) {
@@ -42,7 +43,7 @@ actual object LocalDateParceler : Parceler<LocalDate?> {
 actual object InstantParceler : Parceler<Instant?> {
     override fun create(parcel: Parcel): Instant? {
         val data = parcel.readString()
-        return if (data == "null") null else data?.toInstant()
+        return if (data == "null") null else data?.let { (Instant::parse)(it) }
     }
 
     override fun Instant?.write(parcel: Parcel, flags: Int) {

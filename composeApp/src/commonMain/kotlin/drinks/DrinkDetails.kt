@@ -1,6 +1,6 @@
 package fi.tuska.beerclock.drinks
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 data class DrinkDetails(
     val timesDrunk: Long,

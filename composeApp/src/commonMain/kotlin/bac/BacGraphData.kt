@@ -11,10 +11,9 @@ import fi.tuska.beerclock.graphs.GraphDefinition
 import fi.tuska.beerclock.localization.Strings
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.inHours
-import io.github.koalaplot.core.xygraph.LinearAxisModel
+import io.github.koalaplot.core.xygraph.FloatLinearAxisModel
 import io.github.koalaplot.core.xygraph.Point
 import io.github.koalaplot.core.xygraph.XYGraphScope
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import org.koin.core.component.KoinComponent
@@ -23,6 +22,7 @@ import kotlin.math.max
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Instant
 
 class BacGraphData(private val events: List<AlcoholAtTime>) :
     KoinComponent {
@@ -47,13 +47,13 @@ class BacGraphData(private val events: List<AlcoholAtTime>) :
     val maxY = max(0.7, maxAlcoholConcentration + 0.1).toFloat()
 
     fun graphDef() = GraphDefinition(
-        xAxisModel = LinearAxisModel(
+        xAxisModel = FloatLinearAxisModel(
             range = 0f..24f,
             minorTickCount = 1,
             minimumMajorTickIncrement = 2f,
             minimumMajorTickSpacing = 10.dp,
         ),
-        yAxisModel = LinearAxisModel(range = 0f..maxY),
+        yAxisModel = FloatLinearAxisModel(range = 0f..maxY),
         xTitle = strings.home.bacTime,
         yTitle = strings.home.bacPermilles,
         formatXLabel = { strings.time(dailyHourLabel(it)) + " " }

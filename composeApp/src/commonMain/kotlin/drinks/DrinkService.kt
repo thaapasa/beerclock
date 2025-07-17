@@ -15,11 +15,11 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.minus
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import kotlin.time.Instant
 
 private val logger = getLogger("DrinkService")
 

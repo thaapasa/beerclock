@@ -5,7 +5,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,7 +26,7 @@ fun Modifier.combinedClickableReleasable(
     onRelease: () -> Unit,
 ): Modifier {
     val interactionSource = remember { MutableInteractionSource() }
-    val indication: Indication = rememberRipple()
+    val indication: Indication = ripple()
     // detectTapGestures() remembers its contents, so we need wrap callbacks to mutable
     // state so that they are updated properly
     var wrappedClick by remember { mutableStateOf(onClick) }
@@ -61,7 +61,7 @@ fun Modifier.clickableWithPosition(
     onClick: (offset: Offset) -> Unit,
 ): Modifier {
     val interactionSrc = remember { MutableInteractionSource() }
-    val indication: Indication = rememberRipple()
+    val indication: Indication = ripple()
     return indication(interactionSrc, indication)
         .pointerInput(Unit) {
             detectTapGestures(

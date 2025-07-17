@@ -2,8 +2,8 @@ package fi.tuska.beerclock.drinks
 
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.images.toDrinkImage
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
+import kotlin.time.Instant
 
 data class DrinkDetailsFromEditor(
     val name: String,

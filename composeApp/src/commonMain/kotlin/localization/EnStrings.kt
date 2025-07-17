@@ -13,13 +13,13 @@ import fi.tuska.beerclock.ui.theme.ThemeSelection
 import fi.tuska.beerclock.util.toWeekOfYear
 import fi.tuska.beerclock.util.zeroPad
 import kotlinx.datetime.DayOfWeek
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Instant
 
 object EnStrings : Strings {
     override val appName = "Beer Clock"
@@ -45,7 +45,6 @@ object EnStrings : Strings {
             DayOfWeek.FRIDAY -> "Friday"
             DayOfWeek.SATURDAY -> "Saturday"
             DayOfWeek.SUNDAY -> "Sunday"
-            else -> "?"
         }
     }
 
@@ -58,7 +57,6 @@ object EnStrings : Strings {
             DayOfWeek.FRIDAY -> "Fri"
             DayOfWeek.SATURDAY -> "Sat"
             DayOfWeek.SUNDAY -> "Sun"
-            else -> "?"
         }
     }
 
@@ -75,7 +73,7 @@ object EnStrings : Strings {
     }
 
     override fun dateShort(day: LocalDate): String {
-        val dm = day.dayOfMonth
+        val dm = day.day
         val mon = month(day.month).substring(0, 3)
         return "$dm $mon"
     }
@@ -374,12 +372,12 @@ object EnStrings : Strings {
         override val importDb = "Load backup"
 
         override fun exportDataMsgComplete(filename: String?, libraryDrinks: Long, records: Long) =
-            "Exported $records drink records and $libraryDrinks drinks in library ${if (filename != null) "to $filename" else "succesfully"}"
+            "Exported $records drink records and $libraryDrinks drinks in library ${if (filename != null) "to $filename" else "successfully"}"
 
         override val exportDataMsgError = "There was an error exporting the data, please try again"
 
         override fun importDataMsgComplete(filename: String?, libraryDrinks: Long, records: Long) =
-            "Imported $records drink records and $libraryDrinks drinks from backup file ${if (filename != null) "$filename" else "succesfully"}"
+            "Imported $records drink records and $libraryDrinks drinks from backup file ${filename ?: "successfully"}"
 
         override val importDataMsgError = "There was an error importing the data, please try again"
 

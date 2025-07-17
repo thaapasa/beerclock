@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import io.github.koalaplot.core.gestures.GestureConfig
 import io.github.koalaplot.core.style.KoalaPlotTheme
 import io.github.koalaplot.core.util.VerticalRotation
 import io.github.koalaplot.core.util.rotateVertically
@@ -22,7 +23,6 @@ import io.github.koalaplot.core.xygraph.XYGraph as KoalaXYGraph
 fun XYGraph(
     graph: GraphDefinition,
     modifier: Modifier = Modifier,
-    panZoomEnabled: Boolean = false,
     showYGridLines: Boolean = false,
     content: @Composable XYGraphScope<Float, Float>.() -> Unit,
 ) {
@@ -85,7 +85,7 @@ fun XYGraph(
         horizontalMinorGridLineStyle = KoalaPlotTheme.axis.minorGridlineStyle,
         verticalMajorGridLineStyle = if (showYGridLines) KoalaPlotTheme.axis.majorGridlineStyle else NoLine,
         verticalMinorGridLineStyle = if (showYGridLines) KoalaPlotTheme.axis.minorGridlineStyle else NoLine,
-        panZoomEnabled = panZoomEnabled,
+        gestureConfig = GestureConfig(),
         content
     )
 }

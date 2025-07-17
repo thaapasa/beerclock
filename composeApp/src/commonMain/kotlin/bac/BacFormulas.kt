@@ -2,10 +2,10 @@ package fi.tuska.beerclock.bac
 
 import fi.tuska.beerclock.settings.UserPreferences
 import fi.tuska.beerclock.util.inHours
-import kotlinx.datetime.Instant
 import kotlin.math.max
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.hours
+import kotlin.time.Instant
 
 /**
  * This class defines how a drink is absorbed into the body. For the given time period, this

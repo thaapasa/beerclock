@@ -4,11 +4,11 @@ import fi.tuska.beerclock.bac.BacFormulas.burnOffAlcohol
 import fi.tuska.beerclock.bac.BacFormulas.timeToBurnAlcohol
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.settings.GlobalUserPreferences
-import kotlinx.datetime.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.math.max
 import kotlin.time.Duration.Companion.hours
+import kotlin.time.Instant
 
 /**
  * Utility class to ease calculating the alcohol left in your body, in grams.

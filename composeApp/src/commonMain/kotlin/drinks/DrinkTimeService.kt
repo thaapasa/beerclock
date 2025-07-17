@@ -6,10 +6,8 @@ import fi.tuska.beerclock.util.TimeInterval
 import fi.tuska.beerclock.util.fromMinutesOfDay
 import fi.tuska.beerclock.util.getFirstDayOfWeek
 import fi.tuska.beerclock.util.toMinutesOfDay
-import kotlinx.datetime.Clock
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
@@ -20,6 +18,8 @@ import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 /**
  * This class defines how time zones are handled and for which days each drink record is shown.

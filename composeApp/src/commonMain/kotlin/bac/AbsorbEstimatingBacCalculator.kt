@@ -5,11 +5,11 @@ import fi.tuska.beerclock.bac.BacFormulas.alcoholBurnOffRate
 import fi.tuska.beerclock.drinks.DrinkRecordInfo
 import fi.tuska.beerclock.settings.GlobalUserPreferences
 import fi.tuska.beerclock.util.inHours
-import kotlinx.datetime.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.math.max
 import kotlin.time.Duration.Companion.hours
+import kotlin.time.Instant
 
 /**
  * This is a variant of InstantBacCalculator that tries to guess some estimate for how
