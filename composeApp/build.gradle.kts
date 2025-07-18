@@ -110,18 +110,6 @@ android {
         versionCode = libs.versions.app.version.code.get().toInt() * 10
         versionName = libs.versions.app.version.name.get()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        externalNativeBuild {
-            // For ndk-build, instead use the ndkBuild block.
-            cmake {
-                // Passes optional arguments to CMake.
-                arguments += listOf("-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON")
-            }
-            ndkBuild {
-                // Passes optional arguments to CMake.
-                arguments += listOf("-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON")
-            }
-        }
     }
     bundle {
         language {
@@ -149,11 +137,11 @@ android {
     androidResources {
         generateLocaleConfig = true
     }
-    dependencies {
-        debugImplementation(libs.compose.ui.tooling)
-    }
 }
 
+dependencies {
+    debugImplementation(compose.uiTooling)
+}
 
 sqldelight {
     databases {

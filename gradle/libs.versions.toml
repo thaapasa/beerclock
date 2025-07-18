@@ -1,5 +1,5 @@
 [versions]
-app-version-code = "19"
+app-version-code = "20"
 app-version-name = "1.2.3"
 agp = "8.11.1"
 android-compileSdk = "36"
