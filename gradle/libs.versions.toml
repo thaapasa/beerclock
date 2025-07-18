@@ -1,6 +1,6 @@
 [versions]
-app-version-code = "22"
-app-version-name = "1.2.5"
+app-version-code = "23"
+app-version-name = "1.2.6"
 agp = "8.11.1"
 android-compileSdk = "36"
 # Oreo, required by Time.android.kt
