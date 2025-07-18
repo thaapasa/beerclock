@@ -61,11 +61,11 @@ data class NewDrinkSearchScreen(
         val query = vm.searchQuery
 
         MainLayout(showTopBar = false, snackbarHostState = vm.snackbar) { innerPadding ->
-            Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
+            // For some reason the innerPadding is too much here
+            Column(modifier = Modifier.fillMaxSize()) {
                 SearchBar(
                     inputField = {
                         SearchBarDefaults.InputField(
-                            modifier = Modifier.fillMaxWidth(),
                             query = query,
                             onQueryChange = { vm.searchQuery = it },
                             onSearch = { },
@@ -82,6 +82,7 @@ data class NewDrinkSearchScreen(
                             },
                         )
                     },
+                    modifier = Modifier.fillMaxWidth(),
                     expanded = vm.active,
                     onExpandedChange = vm::toggleActive,
                 ) {

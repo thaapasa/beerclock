@@ -18,6 +18,7 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Instant
 
@@ -95,11 +96,11 @@ object FiStrings : Strings {
     }
 
     override fun date(day: LocalDate): String {
-        return "${day.day}.${day.month}.${day.year}"
+        return "${day.day}.${day.month.number}.${day.year}"
     }
 
     override fun dateShort(day: LocalDate): String {
-        return "${day.day}.${day.month}."
+        return "${day.day}.${day.month.number}."
     }
 
     override fun time(time: LocalTime): String {

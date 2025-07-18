@@ -1,6 +1,8 @@
 package fi.tuska.beerclock.ui.layout
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -26,6 +28,7 @@ fun MainLayout(
     val navigator = LocalNavigator.currentOrThrow
     Scaffold(
         snackbarHost = { snackbarHostState?.let { SnackbarHost(it) } },
+        contentWindowInsets = WindowInsets.safeDrawing,
         topBar = {
             if (showTopBar) {
                 TopAppBar(colors = TopAppBarDefaults.topAppBarColors(

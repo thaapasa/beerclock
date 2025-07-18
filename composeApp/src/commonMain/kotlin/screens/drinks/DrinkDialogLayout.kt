@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -24,8 +25,8 @@ fun DrinkDialogLayout(
     val navigator = LocalNavigator.currentOrThrow
     val scrollState = rememberScrollState()
     val strings = Strings.get()
-    SubLayout(title = title, showTopBar = false) {
-        Column(modifier = Modifier.fillMaxSize()) {
+    SubLayout(title = title, showTopBar = false) { paddingValue ->
+        Column(modifier = Modifier.padding(paddingValue).fillMaxSize()) {
             DialogHeader(
                 titleText = title,
                 leadingIcon = { modifier ->
