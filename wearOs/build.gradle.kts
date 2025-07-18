@@ -12,8 +12,7 @@ android {
     defaultConfig {
         applicationId = "fi.tuska.beerclock"
         minSdk = libs.versions.android.minSdk.get().toInt()
-        // Must use target level 33 for WearOS (at least as of 2024-04-23)
-        targetSdk = 33
+        targetSdk = 34
         versionCode = libs.versions.app.version.code.get().toInt() * 10 + 1
         versionName = libs.versions.app.version.name.get()
         vectorDrawables {
