@@ -23,7 +23,7 @@ data class CurrentBacStatus(
 ) : Parcelable {
 
     @IgnoredOnParcel
-    val locale = languageTag?.let { Locale(it) }
+    val locale = languageTag?.let { Locale.forLanguageTag(it) }
 
     /**
      * Blood alcohol concentration (per mille).

@@ -23,9 +23,9 @@ import kotlin.math.max
 import kotlin.math.min
 
 abstract class RangedComplicationService(
-    @DrawableRes private val iconRes: Int,
-    @StringRes private val valueRes: Int,
-    @StringRes private val labelRes: Int,
+    @param:DrawableRes @field:DrawableRes private val iconRes: Int,
+    @param:StringRes @field:StringRes private val valueRes: Int,
+    @param:StringRes @field:StringRes private val labelRes: Int,
 ) :
     SuspendingComplicationDataSourceService() {
 

@@ -10,6 +10,7 @@ import fi.tuska.beerclock.drinks.BasicDrinkInfo
 import fi.tuska.beerclock.drinks.Category
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.settings.GlobalUserPreferences
+import fi.tuska.beerclock.util.CommonIgnoredOnParcel
 import fi.tuska.beerclock.util.CommonParcelable
 import fi.tuska.beerclock.util.CommonParcelize
 import org.koin.core.component.KoinComponent
@@ -56,6 +57,7 @@ data class MixedDrinkOverview(
     val quantityLiters: Double,
     val alcoholLiters: Double,
 ) : KeyedObject(info.key), CommonParcelable {
+    @CommonIgnoredOnParcel
     val key = info.key
 
     fun asDrinkInfo(): BasicDrinkInfo {
@@ -96,8 +98,10 @@ data class MixedDrinkItem(
     val key: String = "$id-${Clock.System.now().toDbTime()}",
 ) : KeyedObject(key), CommonParcelable, KoinComponent {
 
+    @CommonIgnoredOnParcel
     val prefs: GlobalUserPreferences = get()
 
+    @CommonIgnoredOnParcel
     val totalAlcoholGrams =
         BacFormulas.getAlcoholGrams(quantityCl = quantityCl, abvPercentage = abvPercentage)
 
@@ -120,15 +124,23 @@ data class MixedDrink(
     val info: MixedDrinkInfo,
     val items: List<MixedDrinkItem>,
 ) : CommonParcelable, KoinComponent {
+    @CommonIgnoredOnParcel
     val id = info.id
+    @CommonIgnoredOnParcel
     val key = info.key
 
+    @CommonIgnoredOnParcel
     val prefs: GlobalUserPreferences = get()
 
+    @CommonIgnoredOnParcel
     val totalQuantityCl = items.sumOf { it.quantityCl }
+    @CommonIgnoredOnParcel
     val totalAlcoholGrams = items.sumOf { it.totalAlcoholGrams }
+    @CommonIgnoredOnParcel
     val totalAlcoholCl = items.sumOf { it.quantityCl * it.abvPercentage / 100.0 }
+    @CommonIgnoredOnParcel
     val totalAbv = if (totalQuantityCl > 0) (totalAlcoholCl / totalQuantityCl) * 100.0 else 0.0
+    @CommonIgnoredOnParcel
     val totalUnits = BacFormulas.getUnitsFromAlcoholWeight(totalAlcoholGrams, prefs.prefs)
 
     fun asDrinkInfo(): BasicDrinkInfo {

@@ -113,12 +113,12 @@ fun RatingField(
         isError = isError,
         interactionSource = interactionSource,
         container = {
-            OutlinedTextFieldDefaults.ContainerBox(
+            OutlinedTextFieldDefaults.Container(
                 enabled,
                 isError,
                 interactionSource,
-                colors,
-                shape
+                colors = colors,
+                shape = shape
             )
         }
     )

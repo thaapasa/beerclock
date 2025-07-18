@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.MaterialTheme
@@ -24,7 +23,7 @@ import fi.tuska.beerclock.wear.presentation.components.Gauge
 import fi.tuska.beerclock.wear.presentation.components.GaugeValue
 import fi.tuska.beerclock.wear.presentation.components.adaptiveIconPainterResource
 import fi.tuska.beerclock.wear.presentation.theme.BeerclockTheme
-
+import androidx.wear.tooling.preview.devices.WearDevices
 
 @Composable
 fun MainScreen(vm: BeerWearViewModel) {
@@ -96,7 +95,7 @@ fun MainScreen(bacGauge: GaugeValue, dailyUnitsGauge: GaugeValue) {
 }
 
 
-@Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
+@Preview(device = WearDevices.SMALL_ROUND, showSystemUi = true)
 @Composable
 fun MainScreenPreview() {
     val bacGauge =

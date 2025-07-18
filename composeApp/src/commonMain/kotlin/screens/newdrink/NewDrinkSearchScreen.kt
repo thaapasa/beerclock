@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -62,20 +63,27 @@ data class NewDrinkSearchScreen(
         MainLayout(showTopBar = false, snackbarHostState = vm.snackbar) { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
                 SearchBar(
-                    query,
-                    onQueryChange = { vm.searchQuery = it },
-                    placeholder = { Text(strings.newdrink.searchPlaceholder) },
-                    active = vm.active,
-                    onActiveChange = vm::toggleActive,
-                    onSearch = { },
-                    leadingIcon = { IconButton(onClick = { keyboardController?.hide() }) { AppIcon.SEARCH.icon() } },
-                    trailingIcon = {
-                        IconButton(onClick = {
-                            vm.searchQuery = ""
-                            keyboardController?.hide()
-                        }) { AppIcon.CLOSE.icon() }
+                    inputField = {
+                        SearchBarDefaults.InputField(
+                            modifier = Modifier.fillMaxWidth(),
+                            query = query,
+                            onQueryChange = { vm.searchQuery = it },
+                            onSearch = { },
+                            expanded = vm.active,
+                            onExpandedChange = vm::toggleActive,
+                            enabled = true,
+                            placeholder =  { Text(strings.newdrink.searchPlaceholder) },
+                            leadingIcon = { IconButton(onClick = { keyboardController?.hide() }) { AppIcon.SEARCH.icon() } },
+                            trailingIcon = {
+                                IconButton(onClick = {
+                                    vm.searchQuery = ""
+                                    keyboardController?.hide()
+                                }) { AppIcon.CLOSE.icon() }
+                            },
+                        )
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    expanded = vm.active,
+                    onExpandedChange = vm::toggleActive,
                 ) {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         item {

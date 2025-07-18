@@ -8,6 +8,12 @@ import kotlin.time.Instant
 @Retention(AnnotationRetention.BINARY)
 annotation class CommonParcelize()
 
+@OptIn(ExperimentalMultiplatform::class)
+@OptionalExpectation
+@Target(AnnotationTarget.PROPERTY)
+@Retention(AnnotationRetention.SOURCE)
+expect annotation class CommonIgnoredOnParcel()
+
 expect interface CommonParcelable
 
 // For Android @TypeParceler

@@ -1,7 +1,7 @@
 [versions]
 app-version-code = "19"
 app-version-name = "1.2.3"
-agp = "8.7.3"
+agp = "8.11.1"
 android-compileSdk = "36"
 # Oreo, required by Time.android.kt
 android-minSdk = "26"
@@ -39,6 +39,7 @@ horologistComposeTools = "0.6.23"
 horologistTiles = "0.6.23"
 watchfaceComplicationsDataSourceKtx = "1.2.1"
 kotlinx = "1.10.2"
+wearToolingPreview = "1.0.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -98,6 +99,7 @@ play-services-wearable = { group = "com.google.android.gms", name = "play-servic
 horologist-compose-tools = { group = "com.google.android.horologist", name = "horologist-compose-tools", version.ref = "horologistComposeTools" }
 horologist-tiles = { group = "com.google.android.horologist", name = "horologist-tiles", version.ref = "horologistTiles" }
 androidx-watchface-complications-data-source-ktx = { group = "androidx.wear.watchface", name = "watchface-complications-data-source-ktx", version.ref = "watchfaceComplicationsDataSourceKtx" }
+androidx-wear-tooling-preview = { group = "androidx.wear", name = "wear-tooling-preview", version.ref = "wearToolingPreview" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

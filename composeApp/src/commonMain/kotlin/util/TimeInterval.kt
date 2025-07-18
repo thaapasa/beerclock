@@ -56,13 +56,13 @@ data class TimeInterval(val start: Instant, val end: Instant) {
         }
 
         fun ofYear(year: Int): TimeInterval {
-            val startDay = LocalDate(year = year, month = Month.JANUARY, dayOfMonth = 1)
-            val endDay = LocalDate(year = year + 1, month = Month.JANUARY, dayOfMonth = 1)
+            val startDay = LocalDate(year = year, month = Month.JANUARY, day = 1)
+            val endDay = LocalDate(year = year + 1, month = Month.JANUARY, day = 1)
             return ofDays(startDay, endDay)
         }
 
         fun ofMonth(year: Int, month: Month): TimeInterval {
-            val startDay = LocalDate(year = year, month = month, dayOfMonth = 1)
+            val startDay = LocalDate(year = year, month = month, day = 1)
             val endDay = startDay.plus(OneMonth)
             return ofDays(startDay, endDay)
         }

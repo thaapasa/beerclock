@@ -4,6 +4,7 @@ import fi.tuska.beerclock.bac.BacFormulas
 import fi.tuska.beerclock.database.KeyedObject
 import fi.tuska.beerclock.images.DrinkImage
 import fi.tuska.beerclock.settings.GlobalUserPreferences
+import fi.tuska.beerclock.util.CommonIgnoredOnParcel
 import fi.tuska.beerclock.util.CommonParcelable
 import fi.tuska.beerclock.util.CommonParcelize
 import org.koin.core.component.KoinComponent
@@ -37,13 +38,17 @@ open class BasicDrinkInfo(
     /** Categorization of the drink */
     val category: Category? = null,
 ) : KeyedObject(key), KoinComponent, CommonParcelable {
+
+    @CommonIgnoredOnParcel
     protected val prefs: GlobalUserPreferences = get()
 
     /** Amount of alcohol in the drink, in liters */
+    @CommonIgnoredOnParcel
     val alcoholLiters: Double =
         BacFormulas.getAlcoholLiters(quantityCl = quantityCl, abvPercentage = abvPercentage)
 
     /** Amount of alcohol in the drink, in grams */
+    @CommonIgnoredOnParcel
     val alcoholGrams: Double = BacFormulas.getAlcoholGrams(alcoholLiters = alcoholLiters)
 
     /**

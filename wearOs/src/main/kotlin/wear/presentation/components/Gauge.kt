@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,12 +22,12 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
+import androidx.wear.tooling.preview.devices.WearDevices
 import fi.tuska.beerclock.R
 import kotlin.math.max
 import kotlin.math.min
@@ -36,12 +36,12 @@ const val gapDegrees = 60.0f
 
 open class GaugeValue(
     initialValue: Double = 0.0,
-    @DrawableRes val iconRes: Int,
+    @param:DrawableRes @field:DrawableRes val iconRes: Int,
     maxValue: Double = 1.0,
 ) {
-    var value by mutableStateOf(initialValue)
+    var value by mutableDoubleStateOf(initialValue)
         private set
-    private var maxValue by mutableStateOf(max(maxValue, 0.1))
+    private var maxValue by mutableDoubleStateOf(max(maxValue, 0.1))
 
     fun position(): Double {
         return min(value / maxValue, 1.0)
@@ -81,11 +81,11 @@ fun Gauge(
 fun Gauge(
     position: Float,
     value: Float,
-    isOverLimit: Boolean = false,
     @DrawableRes iconRes: Int,
     @StringRes valueRes: Int,
     @StringRes labelRes: Int,
     modifier: Modifier = Modifier,
+    isOverLimit: Boolean = false,
 ) {
     val v = animateFloatAsState(targetValue = value, label = "Value")
     val p = animateFloatAsState(targetValue = position, label = "Position")
@@ -138,7 +138,7 @@ fun Gauge(
     }
 }
 
-@Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
+@Preview(device = WearDevices.SMALL_ROUND, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
     val gauge = GaugeValue(initialValue = 0.4, maxValue = 1.4, iconRes = R.drawable.ic_permille)

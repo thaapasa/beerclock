@@ -4,6 +4,7 @@ import fi.tuska.beerclock.drinks.DrinkTimeService
 import fi.tuska.beerclock.util.CommonParcelable
 import fi.tuska.beerclock.util.CommonParcelize
 import fi.tuska.beerclock.util.CommonTypeParceler
+import fi.tuska.beerclock.util.CommonIgnoredOnParcel
 import fi.tuska.beerclock.util.LocalDateParceler
 import fi.tuska.beerclock.util.OneMonth
 import fi.tuska.beerclock.util.OneWeek
@@ -32,6 +33,10 @@ abstract class StatisticsPeriod(
     abstract fun prev(): StatisticsPeriod
     override fun equals(other: Any?): Boolean =
         other != null && other is StatisticsPeriod && period == other.period && date == other.date
+
+    override fun hashCode(): Int {
+        return period.hashCode() * 31 + date.hashCode()
+    }
 }
 
 
@@ -41,8 +46,11 @@ class StatisticsYear(
     private val yearDate: LocalDate,
 ) :
     StatisticsPeriod(yearDate, period = StatisticsPeriodType.YEAR) {
+    @CommonIgnoredOnParcel
     val year = date.year
+    @CommonIgnoredOnParcel
     override val range = TimeInterval.ofYear(year)
+
     override fun toYear() = this
     override fun toString() = "Year $year"
     override fun next() = StatisticsYear(date.plus(OneYear))
@@ -58,9 +66,13 @@ class StatisticsMonth(
         monthDate,
         period = StatisticsPeriodType.MONTH,
     ) {
+    @CommonIgnoredOnParcel
     val year = date.year
+    @CommonIgnoredOnParcel
     val month = date.month
+    @CommonIgnoredOnParcel
     override val range = TimeInterval.ofMonth(year, month)
+
     override fun toMonth() = this
     override fun toString() = "Month $year/${(month.ordinal + 1).zeroPad(2)}"
     override fun next() = StatisticsMonth(date.plus(OneMonth))
@@ -76,8 +88,11 @@ class StatisticsWeek(
         weekDate,
         period = StatisticsPeriodType.WEEK,
     ) {
+    @CommonIgnoredOnParcel
     val weekOfYear = date.toWeekOfYear()
+    @CommonIgnoredOnParcel
     override val range = TimeInterval.ofWeek(weekOfYear)
+
     override fun toWeek() = this
     override fun toString() = "Week ${weekOfYear.year}-${weekOfYear.weekNumber.zeroPad(2)}"
     override fun next() = StatisticsWeek(date.plus(OneWeek))

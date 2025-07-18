@@ -25,14 +25,14 @@ import fi.tuska.beerclock.ui.components.RatingField
 import fi.tuska.beerclock.ui.components.TimeInputField
 import fi.tuska.beerclock.ui.components.UnitAvatar
 import fi.tuska.beerclock.ui.layout.ScreenSizeInfo
-import fi.tuska.beerclock.ui.layout.getScreenSizeInfo
+import fi.tuska.beerclock.ui.layout.getAvailableScreenSize
 
 private val gap = 16.dp
 fun isNarrowScreen(size: ScreenSizeInfo) = size.widthDp < 400.dp
 
 @Composable
 fun DrinkEditor(vm: DrinkEditorViewModel, modifier: Modifier = Modifier, showTime: Boolean = true) {
-    val screenSize = getScreenSizeInfo()
+    val screenSize = getAvailableScreenSize()
     val strings = Strings.get()
     val isNarrow = isNarrowScreen(screenSize)
     Column(modifier = Modifier.padding(16.dp).fillMaxWidth().then(modifier)) {
